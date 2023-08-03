@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#1E1E1E</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="m1">#0C6241</color>
+    <color name="m2">#387B61</color>
+    <color name="m3">#78A190</color>
+    <color name="m4">#B8C7C0</color>
+    <color name="s1">#FFA441</color>
+    <color name="error">#CB3C3C</color>
+    <color name="g1">#4E4E4E</color>
+    <color name="g2">#757575</color>
+    <color name="g3">#B0B0B0</color>
+    <color name="g4">#F3F3F3</color>
+    <color name="g_line">#E0E0E0</color>
+    <color name="g_line_light">#ECECEC</color>
 </resources>

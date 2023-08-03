@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_farmer"
+        android:title="홈"
+        android:icon="@drawable/selector_menu_icon1"
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/find_farmer"
+        android:title="일손찾기"
+        android:icon="@drawable/selector_menu_icon2"
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/write_farmer"
+        android:title="공고쓰기"
+        android:icon="@drawable/selector_menu_icon3"
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/mypage_farmer"
+        android:title="마이페이지"
+        android:icon="@drawable/selector_menu_icon4"
+        android:enabled="true"
+        />
+
+</menu>
