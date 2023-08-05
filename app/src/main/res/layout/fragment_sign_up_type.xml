@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.SignUp_type">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginTop="42dp"
+           >
+           <ImageView
+               android:id="@+id/bach_btn"
+               android:layout_width="24dp"
+               android:layout_height="24dp"
+               android:src="@drawable/CaretLeft"
+               android:layout_marginTop="16dp"
+               android:layout_marginBottom="16dp"
+               android:layout_marginLeft="20dp"
+               />
+       </LinearLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가입유형"
+                android:textSize="16sp"
+                android:textColor="@color/g2"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가입할 유형을 선택해주세요."
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:layout_marginTop="12dp"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/typebox_style"
+                android:layout_marginTop="32dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginLeft="24dp"
+                    android:text="구인자 회원"
+                    android:fontFamily="@font/spoqahansansneo_medium"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="61dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginBottom="42dp"
+                    android:text="일손을 찾고싶어요!"
+                    android:fontFamily="@font/spoqahansansneo_medium"
+                    android:textColor="@color/g2"
+                    android:textSize="14sp"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/typebox_style"
+                android:layout_marginTop="16dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginLeft="24dp"
+                    android:text="구직자 회원"
+                    android:fontFamily="@font/spoqahansansneo_medium"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="61dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginBottom="42dp"
+                    android:text="일자리를 찾고싶어요"
+                    android:fontFamily="@font/spoqahansansneo_medium"
+                    android:textColor="@color/g2"
+                    android:textSize="14sp"
+                    />
+
+            </RelativeLayout>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</FrameLayout>
