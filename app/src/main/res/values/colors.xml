@@ -14,4 +14,7 @@
     <color name="g4">#F3F3F3</color>
     <color name="g_line">#E0E0E0</color>
     <color name="g_line_light">#ECECEC</color>
+    <color name="unactive">#85B0A0</color>
+    <color name="background">#F6F4F1</color>
+
 </resources>

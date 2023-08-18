@@ -3,9 +3,6 @@ package com.example.nongglenonggle.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import com.example.nongglenonggle.MainActivity
 import com.example.nongglenonggle.R
 import kotlinx.coroutines.*
 
@@ -21,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
         //코루틴을 시작하는 블록
         activityScope.launch {
             delay(3000)
-            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+            val intent = Intent(this@SplashActivity, FirstActivity::class.java)
             startActivity(intent)
             finish()
         }
