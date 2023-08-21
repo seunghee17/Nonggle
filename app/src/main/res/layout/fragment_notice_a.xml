@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.noticeAFragment"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:text="이름"
+        android:textSize="14sp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/g1"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/g_line"
+        android:layout_marginTop="4dp"
+        android:text="본인의 이름을 입력해주세요."
+        android:paddingLeft="16dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:textColor="@color/g3"
+        android:paddingBottom="13dp"
+        android:paddingTop="15dp"
+        android:textCursorDrawable="@color/m1"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:text="연락처"
+        android:textSize="14sp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/g1"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/g_line"
+        android:layout_marginTop="4dp"
+        android:text="본인의 연락처를 기호없이 입력해주세요."
+        android:paddingLeft="16dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:textColor="@color/g3"
+        android:paddingBottom="13dp"
+        android:paddingTop="15dp"
+        android:textCursorDrawable="@color/m1"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:text="근무지 대표주소"
+        android:textSize="14sp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/g1"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/g_line"
+        android:layout_marginTop="4dp"
+        android:text="근무지 대표 도로명 주소를 검색해주세요."
+        android:paddingLeft="16dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:textColor="@color/g3"
+        android:paddingBottom="13dp"
+        android:paddingTop="15dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/g_line"
+        android:layout_marginTop="12dp"
+        android:text="상세주소를 입력해주세요."
+        android:paddingLeft="16dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:textColor="@color/g3"
+        android:paddingBottom="13dp"
+        android:paddingTop="15dp"
+        android:textCursorDrawable="@color/m1"
+        />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/nextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stateListAnimator="@null"
+        android:text="다음"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:fontFamily="@font/spoqahansansneo_medium"
+        android:background="@color/unactive"
+        android:paddingTop="14.5dp"
+        android:paddingBottom="14.5dp"
+        />
+
+</LinearLayout>
