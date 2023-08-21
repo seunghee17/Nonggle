@@ -6,4 +6,21 @@
     </style>
 
     <style name="Theme.Nongglenonggle" parent="Base.Theme.Nongglenonggle" />
+    
+    <style name="m1button" parent="Widget.AppCompat.Button">
+        <item name="strokeColor">@color/white</item>
+        <item name="backgroundTint">@color/m1</item>
+        <item name="android:radius">4dp</item>
+    </style>
+    
+    <style name="g4button" parent="Widget.AppCompat.Button">
+        <item name="strokeColor">@color/g_line</item>
+        <item name="backgroundTint">@color/g4</item>
+        <item name="android:radius">4dp</item>
+    </style>
+
+
+
+
+
 </resources>
