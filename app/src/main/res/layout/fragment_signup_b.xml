@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.example.nongglenonggle.viewModel.SignupBViewModel" />
@@ -12,8 +14,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.SignupBFragment"
+    tools:context=".view.farmer.signup.SignupBFragment"
 >
 
     <ScrollView
@@ -150,7 +151,6 @@
             android:layout_height="wrap_content"
             android:hint="전화번호를 입력해주세요"
             android:backgroundTint="@color/g_line"
-            android:paddingLeft="16dp"
             android:paddingBottom="14dp"
             android:paddingTop="15dp"
             android:textColorHint="@color/g3"
@@ -184,9 +184,19 @@
             android:textSize="16sp"
             android:textColor="@color/white"
             android:layout_marginLeft="16dp"
-            android:background="@drawable/button_unactive"
+            android:background="@{viewModel.isinputComplete ? @drawable/button_active : @drawable/button_unactive}"
             />
     </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기호없이 번호만 입력해주세요."
+                android:layout_marginTop="8dp"
+                android:textColor="@color/error"
+                android:textSize="12sp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:visibility="@{viewModel.ishypenError ? View.VISIBLE : View.GONE}"
+                />
 
     <TextView
         android:layout_width="wrap_content"
@@ -243,9 +253,20 @@
             android:textSize="16sp"
             android:textColor="@color/white"
             android:layout_marginLeft="16dp"
-            android:background="@drawable/button_unactive"
+            android:background="@{viewModel.isverifyend ? @drawable/button_active : @drawable/button_unactive}"
             />
     </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인증번호가 맞지 않습니다."
+                android:layout_marginTop="8dp"
+                android:textColor="@color/error"
+                android:textSize="12sp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:visibility="@{viewModel.authcomplete ? View.GONE : View.VISIBLE}"
+                />
 
     <TextView
         android:layout_width="wrap_content"
@@ -260,22 +281,22 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="0dp"
             >
+
             <EditText
                 android:id="@+id/passwordbox1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/g_line"
+                android:fontFamily="@font/spoqahansansneo_regular"
                 android:hint="비밀번호를 입력해주세요"
                 android:paddingLeft="16dp"
-                android:paddingBottom="14dp"
                 android:paddingTop="15dp"
+                android:paddingBottom="14dp"
                 android:textColorHint="@color/g3"
-                android:textSize="16sp"
-                android:fontFamily="@font/spoqahansansneo_regular"
                 android:textCursorDrawable="@color/m1"
-                android:backgroundTint="@color/g_line"
-                />
+                android:textSize="16sp" />
             <ImageView
                 android:id="@+id/clearbtn4"
                 android:layout_width="wrap_content"
@@ -286,7 +307,16 @@
                 android:visibility="invisible"
                 />
         </FrameLayout>
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8~20자의 영문자,숫자만 사용 가능합니다."
+                android:textColor="@color/error"
+                android:textSize="12sp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:layout_marginTop="8dp"
+                android:visibility="@{viewModel.ispasswordavail ? View.INVISIBLE : View.VISIBLE}"
+                />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -326,6 +356,17 @@
             />
 
     </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="비밀번호가 일치하지 않습니다."
+                android:textColor="@color/error"
+                android:textSize="12sp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="75dp"
+                android:visibility="@{viewModel.ispasswordsame ? View.INVISIBLE : View.VISIBLE}"
+                />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
     <androidx.appcompat.widget.AppCompatButton

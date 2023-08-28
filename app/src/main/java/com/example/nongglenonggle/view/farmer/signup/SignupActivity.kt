@@ -1,4 +1,4 @@
-package com.example.nongglenonggle.view
+package com.example.nongglenonggle.view.farmer.signup
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

@@ -14,7 +14,7 @@
 
 
     android:layout_height="match_parent"
-    tools:context=".view.SignupDFragment"
+    tools:context=".view.farmer.signup.SignupDFragment"
     android:orientation="vertical"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp">

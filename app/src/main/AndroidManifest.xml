@@ -13,17 +13,17 @@
         android:theme="@style/Theme.Nongglenonggle"
         tools:targetApi="31">
         <activity
-            android:name=".view.NoticeActivity"
+            android:name=".view.farmer.notice.NoticeActivity"
             android:exported="false" />
         <activity
             android:name=".view.Dialog1"
             android:exported="false" />
         <activity
-            android:name=".view.SignupActivity"
+            android:name=".view.farmer.signup.SignupActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".view.LoginActivity"
+            android:name=".view.login.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".view.FirstActivity"

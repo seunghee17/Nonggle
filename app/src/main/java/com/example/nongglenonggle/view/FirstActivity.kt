@@ -1,20 +1,16 @@
 package com.example.nongglenonggle.view
 
-import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.GradientDrawable
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
 import androidx.activity.viewModels
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.ActivityFirstBinding
+import com.example.nongglenonggle.view.farmer.signup.SignupActivity
+import com.example.nongglenonggle.view.login.LoginActivity
 import com.example.nongglenonggle.viewModel.FirstViewModel
 import kotlinx.coroutines.*
 

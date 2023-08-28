@@ -1,24 +1,21 @@
-package com.example.nongglenonggle.view
+package com.example.nongglenonggle.view.farmer.signup
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.NotificationCompat.getColor
-import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.nongglenonggle.R
-import com.example.nongglenonggle.viewModel.SignupAViewModel
 import com.example.nongglenonggle.databinding.FragmentSignupABinding
+import com.example.nongglenonggle.viewModel.SignupAViewModel
 import com.example.nongglenonggle.viewModel.SignupViewModel
-
 
 class SignupAFragment : Fragment() {
     private lateinit var viewModel: SignupAViewModel
-    private lateinit var binding:FragmentSignupABinding
+    private lateinit var binding: FragmentSignupABinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +26,7 @@ class SignupAFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSignupABinding.inflate(inflater,container,false)
+        binding = FragmentSignupABinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(SignupAViewModel::class.java)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel

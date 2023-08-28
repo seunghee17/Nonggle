@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.nongglenonggle.R
-import com.example.nongglenonggle.view.SignupAFragment
-import com.example.nongglenonggle.view.SignupBFragment
-import com.example.nongglenonggle.view.SignupCFragment
-import com.example.nongglenonggle.view.SignupDFragment
+import com.example.nongglenonggle.view.farmer.signup.SignupAFragment
+import com.example.nongglenonggle.view.farmer.signup.SignupBFragment
+import com.example.nongglenonggle.view.farmer.signup.SignupCFragment
+import com.example.nongglenonggle.view.farmer.signup.SignupDFragment
 
 class SignupViewModel :ViewModel() {
 

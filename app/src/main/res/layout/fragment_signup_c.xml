@@ -12,7 +12,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.SignupCFragment"
+    tools:context=".view.farmer.signup.SignupCFragment"
     android:orientation="vertical"
     android:layout_marginRight="20dp"
     android:layout_marginLeft="20dp">

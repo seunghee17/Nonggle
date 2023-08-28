@@ -1,4 +1,4 @@
-package com.example.nongglenonggle.view
+package com.example.nongglenonggle.view.farmer.notice
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.example.nongglenonggle.view
+package com.example.nongglenonggle.view.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.viewModel.LoginViewModel
 import com.example.nongglenonggle.databinding.ActivityLoginBinding
+import com.example.nongglenonggle.view.farmer.signup.SignupActivity
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel : LoginViewModel by viewModels()
@@ -31,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         val signup = binding.signupTxt
-        val intent = Intent(this,SignupActivity::class.java)
+        val intent = Intent(this, SignupActivity::class.java)
         signup.setOnClickListener{startActivity(intent)}
     }
 }
