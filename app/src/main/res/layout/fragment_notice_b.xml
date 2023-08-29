@@ -1,158 +1,421 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.farmer.notice.noticeBFragment">
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.farmer.notice.noticeBFragment"
-    android:orientation="vertical">
+    >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="제목"
-        android:fontFamily="@font/spoqahansansneo_regular"
-        android:textColor="@color/g1"
-        android:textSize="14sp"
-        android:layout_marginTop="24dp"
-        android:layout_marginLeft="20dp"
-        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/nextBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="-16dp">
 
-    <EditText
-        android:id="@+id/title_edit"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:text="제목"
+                android:textColor="@color/g1"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/title_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="@color/g_line"
+                android:paddingLeft="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:text="공고글 제목을 입력해주세요."
+                android:textColor="@color/g3"
+                android:textCursorDrawable="@color/m1"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:text="작업기간"
+                android:textColor="@color/g1"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/datepicker1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/noticeeditbox"
+                android:drawableRight="@drawable/calendersize"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:paddingLeft="16dp"
+                android:paddingTop="15dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="14dp"
+                android:text="작업 시작 날짜를 선택해주세요."
+                android:textColor="@color/g3"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/datepicker2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/noticeeditbox"
+                android:drawableRight="@drawable/calendersize"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:paddingLeft="16dp"
+                android:paddingTop="15dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="14dp"
+                android:text="작업 종료 날짜를 선택해주세요."
+                android:textColor="@color/g3"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:text="작업내용"
+                android:textColor="@color/g1"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/notice_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/noticeeditbox"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="109dp"
+                android:text="업무 내용을 상세히 입력해주세요."
+                android:textColor="@color/g3"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:text="작업 이미지"
+                android:textColor="@color/g1"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:text="이미지는 참고용으로 이용됩니다. (최대 3장)"
+                android:textColor="@color/g3"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="96dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/imageupload" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="96dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/imageupload" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="96dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/imageupload" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:text="근무요일"
+                android:textColor="@color/g1"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="20dp"
+                android:spinnerMode="dropdown" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:text="근무시간"
+                android:textColor="@color/g1"
+                android:textSize="14sp" />
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                >
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/worker_time1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="시간입력"
+                    android:textColor="@color/g3"
+                    android:background="@drawable/typebox_style"
+                    android:textSize="16sp"
+                    android:paddingLeft="18.5dp"
+                    android:paddingRight="18.5dp"
+                    android:paddingTop="14.5dp"
+                    android:paddingBottom="14.5dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/spoqahansansneo_medium"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/worker_time2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="시간협의"
+                    android:textColor="@color/g3"
+                    android:background="@drawable/typebox_style"
+                    android:textSize="16sp"
+                    android:paddingLeft="18.5dp"
+                    android:paddingRight="18.5dp"
+                    android:paddingTop="14.5dp"
+                    android:paddingBottom="14.5dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/spoqahansansneo_medium"
+                    />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:text="재배품목"
+                android:textColor="@color/g1"
+                android:textSize="14sp" />
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/farmer_category1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="식량작물"
+                    android:textColor="@color/g3"
+                    android:background="@drawable/typebox_style"
+                    android:textSize="16sp"
+                    android:paddingLeft="18.5dp"
+                    android:paddingRight="18.5dp"
+                    android:paddingTop="14.5dp"
+                    android:paddingBottom="14.5dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/spoqahansansneo_medium"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/farmer_category2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="채소"
+                    android:textColor="@color/g3"
+                    android:background="@drawable/typebox_style"
+                    android:textSize="16sp"
+                    android:paddingLeft="33dp"
+                    android:paddingRight="33dp"
+                    android:paddingTop="14.5dp"
+                    android:paddingBottom="14.5dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/spoqahansansneo_medium"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/farmer_category3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="과수"
+                    android:textColor="@color/g3"
+                    android:background="@drawable/typebox_style"
+                    android:textSize="16sp"
+                    android:paddingLeft="33dp"
+                    android:paddingRight="33dp"
+                    android:paddingTop="14.5dp"
+                    android:paddingBottom="14.5dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/spoqahansansneo_medium"
+                    />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/farmer_category4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="특용작물"
+                    android:textColor="@color/g3"
+                    android:background="@drawable/typebox_style"
+                    android:textSize="16sp"
+                    android:paddingLeft="18.5dp"
+                    android:paddingRight="18.5dp"
+                    android:paddingTop="14.5dp"
+                    android:paddingBottom="14.5dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/spoqahansansneo_medium"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/farmer_category5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="화훼"
+                    android:textColor="@color/g3"
+                    android:background="@drawable/typebox_style"
+                    android:textSize="16sp"
+                    android:paddingLeft="33dp"
+                    android:paddingRight="33dp"
+                    android:paddingTop="14.5dp"
+                    android:paddingBottom="14.5dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/spoqahansansneo_medium"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/farmer_category6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="축산"
+                    android:textColor="@color/g3"
+                    android:background="@drawable/typebox_style"
+                    android:textSize="16sp"
+                    android:paddingLeft="33dp"
+                    android:paddingRight="33dp"
+                    android:paddingTop="14.5dp"
+                    android:paddingBottom="14.5dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/spoqahansansneo_medium"
+                    />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:weightSum="3"
+                android:layout_marginBottom="40dp"
+                >
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/farmer_category7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="농기계작업"
+                    android:textColor="@color/g3"
+                    android:background="@drawable/typebox_style"
+                    android:textSize="16sp"
+                    android:paddingLeft="18.5dp"
+                    android:paddingRight="18.5dp"
+                    android:paddingTop="14.5dp"
+                    android:paddingBottom="14.5dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/farmer_category8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="기타"
+                    android:textColor="@color/g3"
+                    android:background="@drawable/typebox_style"
+                    android:textSize="16sp"
+                    android:paddingLeft="33dp"
+                    android:paddingRight="33dp"
+                    android:paddingTop="14.5dp"
+                    android:paddingBottom="14.5dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/nextBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="4dp"
-        android:backgroundTint="@color/g_line"
-        android:text="공고글 제목을 입력해주세요."
-        android:textSize="16sp"
-        android:textColor="@color/g3"
-        android:paddingLeft="16dp"
+        android:stateListAnimator="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="다음"
         android:paddingTop="14dp"
-        android:paddingBottom="14dp"
-        android:textCursorDrawable="@color/m1"
+        android:paddingBottom="16dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:background="@color/unactive"
+        android:textColor="@color/white"
+        android:fontFamily="@font/spoqahansansneo_medium"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="작업기간"
-        android:fontFamily="@font/spoqahansansneo_regular"
-        android:textColor="@color/g1"
-        android:textSize="14sp"
-        android:layout_marginTop="24dp"
-        android:layout_marginLeft="20dp"
-        />
-    <EditText
-        android:id="@+id/datepicker1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/noticeeditbox"
-        android:text="작업 시작 날짜를 선택해주세요."
-        android:textSize="16sp"
-        android:fontFamily="@font/spoqahansansneo_regular"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="14dp"
-        android:paddingLeft="16dp"
-        android:textColor="@color/g3"
-        android:layout_marginTop="12dp"
-        android:drawableRight="@drawable/calendersize"
-        android:paddingRight="16dp"
-        />
-    <EditText
-        android:id="@+id/datepicker2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/noticeeditbox"
-        android:text="작업 종료 날짜를 선택해주세요."
-        android:textSize="16sp"
-        android:fontFamily="@font/spoqahansansneo_regular"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="14dp"
-        android:paddingLeft="16dp"
-        android:textColor="@color/g3"
-        android:layout_marginTop="12dp"
-        android:drawableRight="@drawable/calendersize"
-        android:paddingRight="16dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="작업내용"
-        android:fontFamily="@font/spoqahansansneo_regular"
-        android:textColor="@color/g1"
-        android:textSize="14sp"
-        android:layout_marginTop="24dp"
-        android:layout_marginLeft="20dp"
-        />
-    <EditText
-        android:id="@+id/notice_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/noticeeditbox"
-        android:text="업무 내용을 상세히 입력해주세요."
-        android:textSize="16sp"
-        android:fontFamily="@font/spoqahansansneo_regular"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="109dp"
-        android:paddingLeft="16dp"
-        android:textColor="@color/g3"
-        android:layout_marginTop="12dp"
-       />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="작업 이미지"
-        android:fontFamily="@font/spoqahansansneo_regular"
-        android:textColor="@color/g1"
-        android:textSize="14sp"
-        android:layout_marginTop="24dp"
-        android:layout_marginLeft="20dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="이미지는 참고용으로 이용됩니다. (최대 3장)"
-        android:fontFamily="@font/spoqahansansneo_regular"
-        android:textColor="@color/g3"
-        android:textSize="14sp"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="20dp"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="96dp"
-            android:src="@drawable/imageupload"
-            android:layout_weight="1"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="96dp"
-            android:src="@drawable/imageupload"
-            android:layout_weight="1"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="96dp"
-            android:src="@drawable/imageupload"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
