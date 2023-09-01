@@ -1,4 +1,4 @@
-package com.example.nongglenonggle.viewModel
+package com.example.nongglenonggle.viewModel.farmer.signup
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData

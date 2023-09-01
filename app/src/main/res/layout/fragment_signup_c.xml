@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.viewModel.SignupCViewModel" />
+            type="com.example.nongglenonggle.viewModel.farmer.signup.SignupCViewModel" />
     </data>
 
 
@@ -14,22 +14,25 @@
     android:layout_height="match_parent"
     tools:context=".view.farmer.signup.SignupCFragment"
     android:orientation="vertical"
-    android:layout_marginRight="20dp"
-    android:layout_marginLeft="20dp">
+    >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="회원가입"
         android:textSize="16sp"
-        android:fontFamily="@font/spoqahansansneo_regular"/>
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="12dp"
-        android:layout_marginBottom="32dp">
+        android:layout_marginBottom="32dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -79,12 +82,15 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/typebox_style">
+        android:background="@drawable/typebox_style"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <CheckBox
+                android:id="@+id/allcheckbox"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginLeft="16dp"
@@ -109,8 +115,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
         <CheckBox
+            android:id="@+id/checkbox1"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginLeft="16dp"
@@ -146,8 +155,11 @@
         android:id="@+id/service_agree"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
         <CheckBox
+            android:id="@+id/checkbox2"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginLeft="16dp"
@@ -196,8 +208,11 @@
         android:id="@+id/personalAgree"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
         <CheckBox
+            android:id="@+id/checkbox3"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginLeft="16dp"
@@ -245,8 +260,11 @@
         android:id="@+id/personalAgreenon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
         <CheckBox
+            android:id="@+id/checkbox4"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginLeft="16dp"
@@ -294,8 +312,11 @@
         android:id="@+id/comercialagree"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
         <CheckBox
+            android:id="@+id/checkbox5"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginLeft="16dp"
@@ -339,6 +360,24 @@
             android:layout_marginRight="16dp"
             />
     </LinearLayout>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/nextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stateListAnimator="@null"
+        android:text="다음"
+        android:paddingTop="14dp"
+        android:paddingBottom="16dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:background="@color/unactive"
+        android:textColor="@color/white"
+        android:fontFamily="@font/spoqahansansneo_medium"
+        />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

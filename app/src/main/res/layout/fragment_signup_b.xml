@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.viewModel.SignupBViewModel" />
+            type="com.example.nongglenonggle.viewModel.farmer.signup.SignupBViewModel" />
     </data>
 
 
@@ -296,6 +296,7 @@
                 android:paddingBottom="14dp"
                 android:textColorHint="@color/g3"
                 android:textCursorDrawable="@color/m1"
+                android:inputType="textPassword"
                 android:textSize="16sp" />
             <ImageView
                 android:id="@+id/clearbtn4"
@@ -343,6 +344,7 @@
             android:textSize="16sp"
             android:fontFamily="@font/spoqahansansneo_regular"
             android:textCursorDrawable="@color/m1"
+            android:inputType="textPassword"
             android:backgroundTint="@color/g_line"
             />
         <ImageView

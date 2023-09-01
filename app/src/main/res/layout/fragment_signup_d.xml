@@ -6,13 +6,11 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.viewModel.SignupDViewModel" />
+            type="com.example.nongglenonggle.viewModel.farmer.signup.SignupDViewModel" />
     </data>
 
 <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
-
-
     android:layout_height="match_parent"
     tools:context=".view.farmer.signup.SignupDFragment"
     android:orientation="vertical"
@@ -79,6 +77,17 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -118,8 +127,8 @@
         android:layout_marginTop="4dp"
         android:textColorHint="@color/g3"
         android:textSize="16sp"
+        android:focusable="false"
         android:fontFamily="@font/spoqahansansneo_regular"
-        android:textCursorDrawable="@color/m1"
         android:backgroundTint="@color/g_line"
         />
 
@@ -136,6 +145,7 @@
         android:textSize="16sp"
         android:fontFamily="@font/spoqahansansneo_regular"
         android:textCursorDrawable="@color/m1"
+        android:backgroundTint="@color/g_line"
         />
 
     <TextView
@@ -298,7 +308,8 @@
             />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-
+    </LinearLayout>
+    </ScrollView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

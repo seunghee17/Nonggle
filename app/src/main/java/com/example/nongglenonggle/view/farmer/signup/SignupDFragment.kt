@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.nongglenonggle.R
+import androidx.lifecycle.ViewModelProvider
+import com.example.nongglenonggle.databinding.FragmentSignupDBinding
+import com.example.nongglenonggle.viewModel.farmer.signup.SignupDViewModel
 
 class SignupDFragment : Fragment() {
+    private lateinit var viewModel: SignupDViewModel
+    private lateinit var binding: FragmentSignupDBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,8 +22,17 @@ class SignupDFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_signup_d, container, false)
+        binding = FragmentSignupDBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this).get(SignupDViewModel::class.java)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
 
 }

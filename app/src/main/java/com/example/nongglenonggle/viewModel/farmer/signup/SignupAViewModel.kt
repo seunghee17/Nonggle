@@ -1,6 +1,5 @@
-package com.example.nongglenonggle.viewModel
+package com.example.nongglenonggle.viewModel.farmer.signup
 
-import android.service.autofill.Transformation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

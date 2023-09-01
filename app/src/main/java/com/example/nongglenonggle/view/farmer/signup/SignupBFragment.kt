@@ -12,19 +12,23 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentSignupBBinding
-import com.example.nongglenonggle.viewModel.SignupBViewModel
-import com.example.nongglenonggle.viewModel.SignupViewModel
+import com.example.nongglenonggle.viewModel.farmer.signup.SignupBViewModel
+import com.example.nongglenonggle.viewModel.farmer.signup.SignupViewModel
+import com.example.nongglenonggle.viewModel.farmer.signup.SignupAuthViewModel
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class SignupBFragment : Fragment() {
     private lateinit var viewModel: SignupBViewModel
+    private lateinit var SignupviewModel : SignupAuthViewModel
     private lateinit var binding: FragmentSignupBBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +40,7 @@ class SignupBFragment : Fragment() {
     ): View?{
         binding = FragmentSignupBBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(SignupBViewModel::class.java)
+        SignupviewModel = ViewModelProvider(this).get(SignupAuthViewModel::class.java)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
@@ -64,17 +69,26 @@ class SignupBFragment : Fragment() {
         }
         //edittext1 -> 이름 입력란 포커싱 이벤트
         edittext1.setOnFocusChangeListener{
-            view,isFocus->
-            viewModel.setboxFocus(isFocus)
-            updateFocusColor(edittext1)
-            clearbtn1.visibility = if(viewModel.isFocus.value==true) View.VISIBLE else View.INVISIBLE
+                view,isFocus->
+            //비동기 코루틴 시작
+            viewModel.viewModelScope.launch(Dispatchers.IO){
+                val boxFocusResult =  viewModel.setboxFocus(isFocus)
+                viewModel.viewModelScope.launch(Dispatchers.Main) {
+                    updateFocusColor(edittext1)
+                    clearbtn1.visibility = if(viewModel.isFocus.value==true) View.VISIBLE else View.INVISIBLE
+                }
+                 }
         }
         //edittext2-> 전화번호 입력 오류 감지 색상 업데이트
         edittext2.setOnFocusChangeListener{
             view,isFocus ->
-            viewModel.setboxFocus(isFocus)
-            updateFocusColor(edittext2)
-            clearbtn2.visibility = if(viewModel.isFocus.value==true) View.VISIBLE else View.INVISIBLE
+            viewModel.viewModelScope.launch(Dispatchers.IO) {
+                viewModel.setboxFocus(isFocus)
+                viewModel.viewModelScope.launch(Dispatchers.Main) {
+                    updateFocusColor(edittext2)
+                    clearbtn2.visibility = if(viewModel.isFocus.value==true) View.VISIBLE else View.INVISIBLE
+                }
+            }
         }
         edittext2.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -93,10 +107,14 @@ class SignupBFragment : Fragment() {
 
         //edittext3 -> 인증번호 필드 포커싱
         edittext3.setOnFocusChangeListener{
-            view,isFocus ->
-            viewModel.setboxFocus(isFocus)
-            updateFocusColor(edittext3)
-            clearbtn3.visibility = if(viewModel.isFocus.value == true) View.VISIBLE else View.INVISIBLE
+                view,isFocus ->
+            viewModel.viewModelScope.launch(Dispatchers.IO) {
+                viewModel.setboxFocus(isFocus)
+                viewModel.viewModelScope.launch(Dispatchers.Main) {
+                    updateFocusColor(edittext3)
+                    clearbtn3.visibility = if(viewModel.isFocus.value==true) View.VISIBLE else View.INVISIBLE
+                }
+            }
         }
 
         //edittext3-> 버튼색상 변경을 위해
@@ -118,26 +136,38 @@ class SignupBFragment : Fragment() {
         binding.sendnum.setOnClickListener{
             val phonenum = "+821002020202"
             val callbacks = createVerificationCallbacks()
-            viewModel.startPhoneNumberVerificcation(phonenum, callbacks)
+            //viewModel.startPhoneNumberVerificcation(phonenum, callbacks)
+            viewModel.viewModelScope.launch(Dispatchers.IO) {
+                viewModel.startPhoneNumberVerificcation(phonenum, callbacks)
+
+            }
         }
 
         binding.confirmBtn.setOnClickListener {
-            viewModel.signInWithPhoneAuthCredential(binding.verifyid.text.toString())
+            //viewModel.signInWithPhoneAuthCredential(binding.verifyid.text.toString())
+            viewModel.viewModelScope.launch {
+                 viewModel.signInWithPhoneAuthCredential(binding.verifyid.text.toString())
+            }
         }
         viewModel.authcomplete.observe(viewLifecycleOwner){
             isAuthComplete->
             if(!isAuthComplete){
                 updateErrorColorAuth(edittext3)
             }else{
-                Toast.makeText(getActivity(), "인증성공", Toast.LENGTH_LONG).show()
+                //Toast.makeText(getActivity(), "인증성공", Toast.LENGTH_LONG).show()
                 updateSuccessColorAuth(edittext3)
             }
         }
-        
-        edittext4.setOnFocusChangeListener { view, isFocus ->
-            viewModel.setboxFocus(isFocus)
-            updateFocusColor(edittext4)
-            clearbtn4.visibility = if(viewModel.isFocus.value==true) View.VISIBLE else View.INVISIBLE
+
+        edittext4.setOnFocusChangeListener{
+                view,isFocus ->
+            viewModel.viewModelScope.launch(Dispatchers.IO) {
+                viewModel.setboxFocus(isFocus)
+                viewModel.viewModelScope.launch(Dispatchers.Main) {
+                    updateFocusColor(edittext4)
+                    clearbtn4.visibility = if(viewModel.isFocus.value==true) View.VISIBLE else View.INVISIBLE
+                }
+            }
         }
         edittext4.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -155,10 +185,17 @@ class SignupBFragment : Fragment() {
 
         edittext5.setOnFocusChangeListener{
             view,isFocus->
-            viewModel.setboxFocus(isFocus)
-            updateFocusColor(edittext5)
-            clearbtn5.visibility = if(viewModel.isFocus.value==true) View.VISIBLE else View.INVISIBLE
+            viewModel.viewModelScope.launch(Dispatchers.IO) {
+                viewModel.setboxFocus(isFocus)
+                viewModel.viewModelScope.launch(Dispatchers.Main) {
+                    updateFocusColor(edittext5)
+                    clearbtn5.visibility = if(viewModel.isFocus.value==true) View.VISIBLE else View.INVISIBLE
+                    viewModel.isNextBtnPrepare()
+                    updateTypeBackground(viewModel.iscomplete)
+                }
+            }
         }
+
         edittext5.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
@@ -167,8 +204,6 @@ class SignupBFragment : Fragment() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 viewModel.updatePwErrorSame(edittext4.text.toString(),p0.toString())
                 updatePWErrorSameColor(edittext5)
-                viewModel.onNextClick()
-                updateTypeBackground(viewModel.isClicked)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -185,8 +220,10 @@ class SignupBFragment : Fragment() {
         val verifyid = binding.verifyid
         val confirm = binding.confirmBtn
         val nextbtn=binding.nextBtn
+        val edittext1 = binding.name
         //다음버튼 누를때 화면전환 이벤트
         nextbtn.setOnClickListener{
+            //코루틴 사용할 수 있지 않을까?
             if(nextbtn.background is ColorDrawable)
             {
                 val currentColor = (nextbtn.background as ColorDrawable).color
@@ -195,6 +232,13 @@ class SignupBFragment : Fragment() {
                     viewModel.onNextbtnClick()
                 }
             }
+            val phoneNumber = binding.phnum.text.toString()
+            val phoneNumberFinal = "$phoneNumber@example.com"
+            val passWord = binding.passwordbox2.text.toString()
+            SignupviewModel.viewModelScope.launch(Dispatchers.IO) {
+                SignupviewModel.signUpWithEmailPasswordAndPhoneNumber(phoneNumberFinal,passWord,edittext1.text.toString())
+            }
+
         }
         viewModel.navigateToframentC.observe(viewLifecycleOwner){
                 navigate->
@@ -261,9 +305,9 @@ class SignupBFragment : Fragment() {
         EditText.backgroundTintList = resources.getColorStateList(errorLine)
     }
     //다음버튼 배경색
-    private fun updateTypeBackground(isClicked:Boolean)
+    private fun updateTypeBackground(isComplete:Boolean)
     {
-        val drawables = if(isClicked) resources.getColor(R.color.m1) else resources.getColor(R.color.unactive)
+        val drawables = if(isComplete) resources.getColor(R.color.m1) else resources.getColor(R.color.unactive)
         binding.nextBtn.setBackgroundColor(drawables)
     }
 

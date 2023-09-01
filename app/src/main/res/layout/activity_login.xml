@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.viewModel.LoginViewModel" />
+            type="com.example.nongglenonggle.viewModel.login.LoginViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -43,7 +43,6 @@
                     android:paddingLeft="16dp"
                     android:fontFamily="@font/spoqahansansneo_regular"
                     android:backgroundTint="@android:color/transparent"
-                    android:inputType="textPassword"
                     android:textCursorDrawable="@color/m1"
                     />
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -106,6 +105,21 @@
                 />
         </FrameLayout>
 
+        <TextView
+            android:id="@+id/loginerror"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디와 비밀번호가 맞지 않습니다. 다시 한 번 확인해주세요."
+            app:layout_constraintTop_toBottomOf="@id/passwordBox"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="12sp"
+            android:textColor="@color/error"
+            android:layout_marginTop="8dp"
+            android:visibility="@{viewModel.loginAvailable ? View.GONE : View.VISIBLE}"
+            />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginVerify"
             android:layout_width="match_parent"
@@ -115,7 +129,9 @@
             app:layout_constraintBottom_toTopOf="@id/select"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loginerror"
             android:layout_marginBottom="20dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/logincomplete"
             android:gravity="center"
             android:text="로그인"
