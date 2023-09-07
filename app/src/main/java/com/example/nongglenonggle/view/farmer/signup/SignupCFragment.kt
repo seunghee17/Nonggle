@@ -58,6 +58,7 @@ class SignupCFragment : Fragment() {
                 }
             }
         }
+
         viewModel.navigateToframentD.observe(viewLifecycleOwner)
         {
             navigate->

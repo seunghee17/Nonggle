@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.nongglenonggle.R
+import com.example.nongglenonggle.view.farmer.signup.AddressSearchFragment
 import com.example.nongglenonggle.view.farmer.signup.SignupAFragment
 import com.example.nongglenonggle.view.farmer.signup.SignupBFragment
 import com.example.nongglenonggle.view.farmer.signup.SignupCFragment
@@ -17,7 +18,7 @@ class SignupViewModel :ViewModel() {
 
    //보여지는 첫화면 세팅
     init{
-       currentFragment.value = SignupAFragment()
+       currentFragment.value = SignupDFragment()
     }
 
     fun navigateTo(fragment: Fragment){

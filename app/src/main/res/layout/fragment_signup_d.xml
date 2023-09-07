@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.example.nongglenonggle.viewModel.farmer.signup.SignupDViewModel" />
     </data>
 
 <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/linearlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.farmer.signup.SignupDFragment"
@@ -116,21 +117,43 @@
         android:textSize="14sp"
         android:text="농가 주소"
         />
-    <EditText
-        android:id="@+id/addressSearch"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="본인의 농가 도로명 주소를 검색해주세요."
-        android:paddingLeft="16dp"
-        android:paddingBottom="14dp"
-        android:paddingTop="15dp"
-        android:layout_marginTop="4dp"
-        android:textColorHint="@color/g3"
-        android:textSize="16sp"
-        android:focusable="false"
-        android:fontFamily="@font/spoqahansansneo_regular"
-        android:backgroundTint="@color/g_line"
-        />
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/addressSearch"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="본인의 농가 도로명 주소를 검색해주세요."
+            android:paddingLeft="16dp"
+            android:paddingBottom="14dp"
+            android:paddingTop="15dp"
+            android:layout_marginTop="4dp"
+            android:textColorHint="@color/g3"
+            android:textSize="16sp"
+            android:focusable="false"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:backgroundTint="@color/g_line"
+            />
+        <TextView
+            android:id="@+id/firstaddressTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:paddingBottom="14dp"
+            android:paddingTop="15dp"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            android:paddingLeft="16dp"
+            android:text="@{viewModel.addressResult}"
+            android:visibility="@{viewModel.textviewVisible ? View.VISIBLE : View.INVISIBLE}"
+            android:textColor="@color/black"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
         android:id="@+id/addressdetail"
