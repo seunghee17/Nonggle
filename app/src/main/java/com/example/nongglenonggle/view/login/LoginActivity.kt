@@ -5,10 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.viewModelScope
+import com.example.nongglenonggle.MainActivity
 import com.example.nongglenonggle.R
-import com.example.nongglenonggle.viewModel.LoginViewModel
+import com.example.nongglenonggle.viewModel.login.LoginViewModel
 import com.example.nongglenonggle.databinding.ActivityLoginBinding
 import com.example.nongglenonggle.view.farmer.signup.SignupActivity
+import com.example.nongglenonggle.view.worker.home.WorkerMainActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel : LoginViewModel by viewModels()
@@ -18,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
         binding= DataBindingUtil.setContentView(this,R.layout.activity_login)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        val loginbtn = binding.loginVerify
 
         //비밀번호 칸 포커스 여부시 활성화
         val passwordText = binding.passwordTxt
@@ -29,6 +36,33 @@ class LoginActivity : AppCompatActivity() {
         val idTxt = binding.idTxt
         idTxt.setOnFocusChangeListener{
             _, hasFocus -> viewModel.setIDEditTextFocused(hasFocus)
+        }
+
+        loginbtn.setOnClickListener {
+            val phnum = idTxt.text.toString()
+            val email = "$phnum@example.com"
+            viewModel.viewModelScope.launch {
+                val loginResult = withContext(Dispatchers.IO){
+                    viewModel.loginWithEmailAndPassword(email,passwordText.text.toString())
+                }
+                //로그인 성공시
+                if(loginResult){
+                    //로그인 성공하고 farmer회원일때
+                    if(viewModel.isFarmer.value==true)
+                    {
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                    //로그인 성공하고 구인자 회원일때
+                    else
+                    {
+                        val intent = Intent(this@LoginActivity, WorkerMainActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+                //로그인 실패시
+
+            }
         }
 
         val signup = binding.signupTxt

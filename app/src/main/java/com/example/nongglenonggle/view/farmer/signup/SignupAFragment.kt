@@ -10,8 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentSignupABinding
-import com.example.nongglenonggle.viewModel.SignupAViewModel
-import com.example.nongglenonggle.viewModel.SignupViewModel
+import com.example.nongglenonggle.viewModel.farmer.signup.SignupAViewModel
+import com.example.nongglenonggle.viewModel.farmer.signup.SignupViewModel
 
 class SignupAFragment : Fragment() {
     private lateinit var viewModel: SignupAViewModel

@@ -1,22 +1,19 @@
 package com.example.nongglenonggle.view.farmer.signup
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
 import com.example.nongglenonggle.R
-import com.example.nongglenonggle.viewModel.SignupViewModel
+import com.example.nongglenonggle.viewModel.farmer.signup.SignupViewModel
 import com.example.nongglenonggle.databinding.ActivitySignupBinding
+import com.example.nongglenonggle.viewModel.farmer.signup.SignupDViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
 class SignupActivity : AppCompatActivity() {
-    val acctivityScope= CoroutineScope(Dispatchers.Main)
+    val activityScope= CoroutineScope(Dispatchers.Main)
     private val viewModel : SignupViewModel by viewModels()
     private lateinit var binding: ActivitySignupBinding
 
@@ -39,4 +36,8 @@ class SignupActivity : AppCompatActivity() {
         }
 
     }
+//    fun updateAddressData(data:String){
+//        val viewModelD = ViewModelProvider(this).get(SignupDViewModel::class.java)
+//        viewModelD.updateData(data)
+//    }
 }

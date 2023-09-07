@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.viewModel.SignupViewModel" />
+            type="com.example.nongglenonggle.viewModel.farmer.signup.SignupViewModel" />
     </data>
 
 <LinearLayout
