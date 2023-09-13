@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.viewModel.farmer.signup.SignupDViewModel" />
+            type="com.example.nongglenonggle.viewModel.farmer.signup.SignupViewModel" />
     </data>
 
 <androidx.appcompat.widget.LinearLayoutCompat
@@ -150,7 +150,7 @@
             android:layout_marginTop="4dp"
             android:paddingLeft="16dp"
             android:text="@{viewModel.addressResult}"
-            android:visibility="@{viewModel.textviewVisible ? View.VISIBLE : View.INVISIBLE}"
+            android:visibility="@{viewModel.isdata ? View.VISIBLE : View.INVISIBLE}"
             android:textColor="@color/black"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>

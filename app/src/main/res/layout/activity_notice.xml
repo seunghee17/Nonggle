@@ -10,12 +10,33 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="42dp"
+    android:gravity="center"
     >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/공고글작성"
+        android:textColor="@color/black"
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:textSize="16sp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        />
+
 <com.google.android.material.tabs.TabLayout
     android:id="@+id/tablayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".view.farmer.notice.NoticeActivity"
+    app:tabRippleColor="@android:color/transparent"
+    app:tabSelectedTextColor="@color/m1"
+    app:tabTextAppearance="@style/customTablayout"
+    app:tabTextColor="@color/g3"
+    app:tabIndicatorColor="@color/m1"
+    app:tabIndicatorHeight="2dp"
+    app:tabGravity="fill"
+
     >
 
     <com.google.android.material.tabs.TabItem

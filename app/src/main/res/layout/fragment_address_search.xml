@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.viewModel.farmer.signup.AddressSearchViewModel" />
+            type="com.example.nongglenonggle.viewModel.farmer.signup.SignupViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
