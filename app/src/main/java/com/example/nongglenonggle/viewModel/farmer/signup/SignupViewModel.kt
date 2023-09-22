@@ -6,14 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.R
+import com.example.nongglenonggle.usecase.UpdateAddressUseCase
 import com.example.nongglenonggle.view.farmer.signup.AddressSearchFragment
 import com.example.nongglenonggle.view.farmer.signup.SignupAFragment
 import com.example.nongglenonggle.view.farmer.signup.SignupBFragment
 import com.example.nongglenonggle.view.farmer.signup.SignupCFragment
 import com.example.nongglenonggle.view.farmer.signup.SignupDFragment
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SignupViewModel :ViewModel() {
+@HiltViewModel
+class SignupViewModel @Inject constructor(private val updateAddressUseCase: UpdateAddressUseCase) :ViewModel() {
 
     //현재 fragment 읽어오기
     val currentFragment= MutableLiveData<Fragment>()
@@ -29,9 +33,14 @@ class SignupViewModel :ViewModel() {
 
     fun updateAddress(data:String)
     {
+//        viewModelScope.launch {
+//            _isdata.postValue(true)
+//            _addressResult.postValue(data)
+//        }
         viewModelScope.launch {
-            _isdata.postValue(true)
-            _addressResult.postValue(data)
+            updateAddressUseCase.execute(data)
+            _addressResult.value = updateAddressUseCase.getAddress()
+            _isdata.value = updateAddressUseCase.hasData()
         }
     }
 

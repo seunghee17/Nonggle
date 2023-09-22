@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.farmer.notice.noticeBFragment">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.nongglenonggle.viewModel.farmer.notice.FarmerNoticeViewModel" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -39,13 +45,16 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="20dp"
-                android:backgroundTint="@color/g_line"
+                android:backgroundTint="@{viewModel.fragmentBState ? @color/m1 : @color/g_line}"
                 android:paddingLeft="16dp"
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
-                android:text="공고글 제목을 입력해주세요."
-                android:textColor="@color/g3"
+                android:hint="공고글 제목을 입력해주세요."
+                android:textColor="@color/black"
+                android:textColorHint="@color/g3"
                 android:textCursorDrawable="@color/m1"
+                android:drawableRight="@drawable/xcircle"
+                android:paddingRight="16dp"
                 android:textSize="16sp" />
 
             <TextView
@@ -72,9 +81,11 @@
                 android:paddingTop="15dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="14dp"
-                android:text="작업 시작 날짜를 선택해주세요."
-                android:textColor="@color/g3"
-                android:textSize="16sp" />
+                android:hint="작업 시작 날짜를 선택해주세요."
+                android:textColor="@color/black"
+                android:textColorHint="@color/g3"
+                android:textSize="16sp"
+                android:clickable="true"/>
 
             <EditText
                 android:id="@+id/datepicker2"
@@ -90,9 +101,12 @@
                 android:paddingTop="15dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="14dp"
-                android:text="작업 종료 날짜를 선택해주세요."
-                android:textColor="@color/g3"
-                android:textSize="16sp" />
+                android:hint="작업 종료 날짜를 선택해주세요."
+                android:textColor="@color/black"
+                android:textColorHint="@color/g3"
+                android:textSize="16sp"
+                android:enabled="false"
+                android:clickable="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -116,8 +130,9 @@
                 android:paddingLeft="16dp"
                 android:paddingTop="16dp"
                 android:paddingBottom="109dp"
-                android:text="업무 내용을 상세히 입력해주세요."
-                android:textColor="@color/g3"
+                android:hint="업무 내용을 상세히 입력해주세요."
+                android:textColor="@color/black"
+                android:textColorHint="@color/g3"
                 android:textSize="16sp" />
 
             <TextView
@@ -178,12 +193,35 @@
                 android:textSize="14sp" />
 
             <Spinner
+                android:id="@+id/day_select_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginRight="20dp"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"
+                android:background="@drawable/background_spinner"
+                />
+
+            <EditText
+                android:id="@+id/day_select_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="@color/g_line"
+                android:hint="@string/근무요일을"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:textColor="@color/black"
+                android:textColorHint="@color/g3"
+                android:textSize="16sp"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                android:visibility="visible"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -206,8 +244,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="시간입력"
-                    android:textColor="@color/g3"
-                    android:background="@drawable/typebox_style"
+                    android:textColor="@{viewModel.workerTime1 ? @color/m1 : @color/g3}"
+                    android:background="@{viewModel.workerTime1 ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:textSize="16sp"
                     android:paddingLeft="18.5dp"
                     android:paddingRight="18.5dp"
@@ -222,8 +260,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="시간협의"
-                    android:textColor="@color/g3"
-                    android:background="@drawable/typebox_style"
+                    android:textColor="@{viewModel.workerTime2 ? @color/m1 : @color/g3}"
+                    android:background="@{viewModel.workerTime2 ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:textSize="16sp"
                     android:paddingLeft="18.5dp"
                     android:paddingRight="18.5dp"
@@ -243,60 +281,61 @@
                 android:text="재배품목"
                 android:textColor="@color/g1"
                 android:textSize="14sp" />
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="12dp"
+                android:layout_height="43dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/farmer_category1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="식량작물"
-                    android:textColor="@color/g3"
-                    android:background="@drawable/typebox_style"
-                    android:textSize="16sp"
-                    android:paddingLeft="18.5dp"
-                    android:paddingRight="18.5dp"
-                    android:paddingTop="14.5dp"
-                    android:paddingBottom="14.5dp"
                     android:layout_marginRight="16dp"
                     android:layout_weight="1"
+                    android:background="@{viewModel.category ? @drawable/typebox_active : @drawable/typebox_style}"
                     android:fontFamily="@font/spoqahansansneo_medium"
-                    />
+                    android:paddingLeft="18.5dp"
+                    android:paddingTop="14.5dp"
+                    android:paddingRight="18.5dp"
+                    android:paddingBottom="14.5dp"
+                    android:text="식량작물"
+                    android:textColor="@{viewModel.category ? @color/m1 : @color/g3}"
+                    android:textSize="16sp" />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/farmer_category2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="채소"
-                    android:textColor="@color/g3"
-                    android:background="@drawable/typebox_style"
-                    android:textSize="16sp"
-                    android:paddingLeft="33dp"
-                    android:paddingRight="33dp"
-                    android:paddingTop="14.5dp"
-                    android:paddingBottom="14.5dp"
                     android:layout_marginRight="16dp"
                     android:layout_weight="1"
+                    android:textColor="@{viewModel.category ? @color/m1 : @color/g3}"
+                    android:background="@{viewModel.category ? @drawable/typebox_active : @drawable/typebox_style}"
                     android:fontFamily="@font/spoqahansansneo_medium"
-                    />
+                    android:paddingLeft="33dp"
+                    android:paddingTop="14.5dp"
+                    android:paddingRight="33dp"
+                    android:paddingBottom="14.5dp"
+                    android:text="채소"
+                    android:textSize="16sp" />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/farmer_category3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="과수"
-                    android:textColor="@color/g3"
-                    android:background="@drawable/typebox_style"
-                    android:textSize="16sp"
-                    android:paddingLeft="33dp"
-                    android:paddingRight="33dp"
-                    android:paddingTop="14.5dp"
-                    android:paddingBottom="14.5dp"
                     android:layout_weight="1"
+                    android:textColor="@{viewModel.category ? @color/m1 : @color/g3}"
+                    android:background="@{viewModel.category ? @drawable/typebox_active : @drawable/typebox_style}"
                     android:fontFamily="@font/spoqahansansneo_medium"
-                    />
+                    android:paddingLeft="33dp"
+                    android:paddingTop="14.5dp"
+                    android:paddingRight="33dp"
+                    android:paddingBottom="14.5dp"
+                    android:text="과수"
+                    android:textSize="16sp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -310,8 +349,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="특용작물"
-                    android:textColor="@color/g3"
-                    android:background="@drawable/typebox_style"
+                    android:textColor="@{viewModel.category ? @color/m1 : @color/g3}"
+                    android:background="@{viewModel.category ? @drawable/typebox_active : @drawable/typebox_style}"
                     android:textSize="16sp"
                     android:paddingLeft="18.5dp"
                     android:paddingRight="18.5dp"
@@ -326,8 +365,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="화훼"
-                    android:textColor="@color/g3"
-                    android:background="@drawable/typebox_style"
+                    android:textColor="@{viewModel.category ? @color/m1 : @color/g3}"
+                    android:background="@{viewModel.category ? @drawable/typebox_active : @drawable/typebox_style}"
                     android:textSize="16sp"
                     android:paddingLeft="33dp"
                     android:paddingRight="33dp"
@@ -342,8 +381,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="축산"
-                    android:textColor="@color/g3"
-                    android:background="@drawable/typebox_style"
+                    android:textColor="@{viewModel.category ? @color/m1 : @color/g3}"
+                    android:background="@{viewModel.category ? @drawable/typebox_active : @drawable/typebox_style}"
                     android:textSize="16sp"
                     android:paddingLeft="33dp"
                     android:paddingRight="33dp"
@@ -368,8 +407,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="농기계작업"
-                    android:textColor="@color/g3"
-                    android:background="@drawable/typebox_style"
+                    android:textColor="@{viewModel.category ? @color/m1 : @color/g3}"
+                    android:background="@{viewModel.category ? @drawable/typebox_active : @drawable/typebox_style}"
                     android:textSize="16sp"
                     android:paddingLeft="18.5dp"
                     android:paddingRight="18.5dp"
@@ -383,8 +422,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="기타"
-                    android:textColor="@color/g3"
-                    android:background="@drawable/typebox_style"
+                    android:textColor="@{viewModel.category ? @color/m1 : @color/g3}"
+                    android:background="@{viewModel.category ? @drawable/typebox_active : @drawable/typebox_style}"
                     android:textSize="16sp"
                     android:paddingLeft="33dp"
                     android:paddingRight="33dp"

@@ -117,7 +117,7 @@
             android:textSize="12sp"
             android:textColor="@color/error"
             android:layout_marginTop="8dp"
-            android:visibility="@{viewModel.loginAvailable ? View.GONE : View.VISIBLE}"
+            android:visibility="gone"
             />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -129,7 +129,6 @@
             app:layout_constraintBottom_toTopOf="@id/select"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/loginerror"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/logincomplete"

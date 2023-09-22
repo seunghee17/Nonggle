@@ -23,7 +23,14 @@ class LoginViewModel(private val loginModel: LoginModel) : ViewModel() {
     private val _isIDEditTextFocused = MutableLiveData<Boolean>()
     private val _showdeleteImage = MutableLiveData<Boolean>()
     //로그인 상태 업데이트를 위해
-    var isLoginAvailable=false
+    //var isLoginAvailable=false
+    private val _isLoginAvailable=MutableLiveData<Boolean>()
+    val isLoginAvailable:LiveData<Boolean>
+        get() = _isLoginAvailable
+
+    init{
+        _isLoginAvailable.value = false
+    }
 
     //사용자 이름을 받아오기 위한 변수
     val userName=MutableLiveData<String?>()
@@ -60,7 +67,7 @@ class LoginViewModel(private val loginModel: LoginModel) : ViewModel() {
                     viewModelScope.launch{
                         withContext(Dispatchers.Main){
                             //view에 상태 전달용
-                            isLoginAvailable = true
+                            _isLoginAvailable.value = true
                         }
                     }
                     //로그인 성공시 uid값 가져오기
@@ -78,10 +85,10 @@ class LoginViewModel(private val loginModel: LoginModel) : ViewModel() {
                 }
                 //로그인 실패시
                 else{
-                    isLoginAvailable=false
+                    _isLoginAvailable.value=false
                 }
             }
-        return isLoginAvailable
+        return _isLoginAvailable.value!!
     }
 
     fun fetchFarmerInfo(uid:String){

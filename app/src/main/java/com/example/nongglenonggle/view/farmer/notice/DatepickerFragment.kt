@@ -1,60 +1,60 @@
 package com.example.nongglenonggle.view.farmer.notice
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import com.example.nongglenonggle.R
+import com.example.nongglenonggle.databinding.FragmentDatepickerBinding
+import com.example.nongglenonggle.databinding.FragmentNoticeBBinding
+import com.example.nongglenonggle.viewModel.farmer.notice.FarmerNoticeViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import java.util.Calendar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DatepickerFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class DatepickerFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class DatepickerFragment : BottomSheetDialogFragment() {
+    private val viewModel: FarmerNoticeViewModel by activityViewModels()
+    private var _binding : FragmentDatepickerBinding? = null
+    private val binding get() = _binding!!
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_datepicker, container, false)
+        _binding = FragmentDatepickerBinding.inflate(inflater,container,false)
+        binding.lifecycleOwner = this
+
+        return binding.root
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DatepickerFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DatepickerFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.closebtn.setOnClickListener{
+            dismiss()
+        }
+        binding.confirmbtn.setOnClickListener{
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            viewModel.DateList.add(year)
+            viewModel.DateList.add(month)
+            viewModel.DateList.add(day)
+        }
     }
+
+
 }

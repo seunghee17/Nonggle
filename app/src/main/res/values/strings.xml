@@ -2,4 +2,54 @@
     <string name="공고글작성">공고글작성</string>
     <string name="app_name">농글농글</string>
     <string name="hello_blank_fragment">heelo</string>
+
+    <string name="필요인원">필요인원</string>
+    <string name="필요인원설명">필요인원수를 숫자만 입력해주세요. 예) 3</string>
+
+    <string name="근무요일을">근무 요일을 입력해주세요. 예)월수금</string>
+    <string name="근무요일spinner">근무 요일을 선택해주세요.</string>
+
+    <string name="연령대">연령대</string>
+    <string name="시작연령대">시작연령대</string>
+    <string name="끝연령대">끝연령대</string>
+
+    <string name="성별">성별</string>
+    <string name="여">여</string>
+    <string name="남">남</string>
+    <string name="성별무관">성별무관</string>
+
+    <string name="급여">급여</string>
+    <string name="급여sub">※ 현재 최저 시급은 9160원 입니다.</string>
+    <string name="일급">일급</string>
+    <string name="시급">시급</string>
+    <string name="급여협의">급여협의</string>
+
+    <string name="고용형태">고용형태</string>
+    <string name="체류형">체류형</string>
+    <string name="출퇴근형">출퇴근형</string>
+    <string name="계약직">계약직</string>
+
+    <string name="가능경력">지원가능한 경력</string>
+    <string name="비경험자">비경험자</string>
+    <string name="경험자">경험자</string>
+    <string name="경력무관">경력무관</string>
+
+    <string name="자격증">자격증</string>
+    <string name="필요있음">필요있음</string>
+    <string name="필요없음">필요없음</string>
+
+    <string name="숙소제공">숙소제공</string>
+    <string name="제공있음">제공있음</string>
+    <string name="제공없음">제공없음</string>
+    <string name="식사제공">식사제공</string>
+    <string name="공고글_마감설정">공고글 마감설정</string>
+    <string name="마감기한">마감기한 설정</string>
+    <string name="상시모집">상시모집</string>
+
+    <string name="우대사항">우대사항</string>
+    <string name="추가우대">추가로 우대사항이 있다면 입력해주세요.</string>
+
+    <string name="확인사항">확인사항</string>
+    <string name="조건1">근로계약서 작성을 약속합니다.</string>
+    <string name="조건2">개인소득 및 4대보험 신고를 약속합니다.</string>
 </resources>

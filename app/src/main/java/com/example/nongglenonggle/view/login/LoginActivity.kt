@@ -3,6 +3,7 @@ package com.example.nongglenonggle.view.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.viewModelScope
@@ -45,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
                 val loginResult = withContext(Dispatchers.IO){
                     viewModel.loginWithEmailAndPassword(email,passwordText.text.toString())
                 }
+                Log.e("dsds","sdfsdf")
                 //로그인 성공시
                 if(loginResult){
                     //로그인 성공하고 farmer회원일때
@@ -52,6 +54,7 @@ class LoginActivity : AppCompatActivity() {
                     {
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
+                        Log.e("dsds","성공")
                     }
                     //로그인 성공하고 구인자 회원일때
                     else
@@ -61,7 +64,13 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
                 //로그인 실패시
-
+                else
+                {
+                    //Log.e("dsds","실패")
+                    //임시적으로
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
 

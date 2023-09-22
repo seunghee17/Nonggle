@@ -7,9 +7,10 @@ import androidx.databinding.DataBindingUtil
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.viewModel.farmer.signup.SignupViewModel
 import com.example.nongglenonggle.databinding.ActivitySignupBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-
+@AndroidEntryPoint
 class SignupActivity : AppCompatActivity() {
     val activityScope= CoroutineScope(Dispatchers.Main)
     private val viewModel : SignupViewModel by viewModels()
