@@ -92,6 +92,10 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
     val _isIdWrong = MutableLiveData<Boolean>()
     val isIdWrong:LiveData<Boolean> = _isIdWrong
 
+    //아이디 버튼 활성화
+    val _IdBtnActive = MutableLiveData<Boolean>(false)
+    val IdBtnActive:LiveData<Boolean> = _IdBtnActive
+
     //인증번호 포커싱
     val _isFocusVerification = MutableLiveData<Boolean>()
     val isFocusVerification:LiveData<Boolean> = _isFocusVerification
@@ -170,16 +174,16 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
         }
     }
 
-    fun updateHireType():Boolean {
+    fun updateHireType() {
         _isHire.value = !(_isHire.value ?: false)
+        _isWorker.value = !(_isHire.value!!)
         _isActiveNext.value = _isHire.value
-        Log.e("fuck", "${isHire.value}")
-        return isHire.value ?: false
 
     }
 
     fun updateWorkerType() {
         _isWorker.value= !(_isWorker.value ?: false)
+        _isHire.value= !(_isWorker.value!!)
         _isActiveNext.value = _isWorker.value
     }
 
@@ -187,7 +191,6 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
    //보여지는 첫화면 세팅
     init{
        _isdata.postValue(false)
-       //_isHire.postValue(false)
        _isWorker.postValue(false)
        _isActiveNext.postValue(false)
        _isFocusName.postValue(false)

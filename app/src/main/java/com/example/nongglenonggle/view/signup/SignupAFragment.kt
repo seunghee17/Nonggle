@@ -20,8 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class SignupAFragment : BaseFragment<FragmentSignupABinding>(R.layout.fragment_signup_a) {
     private val viewModel: SignupViewModel by activityViewModels()
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -36,12 +34,11 @@ class SignupAFragment : BaseFragment<FragmentSignupABinding>(R.layout.fragment_s
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
 
         //구인자 회원유형 선택시
         binding.farmerType.setOnClickListener{
             viewModel.updateHireType()
-            Log.e("tan", "${viewModel.isHire.value}")
-            Log.e("tan", "${viewModel.isActiveNext.value}")
         }
 
 

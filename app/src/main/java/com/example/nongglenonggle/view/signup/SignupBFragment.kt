@@ -1,13 +1,20 @@
 package com.example.nongglenonggle.view.signup
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.R
@@ -20,7 +27,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_signup_b) {
-    private lateinit var viewModel: SignupViewModel
+    private val viewModel: SignupViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -30,14 +37,12 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
         savedInstanceState: Bundle?
     ): View?{
         val view= super.onCreateView(inflater, container, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
-
-
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
         //edittext들 재정의
         val edittext1 = binding.name
         val edittext2 = binding.phnum
@@ -65,12 +70,13 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
         //edittext1 -> 이름 입력란 포커싱 이벤트
         edittext1.setOnFocusChangeListener{
                 view,isFocus->
-            viewModel._isFocusName.postValue(true)
+            viewModel._isFocusName.postValue(isFocus)
         }
         //edittext2-> 전화번호 입력 오류 감지 색상 업데이트
         edittext2.setOnFocusChangeListener{
                 view,isFocus ->
-            viewModel._isFocusId.postValue(true)
+            viewModel._isFocusId.postValue(isFocus)
+            viewModel._IdBtnActive.value = true
         }
         edittext2.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -78,13 +84,15 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(p0.toString().contains("-"))
-                {
+                if(p0.toString().contains("-")) {
                     viewModel._isIdWrong.postValue(true)
+                    val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.error))
+                    edittext2.backgroundTintList = colorStateList
                 }
-                else
-                {
+                else {
                     viewModel._isIdWrong.postValue(false)
+                    val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.m1))
+                    edittext2.backgroundTintList = colorStateList
                 }
             }
 
@@ -95,7 +103,7 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
         //edittext3 -> 인증번호 필드 포커싱
         edittext3.setOnFocusChangeListener{
                 view,isFocus ->
-            viewModel._isFocusVerification.postValue(true)
+            viewModel._isFocusVerification.postValue(isFocus)
         }
 
 
@@ -104,19 +112,52 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
             val phonenum = "+821002020202"
             //val callbacks = createVerificationCallbacks()
             //viewModel.startPhoneNumberVerificcation(phonenum, callbacks)
-            viewModel.viewModelScope.launch(Dispatchers.IO) {
-                viewModel.startPhoneNumberVerification(phonenum)
-
+//            viewModel.viewModelScope.launch(Dispatchers.IO) {
+//                viewModel.startPhoneNumberVerification(phonenum)
+//            }
+            viewModel.viewModelScope.launch{
+                val ioJob = launch(Dispatchers.IO){
+                    viewModel.startPhoneNumberVerification(phonenum)
+                }
+                val uiJob = launch(Dispatchers.Main) {
+                    //Toast.makeText(getActivity(),"인증번호가 발송되었습니다.",Toast.LENGTH_SHORT).show()
+                    binding.verifyTxt.setText(R.string._분안에)
+                    val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.m1))
+                    binding.verifyTxt.setTextColor(colorStateList)
+                    val typeface = ResourcesCompat.getFont(requireContext(),R.font.spoqahansansneo_regular)
+                    binding.verifyTxt.typeface = typeface
+                    binding.verifyTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP,12f)
+                    binding.verifyTxt.visibility = View.VISIBLE
+                }
             }
         }
 
 
         binding.confirmBtn.setOnClickListener {
             //viewModel.signInWithPhoneAuthCredential(binding.verifyid.text.toString())
+            if(viewModel.authcomplete.value == false)
+            {
+                val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.m1))
+                edittext3.backgroundTintList = colorStateList
+                binding.verifyTxt.visibility = View.GONE
+            }
+            else{
+                val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.error))
+                edittext3.backgroundTintList = colorStateList
+                binding.verifyTxt.visibility = View.VISIBLE
+                binding.verifyTxt.setText(R.string.인증번호가_불일치)
+                val colorStatetxt = ColorStateList.valueOf(resources.getColor(R.color.error))
+                binding.verifyTxt.setTextColor(colorStatetxt)
+                val typeface = ResourcesCompat.getFont(requireContext(),R.font.spoqahansansneo_regular)
+                binding.verifyTxt.typeface = typeface
+                binding.verifyTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP,12f)
+                binding.verifyTxt.visibility = View.VISIBLE
+            }
             viewModel.viewModelScope.launch {
                 viewModel.signInWithPhoneAuthCredential(binding.verifyid.text.toString())
             }
         }
+
         //필요한가?->필요없을듯
 //        viewModel.authcomplete.observe(viewLifecycleOwner){
 //            isAuthComplete->
@@ -130,7 +171,7 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
 
         edittext4.setOnFocusChangeListener{
                 view,isFocus ->
-            viewModel._isFocusPW.postValue(true)
+            viewModel._isFocusPW.postValue(isFocus)
         }
 
         //비밀번호 입력형식 오류 판단
@@ -144,9 +185,13 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
                 {
                     if(s !in 'A'..'Z' && s !in 'a'..'z' && s !in '0'..'9'){
                         viewModel._isPWWrong.postValue(true)
+                        val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.error))
+                        edittext2.backgroundTintList = colorStateList
                     }
                     else{
                         viewModel._isPWWrong.postValue(false)
+                        val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.m1))
+                        edittext2.backgroundTintList = colorStateList
                     }
                 }
             }
@@ -157,11 +202,7 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
 
         edittext5.setOnFocusChangeListener{
                 view,isFocus->
-            viewModel._isFocusPW2.postValue(true)
-            if(isFocus == false)
-            {
-                viewModel._isFocusPW2.postValue(false)
-            }
+            viewModel._isFocusPW2.postValue(isFocus)
         }
 
         edittext5.addTextChangedListener(object : TextWatcher {
@@ -173,10 +214,14 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
                 if(p0.toString() == edittext4.text.toString())
                 {
                     viewModel._isPWSame.postValue(true)
+                    val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.error))
+                    edittext2.backgroundTintList = colorStateList
                 }
                 else
                 {
                     viewModel._isPWSame.postValue(false)
+                    val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.m1))
+                    edittext2.backgroundTintList = colorStateList
                 }
             }
 
