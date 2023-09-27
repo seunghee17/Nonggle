@@ -66,7 +66,7 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
 
 
     //구인자유형 선택
-    val _isHire = MutableLiveData<Boolean>()
+    val _isHire = MutableLiveData<Boolean>(false)
     val isHire:LiveData<Boolean> = _isHire
 
     //구직자 유형 선택
@@ -170,9 +170,12 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
         }
     }
 
-    fun updateHireType() {
+    fun updateHireType():Boolean {
         _isHire.value = !(_isHire.value ?: false)
         _isActiveNext.value = _isHire.value
+        Log.e("fuck", "${isHire.value}")
+        return isHire.value ?: false
+
     }
 
     fun updateWorkerType() {
@@ -184,7 +187,7 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
    //보여지는 첫화면 세팅
     init{
        _isdata.postValue(false)
-       _isHire.postValue(false)
+       //_isHire.postValue(false)
        _isWorker.postValue(false)
        _isActiveNext.postValue(false)
        _isFocusName.postValue(false)

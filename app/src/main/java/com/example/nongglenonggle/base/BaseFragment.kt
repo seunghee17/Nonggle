@@ -18,6 +18,7 @@ abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutRes
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //DataBinding 객체 초기화
         _binding = DataBindingUtil.inflate(inflater,layoutRes,container, false)
         _binding?.lifecycleOwner = viewLifecycleOwner
         return _binding?.root

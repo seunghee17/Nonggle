@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.base.BaseFragment
@@ -38,8 +40,10 @@ class SignupAFragment : BaseFragment<FragmentSignupABinding>(R.layout.fragment_s
         //구인자 회원유형 선택시
         binding.farmerType.setOnClickListener{
             viewModel.updateHireType()
-            Log.e("state", "${viewModel.isHire.value}")
+            Log.e("tan", "${viewModel.isHire.value}")
+            Log.e("tan", "${viewModel.isActiveNext.value}")
         }
+
 
         //구직자 회원유형 선택시
         binding.workerType.setOnClickListener{
@@ -48,17 +52,13 @@ class SignupAFragment : BaseFragment<FragmentSignupABinding>(R.layout.fragment_s
 
         val nextbtn=binding.nextBtn
         //다음버튼 누를때 동작을 하는 코드
-//        nextbtn.setOnClickListener{
-//            viewModel.isActiveNext.observe(viewLifecycleOwner){
-//                istrue ->
-//                moveToNext()
-//            }
-//        }
-        if(viewModel.isActiveNext.value == true){
-            nextbtn.setOnClickListener{
+        nextbtn.setOnClickListener{
+            viewModel.isActiveNext.observe(viewLifecycleOwner){
+                istrue ->
                 moveToNext()
             }
         }
+
     }
 
     fun moveToNext()
