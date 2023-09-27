@@ -26,9 +26,10 @@
             android:fontFamily="@font/spoqahansansneo_medium"
             android:text="LOGO"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/kakaologin_btn"/>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/kakaologin_btn"
             android:layout_width="match_parent"

@@ -11,7 +11,7 @@ import com.example.nongglenonggle.MainActivity
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.viewModel.login.LoginViewModel
 import com.example.nongglenonggle.databinding.ActivityLoginBinding
-import com.example.nongglenonggle.view.farmer.signup.SignupActivity
+import com.example.nongglenonggle.view.signup.SignupActivity
 import com.example.nongglenonggle.view.worker.home.WorkerMainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

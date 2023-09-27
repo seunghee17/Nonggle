@@ -7,13 +7,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.viewModel.farmer.signup.SignupViewModel" />
+            type="com.example.nongglenonggle.viewModel.signup.SignupViewModel" />
     </data>
 
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.farmer.signup.SignupActivity"
+    tools:context=".view.signup.SignupActivity"
     android:orientation="vertical">
 
     <LinearLayout

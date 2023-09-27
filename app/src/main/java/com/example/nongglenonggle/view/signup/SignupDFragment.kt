@@ -1,4 +1,4 @@
-package com.example.nongglenonggle.view.farmer.signup
+package com.example.nongglenonggle.view.signup
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,17 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
+import com.example.nongglenonggle.R
+import com.example.nongglenonggle.base.BaseFragment
+import com.example.nongglenonggle.databinding.FragmentSignupCBinding
 import com.example.nongglenonggle.databinding.FragmentSignupDBinding
-import com.example.nongglenonggle.viewModel.farmer.signup.SignupViewModel
+import com.example.nongglenonggle.viewModel.signup.SignupViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class SignupDFragment : Fragment() {
-    private val viewModel:SignupViewModel by activityViewModels()
-
-    
-    private lateinit var binding: FragmentSignupDBinding
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
+@AndroidEntryPoint
+class SignupDFragment : BaseFragment<FragmentSignupDBinding>(R.layout.fragment_signup_d) {
+    private lateinit var viewModel: SignupViewModel
+  override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
@@ -24,11 +25,10 @@ class SignupDFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSignupDBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+        val view= super.onCreateView(inflater, container, savedInstanceState)
+        viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
 
-        return binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -6,14 +6,14 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.viewModel.farmer.signup.SignupViewModel" />
+            type="com.example.nongglenonggle.viewModel.signup.SignupViewModel" />
     </data>
 
 <androidx.appcompat.widget.LinearLayoutCompat
     android:id="@+id/linearlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.farmer.signup.SignupDFragment"
+    tools:context=".view.signup.SignupDFragment"
     android:orientation="vertical"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp">

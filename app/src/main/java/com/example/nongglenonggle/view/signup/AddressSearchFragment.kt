@@ -1,4 +1,4 @@
-package com.example.nongglenonggle.view.farmer.signup
+package com.example.nongglenonggle.view.signup
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,14 +10,14 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.activityViewModels
 import com.example.nongglenonggle.databinding.FragmentAddressSearchBinding
-import com.example.nongglenonggle.viewModel.farmer.signup.SignupViewModel
+import com.example.nongglenonggle.viewModel.signup.SignupViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
 class AddressSearchFragment : Fragment() {
-    private val viewModel:SignupViewModel by activityViewModels()
+    private val viewModel: SignupViewModel by activityViewModels()
     private lateinit var binding: FragmentAddressSearchBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,21 +1,20 @@
-package com.example.nongglenonggle.view.farmer.signup
+package com.example.nongglenonggle.view.signup
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.nongglenonggle.R
+import com.example.nongglenonggle.base.BaseFragment
 import com.example.nongglenonggle.databinding.FragmentSignupCBinding
-import com.example.nongglenonggle.viewModel.farmer.signup.SignupCViewModel
-import com.example.nongglenonggle.viewModel.farmer.signup.SignupViewModel
+import com.example.nongglenonggle.viewModel.signup.SignupViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class SignupCFragment : Fragment() {
-    private lateinit var viewModel: SignupCViewModel
-    private lateinit var binding: FragmentSignupCBinding
+@AndroidEntryPoint
+class SignupCFragment : BaseFragment<FragmentSignupCBinding>(R.layout.fragment_signup_c) {
+    private lateinit var viewModel: SignupViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,12 +24,10 @@ class SignupCFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSignupCBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(SignupCViewModel::class.java)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
+        val view= super.onCreateView(inflater, container, savedInstanceState)
+        viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
 
-       return binding.root
+       return view
 
 
     }
@@ -54,22 +51,11 @@ class SignupCFragment : Fragment() {
             {
                 val currentColor = (nextbtn.background as ColorDrawable).color
                 if(currentColor==resources.getColor(R.color.m1)){
-                    viewModel.onNextbtnClick()
+                    moveToNext()
                 }
             }
         }
 
-        viewModel.navigateToframentD.observe(viewLifecycleOwner)
-        {
-            navigate->
-            if(navigate)
-            {
-                viewModel.doneNavigate()
-                val fragmentD = SignupDFragment()
-                val signupViewModel: SignupViewModel by activityViewModels()
-                signupViewModel.navigateTo(fragmentD)
-            }
-        }
         //전체 선택 컨트롤용
         allcheckbox.setOnClickListener{
             val isChecked = allcheckbox.isChecked
@@ -116,9 +102,12 @@ class SignupCFragment : Fragment() {
     }
     private fun checkConditions(){
         if((binding.checkbox1.isChecked&&binding.checkbox2.isChecked&&binding.checkbox3.isChecked) || binding.allcheckbox.isChecked){
-            viewModel.ToNextFragment()
             updateTypeBackground(viewModel.isComplete)
         }
+    }
+    fun moveToNext()
+    {
+        replaceFragment(SignupDFragment(), R.id.signup_fragmentcontainer)
     }
 
 }

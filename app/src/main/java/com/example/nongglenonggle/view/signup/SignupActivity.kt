@@ -1,36 +1,41 @@
-package com.example.nongglenonggle.view.farmer.signup
+package com.example.nongglenonggle.view.signup
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.example.nongglenonggle.R
-import com.example.nongglenonggle.viewModel.farmer.signup.SignupViewModel
+import com.example.nongglenonggle.base.BaseActivity
+import com.example.nongglenonggle.viewModel.signup.SignupViewModel
 import com.example.nongglenonggle.databinding.ActivitySignupBinding
+import com.example.nongglenonggle.view.FirstActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 @AndroidEntryPoint
-class SignupActivity : AppCompatActivity() {
+class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_signup) {
     val activityScope= CoroutineScope(Dispatchers.Main)
     private val viewModel : SignupViewModel by viewModels()
-    private lateinit var binding: ActivitySignupBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= DataBindingUtil.setContentView(this,R.layout.activity_signup)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-         //이전버튼 정의
-        val backBtn = binding.backBtn
 
-        //viewmodel을 관찰해서 activity위에 띄운다
-        viewModel.currentFragment.observe(this) {
-            fragment->
+         //이전버튼 정의
+        binding.backBtn.setOnClickListener{
+            val intent = Intent(this, FirstActivity::class.java)
+            startActivity(intent)
+        }
+
+
+        if(savedInstanceState == null)
+        {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.signup_fragmentcontainer,fragment)
-                .addToBackStack(null) //이전fragment로 돌아갈 수 있다
+                .replace(binding.signupFragmentcontainer.id,SignupAFragment())
+                .addToBackStack(null)
                 .commit()
         }
 

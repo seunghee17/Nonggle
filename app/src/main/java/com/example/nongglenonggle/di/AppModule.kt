@@ -17,5 +17,5 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUpdateAddressUseCase(repository: AddressRepository):UpdateAddressUseCase = UpdateAddressUseCase(repository)
+    fun provideUpdateAddressUseCase(repository: AddressRepository): UpdateAddressUseCase = UpdateAddressUseCase(repository)
 }

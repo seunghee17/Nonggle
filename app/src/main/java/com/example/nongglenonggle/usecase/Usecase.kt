@@ -9,7 +9,7 @@ abstract class Usecase<in Params, out Result> {
 
 class UpdateAddressUseCase @Inject constructor(
     private val repository: AddressRepository
-):Usecase<String, Unit>()
+): Usecase<String, Unit>()
 {
     override suspend fun execute(data: String) {
         repository.updateAddress(data)

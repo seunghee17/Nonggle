@@ -7,14 +7,14 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.viewModel.farmer.signup.SignupBViewModel" />
+            type="com.example.nongglenonggle.viewModel.signup.SignupViewModel" />
     </data>
 
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.farmer.signup.SignupBFragment"
+    tools:context=".view.signup.SignupBFragment"
 >
 
     <ScrollView
@@ -118,7 +118,7 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/spoqahansansneo_regular"
                 android:textCursorDrawable="@color/m1"
-                android:backgroundTint="@color/g_line"
+                android:backgroundTint="@{viewModel.isFocusName() ? @color/m1 : @color/g_line}"
                 />
         <ImageView
             android:id="@+id/clearbtn1"
@@ -127,7 +127,7 @@
             android:src="@drawable/xcircle"
             android:layout_gravity="right|center"
             android:layout_marginRight="16dp"
-            android:visibility="invisible"
+            android:visibility="@{viewModel.isFocusName() ? View.VISIBLE : View.GONE}"
             />
     </FrameLayout>
     <TextView
@@ -150,7 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="전화번호를 입력해주세요"
-            android:backgroundTint="@color/g_line"
+            android:backgroundTint="@{viewModel.isFoucsId() ? @color/m1 : @color/g_line}"
             android:paddingBottom="14dp"
             android:paddingTop="15dp"
             android:textColorHint="@color/g3"
@@ -172,7 +172,7 @@
             android:layout_alignBottom="@id/phnum"
             android:layout_toStartOf="@id/sendnum"
             android:layout_alignTop="@id/phnum"
-            android:visibility="invisible"
+            android:visibility="@{viewModel.isFoucsId() ? View.VISIBLE : View.GONE}"
             />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/sendnum"
@@ -184,7 +184,7 @@
             android:textSize="16sp"
             android:textColor="@color/white"
             android:layout_marginLeft="16dp"
-            android:background="@{viewModel.isinputComplete ? @drawable/button_active : @drawable/button_unactive}"
+            android:background="@{viewModel.isFoucsId() ? @drawable/button_active : @drawable/button_unactive}"
             />
     </RelativeLayout>
             <TextView
@@ -195,7 +195,7 @@
                 android:textColor="@color/error"
                 android:textSize="12sp"
                 android:fontFamily="@font/spoqahansansneo_regular"
-                android:visibility="@{viewModel.ishypenError ? View.VISIBLE : View.GONE}"
+                android:visibility="@{viewModel.isIdWrong() ? View.VISIBLE : View.GONE}"
                 />
 
     <TextView
@@ -230,7 +230,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_weight="1"
-            android:backgroundTint="@color/g_line"
+            android:backgroundTint="@{viewModel.isFocusVerification() ? @color/m1 : @color/g_line}"
             />
         <ImageView
             android:id="@+id/clearbtn3"
@@ -241,7 +241,7 @@
             android:layout_alignBottom="@id/verifyid"
             android:layout_toStartOf="@id/confirmBtn"
             android:layout_alignTop="@id/verifyid"
-            android:visibility="invisible"
+            android:visibility="@{viewModel.isFocusVerification() ? View.VISIBLE : View.GONE}"
             />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/confirmBtn"
@@ -253,7 +253,7 @@
             android:textSize="16sp"
             android:textColor="@color/white"
             android:layout_marginLeft="16dp"
-            android:background="@{viewModel.isverifyend ? @drawable/button_active : @drawable/button_unactive}"
+            android:background="@{viewModel.isFocusVerification() ? @drawable/button_active : @drawable/button_unactive}"
             />
     </RelativeLayout>
 
@@ -288,7 +288,7 @@
                 android:id="@+id/passwordbox1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:backgroundTint="@color/g_line"
+                android:backgroundTint="@{viewModel.isFocusPW() ? @color/m1 : @color/g_line}"
                 android:fontFamily="@font/spoqahansansneo_regular"
                 android:hint="비밀번호를 입력해주세요"
                 android:paddingLeft="16dp"
@@ -305,7 +305,7 @@
                 android:src="@drawable/xcircle"
                 android:layout_gravity="right|center"
                 android:layout_marginRight="16dp"
-                android:visibility="invisible"
+                android:visibility="@{viewModel.isFocusPW() ? View.VISIBLE : View.GONE}"
                 />
         </FrameLayout>
             <TextView
@@ -316,7 +316,7 @@
                 android:textSize="12sp"
                 android:fontFamily="@font/spoqahansansneo_regular"
                 android:layout_marginTop="8dp"
-                android:visibility="@{viewModel.ispasswordavail ? View.INVISIBLE : View.VISIBLE}"
+                android:visibility="@{viewModel.isPWWrong() ? View.VISIBLE : View.GONE}"
                 />
     <TextView
         android:layout_width="wrap_content"
@@ -345,8 +345,7 @@
             android:fontFamily="@font/spoqahansansneo_regular"
             android:textCursorDrawable="@color/m1"
             android:inputType="textPassword"
-            android:backgroundTint="@color/g_line"
-            />
+            android:backgroundTint="@{viewModel.isFocusPW2() ? @color/m1 : @color/g_line}" />
         <ImageView
             android:id="@+id/clearbtn5"
             android:layout_width="wrap_content"
@@ -354,7 +353,7 @@
             android:src="@drawable/xcircle"
             android:layout_gravity="right|center"
             android:layout_marginRight="16dp"
-            android:visibility="invisible"
+            android:visibility="@{viewModel.isFocusPW2() ? View.VISIBLE : View.GONE}"
             />
 
     </FrameLayout>
@@ -367,7 +366,7 @@
                 android:fontFamily="@font/spoqahansansneo_regular"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="75dp"
-                android:visibility="@{viewModel.ispasswordsame ? View.INVISIBLE : View.VISIBLE}"
+                android:visibility="@{viewModel.isPWSame() ? View.GONE : View.VISIBLE}"
                 />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
@@ -385,7 +384,7 @@
         android:paddingBottom="16dp"
         android:gravity="center"
         android:textSize="16sp"
-        android:background="@color/unactive"
+        android:background="@{viewModel.isPWSame() ? @color/m1 : @color/unactive}"
         android:textColor="@color/white"
         android:fontFamily="@font/spoqahansansneo_medium"
         />

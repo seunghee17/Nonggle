@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.ActivityFirstBinding
-import com.example.nongglenonggle.view.farmer.signup.SignupActivity
+import com.example.nongglenonggle.view.signup.SignupActivity
 import com.example.nongglenonggle.view.login.LoginActivity
 import com.example.nongglenonggle.viewModel.FirstViewModel
 import kotlinx.coroutines.*

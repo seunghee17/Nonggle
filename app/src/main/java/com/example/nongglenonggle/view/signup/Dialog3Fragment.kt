@@ -1,4 +1,4 @@
-package com.example.nongglenonggle.view.farmer.signup
+package com.example.nongglenonggle.view.signup
 
 import android.app.AlertDialog
 import android.app.Dialog

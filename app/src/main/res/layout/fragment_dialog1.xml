@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.farmer.signup.Dialog1Fragment"
+    tools:context=".view.signup.Dialog1Fragment"
     android:layout_gravity="center">
 
     <androidx.constraintlayout.widget.ConstraintLayout

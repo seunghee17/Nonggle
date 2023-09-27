@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class FarmerNoticeViewModel : ViewModel() {
+
+class FarmerNoticeViewModel: ViewModel() {
     private val _isClick1 = MutableLiveData<Boolean>()
     val isClick1:LiveData<Boolean> = _isClick1
 
@@ -42,6 +43,8 @@ class FarmerNoticeViewModel : ViewModel() {
 
     //시작날짜 저장용
     var DateList : MutableList<Int> = mutableListOf()
+
+
 
 
     fun setActiveButton()

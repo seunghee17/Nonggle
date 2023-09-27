@@ -1,4 +1,4 @@
-package com.example.nongglenonggle.view.farmer.signup
+package com.example.nongglenonggle.view.signup
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -12,10 +12,10 @@ import androidx.fragment.app.DialogFragment
 import com.example.nongglenonggle.R
 import java.lang.IllegalStateException
 
-class Dialog2Fragment : DialogFragment() {
 
+class Dialog4Fragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.fragment_dialog2,null)
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.fragment_dialog4,null)
         val closebtn = dialogView.findViewById<ImageView>(R.id.closebtn)
         closebtn.setOnClickListener{
             dismiss()
@@ -24,5 +24,4 @@ class Dialog2Fragment : DialogFragment() {
             .setView(dialogView)
             .create()
     }
-
 }
