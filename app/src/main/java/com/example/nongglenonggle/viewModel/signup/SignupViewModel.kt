@@ -47,10 +47,6 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
     override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
         this.verificationId = verificationId
     }
-
-    //현재 fragment 읽어오기
-    val currentFragment= MutableLiveData<Fragment>()
-
     //도로명 주소 변수 정의
     val _addressResult = MutableLiveData<String>()
     val addressResult:LiveData<String>
@@ -124,6 +120,9 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
 
     var isComplete = false
         private set
+
+    val _cstepActive = MutableLiveData<Boolean>(false)
+    val cstepActive:LiveData<Boolean> = _cstepActive
 
     fun startPhoneNumberVerification(phonenum:String)
     {
@@ -223,15 +222,4 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
             }
         }
     }
-
-
-    fun navigateToAddressFragment(){
-        currentFragment.value = AddressSearchFragment()
-    }
-    fun navigateToDFragment()
-    {
-        currentFragment.value = SignupDFragment()
-    }
-
-
 }

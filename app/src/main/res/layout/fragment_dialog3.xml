@@ -53,7 +53,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                >
+                android:layout_marginBottom="40dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -62,7 +62,8 @@
                     android:textSize="14sp"
                     android:layout_gravity="left"
                     android:gravity="left"
-                    />
+                    android:text="@string/약관3"
+                    android:lineSpacingExtra="5sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </ScrollView>

@@ -8,16 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Button
-import androidx.appcompat.widget.AppCompatButton
-import androidx.databinding.adapters.AdapterViewBindingAdapter.OnNothingSelected
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.example.nongglenonggle.R
-import com.example.nongglenonggle.databinding.FragmentNoticeABinding
 import com.example.nongglenonggle.databinding.FragmentNoticeBBinding
 import com.example.nongglenonggle.view.adapter.SpinnerAdapter
-import com.example.nongglenonggle.viewModel.farmer.notice.FarmerNoticeViewModel
+import com.example.nongglenonggle.viewModel.farmer.FarmerNoticeViewModel
 
 class noticeBFragment : Fragment() {
     private var _binding : FragmentNoticeBBinding? = null

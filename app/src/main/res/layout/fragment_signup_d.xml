@@ -14,9 +14,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.signup.SignupDFragment"
-    android:orientation="vertical"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp">
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,14 +22,18 @@
         android:layout_marginTop="10dp"
         android:text="회원가입"
         android:textSize="16sp"
-        android:fontFamily="@font/spoqahansansneo_regular"/>
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="12dp"
-        android:layout_marginBottom="32dp">
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -79,15 +81,17 @@
     </LinearLayout>
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -169,6 +173,8 @@
         android:fontFamily="@font/spoqahansansneo_regular"
         android:textCursorDrawable="@color/m1"
         android:backgroundTint="@color/g_line"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         />
 
     <TextView
@@ -333,6 +339,22 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
     </LinearLayout>
     </ScrollView>
-
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/nextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stateListAnimator="@null"
+        android:text="@string/가입완료"
+        android:paddingTop="14dp"
+        android:paddingBottom="16dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:background="@color/m1"
+        android:textColor="@color/white"
+        android:fontFamily="@font/spoqahansansneo_medium" />
 </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignupDFragment : BaseFragment<FragmentSignupDBinding>(R.layout.fragment_signup_d) {
-    private lateinit var viewModel: SignupViewModel
+    private val viewModel: SignupViewModel by activityViewModels()
   override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -26,17 +26,16 @@ class SignupDFragment : BaseFragment<FragmentSignupDBinding>(R.layout.fragment_s
         savedInstanceState: Bundle?
     ): View? {
         val view= super.onCreateView(inflater, container, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
-
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
         val addressSearch = binding.addressSearch
 
         addressSearch.setOnClickListener{
-            viewModel.navigateToAddressFragment()
+            moveToNext()
         }
 
         viewModel.addressResult.observe(viewLifecycleOwner){
@@ -48,11 +47,9 @@ class SignupDFragment : BaseFragment<FragmentSignupDBinding>(R.layout.fragment_s
 
 
 
-
-
-
     }
-
-
-
+    fun moveToNext()
+    {
+        replaceFragment(AddressSearchFragment(), R.id.signup_fragmentcontainer)
+    }
 }

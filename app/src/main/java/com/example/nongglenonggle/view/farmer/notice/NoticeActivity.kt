@@ -4,13 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.ActivityNoticeBinding
-import com.example.nongglenonggle.viewModel.farmer.notice.FarmerNoticeViewModel
+import com.example.nongglenonggle.viewModel.farmer.FarmerNoticeViewModel
 import com.google.android.material.tabs.TabLayout
-import kotlin.reflect.KMutableProperty1
 
 class NoticeActivity : AppCompatActivity() {
     private var _binding : ActivityNoticeBinding? = null

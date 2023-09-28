@@ -186,12 +186,12 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
                     if(s !in 'A'..'Z' && s !in 'a'..'z' && s !in '0'..'9'){
                         viewModel._isPWWrong.postValue(true)
                         val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.error))
-                        edittext2.backgroundTintList = colorStateList
+                        edittext4.backgroundTintList = colorStateList
                     }
                     else{
                         viewModel._isPWWrong.postValue(false)
                         val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.m1))
-                        edittext2.backgroundTintList = colorStateList
+                        edittext4.backgroundTintList = colorStateList
                     }
                 }
             }
@@ -214,14 +214,14 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
                 if(p0.toString() == edittext4.text.toString())
                 {
                     viewModel._isPWSame.postValue(true)
-                    val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.error))
-                    edittext2.backgroundTintList = colorStateList
+                    val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.m1))
+                    edittext5.backgroundTintList = colorStateList
                 }
                 else
                 {
                     viewModel._isPWSame.postValue(false)
-                    val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.m1))
-                    edittext2.backgroundTintList = colorStateList
+                    val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.error))
+                    edittext5.backgroundTintList = colorStateList
                 }
             }
 

@@ -1,4 +1,4 @@
-package com.example.nongglenonggle.viewModel.farmer.notice
+package com.example.nongglenonggle.viewModel.farmer
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

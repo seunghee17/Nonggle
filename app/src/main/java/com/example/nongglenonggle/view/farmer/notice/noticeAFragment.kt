@@ -5,13 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentNoticeABinding
-import com.example.nongglenonggle.viewModel.farmer.notice.FarmerNoticeViewModel
+import com.example.nongglenonggle.viewModel.farmer.FarmerNoticeViewModel
 
 class noticeAFragment : Fragment() {
     private var _binding : FragmentNoticeABinding? = null

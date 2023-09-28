@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.example.nongglenonggle.viewModel.signup.SignupViewModel" />
@@ -64,18 +65,19 @@
             android:fontFamily="@font/spoqahansansneo_regular"
             android:textColor="@color/white"
             android:gravity="center"
-            android:layout_marginRight="10dp"
             />
+
         <TextView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="18dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/stepcircleun"
-            android:text="3"
-            android:textSize="14sp"
             android:fontFamily="@font/spoqahansansneo_regular"
-            android:textColor="@color/m1"
             android:gravity="center"
-            />
+            android:text="3"
+            android:textColor="@color/m1"
+            android:textSize="14sp"
+            android:visibility="@{viewModel.isHire() ? View.VISIBLE : View.GONE}"/>
 
     </LinearLayout>
 
@@ -276,7 +278,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(필수)"
+            android:text="(선택)"
             android:textSize="14sp"
             android:layout_marginLeft="16dp"
             android:layout_marginBottom="15.5dp"
@@ -328,7 +330,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(필수)"
+            android:text="(선택)"
             android:textSize="14sp"
             android:layout_marginLeft="16dp"
             android:layout_marginBottom="15.5dp"
@@ -369,12 +371,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:stateListAnimator="@null"
-        android:text="다음"
+        android:text="@{viewModel.isHire ? @string/다음 : @string/가입완료}"
         android:paddingTop="14dp"
         android:paddingBottom="16dp"
         android:gravity="center"
         android:textSize="16sp"
-        android:background="@color/unactive"
+        android:background="@{viewModel.cstepActive ? @color/m1 : @color/unactive}"
         android:textColor="@color/white"
         android:fontFamily="@font/spoqahansansneo_medium"
         />
