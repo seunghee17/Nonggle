@@ -1,18 +1,33 @@
 package com.example.nongglenonggle.viewModel.farmer
 
+import android.app.Activity
+import android.content.Context
+import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 
 class FarmerNoticeViewModel: ViewModel() {
-    private val _isClick1 = MutableLiveData<Boolean>()
+    //이름칸 감지
+    val _isClick1 = MutableLiveData<Boolean>()
     val isClick1:LiveData<Boolean> = _isClick1
 
-    private val _isClick2 = MutableLiveData<Boolean>()
+    //폰번호 입력 감지
+    val _isClick2 = MutableLiveData<Boolean>()
     val isClick2:LiveData<Boolean> = _isClick2
 
-    private val _isClick3 = MutableLiveData<Boolean>()
+    //도로명 주소 받아오기
+    val _AddressFromWeb = MutableLiveData<String?>()
+    val AddressFromWeb:LiveData<String?> = _AddressFromWeb
+
+    //받아온 도로명 주소 표시
+    val _isAddressVisible = MutableLiveData<Boolean>()
+    val isAddressVisible:LiveData<Boolean> = _isAddressVisible
+
+    //상세주소 focus용
+    val _isClick3 = MutableLiveData<Boolean>()
     val isClick3:LiveData<Boolean> = _isClick3
 
     //다음버튼 활성화(모든 fragment 공통)
@@ -23,11 +38,9 @@ class FarmerNoticeViewModel: ViewModel() {
     private val _setFragment = MutableLiveData<Boolean>()
     val setFragment:LiveData<Boolean> = _setFragment
 
-    //다음 탭 인지를 위한 변수
-    val switchTab = MutableLiveData<Boolean>()
 
     //fragmentB에서 이렇게 해보겠음
-    private val _fragmentBState = MutableLiveData<Boolean>()
+    val _fragmentBState = MutableLiveData<Boolean>()
     val fragmentBState:LiveData<Boolean> = _fragmentBState
 
     //worker_time1용
@@ -43,6 +56,13 @@ class FarmerNoticeViewModel: ViewModel() {
 
     //시작날짜 저장용
     var DateList : MutableList<Int> = mutableListOf()
+
+    fun loadAddressData(context:Context){
+        val sharedPreferences = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
+        val addressData = sharedPreferences.getString("addressData",null)
+        _AddressFromWeb.value=addressData
+        Log.e("love","${AddressFromWeb.value}")
+    }
 
 
 
@@ -76,28 +96,9 @@ class FarmerNoticeViewModel: ViewModel() {
         _category.value = false
     }
 
-    fun changeToActive()
-    {
-        _fragmentBState.value = !(_fragmentBState.value ?: false)
-    }
 
-    fun setFirst()
-    {
-        _fragmentBState.value = false
-    }
 
-    fun changeToActive1()
-    {//이름박스
-        _isClick1.value = !(isClick1.value ?: false)
-    }
-    fun changeToActive2()
-    {//연락처
-        _isClick2.value = !(isClick2.value ?: false)
-    }
-    fun changeToActive3()
-    {//근무지대표주소2
-        _isClick3.value = !(isClick3.value ?: false)
-    }
+
 
     fun updateNext()
     {

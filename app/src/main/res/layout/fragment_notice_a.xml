@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.farmer.notice.noticeAFragment">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.example.nongglenonggle.viewModel.farmer.FarmerNoticeViewModel" />
@@ -33,15 +34,17 @@
         android:backgroundTint="@{viewModel.isClick1() ? @color/m1 : @color/g_line}"
         android:layout_marginTop="4dp"
         android:hint="본인의 이름을 입력해주세요."
-        android:paddingLeft="16dp"
+        android:paddingLeft="4dp"
         android:textSize="16sp"
         android:fontFamily="@font/spoqahansansneo_regular"
         android:textColorHint="@color/g3"
         android:textColor="@color/black"
-        android:paddingBottom="13dp"
-        android:paddingTop="15dp"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
         android:textCursorDrawable="@color/m1"
         android:paddingRight="16dp"
+        android:clickable="true"
+
         />
     <TextView
         android:layout_width="wrap_content"
@@ -62,17 +65,18 @@
         android:backgroundTint="@{viewModel.isClick2() ? @color/m1 : @color/g_line}"
         android:layout_marginTop="4dp"
         android:hint="본인의 연락처를 기호없이 입력해주세요."
-        android:paddingLeft="16dp"
+        android:paddingLeft="4dp"
         android:paddingRight="16dp"
         android:textSize="16sp"
         android:fontFamily="@font/spoqahansansneo_regular"
         android:textColorHint="@color/g3"
         android:textColor="@color/black"
-        android:paddingBottom="13dp"
-        android:paddingTop="15dp"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
         android:textCursorDrawable="@color/m1"
         />
     <TextView
+        android:id="@+id/addresstitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -82,23 +86,48 @@
         android:layout_marginLeft="20dp"
         android:textColor="@color/g1"
         />
-    <EditText
-        android:id="@+id/address"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:backgroundTint="@color/g_line"
-        android:layout_marginTop="4dp"
-        android:hint="근무지 대표 도로명 주소를 검색해주세요."
-        android:paddingLeft="16dp"
-        android:textSize="16sp"
-        android:fontFamily="@font/spoqahansansneo_regular"
-        android:textColorHint="@color/g3"
-        android:textColor="@color/black"
-        android:paddingBottom="13dp"
-        android:paddingTop="15dp"
-        />
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/g_line"
+            android:layout_marginTop="4dp"
+            android:hint="근무지 대표 도로명 주소를 검색해주세요."
+            android:paddingLeft="4dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textColorHint="@color/g3"
+            android:textColor="@color/black"
+            android:paddingBottom="13dp"
+            android:paddingTop="15dp"
+            android:focusable="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/addressFromweb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text=""
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="20dp"
+            android:visibility="@{viewModel.isAddressVisible() ? View.VISIBLE : View.GONE}"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <EditText
         android:id="@+id/detail_address"
         android:layout_width="match_parent"
@@ -109,13 +138,13 @@
         android:layout_marginTop="12dp"
         android:paddingRight="16dp"
         android:hint="상세주소를 입력해주세요."
-        android:paddingLeft="16dp"
+        android:paddingLeft="4dp"
         android:textSize="16sp"
         android:fontFamily="@font/spoqahansansneo_regular"
         android:textColorHint="@color/g3"
         android:textColor="@color/black"
-        android:paddingBottom="13dp"
-        android:paddingTop="15dp"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
         android:textCursorDrawable="@color/m1"
         />
 
@@ -124,7 +153,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/nextBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -136,6 +165,8 @@
         android:background="@{viewModel.toNext ? @color/m1 : @color/unactive}"
         android:paddingTop="14.5dp"
         android:paddingBottom="14.5dp"
+        android:layout_gravity="bottom"
+        android:gravity="center"
         />
 
 </LinearLayout>

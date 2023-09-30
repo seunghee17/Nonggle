@@ -29,8 +29,7 @@ abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutRes
     {
         val transaction = parentFragmentManager.beginTransaction()
             .replace(containerId, fragment)
-        if(addToBackStack)
-        {
+        if(addToBackStack) {
             transaction.addToBackStack(null)
         }
         transaction.commit()

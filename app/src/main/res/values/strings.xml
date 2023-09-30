@@ -1,5 +1,7 @@
 <resources>
     <string name="공고글작성">공고글작성</string>
+    <string name="대표주소">대표주소</string>
+
     <string name="app_name">농글농글</string>
     <string name="hello_blank_fragment">heelo</string>
 

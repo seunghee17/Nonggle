@@ -1,23 +1,18 @@
 package com.example.nongglenonggle.view.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.viewModelScope
-import com.example.nongglenonggle.MainActivity
+import com.example.nongglenonggle.view.farmer.home.MainActivity
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.base.BaseActivity
 import com.example.nongglenonggle.viewModel.login.LoginViewModel
 import com.example.nongglenonggle.databinding.ActivityLoginBinding
 import com.example.nongglenonggle.view.signup.SignupActivity
 import com.example.nongglenonggle.view.worker.home.WorkerMainActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private val viewModel : LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +40,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             if(viewModel.isLoginAvailable.value == true){
                 //viewModel.getUserType()
                 viewModel.isFarmer.observe(this, Observer { isFarmer->
-                    val intent = Intent(this,MainActivity::class.java)
+                    val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     Log.e("applesdf","구인자")
                     //Log.e("applesdf","${viewModel.isFarmer.value}")

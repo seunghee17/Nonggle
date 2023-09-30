@@ -35,15 +35,6 @@ class SignupDFragment : BaseFragment<FragmentSignupDBinding>(R.layout.fragment_s
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
 
-        val category1 = binding.farmerCategory1
-        val category2 = binding.farmerCategory2
-        val category3 = binding.farmerCategory3
-        val category4 = binding.farmerCategory4
-        val category5 = binding.farmerCategory5
-        val category6 = binding.farmerCategory6
-        val category7 = binding.farmerCategory7
-        val category8 = binding.farmerCategory8
-
         val addressSearch = binding.addressSearch
 
 

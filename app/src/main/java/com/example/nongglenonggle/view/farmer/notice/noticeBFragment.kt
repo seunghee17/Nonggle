@@ -1,6 +1,8 @@
 package com.example.nongglenonggle.view.farmer.notice
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -8,17 +10,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Button
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.nongglenonggle.R
+import com.example.nongglenonggle.base.BaseFragment
 import com.example.nongglenonggle.databinding.FragmentNoticeBBinding
 import com.example.nongglenonggle.view.adapter.SpinnerAdapter
 import com.example.nongglenonggle.viewModel.farmer.FarmerNoticeViewModel
 
-class noticeBFragment : Fragment() {
-    private var _binding : FragmentNoticeBBinding? = null
+class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_notice_b) {
     private val viewModel: FarmerNoticeViewModel by activityViewModels()
-    private val binding get() = _binding!!
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,15 +31,14 @@ class noticeBFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentNoticeBBinding.inflate(inflater,container,false)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
-
-        return binding.root
+        val view= super.onCreateView(inflater, container, savedInstanceState)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+
         val workerTime1 = binding.workerTime1
         val workerTime2 = binding.workerTime2
 
@@ -56,20 +57,31 @@ class noticeBFragment : Fragment() {
         var clickcnt =0
 
         binding.titleEdit.setOnFocusChangeListener { view, isfocus ->
-            viewModel.changeToActive()
+            viewModel._fragmentBState.postValue(isfocus)
         }
 
-        binding.titleEdit.setOnTouchListener { view, event ->
-            if(event.action == MotionEvent.ACTION_UP){
-                val drawableRightXStart = binding.titleEdit.right - binding.titleEdit.totalPaddingRight
-                if(event.rawX >= drawableRightXStart)
-                {
-                    binding.titleEdit.setText("")
-                    return@setOnTouchListener true
+        binding.titleEdit.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.titleEdit.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.xcircle,0)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                viewModel.fragmentBState.observe(viewLifecycleOwner){isfocus->
+                    if(isfocus && binding.titleEdit.text != null){
+                        binding.titleEdit.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.xcircle,0)
+                        binding.titleEdit.getClearButton(R.drawable.xcircle)
+                    }
+                    else{
+                        binding.titleEdit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
+                    }
                 }
             }
-            false
-        }
+        })
+
+
 
         workerTime1.setOnClickListener{
             viewModel.setActiveTime1Button()
@@ -122,7 +134,6 @@ class noticeBFragment : Fragment() {
         binding.datepicker1.setOnTouchListener{v,event->
             if(event.action == MotionEvent.ACTION_UP)
             {
-                Log.e("sagf", "ㄴㅇㅎ")
                 showDatePicker()
                 if(viewModel.DateList.isNotEmpty())
                 {
@@ -141,17 +152,30 @@ class noticeBFragment : Fragment() {
 
     }
 
+    fun EditText.getClearButton(drawableRightId:Int){
+        val drawableRight = 2
+        val rightDrawable = this.compoundDrawables[drawableRight]
+        if (rightDrawable != null) {
+            val drawableWidth = rightDrawable.bounds.width()
+            val clearButtonStart = this.width - drawableWidth
+
+            this.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+                    if (event.rawX >= clearButtonStart) {
+                        this.text.clear()
+                        return@setOnTouchListener true
+                    }
+                }
+                false
+            }
+        }
+    }
+
     private fun showDatePicker()
     {
         val newFrament = DatepickerFragment()
         newFrament.show(parentFragmentManager,"datepicker")
-        Log.e("sagf", "이거출력")
     }
 
-
-    override fun onDestroy() {
-        _binding = null
-        super.onDestroy()
-    }
 
 }
