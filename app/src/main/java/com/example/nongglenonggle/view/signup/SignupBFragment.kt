@@ -110,17 +110,11 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
         //인증번호 전송을 위해 버튼 누를시 오류 텍스트 visile용
         binding.sendnum.setOnClickListener{
             val phonenum = "+821002020202"
-            //val callbacks = createVerificationCallbacks()
-            //viewModel.startPhoneNumberVerificcation(phonenum, callbacks)
-//            viewModel.viewModelScope.launch(Dispatchers.IO) {
-//                viewModel.startPhoneNumberVerification(phonenum)
-//            }
             viewModel.viewModelScope.launch{
                 val ioJob = launch(Dispatchers.IO){
                     viewModel.startPhoneNumberVerification(phonenum)
                 }
                 val uiJob = launch(Dispatchers.Main) {
-                    //Toast.makeText(getActivity(),"인증번호가 발송되었습니다.",Toast.LENGTH_SHORT).show()
                     binding.verifyTxt.setText(R.string._분안에)
                     val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.m1))
                     binding.verifyTxt.setTextColor(colorStateList)
@@ -134,7 +128,6 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
 
 
         binding.confirmBtn.setOnClickListener {
-            //viewModel.signInWithPhoneAuthCredential(binding.verifyid.text.toString())
             if(viewModel.authcomplete.value == false)
             {
                 val colorStateList = ColorStateList.valueOf(resources.getColor(R.color.m1))
@@ -157,17 +150,6 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
                 viewModel.signInWithPhoneAuthCredential(binding.verifyid.text.toString())
             }
         }
-
-        //필요한가?->필요없을듯
-//        viewModel.authcomplete.observe(viewLifecycleOwner){
-//            isAuthComplete->
-//            if(!isAuthComplete){
-//                updateErrorColorAuth(edittext3)
-//            }else{
-//                //Toast.makeText(getActivity(), "인증성공", Toast.LENGTH_LONG).show()
-//                updateSuccessColorAuth(edittext3)
-//            }
-//        }
 
         edittext4.setOnFocusChangeListener{
                 view,isFocus ->

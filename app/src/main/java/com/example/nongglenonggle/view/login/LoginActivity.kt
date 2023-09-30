@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.MainActivity
 import com.example.nongglenonggle.R
+import com.example.nongglenonggle.base.BaseActivity
 import com.example.nongglenonggle.viewModel.login.LoginViewModel
 import com.example.nongglenonggle.databinding.ActivityLoginBinding
 import com.example.nongglenonggle.view.signup.SignupActivity
@@ -16,13 +18,10 @@ import com.example.nongglenonggle.view.worker.home.WorkerMainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private val viewModel : LoginViewModel by viewModels()
-    private lateinit var binding:ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= DataBindingUtil.setContentView(this,R.layout.activity_login)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         val loginbtn = binding.loginVerify
@@ -42,35 +41,22 @@ class LoginActivity : AppCompatActivity() {
         loginbtn.setOnClickListener {
             val phnum = idTxt.text.toString()
             val email = "$phnum@example.com"
-            viewModel.viewModelScope.launch {
-                val loginResult = withContext(Dispatchers.IO){
-                    viewModel.loginWithEmailAndPassword(email,passwordText.text.toString())
-                }
-                Log.e("dsds","sdfsdf")
-                //로그인 성공시
-                if(loginResult){
-                    //로그인 성공하고 farmer회원일때
-                    if(viewModel.isFarmer.value==true)
-                    {
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        startActivity(intent)
-                        Log.e("dsds","성공")
-                    }
-                    //로그인 성공하고 구인자 회원일때
-                    else
-                    {
-                        val intent = Intent(this@LoginActivity, WorkerMainActivity::class.java)
-                        startActivity(intent)
-                    }
-                }
-                //로그인 실패시
-                else
-                {
-                    //Log.e("dsds","실패")
-                    //임시적으로
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            viewModel.loginWithEmailAndPassword(email,passwordText.text.toString())
+            if(viewModel.isLoginAvailable.value == true){
+                //viewModel.getUserType()
+                viewModel.isFarmer.observe(this, Observer { isFarmer->
+                    val intent = Intent(this,MainActivity::class.java)
                     startActivity(intent)
-                }
+                    Log.e("applesdf","구인자")
+                    //Log.e("applesdf","${viewModel.isFarmer.value}")
+                    Log.e("applesdf","${viewModel.UserUID}")
+                })
+                viewModel.isWorker.observe(this, Observer { isWorker->
+                    val intent = Intent(this,WorkerMainActivity::class.java)
+                    startActivity(intent)
+                    Log.e("apple","구직자")
+                    Log.e("apple","${viewModel.isWorker.value}")
+                })
             }
         }
 

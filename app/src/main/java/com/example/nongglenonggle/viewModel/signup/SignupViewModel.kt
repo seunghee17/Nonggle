@@ -124,6 +124,20 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
     val _cstepActive = MutableLiveData<Boolean>(false)
     val cstepActive:LiveData<Boolean> = _cstepActive
 
+    //카테고리 상태 저장용
+    val buttonupdateds: MutableLiveData<MutableMap<String, Boolean>> = MutableLiveData()
+
+    private var buttoncnt = 0
+
+    //유저의 uid값 livedata에 저장
+    private val _UserUID = MutableLiveData<String>()
+    val UserUID : LiveData<String> = _UserUID
+
+    //dstep 다음버튼 활성화
+    private val _dstepActive=MutableLiveData<Boolean>()
+    val dstepActive:LiveData<Boolean> = _dstepActive
+
+
     fun startPhoneNumberVerification(phonenum:String)
     {
         val options = PhoneAuthOptions.newBuilder(auth)
@@ -135,8 +149,7 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
     }
 
     //회원가입 진행
-    suspend fun signUpWithEmailPasswordAndPhoneNumber(email: String,password:String,name:String)
-    {
+    suspend fun signUpWithEmailPasswordAndPhoneNumber(email: String,password:String,name:String) {
         return suspendCancellableCoroutine {
                 continuation->
             auth.createUserWithEmailAndPassword(email,password)
@@ -145,7 +158,8 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
                     {
                         val user: FirebaseUser? = auth.currentUser
                         user?.let{
-                            val userDocument = firestore.collection("Farmer").document("User").collection("Users").document(it.uid)
+                            val userDocument = firestore.collection("Farmer").document(it.uid)
+                            _UserUID.postValue(it.uid)
                             userDocument.set(
                                 mapOf(
                                     "uid" to it.uid,
@@ -155,7 +169,7 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
                             )
                         }
                         //코루틴 사용할 수 있지 않을까?
-                        Log.e("signup", "success")
+                        Log.e("signup", "회원가입 완료")
                     }
                     else{
                         Log.e("signup", "fail")
@@ -200,6 +214,51 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
        _isPWWrong.postValue(false)
        _isPWSame.postValue(true)
        _isFocusPW2.postValue(false)
+       buttonupdateds.value = mutableMapOf()
+       _dstepActive.postValue(false)
+
+    }
+
+    //버튼클릭시 변경되는
+    fun onButtonClick(category:String){
+        if(buttoncnt <3){
+            val currentColor = buttonupdateds.value?.get(category) ?: false
+            if(!currentColor){
+                val updateMap = buttonupdateds.value?: mutableMapOf()
+                updateMap[category]=true
+                buttonupdateds.value = updateMap
+                buttoncnt++
+                Log.e("please", "${buttonupdateds.value}")
+                Log.e("signup", "success/${UserUID.value}")
+            }
+        }
+        getSelectedCategory()
+    }
+
+
+
+    //선택한 카테고리 list화
+    fun getSelectedCategory() : List<String>{
+        val selectedButtonId = buttonupdateds.value?.filter { it.value }?.keys ?: emptySet()
+        //데이터베이스에 들어갈 리스트
+        val selectedButtonText = mutableListOf<String>()
+
+        for(buttonId in selectedButtonId){
+            when(buttonId){
+                "category1" -> selectedButtonText.add("식량작물")
+                "category2" -> selectedButtonText.add("채소")
+                "category3" -> selectedButtonText.add("과수")
+                "category4" -> selectedButtonText.add("특용작물")
+                "category5" -> selectedButtonText.add("화훼")
+                "category6" -> selectedButtonText.add("축산")
+                "category7" -> selectedButtonText.add("농기계작업")
+                "category8" -> selectedButtonText.add("기타")
+            }
+        }
+        if(selectedButtonText.isNotEmpty()){
+            _dstepActive.postValue(true)
+        }
+        return selectedButtonText
     }
 
     suspend fun signInWithPhoneAuthCredential(verificationCode: String):Boolean {

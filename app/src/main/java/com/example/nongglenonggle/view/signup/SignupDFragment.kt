@@ -1,5 +1,6 @@
 package com.example.nongglenonggle.view.signup
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.example.nongglenonggle.R
 import com.example.nongglenonggle.base.BaseFragment
 import com.example.nongglenonggle.databinding.FragmentSignupCBinding
 import com.example.nongglenonggle.databinding.FragmentSignupDBinding
+import com.example.nongglenonggle.view.login.LoginActivity
 import com.example.nongglenonggle.viewModel.signup.SignupViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,7 +34,18 @@ class SignupDFragment : BaseFragment<FragmentSignupDBinding>(R.layout.fragment_s
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
+
+        val category1 = binding.farmerCategory1
+        val category2 = binding.farmerCategory2
+        val category3 = binding.farmerCategory3
+        val category4 = binding.farmerCategory4
+        val category5 = binding.farmerCategory5
+        val category6 = binding.farmerCategory6
+        val category7 = binding.farmerCategory7
+        val category8 = binding.farmerCategory8
+
         val addressSearch = binding.addressSearch
+
 
         addressSearch.setOnClickListener{
             moveToNext()
@@ -44,12 +57,21 @@ class SignupDFragment : BaseFragment<FragmentSignupDBinding>(R.layout.fragment_s
             binding.firstaddressTxt.text = viewModel.addressResult.value
             binding.addressSearch.hint=""
         }
-
-
+        binding.nextBtn.setOnClickListener{
+            if(viewModel.dstepActive.value == true)
+            {
+                moveToEnd()
+            }
+        }
 
     }
     fun moveToNext()
     {
         replaceFragment(AddressSearchFragment(), R.id.signup_fragmentcontainer)
     }
+    fun moveToEnd(){
+        val intent = Intent(context,LoginActivity::class.java)
+        startActivity(intent)
+    }
+
 }

@@ -15,7 +15,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 @AndroidEntryPoint
 class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_signup) {
-    val activityScope= CoroutineScope(Dispatchers.Main)
     private val viewModel : SignupViewModel by viewModels()
 
 
