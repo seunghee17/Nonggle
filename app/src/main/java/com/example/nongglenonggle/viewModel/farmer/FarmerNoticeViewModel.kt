@@ -54,8 +54,12 @@ class FarmerNoticeViewModel: ViewModel() {
     private val _category = MutableLiveData<Boolean>()
     val category:LiveData<Boolean> = _category
 
+    val _DateList = MutableLiveData<List<Int>>()
+    val DateList : LiveData<List<Int>> = _DateList
+
     //시작날짜 저장용
-    var DateList : MutableList<Int> = mutableListOf()
+//    val _startDateList = MutableLiveData<List<Int>>()
+//    val startDateList : LiveData<List<Int>> = _startDateList
 
     fun loadAddressData(context:Context){
         val sharedPreferences = context.getSharedPreferences("pref", Context.MODE_PRIVATE)

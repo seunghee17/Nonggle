@@ -135,20 +135,33 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
             if(event.action == MotionEvent.ACTION_UP)
             {
                 showDatePicker()
-                if(viewModel.DateList.isNotEmpty())
-                {
-                    binding.datepicker1.setText("${viewModel.DateList[0]}년 ${viewModel.DateList[1]}월 ${viewModel.DateList[2]}일")
-                    viewModel.DateList.clear()
-                }
             }
             false
         }
 
-        binding.datepicker2.setOnClickListener{
-            showDatePicker()
-            binding.datepicker2.setText("${viewModel.DateList[0]}년 ${viewModel.DateList[1]}월 ${viewModel.DateList[2]}일")
-            viewModel.DateList.clear()
+        //작업 시작날짜 종료날짜 text에 표시하기위한 옵저빙
+        viewModel.DateList.observe(viewLifecycleOwner){havedata->
+            if(viewModel.DateList.value?.size == 3){
+                binding.startDate.text = "${viewModel.DateList.value?.get(0)}년 ${viewModel.DateList.value?.get(1)}월 ${viewModel.DateList.value?.get(2)}일"
+                binding.datepicker1.hint=""
+            }
+            if(viewModel.DateList.value?.size == 6){
+                binding.endDate.text = "${viewModel.DateList.value?.get(3)}년 ${viewModel.DateList.value?.get(4)}월 ${viewModel.DateList.value?.get(5)}일"
+                binding.datepicker2.hint=""
+            }
         }
+
+        binding.datepicker2.setOnTouchListener{v,event->
+            if(event.action == MotionEvent.ACTION_UP)
+            {
+                showDatePicker()
+            }
+            false
+        }
+
+
+
+
 
     }
 
