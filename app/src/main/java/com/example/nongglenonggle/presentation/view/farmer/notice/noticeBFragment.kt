@@ -11,26 +11,33 @@ import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.presentation.base.BaseFragment
 import com.example.nongglenonggle.databinding.FragmentNoticeBBinding
+import com.example.nongglenonggle.domain.entity.Model
 import com.example.nongglenonggle.presentation.view.adapter.SpinnerAdapter
 import com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_notice_b) {
     private val viewModel: FarmerNoticeViewModel by activityViewModels()
-    //이미지 업로드 권한용
-    private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-    private val checkPermisiion = registerForActivityResult(ActivityResultContracts.RequestPermission()){granted->
-            if(!granted){
-                //권한 거부시
-                Toast.makeText(context,"권한 동의가 필요합니다.", Toast.LENGTH_SHORT).show()
-            }
-    }
-
+    var pickImageFromAlbum = 0
+    var fbStorage : FirebaseStorage? = null
+    var uriPhoto : Uri? = null
+    private val REQUEST_CODE_PERMISSION = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +48,21 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
         savedInstanceState: Bundle?
     ): View? {
         val view= super.onCreateView(inflater, container, savedInstanceState)
+        //사진 업로드
+        //storage초기화
+        fbStorage = FirebaseStorage.getInstance()
+        binding.workImageA.setOnClickListener{
+            if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                //open album
+                var photoPickerIntent = Intent(Intent.ACTION_PICK)
+                photoPickerIntent.type = "image/*"
+                startActivityForResult(photoPickerIntent, pickImageFromAlbum)
+            }
+            else{
+                //권한 요청
+                requestStoragePermission()
+            }
+        }
         return view
     }
 
@@ -174,6 +196,7 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
             false
         }
 
+        //업무 세부 내용
         binding.noticeContent.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -186,7 +209,6 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
             }
 
         })
-
 
 
     }
@@ -215,6 +237,49 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
         val newFrament = DatepickerFragment()
         newFrament.show(parentFragmentManager,"datepicker")
     }
+
+    //권한이 없을때 해당함수 호출
+    private fun requestStoragePermission(){
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            REQUEST_CODE_PERMISSION
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == pickImageFromAlbum){
+            if(resultCode == Activity.RESULT_OK){
+                uriPhoto = data?.data
+                //화면에 사진을 보여준다
+                binding.workImageA.setImageURI(uriPhoto)
+                uriPhoto?.let{uri->
+                    val imageEntity = Model.ImageEntity(uri)
+                    viewModel.uploadImage(imageEntity)
+                }
+            }
+            else{
+
+            }
+        }
+    }
+
+//    private fun ImageUpload(view: View){
+//        Log.e("image", "이미지 업로드 완1")
+//        val user = FirebaseAuth.getInstance().currentUser
+//        val uid = user?.uid
+//        var imageFileName = "Image_" + uid + "_.png"
+//        var storageRef = fbStorage?.reference?.child("NoticeImages")?.child(imageFileName)
+//
+//        storageRef?.putFile(uriPhoto!!)?.addOnSuccessListener {
+//            Log.e("image", "이미지 업로드 완")
+//
+//            storageRef.downloadUrl.addOnSuccessListener { url->
+//                viewModel._farmerImage.value = url.toString()
+//            }
+//        }
+//    }
 
 
 }

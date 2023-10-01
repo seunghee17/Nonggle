@@ -3,13 +3,22 @@ package com.example.nongglenonggle.presentation.viewModel.farmer
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.nongglenonggle.domain.entity.Model
+import com.example.nongglenonggle.domain.usecase.UploadImageUsecase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class FarmerNoticeViewModel: ViewModel() {
+@HiltViewModel
+class FarmerNoticeViewModel @Inject constructor(
+    private val uploadImageUsecase: UploadImageUsecase
+): ViewModel() {
     //이름칸 감지
     val _isClick1 = MutableLiveData<Boolean>()
     val isClick1:LiveData<Boolean> = _isClick1
@@ -61,6 +70,25 @@ class FarmerNoticeViewModel: ViewModel() {
     //상세 작업 내용 저장용
     val _detailContent = MutableLiveData<String>()
     val detailContent:LiveData<String> = _detailContent
+
+    //사진 url저장용
+    val _farmerImage = MutableLiveData<String>()
+    val farmerImage : LiveData<String> = _farmerImage
+
+    fun uploadImage(imageEntity: Model.ImageEntity){
+        viewModelScope.launch {
+            val result = uploadImageUsecase.uploadImage(imageEntity)
+            if(result.isSuccess){
+                //여기서 url접근해서 가져오기
+                val imageurl = result.getOrNull()
+                _farmerImage.value = imageurl!!
+                Log.e("cap", "${farmerImage.value}")
+            }
+            else{
+                Log.e("imageerror", "저장에")
+            }
+        }
+    }
 
 
     fun loadAddressData(context:Context){

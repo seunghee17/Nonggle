@@ -3,7 +3,9 @@ package com.example.nongglenonggle.presentation.view.farmer.notice
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
+import android.Manifest
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.presentation.base.BaseActivity
 import com.example.nongglenonggle.databinding.ActivityNoticeBinding
@@ -11,7 +13,9 @@ import com.example.nongglenonggle.presentation.view.adapter.ViewPager2Adapter
 import com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NoticeActivity : BaseActivity<ActivityNoticeBinding>(R.layout.activity_notice) {
     private val viewModel: FarmerNoticeViewModel by viewModels()
     private lateinit var tablayout : TabLayout
