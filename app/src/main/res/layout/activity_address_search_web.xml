@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.viewModel.farmer.FarmerNoticeViewModel" />
+            type="com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"

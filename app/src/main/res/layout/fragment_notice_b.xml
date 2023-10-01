@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.viewModel.farmer.FarmerNoticeViewModel" />
+            type="com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -177,6 +177,7 @@
                 android:hint="업무 내용을 상세히 입력해주세요."
                 android:textColor="@color/black"
                 android:textColorHint="@color/g3"
+                android:textCursorDrawable="@color/m1"
                 android:textSize="16sp" />
 
             <TextView
@@ -195,7 +196,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/spoqahansansneo_regular"
-                android:text="이미지는 참고용으로 이용됩니다. (최대 3장)"
+                android:text="※이미지는 참고용으로 이용됩니다. (최대 3장)"
                 android:textColor="@color/g3"
                 android:textSize="14sp" />
 
@@ -205,22 +206,26 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginRight="20dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/work_image_A"
+                    android:layout_width="0dp"
+                    android:layout_height="96dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/imageupload"/>
+
+                <ImageView
+                    android:id="@+id/work_image_B"
+                    android:layout_width="0dp"
                     android:layout_height="96dp"
                     android:layout_weight="1"
                     android:src="@drawable/imageupload" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="96dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/imageupload" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/work_image_C"
+                    android:layout_width="0dp"
                     android:layout_height="96dp"
                     android:layout_weight="1"
                     android:src="@drawable/imageupload" />

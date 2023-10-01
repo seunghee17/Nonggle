@@ -1,0 +1,12 @@
+package com.example.nongglenonggle.presentation.view.worker.home
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.example.nongglenonggle.R
+
+class WorkerMainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_worker_main)
+    }
+}
