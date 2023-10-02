@@ -56,6 +56,18 @@ class FarmerNoticeViewModel @Inject constructor(
     val _requiredPeople =MutableLiveData<Boolean>()
     val requiredPeople:LiveData<Boolean> = _requiredPeople
 
+    //spinner 근무요일용
+    val _activeWorkDay = MutableLiveData<Boolean>()
+    val activeWorkDay:LiveData<Boolean> = _activeWorkDay
+
+    //spinner 시작 연령 활성화용
+    val _activeStartAge=MutableLiveData<Boolean>()
+    val activeStartAge:LiveData<Boolean> = _activeStartAge
+
+    //spinner 끝 연령 활성화용
+    val _activeEndAge=MutableLiveData<Boolean>()
+    val activeEndAge:LiveData<Boolean> = _activeEndAge
+
     //worker_time1용
     private val _workerTime1 = MutableLiveData<Boolean>()
     val workerTime1:LiveData<Boolean> = _workerTime1
@@ -161,6 +173,59 @@ class FarmerNoticeViewModel @Inject constructor(
     //사진 url저장용
     val _farmerImage = MutableLiveData<String>()
     val farmerImage : LiveData<String> = _farmerImage
+
+    //숙소제공
+    val _activeDorm = MutableLiveData<Boolean>()
+    val activeDorm:LiveData<Boolean> = _activeDorm
+
+    val _activeNoDorm = MutableLiveData<Boolean>()
+    val activeNoDorm:LiveData<Boolean> = _activeNoDorm
+
+    //숙소제공 데이터 저장
+    val _DormType = MutableLiveData<String>()
+    val DormType : LiveData<String> = _DormType
+
+    //숙소 정보 active용
+    val _yesDormActive=MutableLiveData<Boolean>()
+    val yesDormActive:LiveData<Boolean> = _yesDormActive
+
+    //숙소 정보 저장용
+    val _yesDormInfo = MutableLiveData<String>()
+    val yesDormInfo:LiveData<String> = _yesDormInfo
+
+    //식사정보 active용
+    val _yesFood = MutableLiveData<Boolean>()
+    val yesFood:LiveData<Boolean> = _yesFood
+
+    val _noFood = MutableLiveData<Boolean>()
+    val noFood:LiveData<Boolean> = _noFood
+
+    //식사 제공여부 텍스트
+    val _FoodType = MutableLiveData<String>()
+    val FoodType:LiveData<String> = _FoodType
+
+    //식사제공 부가정보 active
+    val _yesFoodActive=MutableLiveData<Boolean>()
+    val yesFoodActive:LiveData<Boolean> = _yesFoodActive
+
+    //식사제공일 경우 부가정보 데베용
+    val _yesFoodInfo = MutableLiveData<String>()
+    val yesFoodInfo:LiveData<String> = _yesFoodInfo
+
+    //공고글 마감기한 active
+    val _yesDeadlineActive = MutableLiveData<Boolean>()
+    val yesDeadlineActive:LiveData<Boolean> = _yesDeadlineActive
+
+    val _noDeadlineActive = MutableLiveData<Boolean>()
+    val noDeadlineActive:LiveData<Boolean> = _noDeadlineActive
+
+    //공고글 마감기한 타입용
+    val _DeadlineType = MutableLiveData<String>()
+    val DeadlineType : LiveData<String> = _DeadlineType
+
+    //작업 마감기한 값 들어왔다면
+    val _isDeadline = MutableLiveData<Boolean>()
+    val isDeadline:LiveData<Boolean> = _isDeadline
 
 
     fun uploadImage(imageEntity: Model.ImageEntity){

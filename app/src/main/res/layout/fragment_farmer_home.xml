@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.farmer.home.FarmerhomeFragment"
+    tools:context=".presentation.view.farmer.home.FarmerhomeFragment"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -46,14 +46,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/logocontainer"
-            android:paddingTop="35dp"
             android:layout_alignParentLeft="true"
-            android:paddingLeft="20dp"
             android:fontFamily="@font/spoqahansansneo_regular"
             android:text="지원 농부님,"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:lineSpacingExtra="5sp"
+            android:includeFontPadding="false"/>
     </RelativeLayout>
 
 

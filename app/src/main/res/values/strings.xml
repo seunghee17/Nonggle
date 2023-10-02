@@ -6,6 +6,7 @@
     <string name="hello_blank_fragment">heelo</string>
 
     <string name="다음">다음</string>
+    <string name="완료">완료</string>
     <string name="가입완료">가입완료</string>
 
     <string name="필요인원">필요인원</string>
@@ -48,10 +49,13 @@
     <string name="숙소제공">숙소제공</string>
     <string name="제공있음">제공있음</string>
     <string name="제공없음">제공없음</string>
+    <string name="숙소정보를_입력">숙소정보를 입력해주세요. 예)마을회관</string>
     <string name="식사제공">식사제공</string>
+    <string name="식사정보를">식사정보를 입력해주세요. 예)중식제공</string>
     <string name="공고글_마감설정">공고글 마감설정</string>
     <string name="마감기한">마감기한 설정</string>
     <string name="상시모집">상시모집</string>
+    <string name="마감기한_날짜를">마감기한 날짜를 선택해주세요.</string>
 
     <string name="우대사항">우대사항</string>
     <string name="추가우대">추가로 우대사항이 있다면 입력해주세요.</string>
@@ -73,5 +77,6 @@
     <string name="약관4">“농글”서비스 이용을 위해 아래와 같이 개인정보를 수집 및 이용합니다.\n\n동의를 거부할 권리가 있으며, 동의 거부 시 “농글” 회원 서비스 이용이 불가합니다.\n\n 1. 목적\n본인여부 확인, 각종 맞춤형 서비스 제공, 서비스 개선 및 신규 서비스 개발을 위한 통계활용, 계약이행 및 약관 변경 등의 고지를 위한 연락, 본인의사확인 및 민원 등의 고객불만처리\n\n 2. 항목\n이름,비밀번호, 휴대폰\n\n 3. 보유 및 이용기간\n회원 탈퇴시 즉시 파기</string>
 
     <string name="일급을_숫자로">일급을 숫자만 입력해주세요. 예)100,000</string>
+
 
 </resources>

@@ -7,13 +7,19 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.widget.AdapterView
 import android.widget.EditText
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentNoticeCBinding
 import com.example.nongglenonggle.presentation.base.BaseFragment
+import com.example.nongglenonggle.presentation.view.adapter.SpinnerAdapter
 import com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel
+import com.google.android.play.core.integrity.v
 import org.w3c.dom.Text
 
 class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_notice_c) {
@@ -34,6 +40,7 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
 
+        //필요인원
         binding.q1editTxt.setOnFocusChangeListener{
             view,isFocus ->
             viewModel._requiredPeople.postValue(true)
@@ -60,6 +67,14 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
 
         })
 
+
+// 이 함수를 이용하여 스피너 초기화
+        initSpinner(binding.startAgeSpinner, R.array.start_select_age, "시작연령대", viewModel._activeStartAge)
+        initSpinner(binding.endAgeSpinner, R.array.end_select_age, "끝연령대", viewModel._activeEndAge)
+
+
+
+        //성별선택부분
         binding.women.setOnClickListener{
             viewModel._activeWomen.value = true
             viewModel._activemen.value = false
@@ -207,6 +222,36 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
 
         })
 
+    }
+    // 스피너 어댑터 초기화 함수
+    private fun initSpinner(spinner: Spinner, itemsArrayId: Int, hintText: String, viewModelLiveData: MutableLiveData<Boolean>) {
+        val items = resources.getStringArray(itemsArrayId)
+        val adapter = SpinnerAdapter(requireContext(), R.layout.item_spinner, items, R.id.list_content)
+        adapter.setHintTextColor(hintText, R.color.g3)
+        spinner.adapter = adapter
+        spinner.setSelection(adapter.count)
+
+        spinner.post {
+            spinner.dropDownVerticalOffset = spinner.height
+        }
+
+        spinner.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                viewModelLiveData.postValue(true)
+            }
+            false
+        }
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                viewModelLiveData.postValue(false)
+                p1?.isPressed = false
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                viewModelLiveData.postValue(false)
+            }
+        }
     }
     fun EditText.getClearButton(drawableRightId:Int){
         val drawableRight = 2

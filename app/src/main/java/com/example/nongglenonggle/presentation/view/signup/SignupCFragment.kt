@@ -93,6 +93,7 @@ class SignupCFragment : BaseFragment<FragmentSignupCBinding>(R.layout.fragment_s
             }
         }
 
+
     }
     private fun checkConditions(){
         if((binding.checkbox1.isChecked&&binding.checkbox2.isChecked&&binding.checkbox3.isChecked) || binding.allcheckbox.isChecked){

@@ -5,36 +5,59 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
 import androidx.databinding.adapters.SpinnerBindingAdapter
-import com.example.nongglenonggle.databinding.ItemSpinnerBinding
+import com.example.nongglenonggle.R
 
-class SpinnerAdapter(context: Context, @LayoutRes private val resId:Int, private val List:List<String>)
+class SpinnerAdapter(context: Context, @LayoutRes private val resId:Int, private val List:Array<String>, private val textViewResId:Int)
     :ArrayAdapter<String>(context,resId,List)
 {
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val binding = ItemSpinnerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        binding.listContent.text = List[position]
+    private var hintText:String?=null
+    private var hintColor:Int=0
 
-        return binding.root
+    fun setHintTextColor(text:String, colorResId:Int){
+        hintText = text
+        hintColor = ContextCompat.getColor(context,colorResId)
+    }
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val v = super.getView(position, convertView, parent)
+        val textView= v.findViewById<TextView>(textViewResId)
+
+        if(position==count){
+            textView.text=""
+            textView.hint = hintText
+            if(hintColor != 0){
+                textView.setHintTextColor(hintColor)
+            }
+            else{
+                textView.text = getItem(position)
+                textView.hint = null
+            }
+        }
+
+        return v
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val binding = ItemSpinnerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        binding.listContent.text = List[position]
+        val view = super.getDropDownView(position, convertView, parent)
+        view.background = ContextCompat.getDrawable(context, R.drawable.bg_spinner_dropdown)
 
-        return binding.root
+        //마지막 항목을 드롭다운 목록에서 숨긴다
+        if(position == List.size-1){
+            val empty = TextView(context)
+            empty.height = 0
+            return empty
+        }
+        return view
     }
+
 
     override fun getCount(): Int{
-        return List.size+1
+        //마지막 항목은 포함하지 않도록 한다
+        return super.getCount() -1
     }
 
-//    override fun getItem(position: Int): Any {
-//        return if(position ==0) "" else List[position -1]
-//    }
-//
-//    override fun getItemId(position: Int): Long {
-//        return
-//    }
 }

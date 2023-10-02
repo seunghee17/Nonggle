@@ -153,17 +153,32 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
             list[i].setOnClickListener(buttonClickListener)
         }
 
-        val daySpinner = listOf("주 1일", "주 2일", "주 3일", "주 4일","주 5일","주 6일","주 7일", "요일협의")
+        val dayItems = resources.getStringArray(R.array.select_day)
+        val dayadapter = SpinnerAdapter(requireContext(), R.layout.item_spinner, dayItems,R.id.list_content)
+        dayadapter.setHintTextColor("근무 요일을 선택해주세요.", R.color.g3)
+        binding.daySelectSpinner.adapter = dayadapter
+        binding.daySelectSpinner.setSelection(dayadapter.count)
+        binding.daySelectSpinner.post{
+            binding.daySelectSpinner.dropDownVerticalOffset = binding.daySelectSpinner.height
+        }
 
-        binding.daySelectSpinner.adapter = SpinnerAdapter(requireContext(), R.layout.item_spinner, daySpinner)
-
-        binding.daySelectSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val value = binding.daySelectSpinner.getItemAtPosition(position).toString()
+        binding.daySelectSpinner.setOnTouchListener{
+            v,event->
+            if(event.action == MotionEvent.ACTION_UP){
+                viewModel._activeWorkDay.postValue(true)
             }
-            override fun onNothingSelected(p0: AdapterView<*>?)
-            {
+            false
+        }
 
+        binding.daySelectSpinner.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                //database들어갈용 세팅!!!!!!!!
+                viewModel._activeWorkDay.postValue(false)
+                p1?.isPressed = false
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                viewModel._activeWorkDay.postValue(false)
             }
 
         }
@@ -265,21 +280,6 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
         }
     }
 
-//    private fun ImageUpload(view: View){
-//        Log.e("image", "이미지 업로드 완1")
-//        val user = FirebaseAuth.getInstance().currentUser
-//        val uid = user?.uid
-//        var imageFileName = "Image_" + uid + "_.png"
-//        var storageRef = fbStorage?.reference?.child("NoticeImages")?.child(imageFileName)
-//
-//        storageRef?.putFile(uriPhoto!!)?.addOnSuccessListener {
-//            Log.e("image", "이미지 업로드 완")
-//
-//            storageRef.downloadUrl.addOnSuccessListener { url->
-//                viewModel._farmerImage.value = url.toString()
-//            }
-//        }
-//    }
 
 
 }

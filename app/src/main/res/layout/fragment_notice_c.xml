@@ -91,22 +91,24 @@
                     android:layout_marginTop="12dp"
                     >
                     <Spinner
+                        android:id="@+id/start_age_spinner"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:layout_weight="1"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="16dp"
                         android:paddingLeft="16dp"
                         android:layout_marginRight="16dp"
+                        android:background="@{viewModel.activeStartAge ? @drawable/background_spinner_active : @drawable/background_spinner_unactive}"
+                        android:popupBackground="@drawable/bg_spinner_dropdown"
                         />
 
                     <Spinner
+                        android:id="@+id/end_age_spinner"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:layout_weight="1"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="16dp"
                         android:paddingLeft="16dp"
+                        android:background="@{viewModel.activeEndAge ? @drawable/background_spinner_active : @drawable/background_spinner_unactive}"
+                        android:popupBackground="@drawable/bg_spinner_dropdown"
                         />
 
                 </LinearLayout>

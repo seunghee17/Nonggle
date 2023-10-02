@@ -64,7 +64,7 @@
         android:layout_marginRight="20dp"
         android:backgroundTint="@{viewModel.isClick2() ? @color/m1 : @color/g_line}"
         android:layout_marginTop="4dp"
-        android:hint="본인의 연락처를 기호없이 입력해주세요."
+        android:hint="예) 010-1234-5678"
         android:paddingLeft="4dp"
         android:paddingRight="16dp"
         android:textSize="16sp"
