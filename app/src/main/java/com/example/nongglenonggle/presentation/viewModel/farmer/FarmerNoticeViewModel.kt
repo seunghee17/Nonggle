@@ -52,6 +52,10 @@ class FarmerNoticeViewModel @Inject constructor(
     val _fragmentBState = MutableLiveData<Boolean>()
     val fragmentBState:LiveData<Boolean> = _fragmentBState
 
+    //필요인원 활성화용
+    val _requiredPeople =MutableLiveData<Boolean>()
+    val requiredPeople:LiveData<Boolean> = _requiredPeople
+
     //worker_time1용
     private val _workerTime1 = MutableLiveData<Boolean>()
     val workerTime1:LiveData<Boolean> = _workerTime1
@@ -71,9 +75,93 @@ class FarmerNoticeViewModel @Inject constructor(
     val _detailContent = MutableLiveData<String>()
     val detailContent:LiveData<String> = _detailContent
 
+    //성별 선택용
+
+    //여자일경우
+    val _activeWomen = MutableLiveData<Boolean>()
+    val activeWomen:LiveData<Boolean> = _activeWomen
+
+    //남자일경우
+    val _activemen = MutableLiveData<Boolean>()
+    val activemen:LiveData<Boolean> = _activemen
+
+    //무관일경우
+    val _activeBoth = MutableLiveData<Boolean>()
+    val activeBoth:LiveData<Boolean> = _activeBoth
+
+    //성별 데이터 저장용
+    val _noticeGender = MutableLiveData<String>()
+    val noticeGender:LiveData<String> = _noticeGender
+
+    //일급 active
+    val _activedayMoney = MutableLiveData<Boolean>()
+    val activedayMoney:LiveData<Boolean> = _activedayMoney
+
+    //시급 active
+    val _activeTimeMoney = MutableLiveData<Boolean>()
+    val activeTimeMoney:LiveData<Boolean> = _activeTimeMoney
+
+    //급여 협의
+    val _activeCounsel = MutableLiveData<Boolean>()
+    val activeCounsel:LiveData<Boolean> = _activeCounsel
+
+    //급여정보
+    val _noticeMoney = MutableLiveData<String>()
+    val noticeMoney : LiveData<String> = _noticeMoney
+
+    //급여 edit용
+    val _activeEdittxt = MutableLiveData<Boolean>()
+    val activeEdittxt : LiveData<Boolean> = _activeEdittxt
+
+    //고용형태1
+    val _activeWorkType1 = MutableLiveData<Boolean>()
+    val activeWorkType1 : LiveData<Boolean> = _activeWorkType1
+
+    //고용형태2
+    val _activeWorkType2 = MutableLiveData<Boolean>()
+    val activeWorkType2 : LiveData<Boolean> = _activeWorkType2
+
+    //고용형태3
+    val _activeWorkType3 = MutableLiveData<Boolean>()
+    val activeWorkType3 : LiveData<Boolean> = _activeWorkType3
+
+    //고용형태 데이터베이스 저장용
+    val _workType= MutableLiveData<String>()
+    val workType:LiveData<String> = _workType
+
+    //지원가능경력 활성화용
+    val _applyType1 = MutableLiveData<Boolean>()
+    val applyType1:LiveData<Boolean> = _applyType1
+
+    val _applyType2 = MutableLiveData<Boolean>()
+    val applyType2:LiveData<Boolean> = _applyType2
+
+    val _applyType3 = MutableLiveData<Boolean>()
+    val applyType3:LiveData<Boolean> = _applyType3
+
+    //지원가능한경력 데이터베이스 저장용
+    val _applyType = MutableLiveData<String>()
+    val applyType:LiveData<String> = _applyType
+
+    //자격증 활성화용
+    val _activeCertifi1 = MutableLiveData<Boolean>()
+    val activeCertifi1:LiveData<Boolean> = _activeCertifi1
+
+    val _activeCertifi2 = MutableLiveData<Boolean>()
+    val activeCertifi2:LiveData<Boolean> = _activeCertifi2
+
+    //자격증 필요한경우
+    val _active_Edittxt = MutableLiveData<Boolean>()
+    val active_Edittxt:LiveData<Boolean> = _active_Edittxt
+
+    //자격증 작성 확인용
+    val _active_confirm = MutableLiveData<Boolean>()
+    val active_confirm:LiveData<Boolean> = _active_confirm
+
     //사진 url저장용
     val _farmerImage = MutableLiveData<String>()
     val farmerImage : LiveData<String> = _farmerImage
+
 
     fun uploadImage(imageEntity: Model.ImageEntity){
         viewModelScope.launch {

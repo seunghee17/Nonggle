@@ -26,5 +26,15 @@ class SpinnerAdapter(context: Context, @LayoutRes private val resId:Int, private
         return binding.root
     }
 
-    override fun getCount()= List.size
+    override fun getCount(): Int{
+        return List.size+1
+    }
+
+//    override fun getItem(position: Int): Any {
+//        return if(position ==0) "" else List[position -1]
+//    }
+//
+//    override fun getItemId(position: Int): Long {
+//        return
+//    }
 }

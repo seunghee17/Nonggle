@@ -52,9 +52,9 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
         //storage초기화
         fbStorage = FirebaseStorage.getInstance()
         binding.workImageA.setOnClickListener{
-            if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                 //open album
-                var photoPickerIntent = Intent(Intent.ACTION_PICK)
+                val photoPickerIntent = Intent(Intent.ACTION_PICK)
                 photoPickerIntent.type = "image/*"
                 startActivityForResult(photoPickerIntent, pickImageFromAlbum)
             }

@@ -30,6 +30,8 @@
     <string name="급여협의">급여협의</string>
 
     <string name="고용형태">고용형태</string>
+    <string name="지원가능한_경력">지원가능한 경력</string>
+    <string name="자격증_입력">자격증을 입력해주세요.</string>
     <string name="체류형">체류형</string>
     <string name="출퇴근형">출퇴근형</string>
     <string name="계약직">계약직</string>
@@ -55,6 +57,7 @@
     <string name="추가우대">추가로 우대사항이 있다면 입력해주세요.</string>
 
     <string name="확인사항">확인사항</string>
+    <string name="확인">확인</string>
     <string name="조건1">근로계약서 작성을 약속합니다.</string>
     <string name="조건2">개인소득 및 4대보험 신고를 약속합니다.</string>
 
@@ -69,5 +72,6 @@
     <string name="개인정보_수집_필수">개인정보 수집 및 이용동의(필수)</string>
     <string name="약관4">“농글”서비스 이용을 위해 아래와 같이 개인정보를 수집 및 이용합니다.\n\n동의를 거부할 권리가 있으며, 동의 거부 시 “농글” 회원 서비스 이용이 불가합니다.\n\n 1. 목적\n본인여부 확인, 각종 맞춤형 서비스 제공, 서비스 개선 및 신규 서비스 개발을 위한 통계활용, 계약이행 및 약관 변경 등의 고지를 위한 연락, 본인의사확인 및 민원 등의 고객불만처리\n\n 2. 항목\n이름,비밀번호, 휴대폰\n\n 3. 보유 및 이용기간\n회원 탈퇴시 즉시 파기</string>
 
+    <string name="일급을_숫자로">일급을 숫자만 입력해주세요. 예)100,000</string>
 
 </resources>
