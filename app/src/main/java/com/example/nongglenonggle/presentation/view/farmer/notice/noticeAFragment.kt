@@ -36,7 +36,6 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-        Log.e("shit", "onviewcreate")
 
         val sharedPreferences = requireContext().getSharedPreferences("pref", Context.MODE_PRIVATE)
         val editor= sharedPreferences.edit()
@@ -133,12 +132,10 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
                     }
                     Log.e("fucking","${viewModel.AddressFromWeb.value}")
                 }
-                viewModel.updateNext()
             }
         })
 
         binding.nextBtn.setOnClickListener{
-            //viewModel.switchTab.value = true
             val viewpager = requireActivity().findViewById<ViewPager2>(R.id.viewpager)
             val current = viewpager.currentItem
             val next = current+1
@@ -155,11 +152,6 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
         Log.e("shit", "onresume")
         viewModel.loadAddressData(requireContext())
     }
-
-//    override fun onStart() {
-//        super.onStart()
-//        Log.e("shit", "onstart")
-//    }
 
     //삭제 버튼의 동작을 함수화
     fun EditText.getClearButton(drawableRightId:Int){
@@ -180,9 +172,6 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
             }
         }
     }
-
-
-
 
     fun moveToWeb(){
         //replaceFragment(AddressSettingFragment(), R.id.addressSearch)

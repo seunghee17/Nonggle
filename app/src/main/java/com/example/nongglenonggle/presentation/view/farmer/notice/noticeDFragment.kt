@@ -8,11 +8,11 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentNoticeDBinding
 import com.example.nongglenonggle.presentation.base.BaseFragment
+import com.example.nongglenonggle.presentation.view.dialog.DatepickerFragment
 import com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel
 
 class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_notice_d) {

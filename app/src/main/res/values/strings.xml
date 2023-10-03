@@ -15,6 +15,14 @@
     <string name="근무요일을">근무 요일을 입력해주세요. 예)월수금</string>
     <string name="근무요일spinner">근무 요일을 선택해주세요.</string>
 
+    <string name="근무_시작_시간을">근무 시작 시간을 선택해주세요.</string>
+    <string name="근무_종료_시간을">근무 종료 시간을 선택해주세요.</string>
+
+    <string name="작업_시작_날짜를">작업 시작 날짜를 선택해주세요.</string>
+    <string name="작업_종료_날짜를">작업 종작 날짜를 선택해주세요.</string>
+
+    <string name="근무_시작_시간">근무 시작 시간</string>
+
     <string name="연령대">연령대</string>
     <string name="시작연령대">시작연령대</string>
     <string name="끝연령대">끝연령대</string>

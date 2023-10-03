@@ -16,18 +16,18 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.presentation.base.BaseFragment
 import com.example.nongglenonggle.databinding.FragmentNoticeBBinding
 import com.example.nongglenonggle.domain.entity.Model
 import com.example.nongglenonggle.presentation.view.adapter.SpinnerAdapter
+import com.example.nongglenonggle.presentation.view.dialog.DatepickerFragment
+import com.example.nongglenonggle.presentation.view.dialog.TimepickerFragment
 import com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -153,6 +153,8 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
             list[i].setOnClickListener(buttonClickListener)
         }
 
+        //spinner 구현 부분
+
         val dayItems = resources.getStringArray(R.array.select_day)
         val dayadapter = SpinnerAdapter(requireContext(), R.layout.item_spinner, dayItems,R.id.list_content)
         dayadapter.setHintTextColor("근무 요일을 선택해주세요.", R.color.g3)
@@ -175,6 +177,7 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
                 //database들어갈용 세팅!!!!!!!!
                 viewModel._activeWorkDay.postValue(false)
                 p1?.isPressed = false
+                viewModel._daytextVisible.postValue(true)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -182,6 +185,30 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
             }
 
         }
+
+        binding.daySelectTxt.setOnFocusChangeListener{view,isfocus->
+            viewModel._dayTextActive.postValue(isfocus)
+        }
+
+        binding.daySelectTxt.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.daySelectTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.xcircle,0)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                viewModel.dayTextActive.observe(viewLifecycleOwner){isfocus->
+                    if(isfocus && binding.daySelectTxt.text != null){
+                        binding.daySelectTxt.getClearButton(R.drawable.xcircle)
+                    }else{
+                        binding.daySelectTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
+                    }
+                }
+            }
+
+        })
 
         binding.datepicker1.setOnTouchListener{v,event->
             if(event.action == MotionEvent.ACTION_UP)
@@ -194,12 +221,12 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
         //작업 시작날짜 종료날짜 text에 표시하기위한 옵저빙
         viewModel.DateList.observe(viewLifecycleOwner){havedata->
             if(viewModel.DateList.value?.size == 3){
-                binding.startDate.text = "${viewModel.DateList.value?.get(0)}년 ${viewModel.DateList.value?.get(1)}월 ${viewModel.DateList.value?.get(2)}일"
-                binding.datepicker1.hint=""
+                binding.datepicker1Txt.text = "${viewModel.DateList.value?.get(0)}년 ${viewModel.DateList.value?.get(1)}월 ${viewModel.DateList.value?.get(2)}일"
+                viewModel._datepickerTextA.value = true
             }
             if(viewModel.DateList.value?.size == 6){
-                binding.endDate.text = "${viewModel.DateList.value?.get(3)}년 ${viewModel.DateList.value?.get(4)}월 ${viewModel.DateList.value?.get(5)}일"
-                binding.datepicker2.hint=""
+                binding.datepicker2Txt.text = "${viewModel.DateList.value?.get(3)}년 ${viewModel.DateList.value?.get(4)}월 ${viewModel.DateList.value?.get(5)}일"
+                viewModel._datepickerTextB.value = true
             }
         }
 
@@ -225,6 +252,34 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
 
         })
 
+        binding.workTimeStart.setOnClickListener{
+            showTimePicker()
+        }
+        binding.workTimeEnd.setOnClickListener{
+            showTimePicker()
+        }
+
+        viewModel.TimeList.observe(viewLifecycleOwner){havedata->
+            if(viewModel.TimeList.value?.size==3){
+                viewModel._haveStartData.postValue(true)
+                binding.workTimeStartTxt.text = "${viewModel.TimeList.value?.get(0)} ${viewModel.TimeList.value?.get(1)}:${viewModel.TimeList.value?.get(2)}"
+            }
+            if(viewModel.TimeList.value?.size==6){
+                viewModel._haveEndData.postValue(true)
+                binding.workTimeEndTxt.text = "${viewModel.TimeList.value?.get(3)} ${viewModel.TimeList.value?.get(4)}:${viewModel.TimeList.value?.get(5)}"
+            }
+        }
+
+        binding.nextBtn.setOnClickListener{
+            val viewpager = requireActivity().findViewById<ViewPager2>(R.id.viewpager)
+            val current = viewpager.currentItem
+            val next = current+1
+            if(next < viewpager.adapter?.itemCount ?: 0){
+                viewpager.setCurrentItem(next,true)
+            }else{
+                Log.e("yet","아직 마지막아님")
+            }
+        }
 
     }
 
@@ -247,10 +302,14 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
         }
     }
 
-    private fun showDatePicker()
-    {
+    private fun showDatePicker() {
         val newFrament = DatepickerFragment()
         newFrament.show(parentFragmentManager,"datepicker")
+    }
+
+    private fun showTimePicker(){
+        val newFragment = TimepickerFragment()
+        newFragment.show(parentFragmentManager,"timepicker")
     }
 
     //권한이 없을때 해당함수 호출

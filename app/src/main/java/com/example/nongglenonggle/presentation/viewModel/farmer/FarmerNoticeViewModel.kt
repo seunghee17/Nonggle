@@ -39,9 +39,6 @@ class FarmerNoticeViewModel @Inject constructor(
     val _isClick3 = MutableLiveData<Boolean>()
     val isClick3:LiveData<Boolean> = _isClick3
 
-    //다음버튼 활성화(모든 fragment 공통)
-    private val _toNext = MutableLiveData<Boolean>()
-    val toNext:LiveData<Boolean> = _toNext
 
     //다음화면으로 이동위헤
     private val _setFragment = MutableLiveData<Boolean>()
@@ -59,6 +56,14 @@ class FarmerNoticeViewModel @Inject constructor(
     //spinner 근무요일용
     val _activeWorkDay = MutableLiveData<Boolean>()
     val activeWorkDay:LiveData<Boolean> = _activeWorkDay
+
+    //요일 선택후 edittext visible용
+    val _daytextVisible = MutableLiveData<Boolean>()
+    val daytextVisible:LiveData<Boolean> = _daytextVisible
+
+    //요일 작성 edittext active용
+    val _dayTextActive = MutableLiveData<Boolean>()
+    val dayTextActive : LiveData<Boolean> = _dayTextActive
 
     //spinner 시작 연령 활성화용
     val _activeStartAge=MutableLiveData<Boolean>()
@@ -82,6 +87,26 @@ class FarmerNoticeViewModel @Inject constructor(
     //작업 기간 선정용 리스트
     val _DateList = MutableLiveData<List<Int>>()
     val DateList : LiveData<List<Int>> = _DateList
+
+    //근무시간 선정용 리스트
+    val _TimeList = MutableLiveData<List<String>>()
+    val TimeList:LiveData<List<String>> = _TimeList
+
+    //시작시간 데이터 들어옴
+    val _haveStartData = MutableLiveData<Boolean>()
+    val haveStartData:LiveData<Boolean> = _haveStartData
+
+    //시작시간 데이터 들어옴
+    val _haveEndData = MutableLiveData<Boolean>()
+    val haveEndData:LiveData<Boolean> = _haveEndData
+
+    //datepicker1Txt색상 변화
+    val _datepickerTextA= MutableLiveData<Boolean>()
+    val datepickerTextA:LiveData<Boolean> = _datepickerTextA
+
+    //datepicker2Txt색상 변화
+    val _datepickerTextB= MutableLiveData<Boolean>()
+    val datepickerTextB:LiveData<Boolean> = _datepickerTextB
 
     //상세 작업 내용 저장용
     val _detailContent = MutableLiveData<String>()
@@ -248,7 +273,6 @@ class FarmerNoticeViewModel @Inject constructor(
         val sharedPreferences = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
         val addressData = sharedPreferences.getString("addressData",null)
         _AddressFromWeb.value=addressData
-        Log.e("love","${AddressFromWeb.value}")
     }
 
 
@@ -275,7 +299,6 @@ class FarmerNoticeViewModel @Inject constructor(
         _isClick1.postValue(false)
         _isClick2.postValue(false)
         _isClick3.postValue(false)
-        _toNext.value = false
         _setFragment.value = false
         _fragmentBState.value = false
         _workerTime1.value = false
@@ -287,8 +310,4 @@ class FarmerNoticeViewModel @Inject constructor(
 
 
 
-    fun updateNext()
-    {
-        _toNext.value = !(toNext.value ?: false)
-    }
 }

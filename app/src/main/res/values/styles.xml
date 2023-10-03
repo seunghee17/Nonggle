@@ -29,6 +29,9 @@
         <item name="colorControlNormal">@color/m1</item>
     </style>
 
+    <style name="ThemeOverlay.AppCompat.TabLayout" parent="">
+        <item name="tabRippleColor">@null</item>
+    </style>
 
 
 

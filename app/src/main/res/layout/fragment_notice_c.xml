@@ -641,6 +641,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:background="@color/m1"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:fontFamily="@font/spoqahansansneo_medium"
         android:text="@string/다음"
 
         />

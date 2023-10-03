@@ -30,7 +30,7 @@
         android:id="@+id/closebtn"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/close"
+        android:src="@drawable/caretleft"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/tablayout"
@@ -52,6 +52,7 @@
 
 <com.google.android.material.tabs.TabLayout
     android:id="@+id/tablayout"
+    android:theme="@style/ThemeOverlay.AppCompat.TabLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_constraintTop_toBottomOf="@+id/title"

@@ -1,4 +1,4 @@
-package com.example.nongglenonggle.presentation.view.farmer.notice
+package com.example.nongglenonggle.presentation.view.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater

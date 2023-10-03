@@ -19,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class NoticeActivity : BaseActivity<ActivityNoticeBinding>(R.layout.activity_notice) {
     private val viewModel: FarmerNoticeViewModel by viewModels()
     private lateinit var tablayout : TabLayout
-    private lateinit var framelayout:FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -162,9 +162,9 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:fontFamily="@font/spoqahansansneo_medium"
-        android:background="@{viewModel.toNext ? @color/m1 : @color/unactive}"
-        android:paddingTop="14.5dp"
-        android:paddingBottom="14.5dp"
+        android:background="@color/m1"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:layout_gravity="bottom"
         android:gravity="center"
         />

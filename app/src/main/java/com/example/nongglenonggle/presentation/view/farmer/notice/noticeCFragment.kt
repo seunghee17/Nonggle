@@ -3,6 +3,7 @@ package com.example.nongglenonggle.presentation.view.farmer.notice
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -14,6 +15,7 @@ import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.viewpager2.widget.ViewPager2
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentNoticeCBinding
 import com.example.nongglenonggle.presentation.base.BaseFragment
@@ -221,6 +223,16 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
             }
 
         })
+        binding.nextBtn.setOnClickListener{
+            val viewpager = requireActivity().findViewById<ViewPager2>(R.id.viewpager)
+            val current = viewpager.currentItem
+            val next = current+1
+            if(next < viewpager.adapter?.itemCount ?: 0){
+                viewpager.setCurrentItem(next,true)
+            }else{
+                Log.e("yet","아직 마지막아님")
+            }
+        }
 
     }
     // 스피너 어댑터 초기화 함수
