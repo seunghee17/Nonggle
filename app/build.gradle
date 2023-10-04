@@ -13,7 +13,7 @@ kotlin{
 
 android {
     namespace 'com.example.nongglenonggle'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.nongglenonggle"
@@ -78,6 +78,11 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:2.44"
 
     implementation("com.google.firebase:firebase-storage-ktx")
+    implementation('com.google.android.flexbox:flexbox:3.0.0')
+
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.3")
+
 
 }
 kapt {

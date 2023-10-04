@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,9 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FarmerNoticeViewModel @Inject constructor(
-    private val uploadImageUsecase: UploadImageUsecase
-): ViewModel() {
+class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: UploadImageUsecase): ViewModel() {
     //이름칸 감지
     val _isClick1 = MutableLiveData<Boolean>()
     val isClick1:LiveData<Boolean> = _isClick1
@@ -41,8 +41,8 @@ class FarmerNoticeViewModel @Inject constructor(
 
 
     //다음화면으로 이동위헤
-    private val _setFragment = MutableLiveData<Boolean>()
-    val setFragment:LiveData<Boolean> = _setFragment
+//    private val _setFragment = MutableLiveData<Boolean>()
+//    val setFragment:LiveData<Boolean> = _setFragment
 
 
     //fragmentB에서 이렇게 해보겠음
@@ -142,9 +142,13 @@ class FarmerNoticeViewModel @Inject constructor(
     val _activeCounsel = MutableLiveData<Boolean>()
     val activeCounsel:LiveData<Boolean> = _activeCounsel
 
-    //급여정보
+    //급여정보 타입
     val _noticeMoney = MutableLiveData<String>()
     val noticeMoney : LiveData<String> = _noticeMoney
+
+    //급여 실제 액수 입력 데이터
+    val _payMoney = MutableLiveData<String>()
+    val payMoney : LiveData<String> = _payMoney
 
     //급여 edit용
     val _activeEdittxt = MutableLiveData<Boolean>()
@@ -260,10 +264,9 @@ class FarmerNoticeViewModel @Inject constructor(
                 //여기서 url접근해서 가져오기
                 val imageurl = result.getOrNull()
                 _farmerImage.value = imageurl!!
-                Log.e("cap", "${farmerImage.value}")
             }
             else{
-                Log.e("imageerror", "저장에")
+               Log.e("error", "이미지 업로드 실패")
             }
         }
     }
@@ -299,7 +302,7 @@ class FarmerNoticeViewModel @Inject constructor(
         _isClick1.postValue(false)
         _isClick2.postValue(false)
         _isClick3.postValue(false)
-        _setFragment.value = false
+        //_setFragment.value = false
         _fragmentBState.value = false
         _workerTime1.value = false
         _workerTime2.value = false

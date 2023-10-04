@@ -26,16 +26,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            >
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                >
-
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="24dp">
                 <TextView
                     android:id="@+id/q1title"
                     android:layout_width="wrap_content"
@@ -44,16 +37,12 @@
                     android:textSize="14sp"
                     android:textColor="@color/g1"
                     android:text="@string/필요인원"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginTop="24dp"
                     />
                 <EditText
                     android:id="@+id/q1edit_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/q1title"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
                     android:layout_marginTop="4dp"
                     android:backgroundTint="@{viewModel.requiredPeople ? @color/m1 : @color/g_line}"
                     android:hint="@string/필요인원설명"
@@ -70,8 +59,6 @@
                     android:id="@+id/agetitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/q1edit_txt"
                     android:layout_marginTop="24dp"
                     android:text="@string/연령대"
                     android:fontFamily="@font/spoqahansansneo_regular"
@@ -84,9 +71,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/agetitle"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
                     android:weightSum="2"
                     android:layout_marginTop="12dp"
                     >
@@ -117,8 +101,6 @@
                     android:id="@+id/gender_select"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/age_select"
                     android:layout_marginTop="24dp"
                     android:text="@string/성별"
                     android:fontFamily="@font/spoqahansansneo_regular"
@@ -129,8 +111,6 @@
                     android:id="@+id/gender_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/gender_select"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginTop="12dp"
                     android:weightSum="3"
                     android:orientation="horizontal"
@@ -208,8 +188,6 @@
                     android:id="@+id/paytitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/gender_container"
                     android:layout_marginTop="24dp"
                     android:text="@string/급여"
                     android:fontFamily="@font/spoqahansansneo_regular"
@@ -220,8 +198,6 @@
                     android:id="@+id/pay_subtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/paytitle"
                     android:layout_marginTop="8dp"
                     android:text="@string/급여sub"
                     android:fontFamily="@font/spoqahansansneo_regular"
@@ -233,8 +209,6 @@
                     android:id="@+id/pay_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/pay_subtitle"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginTop="12dp"
                     android:weightSum="3"
                     android:orientation="horizontal"
@@ -252,6 +226,7 @@
                         android:clickable="true"
                         >
                         <TextView
+                            android:id="@+id/day_money_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/일급"
@@ -274,6 +249,7 @@
                         android:clickable="true"
                         >
                         <TextView
+                            android:id="@+id/time_money_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/시급"
@@ -285,7 +261,7 @@
                             />
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/cousel_money"
+                        android:id="@+id/counsel_money"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -295,6 +271,7 @@
                         android:clickable="true"
                         >
                         <TextView
+                            android:id="@+id/counsel_money_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/급여협의"
@@ -313,10 +290,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/pay_container"
-                    android:visibility="@{viewModel.activedayMoney ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{(viewModel.activedayMoney || viewModel.activeTimeMoney) ? View.VISIBLE : View.GONE}"
                     android:backgroundTint="@{viewModel.activeEdittxt ? @color/m1 : @color/g_line}"
                     android:hint="@string/일급을_숫자로"
                     android:textColorHint="@color/g3"
@@ -332,8 +306,6 @@
                     android:id="@+id/job_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/money_txt"
                     android:layout_marginTop="24dp"
                     android:text="@string/고용형태"
                     android:fontFamily="@font/spoqahansansneo_regular"
@@ -345,8 +317,6 @@
                     android:id="@+id/job_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/job_type"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginTop="12dp"
                     android:weightSum="3"
                     android:orientation="horizontal"
@@ -424,8 +394,6 @@
                     android:id="@+id/avil_career"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/job_container"
                     android:layout_marginTop="24dp"
                     android:text="@string/지원가능한_경력"
                     android:fontFamily="@font/spoqahansansneo_regular"
@@ -437,8 +405,6 @@
                     android:id="@+id/avail_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/avil_career"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginTop="12dp"
                     android:weightSum="3"
                     android:orientation="horizontal"
@@ -485,8 +451,7 @@
                             android:textSize="16sp"
                             android:fontFamily="@font/spoqahansansneo_medium"
                             android:paddingBottom="16dp"
-                            android:paddingTop="16dp"
-                            />
+                            android:paddingTop="16dp" />
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/apply_type3"
@@ -516,26 +481,23 @@
                     android:id="@+id/certification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/avail_container"
                     android:layout_marginTop="24dp"
+                    android:paddingBottom="12dp"
                     android:text="@string/자격증"
                     android:fontFamily="@font/spoqahansansneo_regular"
                     android:textSize="14sp"
                     android:textColor="@color/g1"
                     />
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="64dp">
                 <LinearLayout
                     android:id="@+id/certification_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/certification"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="64dp"
-                    android:layout_marginTop="12dp"
                     android:weightSum="2"
                     >
 
@@ -589,9 +551,6 @@
                     android:id="@+id/certification_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/certification_container"
                     android:orientation="horizontal"
                     android:layout_marginTop="12dp"
                     android:visibility="@{viewModel.activeCertifi1 ? View.VISIBLE : View.GONE}">
@@ -600,18 +559,17 @@
                         android:id="@+id/certification_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="1"
                         android:backgroundTint="@{viewModel.active_Edittxt ? @color/m1 : @color/g_line}"
+                        android:fontFamily="@font/spoqahansansneo_regular"
                         android:hint="@string/자격증_입력"
                         android:paddingLeft="4dp"
                         android:paddingBottom="16dp"
-                        android:textColorHint="@color/g3"
-                        android:textSize="16sp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/spoqahansansneo_regular"
                         android:textColor="@color/black"
+                        android:textColorHint="@color/g3"
                         android:textCursorDrawable="@color/m1"
-                        android:layout_marginRight="16dp"
-                        />
+                        android:textSize="16sp"/>
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/confirmbtn"
@@ -628,7 +586,110 @@
 
                 </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:id="@+id/c"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp">
+
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:flexWrap="wrap">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="@drawable/bg_certification"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginBottom="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="화훼산업기사"
+                                android:layout_marginLeft="16dp"
+                                android:paddingTop="11dp"
+                                android:paddingBottom="11dp"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/spoqahansansneo_regular"
+                                android:textColor="@color/g2" />
+                            <ImageView
+                                android:id="@+id/clearbtnA"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/xcircle"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="16dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="@drawable/bg_certification"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginBottom="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="운전면허 1종"
+                                android:layout_marginLeft="16dp"
+                                android:paddingTop="11dp"
+                                android:paddingBottom="11dp"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/spoqahansansneo_regular"
+                                android:textColor="@color/g2" />
+                            <ImageView
+                                android:id="@+id/clearbtnB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/xcircle"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="16dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="@drawable/bg_certification"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginBottom="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="운전면허 1종"
+                                android:layout_marginLeft="16dp"
+                                android:paddingTop="11dp"
+                                android:paddingBottom="11dp"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/spoqahansansneo_regular"
+                                android:textColor="@color/g2" />
+                            <ImageView
+                                android:id="@+id/clearbtnC"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/xcircle"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="16dp"/>
+
+                        </LinearLayout>
+
+                    </com.google.android.flexbox.FlexboxLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
 
         </LinearLayout>
 

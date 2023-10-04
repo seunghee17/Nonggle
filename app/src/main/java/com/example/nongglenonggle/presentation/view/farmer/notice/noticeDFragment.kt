@@ -115,7 +115,7 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
             viewModel._DeadlineType.postValue(binding.deadlineYesTxt.text.toString())
         }
 
-        binding.deadlineYes.setOnClickListener{
+        binding.deadlineNo.setOnClickListener{
             viewModel._yesDeadlineActive.postValue(false)
             viewModel._noDeadlineActive.postValue(true)
             viewModel._DeadlineType.postValue(binding.deadlineNoTxt.text.toString())

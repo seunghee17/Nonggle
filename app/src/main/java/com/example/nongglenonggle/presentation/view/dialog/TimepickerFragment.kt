@@ -56,6 +56,9 @@ class TimepickerFragment : BottomSheetDialogFragment() {
 
         minutePicker.minValue = minuteMinValue
         minutePicker.maxValue = minuteMaxValue
+        minutePicker.setFormatter{value->
+            String.format("%02d", value)
+        }
         //옵션무한 반복 금지
         typePicker.wrapSelectorWheel=false
         hourPicker.wrapSelectorWheel=false
@@ -63,11 +66,11 @@ class TimepickerFragment : BottomSheetDialogFragment() {
 
         val selectedTypeValue = typePickerValues[typePicker.value]
         val selectedHourValue = hourPicker.value
-        val seledtedMinuteValue = minutePicker.value
+        val seledtedMinuteValue = String.format("%02d", minutePicker.value)
 
         binding.confirmbtn.setOnClickListener{
             val currentList = viewModel._TimeList.value ?: emptyList()
-            viewModel._TimeList.value = currentList + listOf(selectedTypeValue,selectedHourValue.toString(),seledtedMinuteValue.toString())
+            viewModel._TimeList.value = currentList + listOf(selectedTypeValue,selectedHourValue.toString(),seledtedMinuteValue)
             dismiss()
         }
 

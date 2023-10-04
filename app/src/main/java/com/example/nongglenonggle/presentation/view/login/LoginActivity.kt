@@ -38,12 +38,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             val email = "$phnum@example.com"
             viewModel.loginWithEmailAndPassword(email,passwordText.text.toString())
             if(viewModel.isLoginAvailable.value == true){
-                //viewModel.getUserType()
                 viewModel.isFarmer.observe(this, Observer { isFarmer->
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     Log.e("applesdf","구인자")
-                    //Log.e("applesdf","${viewModel.isFarmer.value}")
                     Log.e("applesdf","${viewModel.UserUID}")
                 })
                 viewModel.isWorker.observe(this, Observer { isWorker->

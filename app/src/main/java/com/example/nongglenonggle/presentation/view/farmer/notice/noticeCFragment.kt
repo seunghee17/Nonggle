@@ -101,23 +101,22 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
             viewModel._activedayMoney.value = true
             viewModel._activeTimeMoney.value = false
             viewModel._activeCounsel.value = false
-            viewModel._noticeMoney.value = "일급"
-
+            viewModel._noticeMoney.value = binding.dayMoneyTxt.text.toString()
         }
         //시급
-        binding.dayMoney.setOnClickListener{
+        binding.timeMoney.setOnClickListener{
             viewModel._activedayMoney.value = false
             viewModel._activeTimeMoney.value = true
             viewModel._activeCounsel.value = false
-            viewModel._noticeMoney.value = "시급"
+            viewModel._noticeMoney.value = binding.timeMoneyTxt.text.toString()
 
         }
         //급여협의
-        binding.dayMoney.setOnClickListener{
+        binding.counselMoney.setOnClickListener{
             viewModel._activedayMoney.value = false
             viewModel._activeTimeMoney.value = false
             viewModel._activeCounsel.value = true
-            viewModel._noticeMoney.value = "급여협의"
+            viewModel._noticeMoney.value = binding.counselMoneyTxt.text.toString()
 
         }
 
@@ -144,7 +143,7 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
                         binding.moneyTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
                     }
                 }
-                viewModel._noticeMoney.postValue(p0.toString())
+                viewModel._payMoney.postValue("${p0.toString()}원")
             }
         })
 
