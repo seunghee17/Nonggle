@@ -25,7 +25,6 @@ class DatepickerFragment : BottomSheetDialogFragment() {
     ): View? {
         _binding = FragmentDatepickerBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = this
-
         return binding.root
 
     }

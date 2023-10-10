@@ -68,6 +68,7 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
                         binding.namebox.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
                     }
                 }
+                viewModel.name = p0.toString()
             }
         })
 
@@ -93,6 +94,7 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
                         binding.phnumbox.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
                     }
                 }
+                viewModel.phnum = p0.toString()
             }
         })
 
@@ -130,8 +132,8 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
                     else{
                         binding.detailAddress.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
                     }
-                    Log.e("fucking","${viewModel.AddressFromWeb.value}")
                 }
+                viewModel.totalAddress = viewModel.AddressFromWeb.value + p0.toString()
             }
         })
 

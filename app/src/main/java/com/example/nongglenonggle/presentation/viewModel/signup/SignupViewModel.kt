@@ -153,16 +153,32 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
                     if(task.isSuccessful)
                     {
                         val user: FirebaseUser? = auth.currentUser
-                        user?.let{
-                            val userDocument = firestore.collection("Farmer").document(it.uid)
-                            _UserUID.postValue(it.uid)
-                            userDocument.set(
-                                mapOf(
-                                    "uid" to it.uid,
-                                    "phoneNum" to email,
-                                    "userName" to name
+                        //구인자
+                        if(isHire.value == true){
+                            user?.let{
+                                val userDocument = firestore.collection("Farmer").document(it.uid)
+                                _UserUID.postValue(it.uid)
+                                userDocument.set(
+                                    mapOf(
+                                        "uid" to it.uid,
+                                        "phoneNum" to email,
+                                        "userName" to name
+                                    )
                                 )
-                            )
+                            }
+                        }
+                        else if(isWorker.value == true){
+                            user?.let{
+                                val userDocument = firestore.collection("Worker").document(it.uid)
+                                _UserUID.postValue(it.uid)
+                                userDocument.set(
+                                    mapOf(
+                                        "uid" to it.uid,
+                                        "phoneNum" to email,
+                                        "userName" to name
+                                    )
+                                )
+                            }
                         }
                         //코루틴 사용할 수 있지 않을까?
                         Log.e("signup", "회원가입 완료")

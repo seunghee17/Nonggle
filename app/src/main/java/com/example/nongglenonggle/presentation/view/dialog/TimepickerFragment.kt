@@ -43,7 +43,7 @@ class TimepickerFragment : BottomSheetDialogFragment() {
 
 
         typePicker.minValue = 0
-        typePicker.maxValue = typePicker.size -1
+        typePicker.maxValue = typePickerValues.size -1
         typePicker.displayedValues = typePickerValues
 
         val hourMinValue =1
@@ -64,13 +64,26 @@ class TimepickerFragment : BottomSheetDialogFragment() {
         hourPicker.wrapSelectorWheel=false
         minutePicker.wrapSelectorWheel=false
 
-        val selectedTypeValue = typePickerValues[typePicker.value]
-        val selectedHourValue = hourPicker.value
-        val seledtedMinuteValue = String.format("%02d", minutePicker.value)
+        var selectedTypeValue = typePickerValues[typePicker.value]
+        var selectedHourValue = hourPicker.value
+        var selectedMinuteValue = String.format("%02d", minutePicker.value)
+
+        typePicker.setOnValueChangedListener { _, _, newVal ->
+            selectedTypeValue = typePickerValues[newVal]
+        }
+
+        hourPicker.setOnValueChangedListener { _, _, newVal ->
+            selectedHourValue = newVal
+        }
+
+        minutePicker.setOnValueChangedListener { _, _, newVal ->
+            selectedMinuteValue = String.format("%02d", newVal)
+        }
 
         binding.confirmbtn.setOnClickListener{
-            val currentList = viewModel._TimeList.value ?: emptyList()
-            viewModel._TimeList.value = currentList + listOf(selectedTypeValue,selectedHourValue.toString(),seledtedMinuteValue)
+            val currentList = viewModel._TimeList.value?.toMutableList() ?: mutableListOf()
+            currentList.addAll(listOf(selectedTypeValue, selectedHourValue.toString(), selectedMinuteValue))
+            viewModel._TimeList.postValue(currentList)
             dismiss()
         }
 

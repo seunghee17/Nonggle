@@ -38,13 +38,13 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
         binding.dormYes.setOnClickListener{
             viewModel._activeDorm.postValue(true)
             viewModel._activeNoDorm.postValue(false)
-            viewModel._DormType.postValue(binding.dormYesTxt.text.toString())
+            viewModel._DormType.value = "숙소를 지원합니다."
         }
         //숙소제공 없음
         binding.dormNo.setOnClickListener{
             viewModel._activeDorm.postValue(false)
             viewModel._activeNoDorm.postValue(true)
-            viewModel._DormType.postValue(binding.dormNoTxt.text.toString())
+            viewModel._DormType.value = "숙소를 지원하지 않습니다."
         }
         binding.yesDormInfo.setOnFocusChangeListener{view,isfocus->
             viewModel._yesDormActive.postValue(isfocus)
@@ -68,6 +68,8 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
                     }
                 }
                 viewModel._yesDormInfo.postValue(p0.toString())
+                val init = viewModel.DormType.value
+                viewModel._DormType.value = "${init} ${viewModel.yesDormInfo.value}"
             }
 
         })
@@ -75,13 +77,12 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
         binding.foodYes.setOnClickListener{
             viewModel._yesFood.postValue(true)
             viewModel._noFood.postValue(false)
-            viewModel._FoodType.postValue(binding.foodYesTxt.text.toString())
+            viewModel._FoodType.value = "식사를 제공합니다."
         }
         binding.foodNo.setOnClickListener{
             viewModel._yesFood.postValue(false)
             viewModel._noFood.postValue(true)
-            viewModel._FoodType.postValue(binding.foodNoTxt.text.toString())
-        }
+            viewModel._FoodType.value = "식사를 제공하지 않습니다." }
 
         binding.yesFoodInfo.setOnFocusChangeListener{view,isfocus->
             viewModel._yesFoodActive.postValue(isfocus)
@@ -105,6 +106,8 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
                     }
                 }
                 viewModel._yesFoodInfo.postValue(p0.toString())
+                val init = viewModel.FoodType.value
+                viewModel._FoodType.value = "${init} ${viewModel._yesFoodInfo.value}"
             }
 
         })
@@ -131,6 +134,7 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
             if(viewModel.DateList.value?.size == 9){
                 viewModel._isDeadline.postValue(true)
                 binding.deadlineTxt.text = "${viewModel.DateList.value?.get(6)}년 ${viewModel.DateList.value?.get(7)}월 ${viewModel.DateList.value?.get(8)}일"
+                viewModel.deadlineDetail = "${viewModel.DateList.value?.get(6)}.${viewModel.DateList.value?.get(7)}.${viewModel.DateList.value?.get(8)}"
             }
             else{
                 viewModel._isDeadline.postValue(false)

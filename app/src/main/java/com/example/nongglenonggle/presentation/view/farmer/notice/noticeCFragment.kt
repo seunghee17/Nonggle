@@ -65,14 +65,15 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
                         binding.q1editTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
                     }
                 }
+                viewModel._requirednum.value = "${p0.toString()}명"
             }
 
         })
 
-
-// 이 함수를 이용하여 스피너 초기화
         initSpinner(binding.startAgeSpinner, R.array.start_select_age, "시작연령대", viewModel._activeStartAge)
+        viewModel.recruitAge.add(0,viewModel.agedata)
         initSpinner(binding.endAgeSpinner, R.array.end_select_age, "끝연령대", viewModel._activeEndAge)
+        viewModel.recruitAge.add(1,viewModel.agedata)
 
 
 
@@ -150,20 +151,12 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
         binding.workType1.setOnClickListener{
             viewModel._activeWorkType1.value = true
             viewModel._activeWorkType2.value = false
-            viewModel._activeWorkType3.value = false
             viewModel._workType.postValue("체류형")
         }
         binding.workType2.setOnClickListener{
             viewModel._activeWorkType1.value = false
             viewModel._activeWorkType2.value = true
-            viewModel._activeWorkType3.value = false
             viewModel._workType.postValue("출퇴근형")
-        }
-        binding.workType3.setOnClickListener{
-            viewModel._activeWorkType1.value = false
-            viewModel._activeWorkType2.value = false
-            viewModel._activeWorkType3.value = true
-            viewModel._workType.postValue("계약직")
         }
 
         binding.applyType1.setOnClickListener{
@@ -187,13 +180,12 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
         binding.certificationNeed.setOnClickListener{
             viewModel._activeCertifi1.postValue(true)
             viewModel._activeCertifi2.postValue(false)
-            //이경우 object로 데이터베이스에 집어넣기
-            //추후 재정의하기!!!
+            viewModel._certifiType.value = binding.certificationNeedTxt.text.toString()
         }
         binding.certificationUnneed.setOnClickListener{
             viewModel._activeCertifi1.postValue(false)
             viewModel._activeCertifi2.postValue(true)
-            //처리방법고민하기!!
+            viewModel._certifiType.value = binding.certificationUnneedTxt.text.toString()
         }
 
         binding.certificationInfo.setOnFocusChangeListener{view,isFocus->
@@ -219,9 +211,47 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
                     }
                     viewModel._active_confirm.postValue(true)
                 }
+                binding.confirmbtn.setOnClickListener{
+                    val currentList = viewModel._certifiList.value ?: emptyList()
+                    viewModel._certifiList.value = currentList + listOf(p0.toString())
+                }
             }
-
         })
+
+        //certifiList 옵저빙
+        viewModel.certifiList.observe(viewLifecycleOwner){data->
+            data?.let{
+                if(it.size ==1){
+                    viewModel._visibleA.postValue(true)
+                    viewModel.certifiA.postValue(it[0])
+                }
+                if(it.size ==2){
+                    viewModel._visibleB.postValue(true)
+                    viewModel.certifiB.postValue(it[1])
+                }
+                if(it.size ==3){
+                    viewModel._visibleC.postValue(true)
+                    viewModel.certifiC.postValue(it[2])
+                }
+            }
+        }
+
+        //추가한 자격증 항목들 지우기
+        binding.clearbtnA.setOnClickListener{
+            viewModel.removeItemAt(0)
+        }
+        binding.clearbtnB.setOnClickListener{
+            viewModel.removeItemAt(1)
+        }
+
+        binding.clearbtnC.setOnClickListener{
+            viewModel.removeItemAt(2)
+        }
+
+
+
+
+
         binding.nextBtn.setOnClickListener{
             val viewpager = requireActivity().findViewById<ViewPager2>(R.id.viewpager)
             val current = viewpager.currentItem
@@ -234,6 +264,7 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
         }
 
     }
+
     // 스피너 어댑터 초기화 함수
     private fun initSpinner(spinner: Spinner, itemsArrayId: Int, hintText: String, viewModelLiveData: MutableLiveData<Boolean>) {
         val items = resources.getStringArray(itemsArrayId)
@@ -256,6 +287,7 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 viewModelLiveData.postValue(false)
+                viewModel.agedata = items[p2]
                 p1?.isPressed = false
             }
 

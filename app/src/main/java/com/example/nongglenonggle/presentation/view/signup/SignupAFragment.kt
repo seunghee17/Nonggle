@@ -45,10 +45,7 @@ class SignupAFragment : BaseFragment<FragmentSignupABinding>(R.layout.fragment_s
         val nextbtn=binding.nextBtn
         //다음버튼 누를때 동작을 하는 코드
         nextbtn.setOnClickListener{
-            viewModel.isActiveNext.observe(viewLifecycleOwner){
-                istrue ->
-                moveToNext()
-            }
+            moveToNext()
         }
 
     }

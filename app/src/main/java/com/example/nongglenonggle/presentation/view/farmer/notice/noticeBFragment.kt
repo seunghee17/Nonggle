@@ -14,6 +14,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.util.Log
 import androidx.core.app.ActivityCompat
@@ -71,175 +72,166 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
         binding.viewModel = viewModel
 
 
-
-
         //시간입력 버튼
         val workerTime1 = binding.workerTime1
         val workerTime2 = binding.workerTime2
-
-
-
-        val category1 = binding.farmerCategory1
-        val category2 = binding.farmerCategory2
-        val category3 = binding.farmerCategory3
-        val category4 = binding.farmerCategory4
-        val category5 = binding.farmerCategory5
-        val category6 = binding.farmerCategory6
-        val category7 = binding.farmerCategory7
-        val category8 = binding.farmerCategory8
-
-        val list = ArrayList<Button>()
-        val list2= listOf(category1,category2,category3,category4,category5,category6,category7,category8)
-        list.addAll(list2)
-        var clickcnt =0
 
         binding.titleEdit.setOnFocusChangeListener { view, isfocus ->
             viewModel._fragmentBState.postValue(isfocus)
         }
 
-        binding.titleEdit.addTextChangedListener(object :TextWatcher{
+        binding.titleEdit.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.titleEdit.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.xcircle,0)
+                binding.titleEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.xcircle, 0)
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                viewModel.fragmentBState.observe(viewLifecycleOwner){isfocus->
-                    if(isfocus && binding.titleEdit.text != null){
-                        binding.titleEdit.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.xcircle,0)
+                viewModel.fragmentBState.observe(viewLifecycleOwner) { isfocus ->
+                    if (isfocus && binding.titleEdit.text != null) {
+                        binding.titleEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.xcircle, 0)
                         binding.titleEdit.getClearButton(R.drawable.xcircle)
-                    }
-                    else{
-                        binding.titleEdit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
+                    } else {
+                        binding.titleEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
                     }
                 }
+                viewModel.titleInfo = p0.toString()
             }
         })
 
 
 
-        workerTime1.setOnClickListener{
-            viewModel.setActiveTime1Button()
+        workerTime1.setOnClickListener {
+            //viewModel.setActiveTime1Button()
+            viewModel._workerTime1.postValue(true)
+            viewModel._workerTime2.postValue(false)
+            viewModel.timeType = "시간입력"
         }
 
-        workerTime2.setOnClickListener{
-            viewModel.setActiveTime2Button()
+        workerTime2.setOnClickListener {
+            viewModel._workerTime1.postValue(false)
+            viewModel._workerTime2.postValue(true)
+            viewModel.timeType = "시간협의"
         }
 
-        val buttonClickListener = View.OnClickListener {
-            view->
-            if(clickcnt < 3){
-                clickcnt++
-                when(viewModel.category.value){
-                    true -> {
-                        viewModel.setActiveButton()
-                    }
-                    false->
-                    {
-                        viewModel.setActiveButton()
-                    }
-                    null ->{
-
-                    }
-                }
-            }
-        }
-
-        //when으로 바꾸기
-        for(i in 0..7)
-        {
-            list[i].setOnClickListener(buttonClickListener)
-        }
 
         //spinner 구현 부분
 
         val dayItems = resources.getStringArray(R.array.select_day)
-        val dayadapter = SpinnerAdapter(requireContext(), R.layout.item_spinner, dayItems,R.id.list_content)
+        val dayadapter =
+            SpinnerAdapter(requireContext(), R.layout.item_spinner, dayItems, R.id.list_content)
         dayadapter.setHintTextColor("근무 요일을 선택해주세요.", R.color.g3)
         binding.daySelectSpinner.adapter = dayadapter
         binding.daySelectSpinner.setSelection(dayadapter.count)
-        binding.daySelectSpinner.post{
+        binding.daySelectSpinner.post {
             binding.daySelectSpinner.dropDownVerticalOffset = binding.daySelectSpinner.height
         }
 
-        binding.daySelectSpinner.setOnTouchListener{
-            v,event->
-            if(event.action == MotionEvent.ACTION_UP){
+        binding.daySelectSpinner.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
                 viewModel._activeWorkDay.postValue(true)
             }
             false
         }
 
-        binding.daySelectSpinner.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                //database들어갈용 세팅!!!!!!!!
-                viewModel._activeWorkDay.postValue(false)
-                p1?.isPressed = false
-                viewModel._daytextVisible.postValue(true)
+        binding.daySelectSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    if(p2 == 8){
+                        return
+                    }
+                    viewModel._activeWorkDay.postValue(false)
+                    p1?.isPressed = false
+                    viewModel._dayType.value = p0?.getItemAtPosition(p2).toString()
+                    viewModel._daytextVisible.postValue(true)
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    viewModel._activeWorkDay.postValue(false)
+                }
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                viewModel._activeWorkDay.postValue(false)
-            }
-
-        }
-
-        binding.daySelectTxt.setOnFocusChangeListener{view,isfocus->
+        binding.daySelectTxt.setOnFocusChangeListener { view, isfocus ->
             viewModel._dayTextActive.postValue(isfocus)
         }
 
-        binding.daySelectTxt.addTextChangedListener(object : TextWatcher{
+        binding.daySelectTxt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.daySelectTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.xcircle,0)
+                binding.daySelectTxt.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.xcircle,
+                    0
+                )
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                viewModel.dayTextActive.observe(viewLifecycleOwner){isfocus->
-                    if(isfocus && binding.daySelectTxt.text != null){
+                viewModel.dayTextActive.observe(viewLifecycleOwner) { isfocus ->
+                    if (isfocus && binding.daySelectTxt.text != null) {
                         binding.daySelectTxt.getClearButton(R.drawable.xcircle)
-                    }else{
-                        binding.daySelectTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
+                    } else {
+                        binding.daySelectTxt.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
                     }
                 }
+                viewModel._dayDetail.postValue(p0.toString())
             }
 
         })
 
-        binding.datepicker1.setOnTouchListener{v,event->
-            if(event.action == MotionEvent.ACTION_UP)
-            {
+        binding.datepicker1.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
                 showDatePicker()
             }
             false
         }
-
         //작업 시작날짜 종료날짜 text에 표시하기위한 옵저빙
-        viewModel.DateList.observe(viewLifecycleOwner){havedata->
-            if(viewModel.DateList.value?.size == 3){
-                binding.datepicker1Txt.text = "${viewModel.DateList.value?.get(0)}년 ${viewModel.DateList.value?.get(1)}월 ${viewModel.DateList.value?.get(2)}일"
+        viewModel.DateList.observe(viewLifecycleOwner) { havedata ->
+            if (viewModel.DateList.value?.size == 3) {
+                binding.datepicker1Txt.text =
+                    "${viewModel.DateList.value?.get(0)}년 ${viewModel.DateList.value?.get(1)}월 ${
+                        viewModel.DateList.value?.get(2)
+                    }일"
                 viewModel._datepickerTextA.value = true
+                val year = viewModel.DateList.value?.get(0)
+                val shortYear = year!! % 100
+                val currentList = viewModel._workPeriod.value ?: emptyList()
+                viewModel._workPeriod.value = currentList + listOf(
+                    "${shortYear}.${viewModel.DateList.value?.get(1)}.${
+                        viewModel.DateList.value?.get(2)
+                    }"
+                )
             }
-            if(viewModel.DateList.value?.size == 6){
-                binding.datepicker2Txt.text = "${viewModel.DateList.value?.get(3)}년 ${viewModel.DateList.value?.get(4)}월 ${viewModel.DateList.value?.get(5)}일"
+            if (viewModel.DateList.value?.size == 6) {
+                binding.datepicker2Txt.text =
+                    "${viewModel.DateList.value?.get(3)}년 ${viewModel.DateList.value?.get(4)}월 ${
+                        viewModel.DateList.value?.get(5)
+                    }일"
                 viewModel._datepickerTextB.value = true
+                val year = viewModel.DateList.value?.get(3)
+                val shortYear = year!! % 100
+                val currentList = viewModel._workPeriod.value ?: emptyList()
+                viewModel._workPeriod.value = currentList + listOf(
+                    "${shortYear}.${viewModel.DateList.value?.get(1)}.${
+                        viewModel.DateList.value?.get(2)
+                    }"
+                )
             }
         }
 
-        binding.datepicker2.setOnTouchListener{v,event->
-            if(event.action == MotionEvent.ACTION_UP)
-            {
+        binding.datepicker2.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
                 showDatePicker()
             }
             false
         }
 
         //업무 세부 내용
-        binding.noticeContent.addTextChangedListener(object : TextWatcher{
+        binding.noticeContent.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -252,36 +244,80 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
 
         })
 
-        binding.workTimeStart.setOnClickListener{
+        binding.workTimeStart.setOnClickListener {
             showTimePicker()
         }
-        binding.workTimeEnd.setOnClickListener{
+        binding.workTimeEnd.setOnClickListener {
             showTimePicker()
         }
 
-        viewModel.TimeList.observe(viewLifecycleOwner){havedata->
-            if(viewModel.TimeList.value?.size==3){
-                viewModel._haveStartData.postValue(true)
-                binding.workTimeStartTxt.text = "${viewModel.TimeList.value?.get(0)} ${viewModel.TimeList.value?.get(1)}:${viewModel.TimeList.value?.get(2)}"
-            }
-            if(viewModel.TimeList.value?.size==6){
-                viewModel._haveEndData.postValue(true)
-                binding.workTimeEndTxt.text = "${viewModel.TimeList.value?.get(3)} ${viewModel.TimeList.value?.get(4)}:${viewModel.TimeList.value?.get(5)}"
+        viewModel.TimeList.observe(viewLifecycleOwner) { data ->
+            data?.let {
+                if (it.size == 3) {
+                    viewModel._haveStartData.postValue(true)
+                    binding.workTimeStartTxt.text = "${it.get(0)} ${it.get(1)}:${it.get(2)}"
+                    //데이터베이스에 저장하기 위한 준비
+                    if (it[0] == "PM") {
+                        val hour = (it[1].toInt() + 12).toString()
+                        viewModel.timeDetail = "${hour}:${it[2]}"
+                    } else {
+                        //AM일 경우
+                        viewModel.timeDetail = "${it[1]}:${it[2]}"
+                    }
+                }
+                if (it.size == 6) {
+                    viewModel._haveEndData.postValue(true)
+                    binding.workTimeEndTxt.text = "${it.get(3)} ${it.get(4)}:${it.get(5)}"
+                    if (it[3] == "PM") {
+                        val hour = (it[4].toInt() + 12).toString()
+                        viewModel.timeDetailA = "${hour}:${it[5]}"
+                    } else {
+                        //AM일 경우
+                        viewModel.timeDetailA = "${it[4]}:${it[5]}"
+                    }
+                    viewModel.result = "${viewModel.timeDetail}~${viewModel.timeDetailA}"
+                }
             }
         }
 
-        binding.nextBtn.setOnClickListener{
+        binding.nextBtn.setOnClickListener {
             val viewpager = requireActivity().findViewById<ViewPager2>(R.id.viewpager)
             val current = viewpager.currentItem
-            val next = current+1
-            if(next < viewpager.adapter?.itemCount ?: 0){
-                viewpager.setCurrentItem(next,true)
-            }else{
-                Log.e("yet","아직 마지막아님")
+            val next = current + 1
+            if (next < viewpager.adapter?.itemCount ?: 0) {
+                viewpager.setCurrentItem(next, true)
+            } else {
+                Log.e("yet", "아직 마지막아님")
             }
         }
+        val button1 = binding.farmerCategory1
+        val button2 = binding.farmerCategory2
+        val button3 = binding.farmerCategory3
+        val button4 = binding.farmerCategory4
+        val button5 = binding.farmerCategory5
+        val button6 = binding.farmerCategory6
+        val button7 = binding.farmerCategory7
+        val button8 = binding.farmerCategory8
+        val buttons = listOf(button1, button2, button3, button4, button5, button6, button7, button8)
 
+        for (button in buttons) {
+            button.setOnClickListener {
+                val buttonText = button.text.toString()
+                viewModel.buttonStates.value?.let {
+                    if (it[buttonText] == false && viewModel.selectedButtons.value!!.size < 3) {
+                        it[buttonText] = true
+                        viewModel.addButton(buttonText)
+                    } else if (it[buttonText] == true) {
+                        it[buttonText] = false
+                        viewModel.removeButton(buttonText)
+                    }
+                    viewModel.buttonStates.value = it
+                }
+            }
+        }
     }
+
+
 
     fun EditText.getClearButton(drawableRightId:Int){
         val drawableRight = 2

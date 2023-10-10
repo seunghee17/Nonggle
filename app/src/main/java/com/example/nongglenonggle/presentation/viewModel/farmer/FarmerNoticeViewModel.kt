@@ -23,6 +23,9 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
     val _isClick1 = MutableLiveData<Boolean>()
     val isClick1:LiveData<Boolean> = _isClick1
 
+    var name:String = ""
+    var phnum:String = ""
+
     //폰번호 입력 감지
     val _isClick2 = MutableLiveData<Boolean>()
     val isClick2:LiveData<Boolean> = _isClick2
@@ -30,6 +33,8 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
     //도로명 주소 받아오기
     val _AddressFromWeb = MutableLiveData<String?>()
     val AddressFromWeb:LiveData<String?> = _AddressFromWeb
+
+    var totalAddress:String=""
 
     //받아온 도로명 주소 표시
     val _isAddressVisible = MutableLiveData<Boolean>()
@@ -40,18 +45,19 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
     val isClick3:LiveData<Boolean> = _isClick3
 
 
-    //다음화면으로 이동위헤
-//    private val _setFragment = MutableLiveData<Boolean>()
-//    val setFragment:LiveData<Boolean> = _setFragment
-
-
     //fragmentB에서 이렇게 해보겠음
     val _fragmentBState = MutableLiveData<Boolean>()
     val fragmentBState:LiveData<Boolean> = _fragmentBState
 
+    var titleInfo:String=""
+
     //필요인원 활성화용
     val _requiredPeople =MutableLiveData<Boolean>()
     val requiredPeople:LiveData<Boolean> = _requiredPeople
+
+    //필요인원 데이터 저장
+    val _requirednum = MutableLiveData<String>()
+    val requirednum:LiveData<String> = _requirednum
 
     //spinner 근무요일용
     val _activeWorkDay = MutableLiveData<Boolean>()
@@ -65,6 +71,13 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
     val _dayTextActive = MutableLiveData<Boolean>()
     val dayTextActive : LiveData<Boolean> = _dayTextActive
 
+    //요일작성 (ex.주 3일)
+    val _dayType = MutableLiveData<String>()
+    val dayType : LiveData<String> = _dayType
+
+    val _dayDetail = MutableLiveData<String>()
+    val dayDetail:LiveData<String> = _dayDetail
+
     //spinner 시작 연령 활성화용
     val _activeStartAge=MutableLiveData<Boolean>()
     val activeStartAge:LiveData<Boolean> = _activeStartAge
@@ -73,11 +86,17 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
     val _activeEndAge=MutableLiveData<Boolean>()
     val activeEndAge:LiveData<Boolean> = _activeEndAge
 
+    //연령대 받는 변수
+    var agedata : String = ""
+
+    //spinner 연령대 저장list
+    val recruitAge : MutableList<String> = mutableListOf()
+
     //worker_time1용
-    private val _workerTime1 = MutableLiveData<Boolean>()
+    val _workerTime1 = MutableLiveData<Boolean>()
     val workerTime1:LiveData<Boolean> = _workerTime1
 
-    private val _workerTime2 = MutableLiveData<Boolean>()
+    val _workerTime2 = MutableLiveData<Boolean>()
     val workerTime2:LiveData<Boolean> = _workerTime2
 
     //b단계에서 버튼 카테고리 선택시
@@ -88,9 +107,21 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
     val _DateList = MutableLiveData<List<Int>>()
     val DateList : LiveData<List<Int>> = _DateList
 
+    //작업기간 데이터베이스에 넣을용
+    val _workPeriod = MutableLiveData<List<String>>()
+    val workPeriod:LiveData<List<String>> = _workPeriod
+
     //근무시간 선정용 리스트
     val _TimeList = MutableLiveData<List<String>>()
     val TimeList:LiveData<List<String>> = _TimeList
+
+
+    //근무시간 데이터 넣을 변수
+    var timeDetail : String = ""
+    var timeDetailA : String=""
+    var result : String=""
+
+    var timeType:String = ""
 
     //시작시간 데이터 들어옴
     val _haveStartData = MutableLiveData<Boolean>()
@@ -111,8 +142,6 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
     //상세 작업 내용 저장용
     val _detailContent = MutableLiveData<String>()
     val detailContent:LiveData<String> = _detailContent
-
-    //성별 선택용
 
     //여자일경우
     val _activeWomen = MutableLiveData<Boolean>()
@@ -162,9 +191,6 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
     val _activeWorkType2 = MutableLiveData<Boolean>()
     val activeWorkType2 : LiveData<Boolean> = _activeWorkType2
 
-    //고용형태3
-    val _activeWorkType3 = MutableLiveData<Boolean>()
-    val activeWorkType3 : LiveData<Boolean> = _activeWorkType3
 
     //고용형태 데이터베이스 저장용
     val _workType= MutableLiveData<String>()
@@ -198,6 +224,45 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
     //자격증 작성 확인용
     val _active_confirm = MutableLiveData<Boolean>()
     val active_confirm:LiveData<Boolean> = _active_confirm
+
+
+    //자격증 입력 항목 visible용 A
+    val _visibleA = MutableLiveData<Boolean>()
+    val visibleA : LiveData<Boolean> = _visibleA
+
+    val _visibleB = MutableLiveData<Boolean>()
+    val visibleB : LiveData<Boolean> = _visibleB
+
+    val _visibleC = MutableLiveData<Boolean>()
+    val visibleC : LiveData<Boolean> = _visibleC
+
+    //자격증 필요여부 저장용
+    val _certifiType = MutableLiveData<String>()
+    val certifiType:LiveData<String> = _certifiType
+
+    //자격증 입력시 저장 list
+    val _certifiList = MutableLiveData<List<String>>()
+    val certifiList : LiveData<List<String>> = _certifiList
+
+    fun removeItemAt(index: Int) {
+        val currentList = _certifiList.value?.toMutableList()
+//        currentList?.removeAt(index)
+//        _certifiList.postValue(currentList!!)
+        if(index>0){
+            currentList?.removeAt(index)
+            _certifiList.postValue(currentList!!)
+        }
+        else{
+            currentList?.removeAt(index)
+            _certifiList.value = emptyList()
+        }
+    }
+
+
+    //출력용 변수들
+    val certifiA : MutableLiveData<String> = MutableLiveData()
+    val certifiB : MutableLiveData<String> = MutableLiveData()
+    val certifiC : MutableLiveData<String> = MutableLiveData()
 
     //사진 url저장용
     val _farmerImage = MutableLiveData<String>()
@@ -252,11 +317,28 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
     val _DeadlineType = MutableLiveData<String>()
     val DeadlineType : LiveData<String> = _DeadlineType
 
+    var deadlineDetail : String = ""
+
     //작업 마감기한 값 들어왔다면
     val _isDeadline = MutableLiveData<Boolean>()
     val isDeadline:LiveData<Boolean> = _isDeadline
 
+    //재배 품목 카테고리
+    private val _selectedButtons = MutableLiveData<MutableList<String>>()
+    val selectedButtons:LiveData<MutableList<String>> = _selectedButtons
 
+    val buttonStates = MutableLiveData<HashMap<String,Boolean>>().apply {
+        value= hashMapOf(
+            "button1" to false,
+            "button2" to false,
+            "button3" to false,
+            "button4" to false,
+            "button5" to false,
+            "button6" to false,
+            "button7" to false,
+            "button8" to false
+        )
+    }
     fun uploadImage(imageEntity: Model.ImageEntity){
         viewModelScope.launch {
             val result = uploadImageUsecase.uploadImage(imageEntity)
@@ -278,39 +360,38 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
         _AddressFromWeb.value=addressData
     }
 
-
-
-
-    fun setActiveButton()
-    {
-        _category.value = !(_category.value ?: false)
+    fun addButton(text:String){
+        _selectedButtons.value?.let{
+            if(it.size<3 && !it.contains(text)){
+                it.add(text)
+                _selectedButtons.postValue(it)
+            }
+        }
     }
 
-    fun setActiveTime1Button()
-    {
-        _workerTime1.value = !(_workerTime1.value ?: false)
+    fun removeButton(text:String){
+        _selectedButtons.value?.let{
+            if(it.contains(text)){
+                it.remove(text)
+                _selectedButtons.postValue(it)
+            }
+        }
     }
-    fun setActiveTime2Button()
-    {
-        _workerTime2.value = !(_workerTime1.value ?: false)
+    //버튼이 이미 선택됐는지 확인하는 메소드
+    fun isButtonSelected(text:String):Boolean{
+        return _selectedButtons.value?.contains(text) ?: false
     }
-
-
-
 
     init{
         _isClick1.postValue(false)
         _isClick2.postValue(false)
         _isClick3.postValue(false)
-        //_setFragment.value = false
         _fragmentBState.value = false
         _workerTime1.value = false
         _workerTime2.value = false
         _category.value = false
+        _selectedButtons.value = mutableListOf()
+        _daytextVisible.postValue(false)
     }
-
-
-
-
 
 }

@@ -8,7 +8,7 @@ class Model {
     data class NoticeContent(
         val imageUrl : String,
         val pay : List<String>,
-        val recruitPeriod : List<String>,
+        val recruitPeriod : Map<String,Any>,
         val recruitNum : String,
         val recruitAge : List<String>,
         val recruitGender:String,
@@ -24,6 +24,7 @@ class Model {
         val finalAddress:String,
         val workDetailInfo:String,
         val stayInfo:String,
-        val meanInfo:String
+        val mealInfo:String,
+        val specialInfo:String
     )
 }

@@ -307,7 +307,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:text="@string/고용형태"
+                    android:text="@string/근무형태"
                     android:fontFamily="@font/spoqahansansneo_regular"
                     android:textSize="14sp"
                     android:textColor="@color/g1"
@@ -318,7 +318,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:weightSum="3"
+                    android:weightSum="2"
                     android:orientation="horizontal"
                     >
 
@@ -352,35 +352,12 @@
                         android:background="@{viewModel.activeWorkType2 ? @drawable/typebox_active : @drawable/typebox_unactive}"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:layout_marginRight="16dp"
-                        android:clickable="true"
-                        >
+                        android:clickable="true">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/출퇴근형"
                             android:textColor="@{viewModel.activeWorkType2 ? @color/m1 : @color/g3}"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/spoqahansansneo_medium"
-                            android:paddingBottom="16dp"
-                            android:paddingTop="16dp"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/work_type3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:background="@{viewModel.activeWorkType3 ? @drawable/typebox_active : @drawable/typebox_unactive}"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:clickable="true"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/계약직"
-                            android:textColor="@{viewModel.activeWorkType3 ? @color/m1 : @color/g3}"
                             android:textSize="16sp"
                             android:fontFamily="@font/spoqahansansneo_medium"
                             android:paddingBottom="16dp"
@@ -512,6 +489,7 @@
                         android:layout_marginRight="16dp"
                         >
                         <TextView
+                            android:id="@+id/certification_need_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/필요있음"
@@ -519,8 +497,7 @@
                             android:textSize="16sp"
                             android:fontFamily="@font/spoqahansansneo_medium"
                             android:paddingBottom="16dp"
-                            android:paddingTop="16dp"
-                            />
+                            android:paddingTop="16dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -533,6 +510,7 @@
                         android:gravity="center"
                         >
                         <TextView
+                            android:id="@+id/certification_unneed_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/필요없음"
@@ -587,11 +565,11 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/c"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="12dp">
+                    android:layout_marginTop="12dp"
+                    android:visibility="@{viewModel.visibleA ? View.VISIBLE : View.GONE}">
 
                     <com.google.android.flexbox.FlexboxLayout
                         android:layout_width="wrap_content"
@@ -604,12 +582,14 @@
                             android:orientation="horizontal"
                             android:background="@drawable/bg_certification"
                             android:layout_marginRight="12dp"
-                            android:layout_marginBottom="12dp">
+                            android:layout_marginBottom="12dp"
+                            android:visibility="@{viewModel.visibleA ? View.VISIBLE : View.GONE}">
 
                             <TextView
+                                android:id="@+id/certifiA"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="화훼산업기사"
+                                android:text="@{viewModel.certifiA}"
                                 android:layout_marginLeft="16dp"
                                 android:paddingTop="11dp"
                                 android:paddingBottom="11dp"
@@ -632,12 +612,13 @@
                             android:orientation="horizontal"
                             android:background="@drawable/bg_certification"
                             android:layout_marginRight="12dp"
-                            android:layout_marginBottom="12dp">
+                            android:layout_marginBottom="12dp"
+                            android:visibility="@{viewModel.visibleB ? View.VISIBLE : View.GONE}">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="운전면허 1종"
+                                android:text="@{viewModel.certifiB}"
                                 android:layout_marginLeft="16dp"
                                 android:paddingTop="11dp"
                                 android:paddingBottom="11dp"
@@ -660,12 +641,13 @@
                             android:orientation="horizontal"
                             android:background="@drawable/bg_certification"
                             android:layout_marginRight="12dp"
-                            android:layout_marginBottom="12dp">
+                            android:layout_marginBottom="12dp"
+                            android:visibility="@{viewModel.visibleC ? View.VISIBLE : View.GONE}">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="운전면허 1종"
+                                android:text="@{viewModel.certifiC}"
                                 android:layout_marginLeft="16dp"
                                 android:paddingTop="11dp"
                                 android:paddingBottom="11dp"
