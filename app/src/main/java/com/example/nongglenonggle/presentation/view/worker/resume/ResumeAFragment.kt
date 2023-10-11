@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -16,6 +17,7 @@ import android.widget.EditText
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentResumeABinding
 import com.example.nongglenonggle.domain.entity.Model
@@ -188,6 +190,16 @@ class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_r
         binding.certifiCClose.setOnClickListener{
             viewModel.removeCarrer(2)
             binding.certifiC.visibility = View.GONE
+        }
+        binding.nextBtn.setOnClickListener{
+            val viewpager = requireActivity().findViewById<ViewPager2>(R.id.viewPager)
+            val current = viewpager.currentItem
+            val next = current+1
+            if(next < viewpager.adapter?.itemCount ?: 0){
+                viewpager.setCurrentItem(next,true)
+            }else{
+                Log.e("yet","아직 마지막아님")
+            }
         }
 
     }

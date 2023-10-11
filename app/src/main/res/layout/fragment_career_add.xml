@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.example.nongglenonggle.presentation.viewModel.worker.ResumeViewModel" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.view.dialog.CareerAddFragment"
+    android:background="@drawable/bg_career_add"
+    android:clickable="true"
+    android:focusable="true">
+
+
+    <ImageView
+        android:id="@+id/closebtn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/close"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"/>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="52dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/경력추가하기"
+            android:fontFamily="@font/spoqahansansneo_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/경력소개"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="14sp"
+            android:textColor="@color/g1"/>
+        <EditText
+            android:id="@+id/career_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@color/m1"
+            android:backgroundTint="@{viewModel.activeCareerEdit ? @color/m1 : @color/g_line}"
+            android:hint="@string/경력을_소개해"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="16sp"
+            android:paddingLeft="4dp"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:textColorHint="@color/g3"
+            android:layout_marginTop="4dp"
+            android:focusableInTouchMode="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/작업기간"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="14sp"
+            android:textColor="@color/g1"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:weightSum="2">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/month_selectA"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@{viewModel.activeMonthA ? @drawable/typebox_active : @drawable/typebox_unactive}"
+                android:text="@string/개월_미만"
+                android:textColor="@{viewModel.activeMonthA ? @color/m1 : @color/g3}"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:layout_marginRight="16dp"
+                android:textSize="16sp"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/month_selectB"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@{viewModel.activeMonthB ? @drawable/typebox_active : @drawable/typebox_unactive}"
+                android:text="@string/개월_이상"
+                android:textColor="@{viewModel.activeMonthB ? @color/m1 : @color/g3}"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:textSize="16sp"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="12dp"
+            android:weightSum="2"
+            android:visibility="@{viewModel.activeMonthA ? View.VISIBLE : View.GONE}">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/select_calendar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/typebox_unactive"
+                android:clickable="true"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/month_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/년_월_선택"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/spoqahansansneo_regular"
+                    android:textSize="16sp"
+                    android:textColor="@{viewModel.activeMonthYear ? @color/black : @color/g3}"/>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/date"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="16dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@{viewModel.activeSpinner ? @drawable/background_spinner_active : @drawable/background_spinner_unactive}" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="12dp"
+                android:weightSum="2"
+                android:visibility="@{viewModel.activeMonthB ? View.VISIBLE : View.GONE}">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/select_calendarA"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/typebox_unactive"
+                    android:clickable="true"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/month_txtA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/근무시작일"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/spoqahansansneo_regular"
+                        android:textSize="16sp"
+                        android:textColor="@{viewModel.activeMonthYearA ? @color/black : @color/g3}"/>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/date"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="16dp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/select_calendarB"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/typebox_unactive"
+                    android:clickable="true"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/month_txtB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/근무종료일"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/spoqahansansneo_regular"
+                        android:textSize="16sp"
+                        android:textColor="@{viewModel.activeMonthYearB ? @color/black : @color/g3}"/>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/date"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="16dp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/작업내용"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="14sp"
+            android:textColor="@color/g1"/>
+        
+        <EditText
+            android:id="@+id/career_detail"
+            android:layout_width="match_parent"
+            android:layout_height="144dp"
+            android:background="@drawable/noticeeditbox"
+            android:layout_marginTop="12dp"
+            android:hint="@string/업무내용을_상세히"
+            android:textColorHint="@color/g3"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textCursorDrawable="@color/m1"
+            android:paddingLeft="16dp"
+            android:paddingTop="17dp"
+            android:gravity="top"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/plusBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stateListAnimator="@null"
+            android:text="다음"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:layout_marginTop="103dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:background="@{viewModel.activePlus ? @drawable/button_active : @drawable/button_unactive}"
+            android:textColor="@color/white"
+            android:fontFamily="@font/spoqahansansneo_medium"/>
+
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

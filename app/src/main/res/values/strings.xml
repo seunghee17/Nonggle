@@ -17,7 +17,7 @@
 
     <string name="근무_시작_시간을">근무 시작 시간을 선택해주세요.</string>
     <string name="근무_종료_시간을">근무 종료 시간을 선택해주세요.</string>
-
+    <string name="작업기간">작업기간</string>
     <string name="작업_시작_날짜를">작업 시작 날짜를 선택해주세요.</string>
     <string name="작업_종료_날짜를">작업 종작 날짜를 선택해주세요.</string>
 
@@ -97,7 +97,7 @@
     <string name="button7">button7</string>
     <string name="button8">button8</string>
 
-    <string name="이력서작성">이력서작항</string>
+    <string name="이력서작성">이력서작성</string>
     <string name="기본정보">기본정보</string>
     <string name="경력사항">경력사항</string>
     <string name="자기소개">자기소개</string>
@@ -109,6 +109,21 @@
     <string name="본인의_이름을">본인의 이름을 입력해주세요.</string>
     <string name="생년월일">생년월일</string>
     <string name="생년월일을_선택">생년월일을 선택해주세요.</string>
+
+    <string name="어플_사용_이전">※ 어플 사용 이전 본인의 이력을 추가해주세요.</string>
+    <string name="경력추가하기">경력추가하기</string>
+    <string name="경력_총">총 0년 0개월 0일</string>
+    <string name="경력소개">경력소개</string>
+    <string name="경력을_소개해">경력을 소개해주세요. 예) 사과따기</string>
+
+    <string name="개월_미만">1개월 미만</string>
+    <string name="개월_이상">1개월 이상</string>
+    <string name="년_월_선택">년 월 선택</string>
+    <string name="근무시작일">근무시작일</string>
+    <string name="근무종료일">근무종료일</string>
+    <string name="작업내용">작업내용</string>
+
+    <string name="업무내용을_상세히">업무 내용을 상세히 입력해주세요.</string>
 
 
 </resources>

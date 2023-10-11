@@ -32,7 +32,7 @@ class ResumeActivity : BaseActivity<ActivityResumeBinding>(R.layout.activity_res
         viewPager2Adapter.addfragment(ResumeCFragment())
         viewPager2Adapter.addfragment(ResumeDFragment())
 
-        binding.viewpager.apply {
+        binding.viewPager.apply {
             adapter = viewPager2Adapter
             registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
                 override fun onPageSelected(position: Int) {
@@ -40,7 +40,7 @@ class ResumeActivity : BaseActivity<ActivityResumeBinding>(R.layout.activity_res
                 }
             })
         }
-        TabLayoutMediator(binding.tablayout, binding.viewpager){
+        TabLayoutMediator(binding.tablayout, binding.viewPager){
             tab,position->
             when(position){
                 0 -> tab.text = "기본정보"

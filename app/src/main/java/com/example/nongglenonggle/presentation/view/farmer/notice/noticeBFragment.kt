@@ -120,8 +120,7 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
         //spinner 구현 부분
 
         val dayItems = resources.getStringArray(R.array.select_day)
-        val dayadapter =
-            SpinnerAdapter(requireContext(), R.layout.item_spinner, dayItems, R.id.list_content)
+        val dayadapter = SpinnerAdapter(requireContext(), R.layout.item_spinner, dayItems, R.id.list_content)
         dayadapter.setHintTextColor("근무 요일을 선택해주세요.", R.color.g3)
         binding.daySelectSpinner.adapter = dayadapter
         binding.daySelectSpinner.setSelection(dayadapter.count)
@@ -162,12 +161,7 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.daySelectTxt.setCompoundDrawablesWithIntrinsicBounds(
-                    0,
-                    0,
-                    R.drawable.xcircle,
-                    0
-                )
+                binding.daySelectTxt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.xcircle, 0)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -193,9 +187,7 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
         viewModel.DateList.observe(viewLifecycleOwner) { havedata ->
             if (viewModel.DateList.value?.size == 3) {
                 binding.datepicker1Txt.text =
-                    "${viewModel.DateList.value?.get(0)}년 ${viewModel.DateList.value?.get(1)}월 ${
-                        viewModel.DateList.value?.get(2)
-                    }일"
+                    "${viewModel.DateList.value?.get(0)}년 ${viewModel.DateList.value?.get(1)}월 ${viewModel.DateList.value?.get(2)}일"
                 viewModel._datepickerTextA.value = true
                 val year = viewModel.DateList.value?.get(0)
                 val shortYear = year!! % 100

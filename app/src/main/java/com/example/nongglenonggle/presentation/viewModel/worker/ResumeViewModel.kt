@@ -45,9 +45,7 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
         userYear= currentYear - user
     }
 
-    init{
-        _BirthLine.postValue(false)
-    }
+
 
     fun uploadImage(imageEntity: Model.ImageEntity){
         viewModelScope.launch {
@@ -98,5 +96,58 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
         val currentList = _CarrerList.value ?: mutableListOf()
         currentList.removeAt(index)
         _CarrerList.value = currentList
+    }
+
+    private val _activeMonthA = MutableLiveData<Boolean>()
+    val activeMonthA : LiveData<Boolean> = _activeMonthA
+    private val _activeMonthB = MutableLiveData<Boolean>()
+    val activeMonthB : LiveData<Boolean> = _activeMonthB
+    fun activeA(){
+        _activeMonthA.postValue(true)
+        _activeMonthB.postValue(false)
+    }
+    fun activeB(){
+        _activeMonthA.postValue(false)
+        _activeMonthB.postValue(true)
+    }
+    private val _activeCareerEdit = MutableLiveData<Boolean>()
+    val activeCareerEdit:LiveData<Boolean> = _activeCareerEdit
+    //경력사항 active용
+    fun activeCareer(focus:Boolean){
+        _activeCareerEdit.postValue(focus)
+    }
+    var careerTitle=""
+
+    var _activeSpinner = MutableLiveData<Boolean>()
+    val activeSpinner : LiveData<Boolean> = _activeSpinner
+
+    var getSpinnerValue:String = ""
+
+    var _selectMonthYear=MutableLiveData<List<Int>>()
+    val selectMonthYear:LiveData<List<Int>> = _selectMonthYear
+
+    //미만시 선택 년월 활성화용
+     var _activeMonthYear = MutableLiveData<Boolean>()
+    val activeMonthYear:LiveData<Boolean> = _activeMonthYear
+
+    //이상시 선택 년월 활성화용 기간 전
+    var _activeMonthYearA = MutableLiveData<Boolean>()
+    val activeMonthYearA:LiveData<Boolean> = _activeMonthYearA
+
+    //이상시 선택 년월 활성화용 기간 후
+    var _activeMonthYearB = MutableLiveData<Boolean>()
+    val activeMonthYearB:LiveData<Boolean> = _activeMonthYearB
+
+    var careerDetail:String= ""
+    //추가버튼
+    private val _activePlus = MutableLiveData<Boolean>()
+    val activePlus:LiveData<Boolean> = _activePlus
+
+    fun setAddActive(){
+        _activePlus.postValue(true)
+    }
+    init{
+        _BirthLine.postValue(false)
+        _activeCareerEdit.postValue(false)
     }
 }
