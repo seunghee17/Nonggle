@@ -124,6 +124,11 @@
     <string name="작업내용">작업내용</string>
 
     <string name="업무내용을_상세히">업무 내용을 상세히 입력해주세요.</string>
+    <string name="본인을_한문장으로">본인을 한문장으로 표현해주세요.</string>
+    <string name="나의성격">나의성격</string>
+    <string name="추가코멘트">추가코멘트</string>
+    <string name="예_성실함">예) 성실함,꾸준함, 긍정적</string>
+    <string name="하고싶은_말이나">하고싶은 말이나 각오를 입력해주세요.</string>
 
 
 </resources>

@@ -35,7 +35,7 @@
                 android:text="@string/경력사항"
                 android:fontFamily="@font/spoqahansansneo_medium"
                 android:textSize="16sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/g1" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

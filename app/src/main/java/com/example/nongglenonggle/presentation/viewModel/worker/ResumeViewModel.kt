@@ -199,4 +199,31 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
         periodOfWorking = ""
         totalPeriod = ""
     }
+    private val _activePresent = MutableLiveData<Boolean>()
+    val activePresent:LiveData<Boolean> = _activePresent
+    fun setActivePresent(focus:Boolean){
+        _activePresent.postValue(focus)
+    }
+    var presentTxt : String=""
+
+    private val _activeCharacter = MutableLiveData<Boolean>()
+    val activeCharacter:LiveData<Boolean> = _activeCharacter
+    fun setActiveCharacter(focus:Boolean){
+        _activeCharacter.postValue(focus)
+    }
+    var _activeCharacterConfirm = MutableLiveData<Boolean>()
+    val activeCharacterConfirm:LiveData<Boolean> = _activeCharacterConfirm
+
+    private val _characterList = MutableLiveData<MutableList<String>>()
+    val characterList:LiveData<MutableList<String>> = _characterList
+    fun storeCharacter(text:String){
+        val current = _characterList.value ?: mutableListOf()
+        current.add(text)
+        _characterList.value = current
+    }
+    fun removeCharacter(index:Int){
+        val currentList = _characterList.value ?: mutableListOf()
+        currentList.removeAt(index)
+        _characterList.value = currentList
+    }
 }
