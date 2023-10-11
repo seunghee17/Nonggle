@@ -27,4 +27,10 @@ class Model {
         val mealInfo:String,
         val specialInfo:String
     )
+    data class ResumeSummary(
+        val title : String,
+        val date : String,
+        val total : String,
+        val description : String
+    )
 }

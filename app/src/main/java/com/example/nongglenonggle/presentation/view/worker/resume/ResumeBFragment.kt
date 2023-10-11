@@ -8,16 +8,19 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentResumeBBinding
 import com.example.nongglenonggle.presentation.base.BaseFragment
+import com.example.nongglenonggle.presentation.view.adapter.ResumeAdapter
 import com.example.nongglenonggle.presentation.view.dialog.CareerAddFragment
 import com.example.nongglenonggle.presentation.view.dialog.DatepickerFragment
 import com.example.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
 
 
 class ResumeBFragment : BaseFragment<FragmentResumeBBinding>(R.layout.fragment_resume_b) {
+    private lateinit var resumeAdapter : ResumeAdapter
     private val viewModel: ResumeViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,16 +50,28 @@ class ResumeBFragment : BaseFragment<FragmentResumeBBinding>(R.layout.fragment_r
             }
         }
 
+
         binding.addCareer.setOnTouchListener{view,event->
             if(event.action == MotionEvent.ACTION_UP){
-                showDatePicker()
+                showAddCareer()
+                //초기화 코드 추가하기
+                viewModel.getClearData()
             }
             false
         }
 
 
     }
-    private fun showDatePicker() {
+
+    override fun onResume() {
+        super.onResume()
+        resumeAdapter = ResumeAdapter(emptyList())
+        binding.recycler.adapter = resumeAdapter
+        viewModel.resumeData.observe(viewLifecycleOwner, Observer {newData->
+            resumeAdapter.updateList(newData)
+        })
+    }
+    private fun showAddCareer() {
         val newFrament = CareerAddFragment()
         newFrament.show(parentFragmentManager,"careerAdd")
     }

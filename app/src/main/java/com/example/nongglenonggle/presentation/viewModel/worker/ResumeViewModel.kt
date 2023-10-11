@@ -9,6 +9,9 @@ import com.example.nongglenonggle.domain.entity.Model
 import com.example.nongglenonggle.domain.usecase.UploadImageUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.Period
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import javax.inject.Inject
 @HiltViewModel
@@ -16,9 +19,15 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
     private val _profileImage = MutableLiveData<String>()
     val profileImage:LiveData<String> = _profileImage
 
+    val resumeData : MutableLiveData<MutableList<Model.ResumeSummary>> = MutableLiveData(mutableListOf())
+
     //이름
     private val _changeFocus = MutableLiveData<Boolean>()
     val changeFocus:LiveData<Boolean> = _changeFocus
+
+    //total
+    var totalPeriod:String = ""
+    var periodOfWorking:String=""
 
     var userName:String=""
 
@@ -110,6 +119,10 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
         _activeMonthA.postValue(false)
         _activeMonthB.postValue(true)
     }
+    fun clearActive(){
+        _activeMonthA.postValue(false)
+        _activeMonthB.postValue(false)
+    }
     private val _activeCareerEdit = MutableLiveData<Boolean>()
     val activeCareerEdit:LiveData<Boolean> = _activeCareerEdit
     //경력사항 active용
@@ -149,5 +162,41 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
     init{
         _BirthLine.postValue(false)
         _activeCareerEdit.postValue(false)
+    }
+    //recyclerview에 넣을 함수 세팅
+    fun setResumeSummary(){
+        //1개월 이상일때
+        if(activeMonthB.value == true)
+        {
+            //계산하는 함수 호출
+            val start = LocalDate.of(selectMonthYear.value!!.get(0), selectMonthYear.value!!.get(1),1)
+            val end = LocalDate.of(selectMonthYear.value!!.get(2), selectMonthYear.value!!.get(3),1)
+            getTotal(start,end)
+            periodOfWorking = "${selectMonthYear.value!!.get(0)}.${selectMonthYear.value!!.get(1)} ~ ${selectMonthYear.value!!.get(2)}.${selectMonthYear.value!!.get(3)}"
+        }
+        else{
+            totalPeriod = getSpinnerValue
+            periodOfWorking = "${selectMonthYear.value!!.get(0)}.${selectMonthYear.value!!.get(1)}"
+        }
+        val current = resumeData.value ?: mutableListOf()
+        current.add(Model.ResumeSummary(title = careerTitle , date = periodOfWorking, total = totalPeriod, description = careerDetail))
+        resumeData.value = current
+    }
+
+    fun getTotal(startDate:LocalDate, endDate:LocalDate){
+        //1개월 이상일때 계산용
+        val period = Period.between(startDate,endDate)
+        totalPeriod =  "${period.years}년 ${period.months}개월"
+    }
+
+    //초기화코드
+    fun getClearData(){
+        clearActive()
+        careerDetail = ""
+        _selectMonthYear.value = emptyList()
+        getSpinnerValue=""
+        careerDetail = ""
+        periodOfWorking = ""
+        totalPeriod = ""
     }
 }

@@ -21,6 +21,7 @@ import com.example.nongglenonggle.presentation.util.showClearButton
 import com.example.nongglenonggle.presentation.view.adapter.SpinnerAdapter
 import com.example.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.coroutineScope
 
 
 class CareerAddFragment : BottomSheetDialogFragment(){
@@ -47,6 +48,7 @@ class CareerAddFragment : BottomSheetDialogFragment(){
         binding.closebtn.setOnClickListener{
             dismiss()
         }
+        //미만
         binding.monthSelectA.setOnClickListener{
             viewModel.activeA()
             viewModel._selectMonthYear.postValue(emptyList())
@@ -155,6 +157,8 @@ class CareerAddFragment : BottomSheetDialogFragment(){
             }
             else{
                 //코루틴으로 데이터 저장후 dismiss
+                viewModel.setResumeSummary()
+                dismiss()
             }
         }
     }
