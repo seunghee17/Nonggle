@@ -341,7 +341,7 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
     }
     fun uploadImage(imageEntity: Model.ImageEntity){
         viewModelScope.launch {
-            val result = uploadImageUsecase.uploadImage(imageEntity)
+            val result = uploadImageUsecase.uploadImage(imageEntity,"NoticeImages")
             if(result.isSuccess){
                 //여기서 url접근해서 가져오기
                 val imageurl = result.getOrNull()

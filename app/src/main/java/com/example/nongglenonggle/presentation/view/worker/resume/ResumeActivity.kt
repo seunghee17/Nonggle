@@ -11,7 +11,9 @@ import com.example.nongglenonggle.presentation.view.adapter.ViewPager2Adapter
 import com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel
 import com.example.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ResumeActivity : BaseActivity<ActivityResumeBinding>(R.layout.activity_resume) {
     private val viewModel: ResumeViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -5,7 +5,7 @@ import com.example.nongglenonggle.domain.repository.ImageRepository
 import javax.inject.Inject
 
 class UploadImageUsecase @Inject constructor(private val imageRepository: ImageRepository) {
-    suspend fun uploadImage(imageEntity: Model.ImageEntity) : Result<String>{
-        return imageRepository.uploadImage(imageEntity)
+    suspend fun uploadImage(imageEntity: Model.ImageEntity,folderName:String) : Result<String>{
+        return imageRepository.uploadImage(imageEntity,folderName)
     }
 }

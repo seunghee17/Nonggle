@@ -30,7 +30,7 @@
         android:id="@+id/closebtn"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/caretleft"
+        android:src="@drawable/arrow_left"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/tablayout"

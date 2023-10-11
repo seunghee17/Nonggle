@@ -23,6 +23,10 @@ import com.example.nongglenonggle.presentation.base.BaseFragment
 import com.example.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
+import com.example.nongglenonggle.presentation.util.hideClearButton
+import com.example.nongglenonggle.presentation.util.setupClearButton
+import com.example.nongglenonggle.presentation.util.showClearButton
+import com.example.nongglenonggle.presentation.view.dialog.DatepickerFragment
 
 @AndroidEntryPoint
 class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_resume_a) {
@@ -63,49 +67,136 @@ class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_r
         binding.viewModel = viewModel
 
         binding.nameEdit.setOnFocusChangeListener{view,isfocus->
-            viewModel.setFocus()
+            viewModel.setFocus(isfocus)
+            if(isfocus && binding.nameEdit.text?.isNotEmpty() == true){
+                binding.nameEdit.showClearButton(R.drawable.xcircle)
+            }else{
+                binding.nameEdit.hideClearButton()
+            }
         }
         binding.nameEdit.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.nameEdit.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.xcircle,0)
+                if (binding.nameEdit.isFocused && s?.isNotEmpty() == true) {
+                    binding.nameEdit.showClearButton(R.drawable.xcircle)
+                } else {
+                    binding.nameEdit.hideClearButton()
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
                 viewModel.changeFocus.observe(viewLifecycleOwner){isfocus->
                     if(isfocus && binding.nameEdit.text!=null){
-                        binding.nameEdit.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.xcircle,0)
-                        binding.nameEdit.getClearButton(R.drawable.xcircle)
+                        binding.nameEdit.showClearButton(R.drawable.xcircle)
                     }else{
-                        binding.nameEdit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
+                        binding.nameEdit.hideClearButton()
                     }
                 }
                 viewModel.userName = s.toString()
             }
 
         })
-    }
 
-    fun EditText.getClearButton(drawableRightId:Int){
-        val drawableRight = 2
-        val rightDrawable = this.compoundDrawables[drawableRight]
-        if (rightDrawable != null) {
-            val drawableWidth = rightDrawable.bounds.width()
-            val clearButtonStart = this.width - drawableWidth
+        //생년월일
+        binding.birthContainer.setOnTouchListener{v,event->
+            if(event.action == MotionEvent.ACTION_UP){
+                showDatePicker()
+            }
+            false
+        }
+        viewModel.BirthList.observe(viewLifecycleOwner){isdata->
+            binding.birthTxt.text = "${viewModel.BirthList.value?.get(0)}년 ${viewModel.BirthList.value?.get(1)}월 ${viewModel.BirthList.value?.get(2)}일"
+            viewModel.setActive()
+            viewModel.calculate(viewModel.BirthList.value?.get(0)!!)
+        }
+        binding.certifiYes.setOnClickListener{
+            viewModel.activeCertifiA()
+        }
+        binding.certifiNo.setOnClickListener{
+            viewModel.activeCertifiB()
+        }
 
-            this.setOnTouchListener { _, event ->
-                if (event.action == MotionEvent.ACTION_UP) {
-                    if (event.rawX >= clearButtonStart) {
-                        this.text.clear()
-                        return@setOnTouchListener true
-                    }
-                }
-                false
+        binding.certificationTxt.setOnFocusChangeListener{view,isfocus->
+            viewModel.setFocusCertifi(isfocus)
+            if(isfocus && binding.certificationTxt.text?.isNotEmpty()==true){
+                binding.certificationTxt.showClearButton(R.drawable.xcircle)
+            }
+            else{
+                binding.certificationTxt.hideClearButton()
             }
         }
+        binding.certificationTxt.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (binding.certificationTxt.isFocused && s?.isNotEmpty() == true) {
+                    binding.certificationTxt.showClearButton(R.drawable.xcircle)
+                    viewModel._changeConfirmCertifi.postValue(true)
+                } else {
+                    binding.certificationTxt.hideClearButton()
+                    viewModel._changeConfirmCertifi.postValue(false)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.changeFocusCertifi.observe(viewLifecycleOwner){isfocus->
+                    if(isfocus && binding.certificationTxt.text!=null){
+                        binding.certificationTxt.showClearButton(R.drawable.xcircle)
+                        viewModel._changeConfirmCertifi.postValue(true)
+                    }else{
+                        binding.certificationTxt.hideClearButton()
+                        viewModel._changeConfirmCertifi.postValue(false)
+                    }
+                }
+                binding.confirmBtn.setOnClickListener{
+                    viewModel.storeCarrer(s.toString())
+                    binding.certificationTxt.text.clear()
+                }
+            }
+
+
+        })
+
+        viewModel.CarrerList.observe(viewLifecycleOwner,{list->
+            if(list.isNotEmpty() && list.size==1){
+                binding.flexBox.visibility = View.VISIBLE
+                binding.certifiA.visibility = View.VISIBLE
+                binding.certifiATxt.text = viewModel.CarrerList.value?.get(0)
+            }
+            else if(list.isNotEmpty() && list.size==2){
+                binding.certifiB.visibility = View.VISIBLE
+                binding.certifiBTxt.text = viewModel.CarrerList.value?.get(1)
+            }
+            else if(list.isNotEmpty() && list.size==3){
+                binding.certifiC.visibility = View.VISIBLE
+                binding.certifiCTxt.text = viewModel.CarrerList.value?.get(2)
+            }
+            else if(list.isEmpty()){
+                binding.flexBox.visibility = View.GONE
+            }
+        })
+        binding.certifiAClose.setOnClickListener{
+            viewModel.removeCarrer(0)
+        }
+        binding.certifiBClose.setOnClickListener{
+            viewModel.removeCarrer(1)
+            binding.certifiB.visibility = View.GONE
+        }
+        binding.certifiCClose.setOnClickListener{
+            viewModel.removeCarrer(2)
+            binding.certifiC.visibility = View.GONE
+        }
+
     }
+
+    private fun showDatePicker() {
+        val newFrament = DatepickerFragment()
+        newFrament.show(parentFragmentManager,"datepicker")
+    }
+
 
     //권한이 없을때 해당함수 호출
     private fun requestStoragePermission(){
@@ -128,7 +219,7 @@ class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_r
                 }
             }
             else{
-
+                //예외처리
             }
         }
     }

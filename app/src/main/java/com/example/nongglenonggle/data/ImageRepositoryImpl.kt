@@ -11,11 +11,11 @@ class ImageRepositoryImpl @Inject constructor(
     private val firebaseStorage: FirebaseStorage,
     private val firebaseAuth : FirebaseAuth
 ) : ImageRepository{
-    override suspend fun uploadImage(imageEntity: Model.ImageEntity): Result<String> {
+    override suspend fun uploadImage(imageEntity: Model.ImageEntity,folderName:String): Result<String> {
         val user = firebaseAuth.currentUser
         val uid = user?.uid
         val imageFileName = "Image_" + uid + "_png"
-        val storageRef = firebaseStorage.reference.child("NoticeImages").child(imageFileName)
+        val storageRef = firebaseStorage.reference.child(folderName).child(imageFileName)
 
         return try{
             //끝날때까진 대기인가?
