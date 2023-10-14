@@ -130,5 +130,27 @@
     <string name="예_성실함">예) 성실함,꾸준함, 긍정적</string>
     <string name="하고싶은_말이나">하고싶은 말이나 각오를 입력해주세요.</string>
 
+    <string name="희망_근무지역">희망 근무지역</string>
+    <string name="희망_근무요일">희망 근무요일</string>
+    <string name="희망하는_근무지역을">희망하는 근무지역을 선택해주세요.</string>
+    <string name="희망_품목">희망 품목</string>
+    <string name="다중_선택이">다중 선택이 가능하며, 최대 3개까지 선택가능합니다.</string>
+
+    <string name="식량작물">식량작물</string>
+    <string name="채소">채소</string>
+    <string name="과수">과수</string>
+    <string name="특용작물">특용작물</string>
+    <string name="화훼">화훼</string>
+    <string name="축산">축산</string>
+    <string name="농기계작업">농기계작업</string>
+    <string name="기타">기타</string>
+    <string name="기타품목을_입력">기타품목을 입력해주세요.</string>
+    <string name="희망_근무형태">희망 근무형일</string>
+    <string name="월화_월수금">예) 월화, 월수금</string>
+    <string name="이력서_공개설정">이력서 공개설정</string>
+
+    <string name="비공개">비공개</string>
+    <string name="공개">공개</string>
+
 
 </resources>

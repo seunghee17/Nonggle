@@ -73,5 +73,17 @@
         <item>근무 일 선택</item>
     </string-array>
 
+    <string-array name="select_resume_day">
+        <item>주 1일</item>
+        <item>주 2일</item>
+        <item>주 3일</item>
+        <item>주 4일</item>
+        <item>주 5일</item>
+        <item>주 6일</item>
+        <item>주 7일</item>
+        <item>요일협의</item>
+        <item>희망하는 근무요일을 선택해주세요.</item>
+    </string-array>
+
 
 </resources>

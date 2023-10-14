@@ -226,4 +226,58 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
         currentList.removeAt(index)
         _characterList.value = currentList
     }
+
+    val categoryButtons = MutableLiveData<List<Boolean>>(List(8) {false})
+    val categoryLive:LiveData<List<Boolean>> = categoryButtons
+    //선택한 버튼 텍스트 저장용
+    val clickedTexts = mutableListOf<String>()
+
+    fun onButtonClick(index:Int, buttonText:String){
+        val currentColor = categoryButtons.value?.toMutableList() ?: mutableListOf()
+        currentColor[index] = !currentColor[index]
+        categoryButtons.value = currentColor
+        if(currentColor[index]){
+            clickedTexts.add(buttonText)
+        }else{
+            clickedTexts.remove(buttonText)
+        }
+    }
+
+    //기타품목 포커스용
+    private val _focusAdditional = MutableLiveData<Boolean>()
+    val focusAdditional : LiveData<Boolean> = _focusAdditional
+
+    //기타품목 입력
+    var additionalTxt : String = ""
+    fun setAdditional(focus:Boolean){
+        _focusAdditional.postValue(focus)
+    }
+    val _clickDormA = MutableLiveData<Boolean>()
+    val clickDormA:LiveData<Boolean> = _clickDormA
+    val _clickDormB = MutableLiveData<Boolean>()
+    val clickDormB:LiveData<Boolean> = _clickDormB
+
+    //근무형태
+    var dormType : String=""
+
+    //요일데이터 주 몇일
+    var dayData : String=""
+    var dayDetailData : String=""
+
+    val _activedaySpinner = MutableLiveData<Boolean>()
+    val activedaySpinner : LiveData<Boolean> = _activedaySpinner
+
+    private val _focusSpinnerEdit = MutableLiveData<Boolean>()
+    val focusSpinnerEdit : LiveData<Boolean> = _focusSpinnerEdit
+
+    fun setEditFocus(focus:Boolean){
+        _focusSpinnerEdit.postValue(focus)
+    }
+
+    val _activeprivate=MutableLiveData<Boolean>()
+    val activeprivate:LiveData<Boolean> = _activeprivate
+    val _activepublic = MutableLiveData<Boolean>()
+    val activepublic : LiveData<Boolean> = _activepublic
+
+
 }

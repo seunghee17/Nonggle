@@ -249,8 +249,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginRight="20dp"
-                android:background="@{viewModel.activeWorkDay ? @drawable/background_spinner_active : @drawable/background_spinner_unactive}"
-                />
+                android:background="@{viewModel.activeWorkDay ? @drawable/background_spinner_active : @drawable/background_spinner_unactive}" />
 
             <EditText
                 android:id="@+id/day_select_txt"
@@ -269,8 +268,7 @@
                 android:paddingTop="16dp"
                 android:paddingRight="16dp"
                 android:paddingLeft="16dp"
-                android:visibility="@{viewModel.daytextVisible ? View.VISIBLE : View.GONE}"
-                />
+                android:visibility="@{viewModel.daytextVisible ? View.VISIBLE : View.GONE}" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
