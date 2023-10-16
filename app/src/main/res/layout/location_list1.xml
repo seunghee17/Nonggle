@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="서울"
+        android:background="@drawable/location_select_unactive"
+        android:textColor="@color/g2"
+        android:paddingLeft="20dp"
+        android:paddingBottom="13dp"
+        android:paddingTop="13dp"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

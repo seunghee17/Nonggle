@@ -279,5 +279,18 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
     val _activepublic = MutableLiveData<Boolean>()
     val activepublic : LiveData<Boolean> = _activepublic
 
+    //희망지역 선택
+    private val _locationSelect = MutableLiveData<MutableList<String>>()
+    val locationSelect:LiveData<MutableList<String>> = _locationSelect
 
+    fun storeLocation(text:String){
+        val current = _locationSelect.value ?: mutableListOf()
+        current.add(text)
+        _characterList.value = current
+    }
+    fun removeLocation(index:Int){
+        val current = _locationSelect.value ?: mutableListOf()
+        current.removeAt(index)
+        _locationSelect.value = current
+    }
 }
