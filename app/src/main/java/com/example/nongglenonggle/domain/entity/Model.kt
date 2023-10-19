@@ -33,4 +33,6 @@ class Model {
         val total : String,
         val description : String
     )
+
+    //data class Location(val value: String? = null)
 }

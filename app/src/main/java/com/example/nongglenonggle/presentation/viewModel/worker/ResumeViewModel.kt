@@ -7,15 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.domain.entity.Model
 import com.example.nongglenonggle.domain.usecase.UploadImageUsecase
+import com.example.nongglenonggle.domain.usecase.FetchFirestoreDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.Period
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import javax.inject.Inject
 @HiltViewModel
-class ResumeViewModel @Inject constructor(private val uploadImageUsecase: UploadImageUsecase): ViewModel() {
+class ResumeViewModel @Inject constructor(private val uploadImageUsecase: UploadImageUsecase, private val fetchFirestoreDataUseCase: FetchFirestoreDataUseCase): ViewModel() {
     private val _profileImage = MutableLiveData<String>()
     val profileImage:LiveData<String> = _profileImage
 
@@ -292,5 +292,16 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
         val current = _locationSelect.value ?: mutableListOf()
         current.removeAt(index)
         _locationSelect.value = current
+    }
+
+    //firestore로부터 지역을 가져온다
+    private val _regionData = MutableLiveData<List<Model.Location>>()
+    val regionData:LiveData<List<Model.Location>> = _regionData
+
+    fun fetchRegionData(collectionPath: String, documentPath: String?){
+        viewModelScope.launch {
+            val region: List<Model.Location>? = fetchFirestoreDataUseCase.execute(Model.Location::class.java, "LocationFilter", "ResumeFilter")
+            _regionData.value = region!!
+        }
     }
 }

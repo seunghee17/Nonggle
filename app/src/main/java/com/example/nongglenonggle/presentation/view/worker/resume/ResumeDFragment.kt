@@ -20,6 +20,8 @@ import com.example.nongglenonggle.presentation.util.hideClearButton
 import com.example.nongglenonggle.presentation.util.showClearButton
 import com.example.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
 import com.example.nongglenonggle.presentation.view.adapter.SpinnerAdapter
+import com.example.nongglenonggle.presentation.view.dialog.CareerAddFragment
+import com.example.nongglenonggle.presentation.view.dialog.LocationSelectFragment
 
 class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_resume_d) {
     private val viewModel: ResumeViewModel by activityViewModels()
@@ -136,6 +138,13 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
             viewModel._activeprivate.postValue(false)
             viewModel._activepublic.postValue(true)
         }
+        binding.selectLocation.setOnTouchListener{view,event->
+            //희망 장소 선택
+            if(event.action == MotionEvent.ACTION_UP){
+                showLocationSelect()
+            }
+            false
+        }
     }
     // 스피너 어댑터 초기화 함수
     private fun initSpinner(spinner: Spinner, itemsArrayId: Int, hintText: String, viewModelLiveData: MutableLiveData<Boolean>) {
@@ -168,6 +177,11 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
                 viewModelLiveData.postValue(false)
             }
         }
+    }
+
+    private fun showLocationSelect() {
+        val newFrament = LocationSelectFragment()
+        newFrament.show(parentFragmentManager,"locationselectfragment")
     }
 
 }
