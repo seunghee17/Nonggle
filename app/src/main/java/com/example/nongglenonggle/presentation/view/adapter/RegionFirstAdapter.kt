@@ -8,9 +8,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.domain.entity.Model
 
-class RegionFirstAdapter(private var items:List<Model.Location>): RecyclerView.Adapter<RegionFirstAdapter.ViewHolder>() {
-    class ViewHolder(itemView: View):  RecyclerView.ViewHolder(itemView){
+class RegionFirstAdapter(private var items:List<String>): RecyclerView.Adapter<RegionFirstAdapter.ViewHolder>() {
+    var itemClickListener: ((position: Int, value:String)->Unit)? = null
+    inner class ViewHolder(itemView: View):  RecyclerView.ViewHolder(itemView){
         val location: TextView = itemView.findViewById(R.id.first_region)
+        init {
+            itemView.setOnClickListener{
+                val position = adapterPosition
+                if(position != RecyclerView.NO_POSITION){
+                    itemClickListener?.invoke(position,items[position])
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RegionFirstAdapter.ViewHolder {
@@ -21,13 +30,13 @@ class RegionFirstAdapter(private var items:List<Model.Location>): RecyclerView.A
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val list = items[position]
-        holder.location.text = list.value
+        holder.location.text = list
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
-    fun updateList(newData:List<Model.Location>){
+    fun updateList(newData:List<String>){
         this.items = newData
         notifyDataSetChanged()
     }

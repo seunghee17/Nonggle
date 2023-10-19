@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentLocationSelectBinding
 import com.example.nongglenonggle.databinding.FragmentTimepickerBinding
@@ -45,15 +46,17 @@ class LocationSelectFragment : BottomSheetDialogFragment() {
             dismiss()
         }
 
-        adapter = RegionFirstAdapter(emptyList())
-        binding.firstLocation.adapter = adapter
+        val recyclerview1 = binding.firstLocation
+        val firstRegion = resources.getStringArray(R.array.all).toList()
 
-        //데이터 요청
-        viewModel.fetchRegionData("LocationFilter","ResumeFilter")
+        val adapter1 = RegionFirstAdapter(firstRegion)
+        recyclerview1.adapter = adapter1
 
-        viewModel.regionData.observe(viewLifecycleOwner, {data->
-            adapter.updateList(data)
-        })
+        adapter1.itemClickListener{position, value->
+            when(value){
+                "서울"->
+            }
+        }
     }
 
 
