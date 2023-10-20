@@ -7,10 +7,15 @@
             name="viewModel"
             type="com.example.nongglenonggle.presentation.viewModel.worker.ResumeViewModel" />
     </data>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/closebtn"
@@ -45,25 +50,30 @@
             app:flexWrap="wrap"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title">
+            app:layout_constraintTop_toBottomOf="@id/title"
+            android:visibility="gone">
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/wanted_location1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/bg_certification"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
+                    android:id="@+id/wanted_location1_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
                     android:paddingTop="11dp"
                     android:paddingBottom="11dp"
-                    android:text="adfa" />
+                    android:text=" " />
 
                 <ImageView
+                    android:id="@+id/delete1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
@@ -74,22 +84,26 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/wanted_location2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/bg_certification"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
+                    android:id="@+id/wanted_location2_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
                     android:paddingTop="11dp"
                     android:paddingBottom="11dp"
-                    android:text="adfa" />
+                    android:text=" "/>
 
                 <ImageView
+                    android:id="@+id/delete2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
@@ -100,22 +114,26 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/wanted_location3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/bg_certification"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
+                    android:id="@+id/wanted_location3_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
                     android:paddingTop="11dp"
                     android:paddingBottom="11dp"
-                    android:text="adfa" />
+                    android:text=" "/>
 
                 <ImageView
+                    android:id="@+id/delete3"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
@@ -138,6 +156,8 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/location_box" />
 
+
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/listview"
             android:layout_width="match_parent"
@@ -153,20 +173,25 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/first_location"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:nestedScrollingEnabled="false"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/location_list1" />
 
+
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="wrap_content"
+                android:id="@+id/second_location"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/location_list2" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/divider"
@@ -180,7 +205,9 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/listview" />
 
+
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/confirm_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/divider"
@@ -188,7 +215,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="32dp"
             android:background="@drawable/button_active"
             app:layout_constraintBottom_toBottomOf="parent"
             android:textColor="@color/white"
@@ -201,4 +227,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+    </androidx.core.widget.NestedScrollView>
+    </layout>

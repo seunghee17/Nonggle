@@ -246,8 +246,6 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
 
     fun removeItemAt(index: Int) {
         val currentList = _certifiList.value?.toMutableList()
-//        currentList?.removeAt(index)
-//        _certifiList.postValue(currentList!!)
         if(index>0){
             currentList?.removeAt(index)
             _certifiList.postValue(currentList!!)

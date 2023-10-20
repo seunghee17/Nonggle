@@ -286,22 +286,14 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
     fun storeLocation(text:String){
         val current = _locationSelect.value ?: mutableListOf()
         current.add(text)
-        _characterList.value = current
+        _locationSelect.value = current
     }
     fun removeLocation(index:Int){
-        val current = _locationSelect.value ?: mutableListOf()
-        current.removeAt(index)
+        var current = _locationSelect.value?.toMutableList() ?: mutableListOf()
+        if(index >= 0 && index<current!!.size){
+            current.removeAt(index)
+        }
         _locationSelect.value = current
     }
 
-    //firestore로부터 지역을 가져온다
-    private val _regionData = MutableLiveData<List<Model.Location>>()
-    val regionData:LiveData<List<Model.Location>> = _regionData
-
-    fun fetchRegionData(collectionPath: String, documentPath: String?){
-        viewModelScope.launch {
-            val region: List<Model.Location>? = fetchFirestoreDataUseCase.execute(Model.Location::class.java, "LocationFilter", "ResumeFilter")
-            _regionData.value = region!!
-        }
-    }
 }

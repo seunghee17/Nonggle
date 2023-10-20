@@ -5,11 +5,12 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/second_region"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="서울"
         android:background="@drawable/location_select_unactive_ver2"
-        android:textColor="@color/g2"
+        android:textColor="@drawable/color_recycler2"
         android:paddingLeft="20dp"
         android:paddingBottom="13dp"
         android:paddingTop="13dp"/>

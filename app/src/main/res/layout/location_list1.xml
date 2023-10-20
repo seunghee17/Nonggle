@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:text="서울"
         android:background="@drawable/location_select_unactive"
-        android:textColor="@color/g2"
+        android:textColor="@drawable/color_recycler1"
         android:paddingLeft="20dp"
         android:paddingBottom="13dp"
         android:paddingTop="13dp"/>
