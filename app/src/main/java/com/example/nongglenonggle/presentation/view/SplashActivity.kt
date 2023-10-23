@@ -4,6 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.nongglenonggle.R
+import com.example.nongglenonggle.presentation.view.farmer.home.MainActivity
+import com.example.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.*
 
 class SplashActivity : AppCompatActivity() {

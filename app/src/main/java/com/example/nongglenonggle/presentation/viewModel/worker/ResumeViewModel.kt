@@ -166,15 +166,16 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
     //recyclerview에 넣을 함수 세팅
     fun setResumeSummary(){
         //1개월 이상일때
-        if(activeMonthB.value == true)
-        {
+        if(activeMonthB.value == true) {
             //계산하는 함수 호출
             val start = LocalDate.of(selectMonthYear.value!!.get(0), selectMonthYear.value!!.get(1),1)
             val end = LocalDate.of(selectMonthYear.value!!.get(2), selectMonthYear.value!!.get(3),1)
+            //몇년 몇개월
             getTotal(start,end)
             periodOfWorking = "${selectMonthYear.value!!.get(0)}.${selectMonthYear.value!!.get(1)} ~ ${selectMonthYear.value!!.get(2)}.${selectMonthYear.value!!.get(3)}"
         }
         else{
+            //몇일
             totalPeriod = getSpinnerValue
             periodOfWorking = "${selectMonthYear.value!!.get(0)}.${selectMonthYear.value!!.get(1)}"
         }

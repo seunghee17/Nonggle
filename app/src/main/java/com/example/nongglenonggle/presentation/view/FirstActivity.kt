@@ -11,10 +11,13 @@ import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.ActivityFirstBinding
 import com.example.nongglenonggle.presentation.view.signup.SignupActivity
 import com.example.nongglenonggle.presentation.view.login.LoginActivity
+import com.example.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
 import com.example.nongglenonggle.presentation.viewModel.FirstViewModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.*
 
 class FirstActivity : AppCompatActivity() {
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val activityScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
     private val viewModel: FirstViewModel by viewModels()
     private lateinit var binding: ActivityFirstBinding
@@ -50,6 +53,14 @@ class FirstActivity : AppCompatActivity() {
         }
 
         }
+    override fun onStart() {
+        super.onStart()
+        val current = auth.currentUser
+        if(current != null){
+            val intent = Intent(this, WorkerMainActivity::class.java)
+            startActivity(intent)
+        }
+    }
 
     private fun updateTextColor()
     {

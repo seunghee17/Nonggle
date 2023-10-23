@@ -12,6 +12,7 @@ import com.example.nongglenonggle.presentation.viewModel.login.LoginViewModel
 import com.example.nongglenonggle.databinding.ActivityLoginBinding
 import com.example.nongglenonggle.presentation.view.signup.SignupActivity
 import com.example.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private val viewModel : LoginViewModel by viewModels()
@@ -57,4 +58,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         val intent = Intent(this, SignupActivity::class.java)
         signup.setOnClickListener{startActivity(intent)}
     }
+
+
 }

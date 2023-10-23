@@ -156,7 +156,6 @@ class CareerAddFragment : BottomSheetDialogFragment(){
                 Toast.makeText(requireContext(),"입력사항을 모두 채워주세요!",Toast.LENGTH_SHORT).show()
             }
             else{
-                //코루틴으로 데이터 저장후 dismiss
                 viewModel.setResumeSummary()
                 dismiss()
             }
