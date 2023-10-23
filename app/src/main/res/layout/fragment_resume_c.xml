@@ -28,7 +28,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/경력사항"
+        android:text="@string/자기소개"
         android:fontFamily="@font/spoqahansansneo_medium"
         android:textSize="16sp"
         android:textColor="@color/g1" />
@@ -205,6 +205,7 @@
         android:textSize="16sp"
         android:textColor="@color/g1" />
     <EditText
+        android:id="@+id/additional_present"
         android:layout_width="match_parent"
         android:layout_height="144dp"
         android:layout_marginTop="12dp"

@@ -12,18 +12,4 @@ class FirestoreGetRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore
 ) : FirestoreGetRepository {
 
-    override suspend fun <T> fetchData(clazz: Class<T>, collectionPath: String, documentPath: String?): List<T>? {
-        return withContext(Dispatchers.IO) {
-            if (documentPath != null) {
-                val documentReference = firestore.collection(collectionPath).document(documentPath)
-                val snapshot = documentReference.get().await()
-                val item = snapshot.toObject(clazz)
-                item?.let { return@let listOf(it) } ?: return@withContext null
-            } else {
-                val collectionReference = firestore.collection(collectionPath)
-                val snapshots = collectionReference.get().await()
-                snapshots.toObjects(clazz)
-            }
-        }
-    }
 }

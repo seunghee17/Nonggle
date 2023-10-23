@@ -139,6 +139,19 @@ class ResumeCFragment : BaseFragment<FragmentResumeCBinding>(R.layout.fragment_r
             binding.characterC.visibility = View.GONE
         }
 
+        binding.additionalPresent.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.additional_present = s.toString()
+            }
+
+        })
+
         binding.nextBtn.setOnClickListener{
             val viewpager = requireActivity().findViewById<ViewPager2>(R.id.viewPager)
             val current = viewpager.currentItem

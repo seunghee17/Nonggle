@@ -69,6 +69,7 @@ class ResumeBFragment : BaseFragment<FragmentResumeBBinding>(R.layout.fragment_r
         binding.recycler.adapter = resumeAdapter
         viewModel.resumeData.observe(viewLifecycleOwner, Observer {newData->
             resumeAdapter.updateList(newData)
+            binding.carrerSum.text = viewModel.getCareerTotal()
         })
     }
     private fun showAddCareer() {

@@ -20,6 +20,9 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
     val profileImage:LiveData<String> = _profileImage
 
     val resumeData : MutableLiveData<MutableList<Model.ResumeSummary>> = MutableLiveData(mutableListOf())
+    var careerTotal : String=""
+    var additional_present:String=""
+
 
     //이름
     private val _changeFocus = MutableLiveData<Boolean>()
@@ -182,6 +185,31 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
         val current = resumeData.value ?: mutableListOf()
         current.add(Model.ResumeSummary(title = careerTitle , date = periodOfWorking, total = totalPeriod, description = careerDetail))
         resumeData.value = current
+    }
+
+    fun getCareerTotal():String{
+        var year = 0
+        var month=0
+        var day=0
+        resumeData.value?.forEach {
+            if(it.total.contains("년")){
+                val partyear = it.total.split("년")[0].trim().toInt()
+                val partmonth = it.total.split("년")[1].split("개월")[0].trim().toInt()
+                year += partyear
+                month += partmonth
+            }
+            else {
+                val partday = it.total.replace("일", "").trim().toInt()
+                day += partday
+            }
+        }
+        //오버플로우 처리
+        month += day/30
+        day %=30
+        year += month/12
+        month %=12
+        careerTotal = "${year}년 ${month}개월 ${day}일"
+        return "${year}년 ${month}개월 ${day}일"
     }
 
     fun getTotal(startDate:LocalDate, endDate:LocalDate){

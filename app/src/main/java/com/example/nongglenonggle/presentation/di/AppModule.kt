@@ -47,17 +47,10 @@ object AppModule {
     ):ImageRepository{
         return ImageRepositoryImpl(firebaseStorage,firebaseAuth)
     }
-
     @Provides
     fun provideFirestore(): FirebaseFirestore{
         return FirebaseFirestore.getInstance()
     }
-
-//    @Binds
-//    fun provideFirestoreRepository(firestore:FirebaseFirestore): FirestoreGetRepository {
-//        return FirestoreGetRepositoryImpl(firestore)
-//    }
-
     @Provides
     fun provideFirestoreRepository(firestore:FirebaseFirestore): FirestoreGetRepository = FirestoreGetRepositoryImpl(firestore)
 
