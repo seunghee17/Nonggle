@@ -145,6 +145,25 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
             }
             false
         }
+
+        viewModel.locationSelect.observe(viewLifecycleOwner){list->
+            if(list.size == 0){
+                binding.flexbox.visibility = View.GONE
+            }
+            if(list.size ==2){
+                binding.flexbox.visibility = View.VISIBLE
+                binding.locationA.visibility = View.VISIBLE
+                binding.locationATxt.text = "${viewModel.locationSelect.value?.get(0)} ${viewModel.locationSelect.value?.get(1)}"
+            }
+            if(list.size == 4){
+                binding.locationB.visibility = View.VISIBLE
+                binding.locationBTxt.text = "${viewModel.locationSelect.value?.get(2)} ${viewModel.locationSelect.value?.get(3)}"
+            }
+            if(list.size==6){
+                binding.locationC.visibility = View.VISIBLE
+                binding.locationCTxt.text = "${viewModel.locationSelect.value?.get(4)} ${viewModel.locationSelect.value?.get(5)}"
+            }
+        }
     }
     // 스피너 어댑터 초기화 함수
     private fun initSpinner(spinner: Spinner, itemsArrayId: Int, hintText: String, viewModelLiveData: MutableLiveData<Boolean>) {

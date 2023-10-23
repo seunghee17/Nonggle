@@ -74,6 +74,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/flexbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:flexWrap="wrap">
