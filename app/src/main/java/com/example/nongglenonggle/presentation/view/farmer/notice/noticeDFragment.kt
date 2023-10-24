@@ -8,6 +8,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentNoticeDBinding
@@ -148,6 +150,14 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
         }
         binding.checkboxContainerB.setOnClickListener{
             binding.checkboxB.isChecked = true
+            binding.nextBtn.setBackgroundResource(R.color.m1)
+        }
+        binding.nextBtn.setOnClickListener{
+            val result = viewModel.setNoticeData()
+            if(result != null){
+                viewModel.addNoticeContent(result)
+                Toast.makeText(context, "데이터 저장 완료!", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }

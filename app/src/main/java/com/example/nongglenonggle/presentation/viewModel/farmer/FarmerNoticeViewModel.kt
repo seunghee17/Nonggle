@@ -12,13 +12,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.domain.entity.Model
+import com.example.nongglenonggle.domain.entity.NoticeContent
+import com.example.nongglenonggle.domain.usecase.AddNoticeUseCase
 import com.example.nongglenonggle.domain.usecase.UploadImageUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: UploadImageUsecase): ViewModel() {
+class FarmerNoticeViewModel @Inject constructor(
+    private val uploadImageUsecase: UploadImageUsecase,
+    private val addNoticeUseCase: AddNoticeUseCase
+    ): ViewModel() {
     //이름칸 감지
     val _isClick1 = MutableLiveData<Boolean>()
     val isClick1:LiveData<Boolean> = _isClick1
@@ -379,6 +384,56 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
         _workerTime2.value = false
         _category.value = false
         _daytextVisible.postValue(false)
+    }
+    fun setNoticeData():NoticeContent{
+        val allNoticeContent = NoticeContent(
+            imageUrl = farmerImage.value.toString(),
+            pay = listOf(noticeMoney.value ?: "",payMoney.value ?: ""),
+            recruitPeriod= mapOf(
+                "type" to DeadlineType.value!!,
+                "detail" to deadlineDetail
+            ),
+            recruitNum=requirednum.value!!,
+            recruitAge = recruitAge,
+            recruitGender = noticeGender.value!!,
+            career = applyType.value!!,
+            qualification = mapOf(
+                "type" to certifiType.value!!,
+                "name" to certifiList
+            ),
+            workPeriod = workPeriod.value!!,
+            workType = workType.value!!,
+            workDay = mapOf(
+                "type" to dayType.value!!,
+                "detail" to dayDetail.value!!
+            ),
+            workTime = mapOf(
+                "type" to timeType,
+                "detail" to result
+            ),
+            title = titleInfo,
+            categoryItem = clickedTexts,
+            firstAddress = AddressFromWeb.value!!,
+            finalAddress = totalAddress,
+            workDetailInfo = detailContent.value!!,
+            stayInfo = DormType.value!!,
+            mealInfo = FoodType.value!!,
+            specialInfo = mapOf(
+                "name" to name,
+                "phnum" to phnum
+            )
+        )
+        return allNoticeContent
+    }
+    fun addNoticeContent(noticeContent: NoticeContent){
+        viewModelScope.launch {
+            try{
+                addNoticeUseCase.invoke(noticeContent)
+                Log.d("first", "Success!")
+            }catch (e:Exception){
+                Log.d("first", "fail to database")
+            }
+        }
     }
 
 }

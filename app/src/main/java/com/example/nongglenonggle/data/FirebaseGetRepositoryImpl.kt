@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class FirestoreGetRepositoryImpl @Inject constructor(
-    private val firestore: FirebaseFirestore
-) : FirestoreGetRepository {
+    private val firestore: FirebaseFirestore) :
+    FirestoreGetRepository {
 
 }

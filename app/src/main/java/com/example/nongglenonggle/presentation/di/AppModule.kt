@@ -1,9 +1,11 @@
 package com.example.nongglenonggle.presentation.di
 
 import com.example.nongglenonggle.data.FirestoreGetRepositoryImpl
+import com.example.nongglenonggle.data.FirestoreSetRepositoryImpl
 import com.example.nongglenonggle.data.ImageRepositoryImpl
 import com.example.nongglenonggle.domain.repository.AddressRepository
 import com.example.nongglenonggle.domain.repository.FirestoreGetRepository
+import com.example.nongglenonggle.domain.repository.FirestoreSetRepository
 import com.example.nongglenonggle.domain.repository.ImageRepository
 import com.example.nongglenonggle.domain.usecase.UpdateAddressUseCase
 import com.google.firebase.auth.FirebaseAuth
@@ -53,5 +55,14 @@ object AppModule {
     }
     @Provides
     fun provideFirestoreRepository(firestore:FirebaseFirestore): FirestoreGetRepository = FirestoreGetRepositoryImpl(firestore)
+
+    @Provides
+    @Singleton
+    fun provideSetRepository(
+        firestore: FirebaseFirestore,
+        firebaseAuth: FirebaseAuth
+    ):FirestoreSetRepository{
+        return FirestoreSetRepositoryImpl(firestore,firebaseAuth)
+    }
 
 }

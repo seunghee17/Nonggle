@@ -1,10 +1,10 @@
 package com.example.nongglenonggle.domain.entity
 
 data class NoticeContent(
-    val imageUrl : String,
-    val pay : List<String>,
-    val recruitPeriod : Map<String,Any>,
-    val recruitNum : String,
+    var imageUrl : String,
+    var pay : List<String>,
+    var recruitPeriod : Map<String,Any>,
+    var recruitNum : String,
     val recruitAge : List<String>,
     val recruitGender:String,
     val career : String,
@@ -20,5 +20,5 @@ data class NoticeContent(
     val workDetailInfo:String,
     val stayInfo:String,
     val mealInfo:String,
-    val specialInfo:String
+    val specialInfo:Map<String,Any>
 )
