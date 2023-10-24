@@ -13,7 +13,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
 class DatepickerFragment : BottomSheetDialogFragment() {
-    private val viewModel: FarmerNoticeViewModel by activityViewModels()
     private val typeviewModel:SignupViewModel by activityViewModels()
     private val workerviewModel : ResumeViewModel by activityViewModels()
     private var _binding : FragmentDatepickerBinding? = null
@@ -107,16 +106,14 @@ class DatepickerFragment : BottomSheetDialogFragment() {
             val month = month.value
             val day = day.value
 
-            if(typeviewModel.isHire.value == true){
-                val currentList = viewModel._DateList.value ?: emptyList()
-                viewModel._DateList.value = currentList + listOf(year,month,day)
-            }
-            else{
+//            if(typeviewModel.isHire.value == true){
+//                val currentList = viewModel._DateList.value ?: emptyList()
+//                viewModel._DateList.value = currentList + listOf(year,month,day)
+//            }
+
                 val currentList = workerviewModel._BirthList.value ?: emptyList()
                 workerviewModel._BirthList.value = currentList + listOf(year, month, day)
-            }
-
-            dismiss()
+                dismiss()
         }
     }
 

@@ -27,6 +27,7 @@ import com.example.nongglenonggle.databinding.FragmentNoticeBBinding
 import com.example.nongglenonggle.domain.entity.Model
 import com.example.nongglenonggle.presentation.view.adapter.SpinnerAdapter
 import com.example.nongglenonggle.presentation.view.dialog.DatepickerFragment
+import com.example.nongglenonggle.presentation.view.dialog.HireDatePickerFragment
 import com.example.nongglenonggle.presentation.view.dialog.TimepickerFragment
 import com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel
 import com.google.firebase.storage.FirebaseStorage
@@ -331,7 +332,7 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
     }
 
     private fun showDatePicker() {
-        val newFrament = DatepickerFragment()
+        val newFrament = HireDatePickerFragment()
         newFrament.show(parentFragmentManager,"datepicker")
     }
 

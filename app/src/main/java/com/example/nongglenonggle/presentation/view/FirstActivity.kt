@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.ActivityFirstBinding
+import com.example.nongglenonggle.presentation.view.farmer.home.MainActivity
 import com.example.nongglenonggle.presentation.view.signup.SignupActivity
 import com.example.nongglenonggle.presentation.view.login.LoginActivity
 import com.example.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
@@ -57,7 +58,7 @@ class FirstActivity : AppCompatActivity() {
         super.onStart()
         val current = auth.currentUser
         if(current != null){
-            val intent = Intent(this, WorkerMainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }

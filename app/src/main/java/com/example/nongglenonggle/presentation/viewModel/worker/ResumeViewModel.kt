@@ -20,7 +20,7 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
     val profileImage:LiveData<String> = _profileImage
 
     val resumeData : MutableLiveData<MutableList<Model.ResumeSummary>> = MutableLiveData(mutableListOf())
-    var careerTotal : String=""
+    var allcareer : String=""
     var additional_present:String=""
 
 
@@ -208,7 +208,7 @@ class ResumeViewModel @Inject constructor(private val uploadImageUsecase: Upload
         day %=30
         year += month/12
         month %=12
-        careerTotal = "${year}년 ${month}개월 ${day}일"
+        allcareer = "${year}년 ${month}개월 ${day}일"
         return "${year}년 ${month}개월 ${day}일"
     }
 
