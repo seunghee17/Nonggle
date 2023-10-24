@@ -13,6 +13,7 @@ import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentNoticeDBinding
 import com.example.nongglenonggle.presentation.base.BaseFragment
 import com.example.nongglenonggle.presentation.view.dialog.DatepickerFragment
+import com.example.nongglenonggle.presentation.view.dialog.HireDatePickerFragment
 import com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel
 
 class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_notice_d) {
@@ -154,7 +155,7 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
     //날짜 선택용
     private fun showDatePicker()
     {
-        val newFrament = DatepickerFragment()
+        val newFrament = HireDatePickerFragment()
         newFrament.show(parentFragmentManager,"datepicker")
     }
     fun EditText.getClearButton(drawableRightId:Int){
