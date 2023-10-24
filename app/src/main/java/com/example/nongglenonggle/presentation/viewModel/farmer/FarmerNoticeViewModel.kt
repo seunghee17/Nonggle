@@ -321,22 +321,8 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
     val _isDeadline = MutableLiveData<Boolean>()
     val isDeadline:LiveData<Boolean> = _isDeadline
 
-    //재배 품목 카테고리
-    private val _selectedButtons = MutableLiveData<MutableList<String>>()
-    val selectedButtons:LiveData<MutableList<String>> = _selectedButtons
 
-    val buttonStates = MutableLiveData<HashMap<String,Boolean>>().apply {
-        value= hashMapOf(
-            "button1" to false,
-            "button2" to false,
-            "button3" to false,
-            "button4" to false,
-            "button5" to false,
-            "button6" to false,
-            "button7" to false,
-            "button8" to false
-        )
-    }
+
     fun uploadImage(imageEntity: Model.ImageEntity){
         viewModelScope.launch {
             val result = uploadImageUsecase.uploadImage(imageEntity,"NoticeImages")
@@ -357,28 +343,32 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
         val addressData = sharedPreferences.getString("addressData",null)
         _AddressFromWeb.value=addressData
     }
+    val categoryButtons = MutableLiveData<List<Boolean>>(List(8) {false})
+    val categoryLive:LiveData<List<Boolean>> = categoryButtons
+    //선택한 버튼 텍스트 저장용
+    val clickedTexts = mutableListOf<String>()
 
-    fun addButton(text:String){
-        _selectedButtons.value?.let{
-            if(it.size<3 && !it.contains(text)){
-                it.add(text)
-                _selectedButtons.postValue(it)
-            }
+    fun onButtonClick(index:Int, buttonText:String){
+        val currentColor = categoryButtons.value?.toMutableList() ?: mutableListOf()
+        currentColor[index] = !currentColor[index]
+        categoryButtons.value = currentColor
+        if(currentColor[index]){
+            clickedTexts.add(buttonText)
+        }else{
+            clickedTexts.remove(buttonText)
         }
     }
 
-    fun removeButton(text:String){
-        _selectedButtons.value?.let{
-            if(it.contains(text)){
-                it.remove(text)
-                _selectedButtons.postValue(it)
-            }
-        }
+    //기타품목 포커스용
+    private val _focusAdditional = MutableLiveData<Boolean>()
+    val focusAdditional : LiveData<Boolean> = _focusAdditional
+
+    //기타품목 입력
+    var additionalTxt : String = ""
+    fun setAdditional(focus:Boolean){
+        _focusAdditional.postValue(focus)
     }
-    //버튼이 이미 선택됐는지 확인하는 메소드
-    fun isButtonSelected(text:String):Boolean{
-        return _selectedButtons.value?.contains(text) ?: false
-    }
+
 
     init{
         _isClick1.postValue(false)
@@ -388,7 +378,6 @@ class FarmerNoticeViewModel @Inject constructor(private val uploadImageUsecase: 
         _workerTime1.value = false
         _workerTime2.value = false
         _category.value = false
-        _selectedButtons.value = mutableListOf()
         _daytextVisible.postValue(false)
     }
 

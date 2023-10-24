@@ -283,31 +283,6 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
                 Log.e("yet", "아직 마지막아님")
             }
         }
-        val button1 = binding.farmerCategory1
-        val button2 = binding.farmerCategory2
-        val button3 = binding.farmerCategory3
-        val button4 = binding.farmerCategory4
-        val button5 = binding.farmerCategory5
-        val button6 = binding.farmerCategory6
-        val button7 = binding.farmerCategory7
-        val button8 = binding.farmerCategory8
-        val buttons = listOf(button1, button2, button3, button4, button5, button6, button7, button8)
-
-        for (button in buttons) {
-            button.setOnClickListener {
-                val buttonText = button.text.toString()
-                viewModel.buttonStates.value?.let {
-                    if (it[buttonText] == false && viewModel.selectedButtons.value!!.size < 3) {
-                        it[buttonText] = true
-                        viewModel.addButton(buttonText)
-                    } else if (it[buttonText] == true) {
-                        it[buttonText] = false
-                        viewModel.removeButton(buttonText)
-                    }
-                    viewModel.buttonStates.value = it
-                }
-            }
-        }
     }
 
 
