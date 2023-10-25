@@ -2,6 +2,7 @@ package com.example.nongglenonggle.presentation.view.farmer.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.presentation.view.farmer.mypage.FarmerMypageFragment
@@ -46,4 +47,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+    fun hideBottomNavi(){
+        val bottomNavi = findViewById<BottomNavigationView>(R.id.bottom_navi)
+        bottomNavi.visibility = View.GONE
     }
+}

@@ -33,6 +33,8 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(R.layout.fragment_not
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (activity as MainActivity).hideBottomNavi()
+
         binding.gotoN.setOnClickListener{
             val intent = Intent(context, NoticeActivity::class.java)
             startActivity(intent)

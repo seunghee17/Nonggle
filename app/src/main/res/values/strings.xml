@@ -160,5 +160,11 @@
 
     <string name="현재_모집중인_공고글은">%s 농부님,\n현재 모집중인 공고글은\n%s개 입니다.</string>
 
+    <string name="지원자_수">지원자 수</string>
+    <string name="tip">Tip!</string>
+    <string name="해당_공고글과">해당 공고글과 맞는 사람을 찾아보세요!</string>
+    <string name="이런_일손은_어때요">이런 일손은 어때요?</string>
+    <string name="더보기">"<u>더보기</u>"</string>
+
 
 </resources>

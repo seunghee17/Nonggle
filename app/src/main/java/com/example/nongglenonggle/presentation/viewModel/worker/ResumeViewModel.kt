@@ -15,7 +15,8 @@ import java.time.Period
 import java.util.Calendar
 import javax.inject.Inject
 @HiltViewModel
-class ResumeViewModel @Inject constructor(private val uploadImageUsecase: UploadImageUsecase, private val fetchFirestoreDataUseCase: FetchFirestoreDataUseCase): ViewModel() {
+class ResumeViewModel @Inject constructor(
+    private val uploadImageUsecase: UploadImageUsecase): ViewModel() {
     private val _profileImage = MutableLiveData<String>()
     val profileImage:LiveData<String> = _profileImage
 
