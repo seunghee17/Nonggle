@@ -158,5 +158,7 @@
     <string name="모든_항목을">모든 항목을 빠짐없이 입력 후\n 알맞은 일손을 찾아보세요!</string>
     <string name="공고글_작성하러_가기">공고글 작성하러 가기</string>
 
+    <string name="현재_모집중인_공고글은">%s 농부님,\n현재 모집중인 공고글은\n%s개 입니다.</string>
+
 
 </resources>

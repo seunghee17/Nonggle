@@ -429,7 +429,6 @@ class FarmerNoticeViewModel @Inject constructor(
         viewModelScope.launch {
             try{
                 addNoticeUseCase.invoke(noticeContent)
-                Log.d("first", "Success!")
             }catch (e:Exception){
                 Log.d("first", "fail to database")
             }

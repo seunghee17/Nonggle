@@ -70,10 +70,8 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
 
         })
 
-        initSpinner(binding.startAgeSpinner, R.array.start_select_age, "시작연령대", viewModel._activeStartAge)
-        viewModel.recruitAge.add(0,viewModel.agedata)
-        initSpinner(binding.endAgeSpinner, R.array.end_select_age, "끝연령대", viewModel._activeEndAge)
-        viewModel.recruitAge.add(1,viewModel.agedata)
+        initSpinner(binding.startAgeSpinner, R.array.start_select_age, "시작연령대", viewModel._activeStartAge,0)
+        initSpinner(binding.endAgeSpinner, R.array.end_select_age, "끝연령대", viewModel._activeEndAge,1)
 
 
 
@@ -266,7 +264,7 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
     }
 
     // 스피너 어댑터 초기화 함수
-    private fun initSpinner(spinner: Spinner, itemsArrayId: Int, hintText: String, viewModelLiveData: MutableLiveData<Boolean>) {
+    private fun initSpinner(spinner: Spinner, itemsArrayId: Int, hintText: String, viewModelLiveData: MutableLiveData<Boolean>,index: Int) {
         val items = resources.getStringArray(itemsArrayId)
         val adapter = SpinnerAdapter(requireContext(), R.layout.item_spinner, items, R.id.list_content)
         adapter.setHintTextColor(hintText, R.color.g3)
@@ -287,7 +285,12 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 viewModelLiveData.postValue(false)
-                viewModel.agedata = items[p2]
+                val selectedAgeData= items[p2]
+                if(viewModel.recruitAge.size > index){
+                    viewModel.recruitAge[index] = selectedAgeData
+                }else{
+                    viewModel.recruitAge.add(selectedAgeData)
+                }
                 p1?.isPressed = false
             }
 

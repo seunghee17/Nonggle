@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.view.farmer.home.FarmerhomeFragment"
@@ -13,8 +14,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/background"
-            />
+            android:src="@drawable/background" />
         <LinearLayout
             android:id="@+id/logocontainer"
             android:layout_width="match_parent"
@@ -43,18 +43,23 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/home_main_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/logocontainer"
             android:layout_alignParentLeft="true"
             android:fontFamily="@font/spoqahansansneo_regular"
-            android:text="지원 농부님,"
+            android:text="@string/현재_모집중인_공고글은"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:lineSpacingExtra="5sp"
-            android:includeFontPadding="false"/>
+            android:includeFontPadding="false"
+            android:layout_marginTop="76dp"
+            android:layout_marginLeft="20dp"/>
     </RelativeLayout>
 
 
 </LinearLayout>
+
+</layout>

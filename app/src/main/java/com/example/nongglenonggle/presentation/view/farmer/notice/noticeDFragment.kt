@@ -41,7 +41,7 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
         binding.dormYes.setOnClickListener{
             viewModel._activeDorm.postValue(true)
             viewModel._activeNoDorm.postValue(false)
-            viewModel._DormType.value = "숙소를 지원합니다."
+            //viewModel._DormType.value = "숙소를 지원합니다."
         }
         //숙소제공 없음
         binding.dormNo.setOnClickListener{
@@ -70,9 +70,9 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
                         binding.yesDormInfo.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
                     }
                 }
-                viewModel._yesDormInfo.postValue(p0.toString())
-                val init = viewModel.DormType.value
-                viewModel._DormType.value = "${init} ${viewModel.yesDormInfo.value}"
+//                viewModel._yesDormInfo.postValue(p0.toString())
+//                val init = viewModel.DormType.value
+                viewModel._DormType.value = "숙소를 지원합니다. ${p0.toString()}"
             }
 
         })
@@ -80,7 +80,7 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
         binding.foodYes.setOnClickListener{
             viewModel._yesFood.postValue(true)
             viewModel._noFood.postValue(false)
-            viewModel._FoodType.value = "식사를 제공합니다."
+            //viewModel._FoodType.value = "식사를 제공합니다."
         }
         binding.foodNo.setOnClickListener{
             viewModel._yesFood.postValue(false)
@@ -108,9 +108,8 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
                         binding.yesFoodInfo.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
                     }
                 }
-                viewModel._yesFoodInfo.postValue(p0.toString())
-                val init = viewModel.FoodType.value
-                viewModel._FoodType.value = "${init} ${viewModel._yesFoodInfo.value}"
+                val info = viewModel._yesFoodInfo.postValue(p0.toString())
+                viewModel._FoodType.value = "식사를 제공합니다. ${info}"
             }
 
         })
