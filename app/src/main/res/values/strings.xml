@@ -1,5 +1,6 @@
 <resources>
     <string name="공고글작성">공고글작성</string>
+    <string name="공고쓰기">공고쓰기</string>
     <string name="대표주소">대표주소</string>
 
     <string name="app_name">농글농글</string>
@@ -153,6 +154,9 @@
     <string name="공개">공개</string>
 
     <string name="희망근무지역">희망근무지역</string>
+    <string name="공고글_작성은">공고글 작성은 총 4단계입니다.</string>
+    <string name="모든_항목을">모든 항목을 빠짐없이 입력 후\n 알맞은 일손을 찾아보세요!</string>
+    <string name="공고글_작성하러_가기">공고글 작성하러 가기</string>
 
 
 </resources>
