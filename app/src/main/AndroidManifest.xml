@@ -19,9 +19,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.view.farmer.notice.NoticeCompleteActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.view.worker.resume.ResumeActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".presentation.view.farmer.notice.AddressSearchWebActivity"
             android:exported="false" />

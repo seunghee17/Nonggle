@@ -165,6 +165,20 @@
     <string name="해당_공고글과">해당 공고글과 맞는 사람을 찾아보세요!</string>
     <string name="이런_일손은_어때요">이런 일손은 어때요?</string>
     <string name="더보기">"<u>더보기</u>"</string>
+    <string name="공고글">공고간</string>
+    <string name="근무시간">근무시간</string>
+    <string name="근무요일">근무요일</string>
+    <string name="모집조건">모집조건</string>
+    <string name="모집마감">모집마감</string>
+    <string name="모집인원">모집인원</string>
+    <string name="모집연령">모집연령</string>
+    <string name="모집성별">모집성별</string>
+    <string name="요구경력">요구경력</string>
+    <string name="필요자격증">필요자격증</string>
+    <string name="근무내용">근무내용</string>
+    <string name="근무기간">근무기간</string>
+    <string name="재배품목">재배품</string>
+    <string name="근무지역">근무지역</string>
 
 
 </resources>
