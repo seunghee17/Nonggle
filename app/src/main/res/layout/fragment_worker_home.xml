@@ -1,18 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.view.worker.home.WorkerHomeFragment">
-
-    <Button
-        android:id="@+id/hello"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-</FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".presentation.view.worker.home.WorkerHomeFragment">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/bg_worker_home"
+            android:scaleType="fitXY"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="20dp"
+            android:text="@string/이력서와_맞는_일자리를"
+            android:fontFamily="@font/spoqahansansneo_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="5sp"
+            android:layout_marginTop="20dp"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/spoqahansansneo_medium"
+                android:paddingTop="19dp"
+                android:paddingBottom="19dp"
+                android:text="Logo"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/bell" />
+
+        </LinearLayout>
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/non_resume"
+            layout="@layout/summary_no_resume_data"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="280dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:visibility="gone"/>
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/yes_resume"
+            layout="@layout/summary_yes_resume_data"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="280dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/tipbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_farmer_home_tipbox"
+            android:backgroundTint="@color/white"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="473dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="@string/구직자_팁"
+            android:paddingLeft="20dp"
+            android:paddingTop="17dp"
+            android:paddingBottom="17dp"
+            android:gravity="center_vertical"
+            android:elevation="20dp"
+            android:fontFamily="@font/spoqahansansneo_medium"
+            android:textColor="@color/g1"
+            android:textSize="12sp"/>
+
+        <LinearLayout
+            android:id="@+id/introduce_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tipbox"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/이런_일자리는_어때요"
+                android:textSize="16sp"
+                android:fontFamily="@font/spoqahansansneo_medium"
+                android:textColor="@color/black"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/더보기"
+                android:fontFamily="@font/spoqahansansneo_medium"
+                android:textColor="@color/g2"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="40dp"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/introduce_title"
+            app:layout_constraintVertical_bias="0.0"
+            tools:listitem="@layout/list_worker_home" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/introduce_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:visibility="gone">
+          <ImageView
+              android:layout_width="100dp"
+              android:layout_height="100dp"
+              android:src="@drawable/non_data"
+              />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="아직_공고글이_없어요"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:textSize="14sp"
+                android:textColor="@color/g2"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </LinearLayout>
 </layout>

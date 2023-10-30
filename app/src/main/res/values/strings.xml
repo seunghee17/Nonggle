@@ -159,6 +159,7 @@
     <string name="공고글_작성하러_가기">공고글 작성하러 가기</string>
 
     <string name="현재_모집중인_공고글은">%1$s 농부님,\n현재 모집중인 공고글은\n%2$d개 입니다.</string>
+    <string name="이력서와_맞는_일자리를">%1$s님,\n이력서와 맞는 일자리를\n찾아보세요!</string>
 
     <string name="지원자_수">지원자 수</string>
     <string name="tip">Tip!</string>
@@ -180,7 +181,15 @@
     <string name="재배품목">재배품</string>
     <string name="근무지역">근무지역</string>
     <string name="아직_작성된_공고글">아직 작성된 공고글이 없어요!</string>
+    <string name="아직_작성된_이력서">아직 작성된 이력서가 없어요!</string>
     <string name="아직_일손이_없어요">아직 일손이 없어요</string>
+    <string name="이력서_작성하기">이력서 작성하기</string>
+    <string name="수정하기">수정하기</string>
+    <string name="삭제하기">삭제하기</string>
+    <string name="구직자_팁">Tip!&#160;&#160;작성하신 이력서와 맞는 일자리를 추천해드려요!</string>
+
+    <string name="이런_일자리는_어때요">이런 일자리는 어때요?</string>
+    <string name="아직_공고글이_없어요">아직 공고글이 없어요</string>
 
 
 </resources>

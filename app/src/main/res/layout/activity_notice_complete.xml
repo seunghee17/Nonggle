@@ -72,7 +72,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:scaleType="fitXY"
-                    android:src="@drawable/bg_home_farmer"/>
+                    android:src="@drawable/bg_worker_home"/>
 
                 <LinearLayout
                     android:id="@+id/title_box"

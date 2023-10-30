@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_farmer_home_tipbox"
+    android:backgroundTint="@color/white"
+    android:layout_marginRight="12dp">
+
+    <ImageView
+        android:layout_width="170dp"
+        android:layout_height="100dp"
+        android:src="@drawable/bg_worker_home"
+        android:scaleType="fitXY"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="강원도 사과 따기"
+        android:fontFamily="@font/spoqahansansneo_medium"
+        android:textSize="14sp"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/location_fill"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="12sp"
+            android:textColor="@color/g2"
+            android:text="충북 보령시"
+            android:layout_marginLeft="4dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/date_fill"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="12sp"
+            android:textColor="@color/g2"
+            android:text="23.06.16마감"
+            android:layout_marginLeft="4dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_farmer_home_tipbox"
+            android:backgroundTint="@color/m5"
+            android:layout_marginLeft="16dp"
+            android:text="출퇴근형"
+            android:textColor="@color/m1"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="12sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_farmer_home_tipbox"
+            android:backgroundTint="@color/m5"
+            android:layout_marginLeft="16dp"
+            android:text="출퇴근형"
+            android:textColor="@color/m1"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="12sp" />
+        
+    </LinearLayout>
+
+</LinearLayout>
