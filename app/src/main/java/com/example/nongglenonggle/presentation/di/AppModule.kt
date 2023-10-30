@@ -53,8 +53,8 @@ object AppModule {
     fun provideFirestore(): FirebaseFirestore{
         return FirebaseFirestore.getInstance()
     }
-    @Provides
-    fun provideFirestoreRepository(firestore:FirebaseFirestore): FirestoreGetRepository = FirestoreGetRepositoryImpl(firestore)
+//    @Provides
+//    fun provideFirestoreRepository(firestore:FirebaseFirestore): FirestoreGetRepository = FirestoreGetRepositoryImpl(firestore)
 
     @Provides
     @Singleton
@@ -64,5 +64,16 @@ object AppModule {
     ):FirestoreSetRepository{
         return FirestoreSetRepositoryImpl(firestore,firebaseAuth)
     }
+
+    @Provides
+    @Singleton
+    fun provideGetRepository(
+        firestore: FirebaseFirestore,
+        firebaseAuth: FirebaseAuth
+    ):FirestoreGetRepository{
+        return FirestoreGetRepositoryImpl(firestore,firebaseAuth)
+    }
+
+
 
 }

@@ -134,8 +134,7 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
     val dstepActive:LiveData<Boolean> = _dstepActive
 
 
-    fun startPhoneNumberVerification(phonenum:String)
-    {
+    fun startPhoneNumberVerification(phonenum:String) {
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phonenum)
             .setTimeout(120L, TimeUnit.SECONDS)

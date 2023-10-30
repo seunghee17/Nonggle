@@ -51,6 +51,7 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
         val clearbtn4 = binding.clearbtn4
         val clearbtn5 = binding.clearbtn5
         val nextbtn = binding.nextBtn
+        var phonenum = ""
 
         val edittextArray : Array<EditText> = arrayOf(edittext1,edittext2,edittext3,edittext4,edittext5)
         val clearbutton: Array<ImageView> = arrayOf(clearbtn1,clearbtn2,clearbtn3,clearbtn4,clearbtn5)
@@ -93,6 +94,7 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
             }
 
             override fun afterTextChanged(p0: Editable?) {
+                phonenum = p0.toString()
             }
         })
 

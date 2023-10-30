@@ -11,7 +11,9 @@ import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.ActivityWorkerMainBinding
 import com.example.nongglenonggle.presentation.base.BaseActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WorkerMainActivity :AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
