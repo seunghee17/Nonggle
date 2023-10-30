@@ -179,6 +179,8 @@
     <string name="근무기간">근무기간</string>
     <string name="재배품목">재배품</string>
     <string name="근무지역">근무지역</string>
+    <string name="아직_작성된_공고글">아직 작성된 공고글이 없어요!</string>
+    <string name="아직_일손이_없어요">아직 일손이 없어요</string>
 
 
 </resources>

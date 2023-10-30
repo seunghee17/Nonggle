@@ -7,6 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".presentation.view.farmer.home.FarmerhomeFragment"
     android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -14,7 +17,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="346dp"
-            android:src="@drawable/bg_home_farmer"
+            android:src="@drawable/bg_farmer_home"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -79,9 +82,30 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="126dp"
             android:background="@drawable/bg_farmer_home_tipbox"
-            android:backgroundTint="@color/m5"
+            android:backgroundTint="@color/white"
             android:clickable="true"
             android:orientation="horizontal">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/non_data_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/아직_작성된_공고글"
+                android:textSize="14sp"
+                android:textColor="@color/g3"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                android:paddingTop="43dp"
+                android:paddingBottom="42dp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
 
             <ImageView
                 android:id="@+id/category_img"
@@ -91,15 +115,18 @@
                 android:layout_marginTop="25dp"
                 android:src="@drawable/category_img1"
                 android:layout_gravity="center_vertical"
-                android:layout_marginBottom="22dp"/>
+                android:layout_marginBottom="22dp"
+                android:visibility="gone"/>
 
             <LinearLayout
+                android:id="@+id/deadline_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="27dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="28dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/notice_title"
@@ -228,7 +255,36 @@
             android:layout_marginTop="40dp"
             android:layout_marginRight="20dp" />
 
+        <LinearLayout
+            android:id="@+id/non_data_worker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/worker_select"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="60dp"
+            android:gravity="center"
+            android:visibility="visible">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/non_data"
+                android:layout_marginTop="50dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:textSize="14sp"
+                android:textColor="@color/g2"
+                android:layout_marginTop="16dp"
+                android:text="@string/아직_일손이_없어요"/>
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_worker"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/worker_select"
@@ -240,6 +296,7 @@
             tools:listitem="@layout/list_farmer_home"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 
 </LinearLayout>

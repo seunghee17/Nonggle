@@ -6,35 +6,19 @@
     android:layout_height="wrap_content"
     android:layout_marginRight="16dp"
     android:background="@drawable/bg_farmer_home_tipbox">
-    <TextView
-        android:id="@+id/textbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="추천 1순위"
-        android:textColor="@color/m1"
-        android:background="@drawable/bg_farmer_home_tipbox"
-        android:backgroundTint="@color/m6"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="12dp"/>
 
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_img"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/bg_home_farmer"
-        app:layout_constraintTop_toBottomOf="@id/textbox"
+        android:src="@drawable/bg_farmer_home"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="55dp"
         android:layout_marginRight="55dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="20dp"/>
     <TextView
         android:id="@+id/worker_name"
         android:layout_width="wrap_content"
@@ -77,28 +61,26 @@
             android:text="여 ∙ 65세"
             android:layout_marginLeft="12dp"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/basic_box"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="경력 10년 11개월"
+        android:textColor="@color/m1"
+        android:background="@drawable/bg_farmer_home_tipbox"
+        android:backgroundTint="@color/m5"
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:textSize="12sp"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/spoqahansansneo_medium"
-            android:textSize="10sp"
-            android:textColor="@color/m1"
-            android:text="경력 10년 11개월 ⎮  채용 10번"/>
-
-    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
