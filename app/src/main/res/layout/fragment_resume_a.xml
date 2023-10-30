@@ -127,6 +127,47 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/spoqahansansneo_regular"
+        android:text="@string/성별"
+        android:textColor="@color/g1"
+        android:textSize="14sp" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/women"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/여"
+            android:textColor="@{viewModel.activateWomen ? @color/m1 : @color/g3}"
+            android:textSize="16sp"
+            android:fontFamily="@font/spoqahansansneo_medium"
+            android:background="@{viewModel.activateWomen ? @drawable/typebox_active : @drawable/typebox_unactive}"
+            android:layout_weight="1"
+            android:layout_marginRight="16dp"
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/man"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/남"
+            android:textColor="@{viewModel.activateMen ? @color/m1 : @color/g3}"
+            android:textSize="16sp"
+            android:fontFamily="@font/spoqahansansneo_medium"
+            android:background="@{viewModel.activateMen ? @drawable/typebox_active : @drawable/typebox_unactive}"
+            android:layout_weight="1" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/spoqahansansneo_regular"
         android:text="@string/자격증"
         android:textColor="@color/g1"
         android:textSize="14sp" />

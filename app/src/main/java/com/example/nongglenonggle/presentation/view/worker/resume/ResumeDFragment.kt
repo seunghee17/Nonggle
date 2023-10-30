@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -133,10 +134,14 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
             viewModel._activeprivate.postValue(true)
             viewModel._activepublic.postValue(false)
             //비공개 설정시 추가적 기능 명세
+            viewModel.openSetting1 = "private"
+            viewModel.openSetting2 = "privateresume"
         }
         binding.publicBtn.setOnClickListener{
             viewModel._activeprivate.postValue(false)
             viewModel._activepublic.postValue(true)
+            viewModel.openSetting1 = "public"
+            viewModel.openSetting2 = "publicresume"
         }
         binding.selectLocation.setOnTouchListener{view,event->
             //희망 장소 선택
@@ -162,6 +167,13 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
             if(list.size==6){
                 binding.locationC.visibility = View.VISIBLE
                 binding.locationCTxt.text = "${viewModel.locationSelect.value?.get(4)} ${viewModel.locationSelect.value?.get(5)}"
+            }
+        }
+        binding.complete.setOnClickListener{
+            val result = viewModel.setResumeData()
+            if(result != null){
+                viewModel.addResumeContent(result)
+                Toast.makeText(context, "데이터 저장 완료!", Toast.LENGTH_SHORT).show()
             }
         }
     }

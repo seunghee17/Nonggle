@@ -120,6 +120,13 @@ class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_r
             viewModel.activeCertifiB()
         }
 
+        binding.women.setOnClickListener{
+            viewModel.activeWomen()
+        }
+        binding.man.setOnClickListener{
+            viewModel.activeMan()
+        }
+
         binding.certificationTxt.setOnFocusChangeListener{view,isfocus->
             viewModel.setFocusCertifi(isfocus)
             if(isfocus && binding.certificationTxt.text?.isNotEmpty()==true){

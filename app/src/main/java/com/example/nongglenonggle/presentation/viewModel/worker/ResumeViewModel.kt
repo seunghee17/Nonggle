@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.domain.entity.Model
+import com.example.nongglenonggle.domain.entity.ResumeContent
+import com.example.nongglenonggle.domain.usecase.AddResumeUseCase
 import com.example.nongglenonggle.domain.usecase.UploadImageUsecase
 import com.example.nongglenonggle.domain.usecase.FetchFirestoreDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,13 +18,17 @@ import java.util.Calendar
 import javax.inject.Inject
 @HiltViewModel
 class ResumeViewModel @Inject constructor(
-    private val uploadImageUsecase: UploadImageUsecase): ViewModel() {
+    private val uploadImageUsecase: UploadImageUsecase,
+    private val addResumeUseCase: AddResumeUseCase
+    ): ViewModel() {
     private val _profileImage = MutableLiveData<String>()
     val profileImage:LiveData<String> = _profileImage
 
     val resumeData : MutableLiveData<MutableList<Model.ResumeSummary>> = MutableLiveData(mutableListOf())
     var allcareer : String=""
     var additional_present:String=""
+    var openSetting1:String=""
+    var openSetting2:String=""
 
 
     //이름
@@ -73,6 +79,22 @@ class ResumeViewModel @Inject constructor(
             }
         }
     }
+    //성별
+    private val _activateWomen = MutableLiveData<Boolean>()
+    val activateWomen:LiveData<Boolean> = _activateWomen
+    private val _activateMen = MutableLiveData<Boolean>()
+    val activateMen:LiveData<Boolean> = _activateMen
+    var gender = ""
+    fun activeWomen(){
+        _activateWomen.postValue(true)
+        _activateMen.postValue(false)
+        gender = "여"
+    }
+    fun activeMan(){
+        _activateWomen.postValue(false)
+        _activateMen.postValue(true)
+        gender = "남"
+    }
     //자격증
     private val _activeCertifiYes = MutableLiveData<Boolean>()
     val activeCertifiYes:LiveData<Boolean> = _activeCertifiYes
@@ -96,7 +118,7 @@ class ResumeViewModel @Inject constructor(
     val _changeConfirmCertifi = MutableLiveData<Boolean>()
     val changeConfirmCertifi : LiveData<Boolean> = _changeConfirmCertifi
 
-    //경력사항 입력받는 리스트
+    //자격증 입력받는 리스트
     private var _CarrerList=MutableLiveData<MutableList<String>>()
     val CarrerList:LiveData<MutableList<String>> = _CarrerList
 
@@ -324,6 +346,37 @@ class ResumeViewModel @Inject constructor(
             current.removeAt(index)
         }
         _locationSelect.value = current
+    }
+
+    fun setResumeData():ResumeContent{
+        val allResumeContent = ResumeContent(
+            imageurl = profileImage.toString(),
+            userName = userName,
+            userYear = userYear,
+            userGender = gender,
+            userPresent = presentTxt,
+            allCareer = allcareer,
+            resumeData = resumeData.value ?: mutableListOf(),
+            careerList = CarrerList.value ?: mutableListOf(),
+            locationSelect = locationSelect.value ?: mutableListOf(),
+            dormType = dormType,
+            dayData = dayData,
+            dayDetailData = dayDetailData,
+            desiredItem = clickedTexts,
+            selfHastag = characterList.value ?: mutableListOf(),
+            selfInfo = additional_present
+        )
+        return allResumeContent
+    }
+
+    fun addResumeContent(resumeContent: ResumeContent){
+        viewModelScope.launch {
+            try{
+                addResumeUseCase.invoke(resumeContent,openSetting1,openSetting2)
+            }catch (e:Exception){
+                Log.d("second", "fail to database")
+            }
+        }
     }
 
 }

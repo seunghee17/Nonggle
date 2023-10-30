@@ -2,6 +2,7 @@ package com.example.nongglenonggle.data
 
 import android.util.Log
 import com.example.nongglenonggle.domain.entity.NoticeContent
+import com.example.nongglenonggle.domain.entity.ResumeContent
 import com.example.nongglenonggle.domain.repository.FirestoreSetRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,6 +29,21 @@ class FirestoreSetRepositoryImpl @Inject constructor(
             }
             else{
                 firestore.collection("Announcement").document(currentUserUid).set(noticeContent).await()
+            }
+        }catch (e:Exception){
+            Log.e("error","user is not valid")
+        }
+        return@withContext Unit
+    }
+
+    override suspend fun addResumeData(resumeContent: ResumeContent, id1 :String, id2:String) = withContext(Dispatchers.IO){
+        try{
+            val currentUserUid = firebaseAuth.currentUser?.uid
+            if(currentUserUid == null){
+                Log.e("error","user is not valid")
+            }
+            else{
+                firestore.collection("Resume").document(id1).collection(id2).document(currentUserUid).set(resumeContent).await()
             }
         }catch (e:Exception){
             Log.e("error","user is not valid")

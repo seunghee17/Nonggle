@@ -27,10 +27,6 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.hello.setOnClickListener{
-            val intent = Intent(context,ResumeActivity::class.java)
-            startActivity(intent)
-        }
     }
 
 }

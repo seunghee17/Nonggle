@@ -246,7 +246,7 @@
                     android:layout_marginTop="36dp"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-            건<TextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
@@ -425,7 +425,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="g_line"/>
+                android:background="@color/g_line"/>
 
             <TextView
                 android:layout_width="wrap_content"
