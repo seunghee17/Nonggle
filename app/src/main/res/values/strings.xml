@@ -166,7 +166,7 @@
     <string name="해당_공고글과">해당 공고글과 맞는 사람을 찾아보세요!</string>
     <string name="이런_일손은_어때요">이런 일손은 어때요?</string>
     <string name="더보기">"<u>더보기</u>"</string>
-    <string name="공고글">공고간</string>
+    <string name="공고글">공고글</string>
     <string name="근무시간">근무시간</string>
     <string name="근무요일">근무요일</string>
     <string name="모집조건">모집조건</string>
@@ -178,7 +178,7 @@
     <string name="필요자격증">필요자격증</string>
     <string name="근무내용">근무내용</string>
     <string name="근무기간">근무기간</string>
-    <string name="재배품목">재배품</string>
+    <string name="재배품목">재배품요</string>
     <string name="근무지역">근무지역</string>
     <string name="아직_작성된_공고글">아직 작성된 공고글이 없어요!</string>
     <string name="아직_작성된_이력서">아직 작성된 이력서가 없어요!</string>
@@ -193,7 +193,13 @@
 
     <string name="공고쓰기가_완료">공고쓰기가 완료되었습니다!</string>
     <string name="이제_해당_공고글과">이제 해당 공고글과 알맞는\n일손을 찾아보세요.</string>
-    <string name="공고글_확인하러">공고글 확인하러 가기</string>
+    <string name="공고글_확인하러">공고글 확인하러 가요</string>
+
+    <string name="복사">"<u>복사</u>"</string>
+    <string name="업무내용">업무내용</string>
+    <string name="추가내용">추가내용</string>
+    <string name="구인자_이름">구인자 %1$s님,</string>
+    <string name="전화">전화</string>
 
 
 </resources>
