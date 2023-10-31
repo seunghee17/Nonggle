@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -17,6 +18,7 @@ import com.example.nongglenonggle.databinding.FragmentWorkerHomeBinding
 import com.example.nongglenonggle.presentation.base.BaseFragment
 import com.example.nongglenonggle.presentation.view.worker.resume.ResumeActivity
 import com.example.nongglenonggle.presentation.viewModel.worker.WorkerHomeViewModel
+import com.google.api.Distribution.BucketOptions.Linear
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,9 +49,15 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
             binding.nonResume.visibility = View.VISIBLE
         }
         setTextColor(binding.tipbox,binding.tipbox.text.toString(), "Tip!")
+
+        val writeBtn: LinearLayout = binding.root.findViewById(R.id.write_resume_btn)
+        writeBtn.setOnClickListener{
+            val intent = Intent(requireContext(), ResumeActivity::class.java)
+            startActivity(intent)
+        }
     }
     private fun setTextColor(textView: TextView, fullText:String, wordsToColor:String){
-        val color = ContextCompat.getColor(textView.context, R.color.m1)
+        val color = ContextCompat.getColor(textView.context, R.color.s1)
         val spannableStringBuilder = SpannableStringBuilder(fullText)
         var startIndex = fullText.indexOf(wordsToColor)
         while(startIndex != -1){

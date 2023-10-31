@@ -63,7 +63,7 @@
     <string name="숙소정보를_입력">숙소정보를 입력해주세요. 예)마을회관</string>
     <string name="식사제공">식사제공</string>
     <string name="식사정보를">식사정보를 입력해주세요. 예)중식제공</string>
-    <string name="공고글_마감설정">공고글 마감설정</string>
+    <string name="공고글_마감설정">공고글 러마감설정</string>
     <string name="마감기한">마감기한 설정</string>
     <string name="상시모집">상시모집</string>
     <string name="마감기한_날짜를">마감기한 날짜를 선택해주세요.</string>
@@ -190,6 +190,10 @@
 
     <string name="이런_일자리는_어때요">이런 일자리는 어때요?</string>
     <string name="아직_공고글이_없어요">아직 공고글이 없어요</string>
+
+    <string name="공고쓰기가_완료">공고쓰기가 완료되었습니다!</string>
+    <string name="이제_해당_공고글과">이제 해당 공고글과 알맞는\n일손을 찾아보세요.</string>
+    <string name="공고글_확인하러">공고글 확인하러 가기</string>
 
 
 </resources>
