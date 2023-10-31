@@ -13,8 +13,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.domain.entity.Model
 import com.example.nongglenonggle.domain.entity.NoticeContent
+import com.example.nongglenonggle.domain.usecase.AddNoticeRefToUserUseCase
+import com.example.nongglenonggle.domain.usecase.AddNoticeToCategoryUseCase
+import com.example.nongglenonggle.domain.usecase.AddNoticeToGenderUseCase
+import com.example.nongglenonggle.domain.usecase.AddNoticeToTypeUseCase
 import com.example.nongglenonggle.domain.usecase.AddNoticeUseCase
+import com.example.nongglenonggle.domain.usecase.AddRefToAddressUseCase
 import com.example.nongglenonggle.domain.usecase.UploadImageUsecase
+import com.google.firebase.firestore.DocumentReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,7 +28,12 @@ import javax.inject.Inject
 @HiltViewModel
 class FarmerNoticeViewModel @Inject constructor(
     private val uploadImageUsecase: UploadImageUsecase,
-    private val addNoticeUseCase: AddNoticeUseCase
+    private val addNoticeUseCase: AddNoticeUseCase,
+    private val addNoticeRefToUserUseCase: AddNoticeRefToUserUseCase,
+    private val addRefToAddressUseCase: AddRefToAddressUseCase,
+    private val addNoticeToCategoryUseCase: AddNoticeToCategoryUseCase,
+    private val addNoticeToGenderUseCase: AddNoticeToGenderUseCase,
+    private val addNoticeToTypeUseCase: AddNoticeToTypeUseCase
     ): ViewModel() {
     //이름칸 감지
     val _isClick1 = MutableLiveData<Boolean>()
@@ -38,6 +49,20 @@ class FarmerNoticeViewModel @Inject constructor(
     //도로명 주소 받아오기
     val _AddressFromWeb = MutableLiveData<String?>()
     val AddressFromWeb:LiveData<String?> = _AddressFromWeb
+
+    //시도, 시군구 각각 얻기 위해서
+    val locationArray: Array<String> by lazy {
+        AddressFromWeb.value?.split(" ")?.toTypedArray() ?: arrayOf()
+    }
+
+    val firstElement: String? by lazy {
+        locationArray.getOrNull(0)
+    }
+
+    val secondElement: String? by lazy {
+        locationArray.getOrNull(1)
+    }
+
 
     var totalAddress:String=""
 
@@ -429,8 +454,70 @@ class FarmerNoticeViewModel @Inject constructor(
         viewModelScope.launch {
             try{
                 addNoticeUseCase.invoke(noticeContent)
+                val docRef = addNoticeUseCase.invoke(noticeContent)
+                //이제 이를 활용해 필터링할 항목 문서들에 저장할 수 있다
+                //val docPath = docRef.path
+                addNoticeRefToUser(docRef)
+                addRefToAddress(docRef,"Announcement",firstElement ?: "none",secondElement ?: "none")
+                val categorytext = clickedTexts[0]
+                addNoticeRefToCategory(docRef, categorytext)
+                addNoticeRefToGender(docRef,noticeGender.value.toString())
+                addNoticeToType(docRef,workType.value.toString())
             }catch (e:Exception){
                 Log.d("first", "fail to database")
+            }
+        }
+    }
+
+    //user 개인 테이블에 ref저장
+    fun addNoticeRefToUser(docRef: DocumentReference){
+        viewModelScope.launch {
+            try{
+                addNoticeRefToUserUseCase.invoke(docRef)
+            }catch (e:Exception){
+                Log.d("second", "fail to database")
+            }
+        }
+    }
+    //주소에 따른 저장
+    fun addRefToAddress(docRef: DocumentReference, type:String, id1:String,id2:String){
+        viewModelScope.launch {
+            try{
+                addRefToAddressUseCase.invoke(docRef,type,id1, id2)
+            }catch (e:Exception){
+                Log.d("third", "fail to address")
+            }
+        }
+    }
+
+    //카테고리에 따른 저장
+    fun addNoticeRefToCategory(docRef: DocumentReference, id:String){
+        viewModelScope.launch{
+            try {
+                addNoticeToCategoryUseCase.invoke(docRef, id)
+            }catch (e:Exception){
+                Log.d("four", "fail to category")
+            }
+        }
+    }
+    //성별에 따른 저장
+    fun addNoticeRefToGender(docRef: DocumentReference, id:String){
+        viewModelScope.launch{
+            try {
+                addNoticeToGenderUseCase.invoke(docRef, id)
+            }catch (e:Exception){
+                Log.d("five", "fail to gender")
+            }
+        }
+    }
+
+    //근무 유형별 저장
+    fun addNoticeToType(docRef: DocumentReference, id:String){
+        viewModelScope.launch{
+            try {
+                addNoticeToTypeUseCase.invoke(docRef, id)
+            }catch (e:Exception){
+                Log.d("six", "fail to type")
             }
         }
     }
