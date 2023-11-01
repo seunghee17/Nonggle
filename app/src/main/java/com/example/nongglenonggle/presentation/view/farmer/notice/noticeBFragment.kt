@@ -54,7 +54,9 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
         //storage초기화
         fbStorage = FirebaseStorage.getInstance()
         binding.workImageA.setOnClickListener{
+            Log.e("why", "what is wrong")
             if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                Log.e("why", "what is fuck")
                 //open album
                 val photoPickerIntent = Intent(Intent.ACTION_PICK)
                 photoPickerIntent.type = "image/*"
@@ -62,6 +64,7 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
             }
             else{
                 //권한 요청
+                Log.e("why", "what is sdf")
                 requestStoragePermission()
             }
         }
@@ -209,8 +212,8 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
                 val shortYear = year!! % 100
                 val currentList = viewModel._workPeriod.value ?: emptyList()
                 viewModel._workPeriod.value = currentList + listOf(
-                    "${shortYear}.${viewModel.DateList.value?.get(1)}.${
-                        viewModel.DateList.value?.get(2)
+                    "${shortYear}.${viewModel.DateList.value?.get(4)}.${
+                        viewModel.DateList.value?.get(5)
                     }"
                 )
             }
@@ -318,11 +321,13 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
 
     //권한이 없을때 해당함수 호출
     private fun requestStoragePermission(){
-        ActivityCompat.requestPermissions(
-            requireActivity(),
+        Log.e("tagg","what")
+        requestPermissions(
+            //requireActivity(),
             arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
             REQUEST_CODE_PERMISSION
         )
+        Log.e("tagg","what done")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -342,7 +347,6 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
             }
         }
     }
-
 
 
 }

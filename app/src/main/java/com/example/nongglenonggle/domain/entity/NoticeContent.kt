@@ -20,5 +20,6 @@ data class NoticeContent(
     val workDetailInfo:String,
     val stayInfo:String,
     val mealInfo:String,
-    val specialInfo:Map<String,Any>
+    val specialInfo:Map<String,Any>,
+    val preferential:String
 )

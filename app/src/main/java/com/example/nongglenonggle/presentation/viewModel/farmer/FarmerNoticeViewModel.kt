@@ -410,6 +410,7 @@ class FarmerNoticeViewModel @Inject constructor(
         _category.value = false
         _daytextVisible.postValue(false)
     }
+    var preferential : String = ""
     fun setNoticeData():NoticeContent{
         val allNoticeContent = NoticeContent(
             imageUrl = farmerImage.value.toString(),
@@ -446,7 +447,8 @@ class FarmerNoticeViewModel @Inject constructor(
             specialInfo = mapOf(
                 "name" to name,
                 "phnum" to phnum
-            )
+            ),
+            preferential = preferential
         )
         return allNoticeContent
     }

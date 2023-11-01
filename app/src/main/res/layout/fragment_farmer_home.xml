@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.view.farmer.home.FarmerhomeFragment"
-    android:orientation="vertical"
-    android:layout_marginRight="12dp">
+    android:orientation="vertical">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp">
 
         <ImageView
             android:layout_width="match_parent"
@@ -82,7 +82,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="126dp"
-            android:background="@drawable/bg_farmer_home_tipbox"
+            android:background="@drawable/bg_farmer_home_shadow"
+            android:elevation="20dp"
             android:backgroundTint="@color/white"
             android:clickable="true"
             android:orientation="horizontal">
@@ -160,7 +161,7 @@
             app:layout_constraintTop_toBottomOf="@id/notice_box"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@drawable/bg_farmer_home_tipbox"
+            android:background="@drawable/bg_applier_box"
             android:backgroundTint="@color/m1"
             android:clickable="true">
             <TextView
@@ -179,7 +180,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3명"
+                android:text="0명"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/white"
                 android:layout_gravity="center_vertical"
@@ -265,7 +266,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="60dp"
             android:gravity="center"
             android:visibility="visible">
             <ImageView
@@ -280,7 +280,8 @@
                 android:textSize="14sp"
                 android:textColor="@color/g2"
                 android:layout_marginTop="16dp"
-                android:text="@string/아직_일손이_없어요"/>
+                android:text="@string/아직_일손이_없어요"
+                android:layout_marginBottom="134dp"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -292,6 +293,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="24dp"
+            android:layout_marginBottom="134dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/list_farmer_home"/>

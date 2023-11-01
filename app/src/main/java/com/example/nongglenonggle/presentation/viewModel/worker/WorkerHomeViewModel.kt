@@ -11,7 +11,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WorkerHomeViewModel @Inject constructor(private val fetchWorkerDataUseCase: FetchWorkerDataUseCase)
+class WorkerHomeViewModel @Inject constructor(
+    private val fetchWorkerDataUseCase: FetchWorkerDataUseCase)
     :ViewModel(){
     private val _userDetail = MutableLiveData<WorkerHomeData?>()
     val userDetail : LiveData<WorkerHomeData?> = _userDetail

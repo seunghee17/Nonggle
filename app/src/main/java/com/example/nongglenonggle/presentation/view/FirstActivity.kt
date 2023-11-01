@@ -54,14 +54,7 @@ class FirstActivity : AppCompatActivity() {
         }
 
         }
-//    override fun onStart() {
-//        super.onStart()
-//        val current = auth.currentUser
-//        if(current != null){
-//            val intent = Intent(this, WorkerMainActivity::class.java)
-//            startActivity(intent)
-//        }
-//    }
+
 
     private fun updateTextColor()
     {

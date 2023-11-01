@@ -318,6 +318,7 @@
                 />
             
             <EditText
+                android:id="@+id/preferential"
                 android:layout_width="match_parent"
                 android:layout_height="144dp"
                 android:layout_marginTop="12dp"
