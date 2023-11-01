@@ -200,6 +200,10 @@
     <string name="추가내용">추가내용</string>
     <string name="구인자_이름">구인자 %1$s님,</string>
     <string name="전화">전화</string>
-
+    <string name="평점">평점</string>
+    <string name="근무태도">근무태도</string>
+    <string name="수행능력">수행능력</string>
+    <string name="책임감">책임감</string>
+    <string name="습득력">습득력</string>
 
 </resources>

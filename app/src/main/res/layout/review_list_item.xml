@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="212dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_farmer_home_tipbox"
+    android:layout_marginRight="16dp">
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="김지원 구인자님"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="@font/spoqahansansneo_medium"
+        android:textColor="@color/g1"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="성실한 인재! 다음에 또 부르고 싶어요 연락하면 와줘요"
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="4sp"
+        android:textColor="@color/black"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:textColor="@color/g2"
+        android:textSize="12sp"
+        android:text="2023.05.23"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="20dp"/>
+
+</LinearLayout>
