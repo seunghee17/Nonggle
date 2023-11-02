@@ -7,12 +7,15 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.ActivityNoticeCompleteguideBinding
 import com.example.nongglenonggle.presentation.base.BaseActivity
+import com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeCompleteViewModel
 
 class NoticeCompleteguideActivity : BaseActivity<ActivityNoticeCompleteguideBinding>(R.layout.activity_notice_completeguide) {
+    private val viewModel: FarmerNoticeCompleteViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTextColor(binding.first, binding.first.text.toString(), "공고쓰기")

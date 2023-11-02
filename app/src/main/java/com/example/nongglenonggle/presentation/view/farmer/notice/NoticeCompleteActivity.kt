@@ -6,16 +6,24 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.asLiveData
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.ActivityNoticeCompleteBinding
 import com.example.nongglenonggle.presentation.base.BaseActivity
 import com.example.nongglenonggle.presentation.view.farmer.home.MainActivity
 import com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeCompleteViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.StateFlow
+import androidx.lifecycle.asLiveData
 
+
+@AndroidEntryPoint
 class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.layout.activity_notice_complete) {
     private val viewModel : FarmerNoticeCompleteViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,16 +32,23 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
         binding.lifecycleOwner = this
 
         binding.close.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            if(viewModel.isDataReady.value == true){
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
         }
         //현재회원이 어떤 유형의 회원인지 알 방법이 필요하다
         binding.topBtn.setImageResource(R.drawable.pencil)
-        detectDeadline()
-        detectPayType()
-        setRecruitAge()
-        setQualification()
-        setWorkPeriod()
+
+        viewModel.noticeDetail.asLiveData().observe(this, Observer { noticeContent->
+            Log.e("NoticeActivity","${noticeContent}")
+            detectDeadline()
+            detectPayType()
+            setRecruitAge()
+            setQualification()
+            setWorkPeriod()
+            setWorkTime()
+        })
     }
 
     private fun detectDeadline(){
@@ -74,11 +89,21 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
             binding.recruitQualification.text = combined
         }
     }
+
+    private fun setWorkTime(){
+        if(viewModel.noticeDetail.value?.workTime?.get("detail") == null){
+            binding.workTime.text = "시간협의"
+            binding.workTime2.text = "시간협의"
+        }
+        else{
+            binding.workTime.text = viewModel.noticeDetail.value?.workTime?.get("detail").toString()
+            binding.workTime2.text = viewModel.noticeDetail.value?.workTime?.get("detail").toString()
+
+        }
+    }
+
     private fun setWorkPeriod(){
         var txt = "${viewModel.noticeDetail.value?.workPeriod?.get(0)}~${viewModel.noticeDetail.value?.workPeriod?.get(1)}"
         binding.workPeriod.text = txt
     }
-
-
-
 }

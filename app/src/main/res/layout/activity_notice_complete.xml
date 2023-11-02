@@ -89,16 +89,17 @@
                     android:layout_marginLeft="20dp"
                     android:backgroundTint="@color/white"
                     android:elevation="4dp">
+
                     <TextView
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.noticeDetail.title != null ? viewModel.noticeDetail.title : `이건제목`}"
-                        android:fontFamily="@font/spoqahansansneo_medium"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="28dp" />
+                        android:layout_marginTop="28dp"
+                        android:fontFamily="@font/spoqahansansneo_medium"
+                        android:text="@{viewModel.noticeDetail.title != null ? viewModel.noticeDetail.title : `이건제목`}"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
                     <LinearLayout
                         android:layout_marginTop="12dp"
                         android:layout_width="wrap_content"
@@ -200,10 +201,11 @@
                                 android:textColor="@color/g2"
                                 android:text="@string/근무시간"/>
                             <TextView
+                                android:id="@+id/workTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="@{viewModel.noticeDetail.workTime[`detail`] != null ? viewModel.noticeDetail.workTime[`detail`]: `12:00~18:00`}"
+                                android:text="12:00~18:00"
                                 android:fontFamily="@font/spoqahansansneo_medium"
                                 android:textSize="14sp"
                                 android:textColor="@color/m1"/>
@@ -528,10 +530,10 @@
                     android:fontFamily="@font/spoqahansansneo_regular"
                     android:layout_marginRight="35dp"/>
                 <TextView
-                    android:id="@+id/work_time"
+                    android:id="@+id/workTime2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.noticeDetail.workTime.get(`detail`) != null ? viewModel.noticeDetail.workTime.get(`detail`): `시간협의`}"
+                    android:text="12:00~18:00"
                     android:fontFamily="@font/spoqahansansneo_regular"
                     android:textSize="16sp"
                     android:textColor="@color/black"/>

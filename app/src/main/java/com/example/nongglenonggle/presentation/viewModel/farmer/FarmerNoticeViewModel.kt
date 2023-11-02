@@ -439,7 +439,7 @@ class FarmerNoticeViewModel @Inject constructor(
             ),
             title = titleInfo,
             categoryItem = clickedTexts,
-            firstAddress = AddressFromWeb.value!!,
+            firstAddress = "${firstElement} ${secondElement}",
             finalAddress = totalAddress,
             workDetailInfo = detailContent.value!!,
             stayInfo = DormType.value!!,

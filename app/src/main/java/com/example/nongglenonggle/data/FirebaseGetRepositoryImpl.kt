@@ -1,5 +1,7 @@
 package com.example.nongglenonggle.data
 
+import android.util.Log
+import com.example.nongglenonggle.domain.entity.FarmerHomeData
 import com.example.nongglenonggle.domain.entity.Model
 import com.example.nongglenonggle.domain.entity.NoticeContent
 import com.example.nongglenonggle.domain.entity.WorkerHomeData
@@ -35,7 +37,15 @@ class FirestoreGetRepositoryImpl @Inject constructor(
             emit(docSnapshot.toObject(NoticeContent::class.java))
         }.catch {
             e->
+            Log.e("firebasegetimpl","${e.message}")
             emit(null)
         }
     }
+
+    override suspend fun getFarmerHomeInfo():FarmerHomeData?{
+        val currentUserUid = firebaseAuth.currentUser?.uid
+        val docSnapshot = firestore.collection("Farmer").document(currentUserUid!!).get().await()
+        return docSnapshot.toObject(FarmerHomeData::class.java)
+    }
+
 }

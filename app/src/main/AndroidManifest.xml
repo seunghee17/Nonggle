@@ -19,6 +19,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.view.worker.resume.ResumeCompleteActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.view.farmer.notice.NoticeCompleteguideActivity"
             android:exported="false" />
         <activity
