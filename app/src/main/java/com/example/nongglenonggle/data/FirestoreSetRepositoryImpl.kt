@@ -20,10 +20,6 @@ class FirestoreSetRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val firebaseAuth:FirebaseAuth
 ): FirestoreSetRepository {
-    //왜 withcontext?
-    //왜 트라이캐치?
-    //Result<Void?>무슨뜻?
-    //await()?
     override suspend fun addNoticeData(noticeContent: NoticeContent): DocumentReference = withContext(Dispatchers.IO) {
         val currentUserUid = firebaseAuth.currentUser?.uid ?: throw IllegalStateException("User is not valid")
 
@@ -63,7 +59,8 @@ class FirestoreSetRepositoryImpl @Inject constructor(
             }
             else{
                 val userdoc = firestore.collection("Farmer").document(currentUid)
-                userdoc.set(mapOf("notice" to docRef), SetOptions.merge()).await()
+                val update = hashMapOf("refs" to FieldValue.arrayUnion(docRef))
+                userdoc.set(update, SetOptions.merge()).await()
             }
         }catch (e:Exception){
             Log.e("error","user is not valid")
@@ -75,7 +72,8 @@ class FirestoreSetRepositoryImpl @Inject constructor(
     override suspend fun addRefToAddress(docRef: DocumentReference, type:String, id1:String, id2:String) = withContext(Dispatchers.IO){
         try{
             val storeDoc = firestore.collection("LocationFilter").document(type).collection(id1).document(id2)
-            storeDoc.set(mapOf("refs" to listOf(docRef)), SetOptions.merge()).await()}
+            val update = hashMapOf("refs" to FieldValue.arrayUnion(docRef))
+            storeDoc.set(update, SetOptions.merge()).await()}
         catch (e:Exception){
             Log.e("error","user is not valid")
         }
@@ -85,7 +83,8 @@ class FirestoreSetRepositoryImpl @Inject constructor(
     override suspend fun addNoticeToCategory(docRef: DocumentReference,id:String)= withContext(Dispatchers.IO){
         try{
             val storeDoc = firestore.collection("AnnouncementCategory").document(id)
-            storeDoc.set(mapOf("refs" to listOf(docRef)), SetOptions.merge()).await()}catch (e:Exception){
+            val update = hashMapOf("refs" to FieldValue.arrayUnion(docRef))
+            storeDoc.set(update, SetOptions.merge()).await()}catch (e:Exception){
             Log.e("error","user is not valid")
         }
     return@withContext Unit
@@ -95,9 +94,11 @@ class FirestoreSetRepositoryImpl @Inject constructor(
     override suspend fun addNoticeToGender(docRef: DocumentReference,id:String)= withContext(Dispatchers.IO){
         try{
             val storeDoc = firestore.collection("AnnouncementGender").document(id)
-            storeDoc.set(mapOf("refs" to listOf(docRef)), SetOptions.merge()).await()
+            val update = hashMapOf("refs" to FieldValue.arrayUnion(docRef))
+            storeDoc.set(update, SetOptions.merge()).await()
         }catch (e:Exception){
             Log.e("error","user is not valid")
+            throw e
         }
         return@withContext Unit
     }
@@ -106,7 +107,26 @@ class FirestoreSetRepositoryImpl @Inject constructor(
     override suspend fun addNoticeToType(docRef: DocumentReference,id:String)= withContext(Dispatchers.IO){
         try{
             val storeDoc = firestore.collection("AnnouncementHireType").document(id)
-            storeDoc.set(mapOf("refs" to listOf(docRef)), SetOptions.merge()).await()
+            val update = hashMapOf("refs" to FieldValue.arrayUnion(docRef))
+            storeDoc.set(update, SetOptions.merge()).await()
+        }catch (e:Exception){
+            Log.e("error","user is not valid")
+        }
+        return@withContext Unit
+    }
+
+    //구직자 개인 테이블 저장용
+    override suspend fun addResumeRefToUser(docRef: DocumentReference) = withContext(Dispatchers.IO){
+        try{
+            val currentUid = firebaseAuth.currentUser?.uid
+            if(currentUid == null){
+                Log.e("error","user is not valid")
+            }
+            else{
+                val userdoc = firestore.collection("Worker").document(currentUid)
+                val update = hashMapOf("refs" to FieldValue.arrayUnion(docRef))
+                userdoc.set(update, SetOptions.merge()).await()
+            }
         }catch (e:Exception){
             Log.e("error","user is not valid")
         }

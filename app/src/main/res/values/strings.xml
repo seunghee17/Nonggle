@@ -205,5 +205,14 @@
     <string name="수행능력">수행능력</string>
     <string name="책임감">책임감</string>
     <string name="습득력">습득력</string>
+    <string name="채용확정">채용확정</string>
+    <string name="경력">경력</string>
+    <string name="보유자격증">보유자격증</string>
+    <string name="자격증종류">자격증종기</string>
+    <string name="희망품목">희망품목</string>
+    <string name="희망근무장소">희망근무장소</string>
+    <string name="희망근무형태">희망근무형태</string>
+    <string name="희망근무요일">희망근무요일</string>
+    <string name="채용제안하기">채용제안하기</string>
 
 </resources>

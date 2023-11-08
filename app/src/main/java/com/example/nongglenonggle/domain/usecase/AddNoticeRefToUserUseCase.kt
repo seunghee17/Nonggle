@@ -9,3 +9,4 @@ class AddNoticeRefToUserUseCase @Inject constructor(private val firestoreSetRepo
         return firestoreSetRepository.addNoticeRefToUser(docRef)
     }
 }
+

@@ -16,4 +16,6 @@ interface FirestoreSetRepository {
 
     suspend fun addNoticeToGender(docRef: DocumentReference,id:String)
     suspend fun addNoticeToType(docRef: DocumentReference,id:String)
+
+    suspend fun addResumeRefToUser(docRef: DocumentReference)
 }

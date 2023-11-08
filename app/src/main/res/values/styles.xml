@@ -32,6 +32,44 @@
     <style name="ThemeOverlay.AppCompat.TabLayout" parent="">
         <item name="tabRippleColor">@null</item>
     </style>
+    
+    <style name="t1">
+        <item name="fontFamily">@font/spoqahansansneo_regular</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="t2">
+        <item name="fontFamily">@font/spoqahansansneo_medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="t3">
+        <item name="fontFamily">@font/spoqahansansneo_medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="b1_main">
+        <item name="fontFamily">@font/spoqahansansneo_regular</item>
+        <item name="android:textSize">16sp</item>류
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="b2_sub">
+        <item name="fontFamily">@font/spoqahansansneo_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="b3_small">
+        <item name="fontFamily">@font/spoqahansansneo_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="b4_btn">
+        <item name="fontFamily">@font/spoqahansansneo_medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>목
+
+
 
 
 

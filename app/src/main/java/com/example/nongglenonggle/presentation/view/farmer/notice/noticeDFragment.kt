@@ -151,8 +151,6 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
             val result = viewModel.setNoticeData()
             if(result != null){
                 viewModel.addNoticeContent(result)
-                //Toast.makeText(context, "데이터 저장 완료!", Toast.LENGTH_SHORT).show()
-                //필터링 항목에 들어갈 로직도 호출 추가하기
                 goToNext()
 
             }
