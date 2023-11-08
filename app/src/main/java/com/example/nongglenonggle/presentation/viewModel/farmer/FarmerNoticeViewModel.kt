@@ -1,12 +1,7 @@
 package com.example.nongglenonggle.presentation.viewModel.farmer
 
-import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
-import android.net.Uri
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,9 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.domain.entity.Model
 import com.example.nongglenonggle.domain.entity.NoticeContent
 import com.example.nongglenonggle.domain.usecase.AddNoticeRefToUserUseCase
-import com.example.nongglenonggle.domain.usecase.AddNoticeToCategoryUseCase
-import com.example.nongglenonggle.domain.usecase.AddNoticeToGenderUseCase
-import com.example.nongglenonggle.domain.usecase.AddNoticeToTypeUseCase
+import com.example.nongglenonggle.domain.usecase.AddCategoryUseCase
+import com.example.nongglenonggle.domain.usecase.AddGenderUseCase
+import com.example.nongglenonggle.domain.usecase.AddTypeUseCase
 import com.example.nongglenonggle.domain.usecase.AddNoticeUseCase
 import com.example.nongglenonggle.domain.usecase.AddRefToAddressUseCase
 import com.example.nongglenonggle.domain.usecase.UploadImageUsecase
@@ -31,9 +26,9 @@ class FarmerNoticeViewModel @Inject constructor(
     private val addNoticeUseCase: AddNoticeUseCase,
     private val addNoticeRefToUserUseCase: AddNoticeRefToUserUseCase,
     private val addRefToAddressUseCase: AddRefToAddressUseCase,
-    private val addNoticeToCategoryUseCase: AddNoticeToCategoryUseCase,
-    private val addNoticeToGenderUseCase: AddNoticeToGenderUseCase,
-    private val addNoticeToTypeUseCase: AddNoticeToTypeUseCase
+    private val addNoticeToCategoryUseCase: AddCategoryUseCase,
+    private val addNoticeToGenderUseCase: AddGenderUseCase,
+    private val addNoticeToTypeUseCase: AddTypeUseCase
     ): ViewModel() {
     //이름칸 감지
     val _isClick1 = MutableLiveData<Boolean>()
@@ -457,14 +452,13 @@ class FarmerNoticeViewModel @Inject constructor(
             try{
                 addNoticeUseCase.invoke(noticeContent)
                 val docRef = addNoticeUseCase.invoke(noticeContent)
-                //이제 이를 활용해 필터링할 항목 문서들에 저장할 수 있다
-                //val docPath = docRef.path
+
                 addNoticeRefToUser(docRef)
                 addRefToAddress(docRef,"Announcement",firstElement ?: "none",secondElement ?: "none")
                 val categorytext = clickedTexts[0]
-                addNoticeRefToCategory(docRef, categorytext)
-                addNoticeRefToGender(docRef,noticeGender.value.toString())
-                addNoticeToType(docRef,workType.value.toString())
+                addNoticeRefToCategory("AnnouncementCategory",docRef, categorytext)
+                addNoticeRefToGender("AnnouncementGender",docRef,noticeGender.value.toString())
+                addNoticeToType("AnnouncementHireType",docRef,workType.value.toString())
             }catch (e:Exception){
                 Log.d("first", "fail to database")
             }
@@ -493,20 +487,20 @@ class FarmerNoticeViewModel @Inject constructor(
     }
 
     //카테고리에 따른 저장
-    fun addNoticeRefToCategory(docRef: DocumentReference, id:String){
+    fun addNoticeRefToCategory(name:String,docRef: DocumentReference, id:String){
         viewModelScope.launch{
             try {
-                addNoticeToCategoryUseCase.invoke(docRef, id)
+                addNoticeToCategoryUseCase.invoke(name,docRef, id)
             }catch (e:Exception){
                 Log.d("four", "fail to category")
             }
         }
     }
     //성별에 따른 저장
-    fun addNoticeRefToGender(docRef: DocumentReference, id:String){
+    fun addNoticeRefToGender(name:String,docRef: DocumentReference, id:String){
         viewModelScope.launch{
             try {
-                addNoticeToGenderUseCase.invoke(docRef, id)
+                addNoticeToGenderUseCase.invoke(name,docRef, id)
             }catch (e:Exception){
                 Log.d("five", "fail to gender")
             }
@@ -514,10 +508,10 @@ class FarmerNoticeViewModel @Inject constructor(
     }
 
     //근무 유형별 저장
-    fun addNoticeToType(docRef: DocumentReference, id:String){
+    fun addNoticeToType(name:String,docRef: DocumentReference, id:String){
         viewModelScope.launch{
             try {
-                addNoticeToTypeUseCase.invoke(docRef, id)
+                addNoticeToTypeUseCase.invoke(name,docRef, id)
             }catch (e:Exception){
                 Log.d("six", "fail to type")
             }

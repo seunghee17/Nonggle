@@ -7,9 +7,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.domain.entity.Model
 import com.example.nongglenonggle.domain.entity.ResumeContent
+import com.example.nongglenonggle.domain.usecase.AddByAgeUseCase
+import com.example.nongglenonggle.domain.usecase.AddCategoryUseCase
+import com.example.nongglenonggle.domain.usecase.AddGenderUseCase
+import com.example.nongglenonggle.domain.usecase.AddRefToAddressUseCase
+import com.example.nongglenonggle.domain.usecase.AddResumeRefToUserUseCase
 import com.example.nongglenonggle.domain.usecase.AddResumeUseCase
+import com.example.nongglenonggle.domain.usecase.AddTypeUseCase
 import com.example.nongglenonggle.domain.usecase.UploadImageUsecase
 import com.example.nongglenonggle.domain.usecase.FetchFirestoreDataUseCase
+import com.google.firebase.firestore.DocumentReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -19,7 +26,13 @@ import javax.inject.Inject
 @HiltViewModel
 class ResumeViewModel @Inject constructor(
     private val uploadImageUsecase: UploadImageUsecase,
-    private val addResumeUseCase: AddResumeUseCase
+    private val addResumeUseCase: AddResumeUseCase,
+    private val addResumeRefToUserUseCase: AddResumeRefToUserUseCase,
+    private val addRefToAddressUseCase: AddRefToAddressUseCase,
+    private val addResumeByAgeUseCase: AddByAgeUseCase,
+    private val addCategoryUseCase: AddCategoryUseCase,
+    private val addGenderUseCase: AddGenderUseCase,
+    private val addTypeUseCase: AddTypeUseCase
     ): ViewModel() {
     private val _profileImage = MutableLiveData<String>()
     val profileImage:LiveData<String> = _profileImage
@@ -335,6 +348,25 @@ class ResumeViewModel @Inject constructor(
     private val _locationSelect = MutableLiveData<MutableList<String>>()
     val locationSelect:LiveData<MutableList<String>> = _locationSelect
 
+    val firstElement:String? by lazy{
+        locationSelect.value?.getOrNull(0)
+    }
+    val secondElement:String? by lazy{
+        locationSelect.value?.getOrNull(1)
+    }
+    val thirdElement:String? by lazy{
+        locationSelect.value?.getOrNull(2)
+    }
+    val fourthElement:String? by lazy{
+        locationSelect.value?.getOrNull(3)
+    }
+    val fifthElement:String? by lazy{
+        locationSelect.value?.getOrNull(4)
+    }
+    val sixthElement:String? by lazy{
+        locationSelect.value?.getOrNull(5)
+    }
+
     fun storeLocation(text:String){
         val current = _locationSelect.value ?: mutableListOf()
         current.add(text)
@@ -369,14 +401,94 @@ class ResumeViewModel @Inject constructor(
         return allResumeContent
     }
 
+    //전체 저장용
     fun addResumeContent(resumeContent: ResumeContent){
         viewModelScope.launch {
             try{
                 addResumeUseCase.invoke(resumeContent,openSetting1,openSetting2)
+                val docRef = addResumeUseCase.invoke(resumeContent,openSetting1,openSetting2)
+                addResumeRefToUser(docRef)
+                if(locationSelect.value?.size == 2){
+                    addRefToAddress(docRef,"ResumeFilter",firstElement!!,secondElement!!)
+                }
+                if(locationSelect.value?.size == 4){
+                    addRefToAddress(docRef,"ResumeFilter",firstElement!!,secondElement!!)
+                    addRefToAddress(docRef,"ResumeFilter",thirdElement!!,fourthElement!!)
+                }
+                if(locationSelect.value?.size == 6){
+                    addRefToAddress(docRef,"ResumeFilter",firstElement!!,secondElement!!)
+                    addRefToAddress(docRef,"ResumeFilter",thirdElement!!,fourthElement!!)
+                    addRefToAddress(docRef,"ResumeFilter",fifthElement!!,sixthElement!!)
+                }
+                addByAge(docRef,"${userYear}대")
+                addRefToCategory("ResumeCategory",docRef,clickedTexts.get(0))
+                addRefToCategory("ResumeCategory",docRef,clickedTexts.get(1))
+                addRefToCategory("ResumeCategory",docRef,clickedTexts.get(2))
+                addNoticeRefToGender("ResumeGender",docRef,gender)
+                addNoticeToType("ResumeWorkType",docRef,dormType)
             }catch (e:Exception){
-                Log.d("second", "fail to database")
+                Log.d("addResumeContent", "$e")
             }
         }
     }
+    fun addResumeRefToUser(docRef: DocumentReference){
+        viewModelScope.launch {
+            try{
+                addResumeRefToUserUseCase.invoke(docRef)
+            }catch (e:Exception){
+                Log.e("addResumeRefToUser","$e")
+                throw e
+            }
+        }
+    }
+    fun addRefToAddress(docRef: DocumentReference, type:String, id1:String,id2:String){
+            viewModelScope.launch {
+                try{
+                    addRefToAddressUseCase.invoke(docRef,type,id1, id2)
+                }catch (e:Exception){
+                    Log.e("addRefToAddress", "$e")
+                }
+            }
+        }
+    fun addByAge(docRef:DocumentReference, id:String){
+        viewModelScope.launch {
+            try {
+                addResumeByAgeUseCase.invoke(docRef,id)
+            }catch (e:Exception){
+                Log.e("addByAge","$e")
+                throw e
+            }
+        }
+    }
+    fun addRefToCategory(name:String,docRef: DocumentReference, id:String){
+            viewModelScope.launch{
+                try {
+                    addCategoryUseCase.invoke(name,docRef, id)
+                }catch (e:Exception){
+                    Log.d("addRefToCategory", "fail to category")
+                }
+            }
+        }
+
+    fun addNoticeRefToGender(name:String,docRef: DocumentReference, id:String){
+            viewModelScope.launch{
+                try {
+                    addGenderUseCase.invoke(name,docRef, id)
+                }catch (e:Exception){
+                    Log.d("five", "fail to gender")
+                }
+            }
+        }
+
+    //근무 유형별 저장
+        fun addNoticeToType(name:String,docRef: DocumentReference, id:String){
+            viewModelScope.launch{
+                try {
+                    addTypeUseCase.invoke(name,docRef, id)
+                }catch (e:Exception){
+                    Log.d("addNoticeToType", "fail to type")
+                }
+            }
+        }
 
 }

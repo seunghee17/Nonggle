@@ -35,19 +35,33 @@ class FirestoreSetRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun addResumeData(resumeContent: ResumeContent, id1 :String, id2:String) = withContext(Dispatchers.IO){
-        try{
-            val currentUserUid = firebaseAuth.currentUser?.uid
-            if(currentUserUid == null){
-                Log.e("error","user is not valid")
-            }
-            else{
-                firestore.collection("Resume").document(id1).collection(id2).document(currentUserUid).set(resumeContent).await()
-            }
-        }catch (e:Exception){
-            Log.e("error","user is not valid")
+//    override suspend fun addResumeData(resumeContent: ResumeContent, id1 :String, id2:String) = withContext(Dispatchers.IO){
+//        try{
+//            val currentUserUid = firebaseAuth.currentUser?.uid
+//            if(currentUserUid == null){
+//                Log.e("error","user is not valid")
+//            }
+//            else{
+//                firestore.collection("Resume").document(id1).collection(id2).document(currentUserUid).set(resumeContent).await()
+//            }
+//        }catch (e:Exception){
+//            Log.e("error","user is not valid")
+//        }
+//        return@withContext Unit
+//    }
+
+    override suspend fun addResumeData(resumeContent: ResumeContent, id1 :String, id2:String): DocumentReference = withContext(Dispatchers.IO) {
+        val currentUserUid = firebaseAuth.currentUser?.uid ?: throw IllegalStateException("User is not valid")
+
+        val docRef = firestore.collection("Resume").document(id1).collection(id2).document(currentUserUid)
+
+        try {
+            docRef.set(resumeContent).await()
+            return@withContext docRef
+        } catch (e: Exception) {
+            Log.e("FirestoreSetRepositoryImpl", "Failed to add notice data: ${e.message}")
+            throw e
         }
-        return@withContext Unit
     }
 
     //공고글 ref 구인자 개인table에 저장경로
@@ -80,9 +94,9 @@ class FirestoreSetRepositoryImpl @Inject constructor(
         return@withContext Unit
     }
 //공고글 카테고리에 저장하기 위함
-    override suspend fun addNoticeToCategory(docRef: DocumentReference,id:String)= withContext(Dispatchers.IO){
+    override suspend fun addNoticeToCategory(name:String,docRef: DocumentReference,id:String)= withContext(Dispatchers.IO){
         try{
-            val storeDoc = firestore.collection("AnnouncementCategory").document(id)
+            val storeDoc = firestore.collection(name).document(id)
             val update = hashMapOf("refs" to FieldValue.arrayUnion(docRef))
             storeDoc.set(update, SetOptions.merge()).await()}catch (e:Exception){
             Log.e("error","user is not valid")
@@ -91,9 +105,9 @@ class FirestoreSetRepositoryImpl @Inject constructor(
     }
 
     //공고글 성별에 따른 저장
-    override suspend fun addNoticeToGender(docRef: DocumentReference,id:String)= withContext(Dispatchers.IO){
+    override suspend fun addNoticeToGender(name:String,docRef: DocumentReference,id:String)= withContext(Dispatchers.IO){
         try{
-            val storeDoc = firestore.collection("AnnouncementGender").document(id)
+            val storeDoc = firestore.collection(name).document(id)
             val update = hashMapOf("refs" to FieldValue.arrayUnion(docRef))
             storeDoc.set(update, SetOptions.merge()).await()
         }catch (e:Exception){
@@ -104,9 +118,9 @@ class FirestoreSetRepositoryImpl @Inject constructor(
     }
 
     //근무 형태별 저장
-    override suspend fun addNoticeToType(docRef: DocumentReference,id:String)= withContext(Dispatchers.IO){
+    override suspend fun addType(name:String,docRef: DocumentReference,id:String)= withContext(Dispatchers.IO){
         try{
-            val storeDoc = firestore.collection("AnnouncementHireType").document(id)
+            val storeDoc = firestore.collection(name).document(id)
             val update = hashMapOf("refs" to FieldValue.arrayUnion(docRef))
             storeDoc.set(update, SetOptions.merge()).await()
         }catch (e:Exception){
@@ -132,6 +146,28 @@ class FirestoreSetRepositoryImpl @Inject constructor(
         }
         return@withContext Unit
     }
+
+
+    override suspend fun addByAge(docRef:DocumentReference, id:String) = withContext(Dispatchers.IO){
+        try{
+            val storeDoc = firestore.collection("FilterByAge").document(id)
+            val update = hashMapOf("refs" to FieldValue.arrayUnion(docRef))
+            storeDoc.set(update, SetOptions.merge()).await()
+        }catch (e:Exception){
+            Log.e("addByAge","$e")
+            throw e
+        }
+        return@withContext Unit
+    }
+
+
+//    //이력서 희망품목에 저장시키기 위함
+//    override suspend fun addResumeToCategory(docRef:DocumentReference, id:String) = withContext(Dispatchers.IO){
+//        try{
+//            val storeDoc = firestore.collection("ResumeCategory")
+//        }
+//    }
+
 
 
 }
