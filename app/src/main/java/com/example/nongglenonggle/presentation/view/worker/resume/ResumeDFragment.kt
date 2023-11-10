@@ -1,5 +1,6 @@
 package com.example.nongglenonggle.presentation.view.worker.resume
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -173,7 +174,12 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
             val result = viewModel.setResumeData()
             if(result != null){
                 viewModel.addResumeContent(result)
-                Toast.makeText(context, "데이터 저장 완료!", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context, "데이터 저장 완료!", Toast.LENGTH_SHORT).show()
+                //홈화면으로 이동해야함
+                val intent = Intent(context,ResumeCompleteActivity::class.java)
+                intent.putExtra("setting1", viewModel.openSetting1)
+                intent.putExtra("setting2", viewModel.openSetting2)
+                startActivity(intent)
             }
         }
     }

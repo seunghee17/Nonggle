@@ -16,9 +16,11 @@ import androidx.fragment.app.viewModels
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentWorkerHomeBinding
 import com.example.nongglenonggle.presentation.base.BaseFragment
+import com.example.nongglenonggle.presentation.view.login.LoginActivity
 import com.example.nongglenonggle.presentation.view.worker.resume.ResumeActivity
 import com.example.nongglenonggle.presentation.viewModel.worker.WorkerHomeViewModel
 import com.google.api.Distribution.BucketOptions.Linear
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,6 +55,12 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
         val writeBtn: LinearLayout = binding.root.findViewById(R.id.write_resume_btn)
         writeBtn.setOnClickListener{
             val intent = Intent(requireContext(), ResumeActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.logo.setOnClickListener{
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
         }
     }

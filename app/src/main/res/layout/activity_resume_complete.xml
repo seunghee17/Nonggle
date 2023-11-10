@@ -3,6 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.nongglenonggle.presentation.viewModel.worker.ResumeCompleteViewModel" />
+    </data>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -74,15 +79,16 @@
             android:background="@drawable/bg_shadow_box"
             android:backgroundTint="@color/white"
             android:elevation="4dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="정00 일손"
-                android:fontFamily="@font/spoqahansansneo_medium"
-                android:textSize="18sp"
-                android:textColor="@color/black"
                 android:layout_gravity="center"
-                android:layout_marginTop="52dp"/>
+                android:layout_marginTop="52dp"
+                android:fontFamily="@font/spoqahansansneo_medium"
+                android:text="@{viewModel.resumeLiveData.userName + `일손`}"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -99,13 +105,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
-                    android:text="여 ∙ 65세"
+                    android:text="@{viewModel.resumeLiveData.userGender + `∙` + viewModel.resumeLiveData.userYear + `세`}"
                     android:layout_gravity="center_horizontal"/>
             </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="`간단 자기소개 들어갈 위치`"
+                android:text="@{`&quot;`+viewModel.resumeLiveData.userPresent + `&quot;`}"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/spoqahansansneo_regular"
@@ -172,7 +178,7 @@
                         android:fontFamily="@font/spoqahansansneo_medium"
                         android:textColor="@color/m1"
                         android:textSize="14sp"
-                        android:text="들어갈자리"
+                        android:text="@{viewModel.resumeLiveData.allCareer}"
                         android:layout_marginTop="10dp"/>
                 </LinearLayout>
 
@@ -241,7 +247,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="총 10년 11개월"
+                    android:text="@{viewModel.resumeLiveData.allCareer}"
                     android:gravity="right"
                     android:fontFamily="@font/spoqahansansneo_medium"
                     android:textColor="@color/m1"
@@ -250,11 +256,13 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 tools:listitem="@layout/list_resume_item"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_marginTop="24dp" />
             <View
                 android:layout_width="match_parent"
@@ -299,7 +307,7 @@
                     android:textColor="@color/g1"
                     android:textSize="16sp"
                     android:lineSpacingExtra="5sp"
-                    android:text="경력경력경력니안이ㅏㄹㄴ이ㅏ넝리ㅏ너ㅣㅏㄴ이ㅏ러"
+                    android:text="@{viewModel.certification}"
                     android:gravity="left"/>
 
             </LinearLayout>
@@ -345,7 +353,7 @@
                     android:fontFamily="@font/spoqahansansneo_regular"
                     android:textColor="@color/g1"
                     android:textSize="16sp"
-                    android:text="경력경력경력"
+                    android:text="@{viewModel.locations ?? `선택한 지역이 없습니다.`}"
                     android:gravity="right"/>
 
             </LinearLayout>
@@ -374,7 +382,7 @@
                     android:fontFamily="@font/spoqahansansneo_regular"
                     android:textColor="@color/g1"
                     android:textSize="16sp"
-                    android:text="경력경력경력"
+                    android:text="@{viewModel.resumeLiveData.dormType}"
                     android:gravity="right"/>
 
             </LinearLayout>
@@ -404,7 +412,7 @@
                     android:textSize="16sp"
                     android:background="@drawable/bg_radius4_nostroke"
                     android:backgroundTint="@color/m5"
-                    android:text="주 3일"
+                    android:text="@{viewModel.resumeLiveData.dayData ?? `요일협의`}"
                     android:layout_marginRight="8dp"
                     android:paddingBottom="4dp"
                     android:paddingTop="4dp"
@@ -417,7 +425,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/g1"
                     style="@style/b1_main"
-                    android:text="경력경력경력"
+                    android:text="@{viewModel.resumeLiveData.dayDetailData ?? ``}"
                     android:gravity="right" />
 
             </LinearLayout>
@@ -445,7 +453,7 @@
                     android:fontFamily="@font/spoqahansansneo_regular"
                     android:textColor="@color/g1"
                     android:textSize="16sp"
-                    android:text="경력경력경력"
+                    android:text="@{viewModel.items ?? `없음`}"
                     android:lineSpacingExtra="-3sp"
                     android:gravity="right"/>
 
@@ -481,7 +489,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:text="#아무거나"/>
+                    android:text="@{`#`+viewModel.resumeLiveData.selfHastag.get(0) ?? `성실함`}"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -493,7 +501,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:layout_marginLeft="12dp"
-                    android:text="#아무거나"/>
+                    android:text="@{`#`+viewModel.resumeLiveData.selfHastag.get(1) ?? `착실함`}"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -505,7 +513,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:layout_marginLeft="12dp"
-                    android:text="#아무거나"/>
+                    android:text="@{`#`+viewModel.resumeLiveData.selfHastag.get(2) ?? `끈기`}"/>
 
             </LinearLayout>
 
@@ -518,9 +526,10 @@
                 style="@style/b2_sub"
                 android:textColor="@color/g2"
                 android:lineSpacingExtra="4sp"
-                android:text="농업관련된 블라블라블라블라" />
+                android:text="@{viewModel.resumeLiveData.selfInfo}" />
 
             <View
+                android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:visibility="gone"/>
@@ -529,7 +538,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="36dp"
-                android:visibility="visible">
+                android:visibility="gone">
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"

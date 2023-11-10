@@ -23,16 +23,37 @@
             android:src="@drawable/dot"
             android:layout_marginRight="8dp"/>
         <TextView
+            android:id="@+id/work_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="사과분류작업"
             android:fontFamily="@font/spoqahansansneo_medium"
             android:textSize="16sp"
             android:textColor="@color/black"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/work_term"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0년 9개월"
+            android:background="@drawable/bg_radius4_nostroke"
+            android:backgroundTint="@color/m5"
+            android:fontFamily="@font/spoqahansansneo_medium"
+            android:textColor="@color/m1"
+            android:textSize="12sp"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"/>
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/dateperiod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2000.10 ~ 2010.10"
@@ -43,6 +64,7 @@
         android:layout_marginTop="10dp"/>
 
     <TextView
+        android:id="@+id/work_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

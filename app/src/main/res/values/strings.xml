@@ -178,7 +178,7 @@
     <string name="필요자격증">필요자격증</string>
     <string name="근무내용">근무내용</string>
     <string name="근무기간">근무기간</string>
-    <string name="재배품목">재배품요</string>
+    <string name="재배품목">재배품목</string>
     <string name="근무지역">근무지역</string>
     <string name="아직_작성된_공고글">아직 작성된 공고글이 없어요!</string>
     <string name="아직_작성된_이력서">아직 작성된 이력서가 없어요!</string>
@@ -208,7 +208,7 @@
     <string name="채용확정">채용확정</string>
     <string name="경력">경력</string>
     <string name="보유자격증">보유자격증</string>
-    <string name="자격증종류">자격증종기</string>
+    <string name="자격증종류">자격증종류</string>
     <string name="희망품목">희망품목</string>
     <string name="희망근무장소">희망근무장소</string>
     <string name="희망근무형태">희망근무형태</string>

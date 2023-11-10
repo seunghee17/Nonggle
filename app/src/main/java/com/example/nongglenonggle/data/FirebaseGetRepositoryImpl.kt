@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.nongglenonggle.domain.entity.FarmerHomeData
 import com.example.nongglenonggle.domain.entity.Model
 import com.example.nongglenonggle.domain.entity.NoticeContent
+import com.example.nongglenonggle.domain.entity.ResumeContent
 import com.example.nongglenonggle.domain.entity.WorkerHomeData
 import com.example.nongglenonggle.domain.repository.FirestoreGetRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -46,6 +47,23 @@ class FirestoreGetRepositoryImpl @Inject constructor(
         val currentUserUid = firebaseAuth.currentUser?.uid
         val docSnapshot = firestore.collection("Farmer").document(currentUserUid!!).get().await()
         return docSnapshot.toObject(FarmerHomeData::class.java)
+    }
+
+    //자신의 이력서 불러오기
+    override suspend fun getResume(setting1:String, setting2:String):Flow<ResumeContent?>{
+        return flow{
+            val currentUserUid = firebaseAuth.currentUser?.uid
+            if(currentUserUid==null || setting1.isBlank() || setting2.isBlank()){
+                throw IllegalStateException("Invalid settings or user not logged in")
+                Log.e("getResume", "invlid user")
+            }
+            val docSnapshot = firestore.collection("Resume").document(setting1).collection(setting2).document(currentUserUid!!).get().await()
+            emit(docSnapshot.toObject(ResumeContent::class.java))
+        }.catch {
+            e->
+            Log.e("getResume","${e.message}")
+            emit(null)
+        }
     }
 
 }
