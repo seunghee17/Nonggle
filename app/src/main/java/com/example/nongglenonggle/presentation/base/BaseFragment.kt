@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutRes: Int): Fragment(){
     private var _binding: T? = null
-    val binding get() = _binding!!
+    val binding get() = _binding ?: error("Binding is null")
 
     override fun onCreateView(
         inflater: LayoutInflater,

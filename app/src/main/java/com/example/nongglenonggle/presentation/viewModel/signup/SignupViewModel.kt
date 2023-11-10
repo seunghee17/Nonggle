@@ -180,10 +180,9 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
                             }
                         }
                         //코루틴 사용할 수 있지 않을까?
-                        Log.e("signup", "회원가입 완료")
                     }
                     else{
-                        Log.e("signup", "fail")
+                        Log.e("signUpWithEmailPasswordAndPhoneNumber", "fail")
                     }
                 }
         }
@@ -246,13 +245,12 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
         getSelectedCategory()
     }
 
-
+    val selectedButtonText = mutableListOf<String>()
 
     //선택한 카테고리 list화
     fun getSelectedCategory() : List<String>{
         val selectedButtonId = buttonupdateds.value?.filter { it.value }?.keys ?: emptySet()
         //데이터베이스에 들어갈 리스트
-        val selectedButtonText = mutableListOf<String>()
 
         for(buttonId in selectedButtonId){
             when(buttonId){

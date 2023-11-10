@@ -42,14 +42,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 viewModel.isFarmer.observe(this, Observer { isFarmer->
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
-                    Log.e("applesdf","구인자")
-                    Log.e("applesdf","${viewModel.UserUID}")
                 })
                 viewModel.isWorker.observe(this, Observer { isWorker->
                     val intent = Intent(this,WorkerMainActivity::class.java)
                     startActivity(intent)
-                    Log.e("apple","구직자")
-                    Log.e("apple","${viewModel.isWorker.value}")
                 })
             }
         }

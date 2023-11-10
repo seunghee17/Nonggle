@@ -160,14 +160,4 @@ class FirestoreSetRepositoryImpl @Inject constructor(
         return@withContext Unit
     }
 
-
-//    //이력서 희망품목에 저장시키기 위함
-//    override suspend fun addResumeToCategory(docRef:DocumentReference, id:String) = withContext(Dispatchers.IO){
-//        try{
-//            val storeDoc = firestore.collection("ResumeCategory")
-//        }
-//    }
-
-
-
 }
