@@ -4,6 +4,8 @@ import android.view.MotionEvent
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.google.android.play.core.integrity.v
+import com.google.firebase.firestore.DocumentReference
+import kotlinx.coroutines.tasks.await
 
 
 fun EditText.setupClearButton(drawableRightId: Int) {
@@ -31,5 +33,14 @@ fun EditText.setupClearButton(drawableRightId: Int) {
 
     fun EditText.hideClearButton() {
         setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+    }
+
+    suspend inline fun <reified  T> getDataFromReference(documentReference: DocumentReference): T?{
+        return try{
+            val documentSnapshot = documentReference.get().await()
+            documentSnapshot.toObject(T::class.java)
+        }catch (e:Exception){
+            null
+        }
     }
 

@@ -8,6 +8,7 @@ import com.example.nongglenonggle.domain.entity.ResumeContent
 import com.example.nongglenonggle.domain.entity.WorkerHomeData
 import com.example.nongglenonggle.domain.repository.FirestoreGetRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.ktx.toObject
@@ -18,7 +19,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.IllegalStateException
+import java.lang.ref.Reference
 import javax.inject.Inject
+import com.example.nongglenonggle.presentation.util.getDataFromReference
 
 class FirestoreGetRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
@@ -64,6 +67,32 @@ class FirestoreGetRepositoryImpl @Inject constructor(
             Log.e("getResume","${e.message}")
             emit(null)
         }
+    }
+
+    //농가 품목 카테고리 기반 데이터 가져오기
+    private var refs : ArrayList<DocumentReference>? = null
+    override suspend fun getBasedOnCategory(type:String,category:String):List<DocumentReference>{
+       try{
+           val document = firestore.collection(type).document(category).get().await()
+           return if(document.exists()){
+               refs = document.get("refs") as? ArrayList<DocumentReference>
+               Log.d("FirebaseGetRepositoryImpl", "{$refs}니알")
+               //없을 경우 빈 리스트 반환
+               return refs.orEmpty()
+           }else{
+               Log.e("FirebaseGetRepositoryImpl", "$type")
+               return emptyList()
+           }
+       }catch (e:Exception){
+           Log.e("FirebaseGetRepositoryImpl", "Error fetching data for type: $type, category: $category")
+           return emptyList()
+       }
+    }
+    //지역기반 데이터 가져오기
+    override suspend fun getBasedOnAddress(type:String,first:String,second:String):List<DocumentReference>{
+        val document = firestore.collection("LocationFilter").document(type).collection(first).document(second).get().await()
+        val refs = document.get("refs") as? List<DocumentReference>
+        return refs.orEmpty()
     }
 
 }
