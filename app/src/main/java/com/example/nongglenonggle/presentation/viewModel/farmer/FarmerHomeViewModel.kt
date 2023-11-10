@@ -34,6 +34,11 @@ class FarmerHomeViewModel @Inject constructor(
     val basedOnCategory: LiveData<List<DocumentReference>?> get() = _basedOnCategory
     val categories = mutableListOf<String>()
 
+    //일손 데이터 유무 ui업데이트
+    private val _haveData = MutableLiveData<Boolean>()
+    val haveData :LiveData<Boolean> = _haveData
+
+    //공고글 없을때 호출
     fun fetchUserInfo(){
         viewModelScope.launch {
             val user = fetchFarmerDataUseCase.invoke()
@@ -41,15 +46,6 @@ class FarmerHomeViewModel @Inject constructor(
             fetchNoticeVisible()
             setUserCategoryList()
             setRefDataCategory()
-//            userDetail.observeForever{data->
-//                setRefDataAddress(data!!.first,data.second)
-//            }
-//            basedOnCategory.observeForever{data->
-//                Log.d("fetchUserInfo","${data?.joinToString()}")
-//                for(documentReference in basedOnCategory.value ?: emptyList()){
-//                    val data = setDataFromRef(documentReference)
-//                }
-//            }
         }
     }
     private val _isNotice = MutableLiveData<Boolean>()
@@ -122,6 +118,11 @@ class FarmerHomeViewModel @Inject constructor(
         }
     }
 
-
+    fun updateUI(){
+        _haveData.value = true
+    }
+    init{
+        _haveData.value = false
+    }
 
 }

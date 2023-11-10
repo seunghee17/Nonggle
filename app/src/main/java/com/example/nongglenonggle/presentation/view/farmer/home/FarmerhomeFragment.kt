@@ -13,6 +13,7 @@ import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentFarmerHomeBinding
 import com.example.nongglenonggle.domain.entity.OffererHomeFilterContent
 import com.example.nongglenonggle.presentation.base.BaseFragment
+import com.example.nongglenonggle.presentation.view.adapter.FilterFarmerHomeAdapter
 import com.example.nongglenonggle.presentation.view.login.LoginActivity
 import com.example.nongglenonggle.presentation.viewModel.farmer.FarmerHomeViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -38,7 +39,8 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-        val dataList = mutableListOf<OffererHomeFilterContent>()
+        val adapter = FilterFarmerHomeAdapter(emptyList())
+        binding.recyclerWorker.adapter = adapter
 
         binding.logo.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
@@ -46,13 +48,16 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
             startActivity(intent)
         }
         viewModel.basedOnCategory.observe(viewLifecycleOwner){doc->
+            viewModel.updateUI()
             viewModel.viewModelScope.launch {
+                val dataList = mutableListOf<OffererHomeFilterContent>()
                 for(documentReference in viewModel.basedOnCategory.value ?: emptyList()){
                     val data = viewModel.setDataFromRef(documentReference)
                     data?.let{
                         dataList.add(it)
                     }
                 }
+                adapter.updateList(dataList)
             }
         }
     }
