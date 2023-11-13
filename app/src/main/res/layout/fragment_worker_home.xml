@@ -6,6 +6,7 @@
         <variable
             name="viewModel"
             type="com.example.nongglenonggle.presentation.viewModel.worker.WorkerHomeViewModel" />
+        <import type="android.view.View"/>
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,13 +14,13 @@
         android:orientation="vertical">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         tools:context=".presentation.view.worker.home.WorkerHomeFragment">
         <ImageView
             android:id="@+id/imageView"
@@ -88,7 +89,7 @@
             android:layout_marginTop="280dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:visibility="gone"/>
+            android:visibility="@{viewModel.isResume() ? View.GONE : View.VISIBLE}"/>
         <include
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,7 +101,7 @@
             android:layout_marginTop="280dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:visibility="gone"/>
+            android:visibility="@{viewModel.isResume() ? View.VISIBLE : View.GONE}"/>
 
         <TextView
             android:id="@+id/tipbox"
@@ -157,13 +158,14 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="24dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="134dp"
             android:orientation="horizontal"
-            android:visibility="visible"
+            android:visibility="@{viewModel.haveData ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -184,7 +186,7 @@
             android:layout_marginBottom="40dp"
             android:layout_marginTop="50dp"
             android:gravity="center"
-            android:visibility="gone">
+            android:visibility="@{viewModel.haveData ? View.GONE : View.VISIBLE}">
           <ImageView
               android:layout_width="100dp"
               android:layout_height="100dp"

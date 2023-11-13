@@ -1,6 +1,7 @@
 package com.example.nongglenonggle.presentation.view.worker.home
 
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -13,19 +14,24 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentWorkerHomeBinding
+import com.example.nongglenonggle.domain.entity.SeekerHomeFilterContent
 import com.example.nongglenonggle.presentation.base.BaseFragment
+import com.example.nongglenonggle.presentation.view.adapter.FilterWorkerHomeAdapter
 import com.example.nongglenonggle.presentation.view.login.LoginActivity
 import com.example.nongglenonggle.presentation.view.worker.resume.ResumeActivity
 import com.example.nongglenonggle.presentation.viewModel.worker.WorkerHomeViewModel
 import com.google.api.Distribution.BucketOptions.Linear
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.fragment_worker_home) {
     private val viewModel : WorkerHomeViewModel by viewModels()
+    private lateinit var adapter: FilterWorkerHomeAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.fetchUserInfo()
@@ -43,6 +49,8 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
+        adapter = FilterWorkerHomeAdapter(emptyList())
+        binding.recycler.adapter = adapter
 
         if(viewModel.isResume.value == true){
             binding.yesResume.visibility = View.VISIBLE
@@ -63,6 +71,24 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
         }
+
+        viewModel.allNotice.observe(viewLifecycleOwner){docs->
+            val noticeList = mutableListOf<SeekerHomeFilterContent>()
+            for(notice in docs){
+                noticeList.add(notice)
+            }
+            adapter.updateList(noticeList)
+            viewModel.updateVisible()
+        }
+
+        val imageView = binding.imageView
+        val displayMetrics = Resources.getSystem().displayMetrics
+        val screenHeight = displayMetrics.heightPixels
+        val imageViewHeight = screenHeight / 2.3
+
+        val layoutParams = imageView.layoutParams
+        layoutParams.height = imageViewHeight.toInt()
+        imageView.layoutParams = layoutParams
     }
     private fun setTextColor(textView: TextView, fullText:String, wordsToColor:String){
         val color = ContextCompat.getColor(textView.context, R.color.s1)

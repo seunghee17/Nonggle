@@ -94,7 +94,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="126dp"
-            android:elevation="20dp"
+            android:elevation="4dp"
             android:visibility="@{viewModel.isNotice() ? View.VISIBLE : View.GONE}"/>
 
         <LinearLayout
@@ -135,46 +135,6 @@
                 android:layout_height="1dp"
                 android:layout_weight="1"/>
 
-            <ImageView
-                android:id="@+id/category_img"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="36dp"
-                android:layout_marginTop="25dp"
-                android:src="@drawable/category_img1"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="22dp"
-                android:visibility="gone"/>
-
-            <LinearLayout
-                android:id="@+id/deadline_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="27dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="28dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/notice_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/spoqahansansneo_medium"
-                    android:text="강원도 사과따기"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/notice_deadline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:fontFamily="@font/spoqahansansneo_regular"
-                    android:text="마감 2023.11.20"
-                    android:textColor="@color/g1"
-                    android:textSize="14sp" />
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

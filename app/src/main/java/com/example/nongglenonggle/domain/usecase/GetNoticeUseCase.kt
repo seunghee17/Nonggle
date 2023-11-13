@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetNoticeUseCase @Inject constructor(private val firestoreGetRepository: FirestoreGetRepository) {
-    suspend operator fun invoke() : Flow<NoticeContent?> {
-        return firestoreGetRepository.getNotice()
+    suspend operator fun invoke(uid:String) : Flow<NoticeContent?> {
+        return firestoreGetRepository.getNotice(uid)
     }
 }

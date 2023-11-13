@@ -8,14 +8,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.domain.entity.FarmerHomeData
+import com.example.nongglenonggle.domain.entity.NoticeContent
 import com.example.nongglenonggle.domain.entity.OffererHomeFilterContent
 import com.example.nongglenonggle.domain.usecase.FetchFarmerDataUseCase
 import com.example.nongglenonggle.domain.usecase.GetBasedOnAddressUseCase
 import com.example.nongglenonggle.domain.usecase.GetBasedOnCategoryUseCase
+import com.example.nongglenonggle.domain.usecase.GetNoticeUseCase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -24,10 +28,19 @@ import javax.inject.Inject
 class FarmerHomeViewModel @Inject constructor(
     private val fetchFarmerDataUseCase: FetchFarmerDataUseCase,
     private val getBasedOnCategoryUseCase: GetBasedOnCategoryUseCase,
-    private val getBasedOnAddressUseCase: GetBasedOnAddressUseCase)
+    private val getBasedOnAddressUseCase: GetBasedOnAddressUseCase,
+    private val getNoticeUseCase: GetNoticeUseCase
+)
     : ViewModel(){
+    private val firebaseAuth = FirebaseAuth.getInstance()
     private val _userDetail = MutableLiveData<FarmerHomeData?>()
     val userDetail : LiveData<FarmerHomeData?> = _userDetail
+
+    private val _resumeNum = MutableLiveData<Int>()
+    val resumeNum : LiveData<Int> = _resumeNum
+
+    private val _noticeData = MutableLiveData<NoticeContent>()
+    val noticeData : LiveData<NoticeContent> = _noticeData
 
     //공고글이 없을때 받아올 정보들을 세팅하기 위함
     private val _basedOnCategory = MutableLiveData<List<DocumentReference>?>()
@@ -38,28 +51,32 @@ class FarmerHomeViewModel @Inject constructor(
     private val _haveData = MutableLiveData<Boolean>()
     val haveData :LiveData<Boolean> = _haveData
 
+    private val _haveNoticeRef = MutableLiveData<Boolean>()
+    val haveNoticeRef:LiveData<Boolean> = _haveNoticeRef
+
     //공고글 없을때 호출
     fun fetchUserInfo(){
         viewModelScope.launch {
             val user = fetchFarmerDataUseCase.invoke()
             _userDetail.value = user
-            fetchNoticeVisible()
+            Log.d("fetchUserInfo","${userDetail.value?.refs}")
             setUserCategoryList()
             setRefDataCategory()
+            setRefDataAddress(userDetail.value?.first!! ,userDetail.value?.second!! )
         }
     }
     private val _isNotice = MutableLiveData<Boolean>()
     val isNotice:LiveData<Boolean> = _isNotice
-    var resumeNum:Int = 0
+
 
     fun fetchNoticeVisible(){
-        if(_userDetail.value?.notice != null){
+        if(_userDetail.value?.refs != null){
             _isNotice.value = true
-            resumeNum = 1
+            _resumeNum.value =1
         }
         else{
             _isNotice.value = false
-            resumeNum = 0
+            _resumeNum.value = 0
         }
     }
 
@@ -74,6 +91,7 @@ class FarmerHomeViewModel @Inject constructor(
             categories.add(userDetail.value!!.category3!!)
         }
     }
+
     fun setRefDataCategory() {
         viewModelScope.launch {
             val allData = mutableListOf<DocumentReference>()
@@ -121,6 +139,9 @@ class FarmerHomeViewModel @Inject constructor(
     fun updateUI(){
         _haveData.value = true
     }
+//    fun updateNoticeUI(){
+//        _haveNoticeRef.value = true
+//    }
     init{
         _haveData.value = false
     }

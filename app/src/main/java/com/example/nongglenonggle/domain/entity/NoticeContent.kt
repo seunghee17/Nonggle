@@ -21,5 +21,6 @@ data class NoticeContent(
     val stayInfo:String = "",
     val mealInfo:String = "",
     val specialInfo:Map<String,Any> = emptyMap(),
-    val preferential:String = ""
+    val preferential:String = "",
+    val uid : String=""
 )

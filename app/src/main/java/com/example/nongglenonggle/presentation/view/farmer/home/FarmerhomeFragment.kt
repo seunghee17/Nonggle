@@ -41,12 +41,30 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
         binding.viewModel = viewModel
         val adapter = FilterFarmerHomeAdapter(emptyList())
         binding.recyclerWorker.adapter = adapter
+        viewModel.fetchNoticeVisible()
+        viewModel.resumeNum.observe(viewLifecycleOwner){data->
+            Log.d("onViewCreated","$data")
+        }
 
+        //임시적으로 로그아웃 설정
         binding.logo.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
         }
+
+        viewModel.userDetail.observe(viewLifecycleOwner){data->
+            if(data?.refs != null){
+                viewModel.fetchNoticeVisible()
+                //viewModel.loadNotice()
+            }
+        }
+
+        viewModel.noticeData.observe(viewLifecycleOwner){noticeContent ->
+            binding.yesNotice.title.text = noticeContent.title
+            binding.yesNotice.deadline.text = (noticeContent.recruitPeriod["detail"].toString() ?: noticeContent.recruitPeriod["type"]).toString()
+        }
+
         viewModel.basedOnCategory.observe(viewLifecycleOwner){doc->
             viewModel.updateUI()
             viewModel.viewModelScope.launch {

@@ -5,6 +5,7 @@ import com.example.nongglenonggle.domain.entity.FarmerHomeData
 import com.example.nongglenonggle.domain.entity.Model
 import com.example.nongglenonggle.domain.entity.NoticeContent
 import com.example.nongglenonggle.domain.entity.ResumeContent
+import com.example.nongglenonggle.domain.entity.SeekerHomeFilterContent
 import com.example.nongglenonggle.domain.entity.WorkerHomeData
 import com.example.nongglenonggle.domain.repository.FirestoreGetRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +23,7 @@ import java.lang.IllegalStateException
 import java.lang.ref.Reference
 import javax.inject.Inject
 import com.example.nongglenonggle.presentation.util.getDataFromReference
+import com.google.firebase.firestore.ktx.toObjects
 
 class FirestoreGetRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
@@ -34,10 +36,11 @@ class FirestoreGetRepositoryImpl @Inject constructor(
         }
 
     //자신의 공고글 불러오기
-    override suspend fun getNotice(): Flow<NoticeContent?> {
+    override suspend fun getNotice(uid:String): Flow<NoticeContent?> {
         return flow{
-            val currentUserUid = firebaseAuth.currentUser?.uid ?: throw IllegalStateException("User not log")
-            val docSnapshot = firestore.collection("Announcement").document(currentUserUid!!).get().await()
+            //val currentUserUid = firebaseAuth.currentUser?.uid ?: throw IllegalStateException("User not log")
+            //val docSnapshot = firestore.collection("Announcement").document(currentUserUid!!).get().await()
+            val docSnapshot = firestore.collection("Announcement").document(uid).get().await()
             emit(docSnapshot.toObject(NoticeContent::class.java))
         }.catch {
             e->
@@ -76,8 +79,6 @@ class FirestoreGetRepositoryImpl @Inject constructor(
            val document = firestore.collection(type).document(category).get().await()
            return if(document.exists()){
                refs = document.get("refs") as? ArrayList<DocumentReference>
-               Log.d("FirebaseGetRepositoryImpl", "{$refs}니알")
-               //없을 경우 빈 리스트 반환
                return refs.orEmpty()
            }else{
                Log.e("FirebaseGetRepositoryImpl", "$type")
@@ -93,6 +94,14 @@ class FirestoreGetRepositoryImpl @Inject constructor(
         val document = firestore.collection("LocationFilter").document(type).collection(first).document(second).get().await()
         val refs = document.get("refs") as? List<DocumentReference>
         return refs.orEmpty()
+    }
+    //모든 공고글 불러오기
+    override suspend fun getAllNotice():Flow<List<SeekerHomeFilterContent>>{
+        return flow{
+            val docSnapshot = firestore.collection("Announcement").get().await()
+            val documents = docSnapshot.toObjects(SeekerHomeFilterContent::class.java)
+            emit(documents)
+        }
     }
 
 }

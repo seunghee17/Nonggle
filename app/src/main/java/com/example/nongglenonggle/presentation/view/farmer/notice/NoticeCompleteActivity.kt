@@ -21,15 +21,18 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import androidx.lifecycle.asLiveData
+import com.google.firebase.auth.FirebaseAuth
 
 
 @AndroidEntryPoint
 class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.layout.activity_notice_complete) {
     private val viewModel : FarmerNoticeCompleteViewModel by viewModels()
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        viewModel.fetchNoticeDetail(firebaseAuth.currentUser?.uid!!)
 
         binding.close.setOnClickListener{
             if(viewModel.isDataReady.value == true){
@@ -41,7 +44,6 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
         binding.topBtn.setImageResource(R.drawable.pencil)
 
         viewModel.noticeDetail.asLiveData().observe(this, Observer { noticeContent->
-            Log.e("NoticeActivity","${noticeContent}")
             detectDeadline()
             detectPayType()
             setRecruitAge()

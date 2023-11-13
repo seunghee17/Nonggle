@@ -4,7 +4,7 @@ import com.google.firebase.firestore.DocumentReference
 
 data class FarmerHomeData(
     val userName : String = "",
-    val notice : DocumentReference? = null,
+    val refs : List<DocumentReference>? = listOf(),
     val category1 : String = "",
     val category2 : String? = null,
     val category3 : String? = null,

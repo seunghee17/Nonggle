@@ -15,6 +15,7 @@ import com.example.nongglenonggle.domain.usecase.AddTypeUseCase
 import com.example.nongglenonggle.domain.usecase.AddNoticeUseCase
 import com.example.nongglenonggle.domain.usecase.AddRefToAddressUseCase
 import com.example.nongglenonggle.domain.usecase.UploadImageUsecase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,6 +31,7 @@ class FarmerNoticeViewModel @Inject constructor(
     private val addNoticeToGenderUseCase: AddGenderUseCase,
     private val addNoticeToTypeUseCase: AddTypeUseCase
     ): ViewModel() {
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     //이름칸 감지
     val _isClick1 = MutableLiveData<Boolean>()
     val isClick1:LiveData<Boolean> = _isClick1
@@ -443,7 +445,8 @@ class FarmerNoticeViewModel @Inject constructor(
                 "name" to name,
                 "phnum" to phnum
             ),
-            preferential = preferential
+            preferential = preferential,
+            uid =firebaseAuth.currentUser?.uid!!
         )
         return allNoticeContent
     }

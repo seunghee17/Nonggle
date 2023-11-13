@@ -9,6 +9,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.domain.entity.NoticeContent
 import com.example.nongglenonggle.domain.usecase.GetNoticeUseCase
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,12 +25,12 @@ class FarmerNoticeCompleteViewModel @Inject constructor(
     val isDataReady = MutableLiveData<Boolean>()
     val noticeDetail: StateFlow<NoticeContent?> get() = _noticeDetail
     init{
-        fetchNoticeDetail()
+        //fetchNoticeDetail()
         isDataReady.value = false
     }
-    private fun fetchNoticeDetail(){
+    fun fetchNoticeDetail(uid:String){
         viewModelScope.launch {
-            val data= getNoticeUseCase.invoke().collect{data->
+            val data= getNoticeUseCase.invoke(uid).collect{data->
                 _noticeDetail.value = data
             }
             Log.d("NoticeCompleteVM", "$data")
