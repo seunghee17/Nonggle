@@ -13,15 +13,19 @@ import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.ActivityNoticeCompleteguideBinding
 import com.example.nongglenonggle.presentation.base.BaseActivity
 import com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeCompleteViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 class NoticeCompleteguideActivity : BaseActivity<ActivityNoticeCompleteguideBinding>(R.layout.activity_notice_completeguide) {
     private val viewModel: FarmerNoticeCompleteViewModel by viewModels()
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTextColor(binding.first, binding.first.text.toString(), "공고쓰기")
+        val uid = firebaseAuth.currentUser?.uid!!
 
         binding.completeBtn.setOnClickListener{
             val intent = Intent(this, NoticeCompleteActivity::class.java)
+            intent.putExtra("UID_KEY", uid)
             startActivity(intent)
         }
     }

@@ -6,10 +6,13 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -20,6 +23,7 @@ import com.example.nongglenonggle.databinding.FragmentWorkerHomeBinding
 import com.example.nongglenonggle.domain.entity.SeekerHomeFilterContent
 import com.example.nongglenonggle.presentation.base.BaseFragment
 import com.example.nongglenonggle.presentation.view.adapter.FilterWorkerHomeAdapter
+import com.example.nongglenonggle.presentation.view.farmer.notice.NoticeCompleteActivity
 import com.example.nongglenonggle.presentation.view.login.LoginActivity
 import com.example.nongglenonggle.presentation.view.worker.resume.ResumeActivity
 import com.example.nongglenonggle.presentation.viewModel.worker.WorkerHomeViewModel
@@ -49,7 +53,17 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-        adapter = FilterWorkerHomeAdapter(emptyList())
+        adapter = FilterWorkerHomeAdapter(emptyList(), object :
+            FilterWorkerHomeAdapter.onItemClickListener {
+            override fun onItemClick(uid:String) {
+                val intent = Intent(requireContext(), NoticeCompleteActivity::class.java)
+                Log.d("onItemClickListener",uid)
+                intent.putExtra("UID_KEY", uid)
+                startActivity(intent)
+            }
+
+        })
+
         binding.recycler.adapter = adapter
 
         if(viewModel.isResume.value == true){

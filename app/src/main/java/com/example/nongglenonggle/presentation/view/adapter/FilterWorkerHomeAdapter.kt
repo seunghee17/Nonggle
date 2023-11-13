@@ -3,6 +3,7 @@ package com.example.nongglenonggle.presentation.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nongglenonggle.R
@@ -10,7 +11,14 @@ import com.example.nongglenonggle.domain.entity.OffererHomeFilterContent
 import com.example.nongglenonggle.domain.entity.SeekerHomeFilterContent
 import org.w3c.dom.Text
 
-class FilterWorkerHomeAdapter(private var items:List<SeekerHomeFilterContent>):RecyclerView.Adapter<FilterWorkerHomeAdapter.ViewHolder>() {
+class FilterWorkerHomeAdapter(
+    private var items:List<SeekerHomeFilterContent>,
+    private val listener: onItemClickListener
+)
+    :RecyclerView.Adapter<FilterWorkerHomeAdapter.ViewHolder>() {
+    interface onItemClickListener{
+        fun onItemClick(uid: String)
+    }
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val title : TextView = itemView.findViewById(R.id.title)
         val firstAddress:TextView = itemView.findViewById(R.id.address)
@@ -33,6 +41,7 @@ class FilterWorkerHomeAdapter(private var items:List<SeekerHomeFilterContent>):R
             val item= items[position]
             holder.title.text = item.title
             holder.firstAddress.text = item.firstAddress
+            holder.workType.text = item.workType
             val detail = item.recruitPeriod.get("detail").toString()
             val type = item.recruitPeriod.get("type").toString()
             holder.deadline.text =
@@ -42,6 +51,9 @@ class FilterWorkerHomeAdapter(private var items:List<SeekerHomeFilterContent>):R
                     detail
                 }
             holder.payment.text = item.pay[0].toString()
+            holder.itemView.setOnClickListener {
+                listener.onItemClick(item.uid)
+            }
         }
     }
     fun updateList(newData:List<SeekerHomeFilterContent>){

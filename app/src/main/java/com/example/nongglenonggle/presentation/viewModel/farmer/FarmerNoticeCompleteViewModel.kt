@@ -25,7 +25,6 @@ class FarmerNoticeCompleteViewModel @Inject constructor(
     val isDataReady = MutableLiveData<Boolean>()
     val noticeDetail: StateFlow<NoticeContent?> get() = _noticeDetail
     init{
-        //fetchNoticeDetail()
         isDataReady.value = false
     }
     fun fetchNoticeDetail(uid:String){

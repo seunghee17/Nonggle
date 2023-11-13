@@ -27,12 +27,15 @@ import com.google.firebase.auth.FirebaseAuth
 @AndroidEntryPoint
 class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.layout.activity_notice_complete) {
     private val viewModel : FarmerNoticeCompleteViewModel by viewModels()
-    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        viewModel.fetchNoticeDetail(firebaseAuth.currentUser?.uid!!)
+        val uid = intent.getStringExtra("UID_KEY")
+        uid?.let{
+            viewModel.fetchNoticeDetail(uid)
+        }
+
 
         binding.close.setOnClickListener{
             if(viewModel.isDataReady.value == true){
