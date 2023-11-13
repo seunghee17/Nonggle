@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -179,6 +180,7 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
                 val intent = Intent(context,ResumeCompleteActivity::class.java)
                 intent.putExtra("setting1", viewModel.openSetting1)
                 intent.putExtra("setting2", viewModel.openSetting2)
+                Log.d("ResumeDFragment","${viewModel.openSetting1}%%%${viewModel.openSetting2}")
                 startActivity(intent)
             }
         }

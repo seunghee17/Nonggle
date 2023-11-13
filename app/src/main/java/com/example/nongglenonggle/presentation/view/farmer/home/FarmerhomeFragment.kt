@@ -54,15 +54,32 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
         }
 
         viewModel.userDetail.observe(viewLifecycleOwner){data->
-            if(data?.refs != null){
-                viewModel.fetchNoticeVisible()
+            if(data?.refs == null){
+                //공고글 없을때
+                viewModel.fetchNoticeGone()
                 //viewModel.loadNotice()
+            }
+            else{
+                //공고글 있을떼
+                //viewModel.fetchNoticeVisible()
+                //notice정보 패칭하는 함수 호출
+                viewModel.viewModelScope.launch {
+                    viewModel.fetchNoticeVisible()
+                    val data = viewModel.setUserFromRef(data?.refs.get(0))
+                    viewModel._noticeData.value = data
+                }
+                Log.d("resumenum","${viewModel.resumeNum}")
             }
         }
 
+        //홈화면 이력서 미리보기
         viewModel.noticeData.observe(viewLifecycleOwner){noticeContent ->
             binding.yesNotice.title.text = noticeContent.title
-            binding.yesNotice.deadline.text = (noticeContent.recruitPeriod["detail"].toString() ?: noticeContent.recruitPeriod["type"]).toString()
+            if(noticeContent.recruitPeriod["type"].toString() == "상시모집") {
+                binding.yesNotice.deadline.text = "상시모집"
+            }else{
+                binding.yesNotice.deadline.text = noticeContent.recruitPeriod["detail"].toString()
+            }
         }
 
         viewModel.basedOnCategory.observe(viewLifecycleOwner){doc->

@@ -39,7 +39,7 @@ class FarmerHomeViewModel @Inject constructor(
     private val _resumeNum = MutableLiveData<Int>()
     val resumeNum : LiveData<Int> = _resumeNum
 
-    private val _noticeData = MutableLiveData<NoticeContent>()
+    val _noticeData = MutableLiveData<NoticeContent>()
     val noticeData : LiveData<NoticeContent> = _noticeData
 
     //공고글이 없을때 받아올 정보들을 세팅하기 위함
@@ -54,15 +54,18 @@ class FarmerHomeViewModel @Inject constructor(
     private val _haveNoticeRef = MutableLiveData<Boolean>()
     val haveNoticeRef:LiveData<Boolean> = _haveNoticeRef
 
-    //공고글 없을때 호출
+    //기본으로 호출되어야함
+    //유저의 기본 정보 패칭용
     fun fetchUserInfo(){
         viewModelScope.launch {
             val user = fetchFarmerDataUseCase.invoke()
             _userDetail.value = user
+
+
             Log.d("fetchUserInfo","${userDetail.value?.refs}")
-            setUserCategoryList()
-            setRefDataCategory()
-            setRefDataAddress(userDetail.value?.first!! ,userDetail.value?.second!! )
+            //setUserCategoryList()
+            //setRefDataCategory()
+            //setRefDataAddress(userDetail.value?.first!! ,userDetail.value?.second!! )
         }
     }
     private val _isNotice = MutableLiveData<Boolean>()
@@ -70,14 +73,12 @@ class FarmerHomeViewModel @Inject constructor(
 
 
     fun fetchNoticeVisible(){
-        if(_userDetail.value?.refs != null){
-            _isNotice.value = true
-            _resumeNum.value =1
-        }
-        else{
-            _isNotice.value = false
-            _resumeNum.value = 0
-        }
+        _isNotice.value = true
+        _resumeNum.value = 1
+    }
+    fun fetchNoticeGone(){
+        _isNotice.value = false
+        _resumeNum.value = 0
     }
 
 
@@ -136,13 +137,20 @@ class FarmerHomeViewModel @Inject constructor(
         }
     }
 
+    suspend fun setUserFromRef(documentReference:DocumentReference) : NoticeContent?{
+        return try{
+            val documentSnapshot = documentReference.get().await()
+            documentSnapshot.toObject(NoticeContent::class.java)
+        }catch (e:Exception){
+            null
+        }
+    }
+
     fun updateUI(){
         _haveData.value = true
     }
-//    fun updateNoticeUI(){
-//        _haveNoticeRef.value = true
-//    }
     init{
+        fetchUserInfo()
         _haveData.value = false
     }
 

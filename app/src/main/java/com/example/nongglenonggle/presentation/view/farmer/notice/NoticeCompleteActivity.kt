@@ -7,6 +7,7 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -22,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import androidx.lifecycle.asLiveData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 @AndroidEntryPoint
@@ -29,11 +31,24 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
     private val viewModel : FarmerNoticeCompleteViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val docRef = FirebaseFirestore.getInstance().collection("Worker")
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         val uid = intent.getStringExtra("UID_KEY")
         uid?.let{
             viewModel.fetchNoticeDetail(uid)
+        }
+
+        docRef.document(FirebaseAuth.getInstance().currentUser!!.uid).get().addOnCompleteListener{task->
+            if(task.isSuccessful){
+                val document = task.result
+                if(document != null && document.exists()){
+                    //문서 id존재, 현재 회원이 구인자다
+                    binding.includeUserScore.visibility = View.VISIBLE
+                }
+            }else{
+                Log.e("Firestore","$task.exception")
+            }
         }
 
 
@@ -96,7 +111,7 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
     }
 
     private fun setWorkTime(){
-        if(viewModel.noticeDetail.value?.workTime?.get("detail") == null){
+        if(viewModel.noticeDetail.value?.workTime?.get("detail") == ""){
             binding.workTime.text = "시간협의"
             binding.workTime2.text = "시간협의"
         }

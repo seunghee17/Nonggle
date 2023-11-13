@@ -22,9 +22,9 @@ class ResumeCompleteViewModel @Inject constructor(
     private val getResumeUseCase: GetResumeUseCase
 ): ViewModel(){
     private val _resumeDetail = MutableStateFlow<ResumeContent?>(null)
-    val resumeDetail:StateFlow<ResumeContent?> = _resumeDetail
+    val resumeDetail:StateFlow<ResumeContent?> get() =  _resumeDetail
 
-    val resumeLiveData: LiveData<ResumeContent?> = _resumeDetail.asLiveData()
+    //val resumeLiveData: LiveData<ResumeContent?> = _resumeDetail.asLiveData()
 
     var certification:String=""
     var locations:String=""
@@ -34,32 +34,18 @@ class ResumeCompleteViewModel @Inject constructor(
      fun fetchResumeDetail(setting1:String, setting2:String){
         viewModelScope.launch {
             getResumeUseCase.invoke(setting1,setting2).collect{data->
-                _resumeDetail.value = data
-                if(data?.careerList != null && resumeLiveData?.value?.careerList != null){
-                    certification = resumeLiveData?.value?.careerList?.joinToString(",") ?: "자격증 없음"
-                }
-                if(resumeLiveData?.value?.locationSelect != null){
-                    if(resumeLiveData?.value?.locationSelect?.size == 2){
-                        locations = "${resumeLiveData?.value?.locationSelect?.get(0)} ${resumeLiveData?.value?.locationSelect?.get(1)}"
-                    }
-                    if(resumeLiveData?.value?.locationSelect?.size == 4){
-                        locations = "${resumeLiveData?.value?.locationSelect?.get(0)} ${resumeLiveData?.value?.locationSelect?.get(1)}, ${resumeLiveData?.value?.locationSelect?.get(2)} ${resumeLiveData?.value?.locationSelect?.get(3)}"
-                    }
-                    if(resumeLiveData?.value?.locationSelect?.size == 6){
-                        locations = "${resumeLiveData?.value?.locationSelect?.get(0)} ${resumeLiveData?.value?.locationSelect?.get(1)}, ${resumeLiveData?.value?.locationSelect?.get(2)} ${resumeLiveData?.value?.locationSelect?.get(3)}, ${resumeLiveData?.value?.locationSelect?.get(4)} ${resumeLiveData?.value?.locationSelect?.get(5)}"
-                    }
-                }
-                if(resumeLiveData?.value?.desiredItem != null){
-                    if(resumeLiveData?.value?.desiredItem?.size ==1){
-                        items = "${resumeLiveData?.value?.desiredItem?.get(0)}"
-                    }
-                    if(resumeLiveData?.value?.desiredItem?.size ==2){
-                        items = "${resumeLiveData?.value?.desiredItem?.get(0)}, ${resumeLiveData?.value?.desiredItem?.get(1)}"
-                    }
-                    if(resumeLiveData?.value?.desiredItem?.size ==3){
-                        items = "${resumeLiveData?.value?.desiredItem?.get(0)}, ${resumeLiveData?.value?.desiredItem?.get(1)}, ${resumeLiveData?.value?.desiredItem?.get(2)}"
-                    }
-                }
+               if(data != null){
+                   _resumeDetail.value = data
+               }
+//                if(data?.careerList != null && resumeLiveData?.value?.careerList != null){
+//                    certification = resumeLiveData?.value?.careerList?.joinToString(",") ?: "자격증 없음"
+//                }
+//                resumeLiveData?.value?.locationSelect?.let{locationList->
+//                    locations = locationList.chunked(2).joinToString( ", " ) { it.joinToString(" ") }
+//                }
+//                resumeLiveData?.value?.desiredItem?.let{desiredItem->
+//                    locations = desiredItem.chunked(2).joinToString( ", " ) { it.joinToString(" ") }
+//                }
             }
         }
 

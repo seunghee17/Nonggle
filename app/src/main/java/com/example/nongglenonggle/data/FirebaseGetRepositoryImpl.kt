@@ -38,8 +38,6 @@ class FirestoreGetRepositoryImpl @Inject constructor(
     //자신의 공고글 불러오기
     override suspend fun getNotice(uid:String): Flow<NoticeContent?> {
         return flow{
-            //val currentUserUid = firebaseAuth.currentUser?.uid ?: throw IllegalStateException("User not log")
-            //val docSnapshot = firestore.collection("Announcement").document(currentUserUid!!).get().await()
             val docSnapshot = firestore.collection("Announcement").document(uid).get().await()
             emit(docSnapshot.toObject(NoticeContent::class.java))
         }.catch {

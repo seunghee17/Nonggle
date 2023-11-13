@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.asLiveData
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.ActivityResumeCompleteBinding
 import com.example.nongglenonggle.domain.entity.Model
@@ -37,17 +38,26 @@ class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.lay
         viewModel.fetchResumeDetail(value1, value2)
 
 
-        viewModel.resumeLiveData.observe(this, Observer{data->
+        viewModel.resumeDetail.asLiveData().observe(this, Observer{data->
             data?.resumeData?.let{resumeData->
-                allCareer.clear()
-                allCareer.addAll(resumeData)
-                if(::adapter.isInitialized){
+//                allCareer.clear()
+//                allCareer.addAll(resumeData)
+//                if(::adapter.isInitialized){
+//                    adapter.updatelist(allCareer)
+//                    Log.d("ResumeCompleteActivity", "update success $resumeData")
+//                }
+//                else{
+//                    adapter = ResumeCareerAdapter(allCareer)
+//                    recycler.adapter = adapter
+//                }
+                if(resumeData.isNotEmpty()){
+                    allCareer.clear()
+                    allCareer.addAll(resumeData)
                     adapter.updatelist(allCareer)
-                    Log.d("ResumeCompleteActivity", "update success $resumeData")
+                    Log.e("Resume", "$allCareer")
                 }
                 else{
-                    adapter = ResumeCareerAdapter(allCareer)
-                    recycler.adapter = adapter
+                    Log.e("Resume","erroereroejroe")
                 }
             }
         })

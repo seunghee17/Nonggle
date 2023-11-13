@@ -86,7 +86,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="52dp"
                 android:fontFamily="@font/spoqahansansneo_medium"
-                android:text="@{viewModel.resumeLiveData.userName + `일손`}"
+                android:text="@{viewModel.resumeDetail.userName + `일손`}"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -105,13 +105,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
-                    android:text="@{viewModel.resumeLiveData.userGender + `∙` + viewModel.resumeLiveData.userYear + `세`}"
+                    android:text="@{viewModel.resumeDetail.userGender + `∙` + viewModel.resumeDetail.userYear + `세`}"
                     android:layout_gravity="center_horizontal"/>
             </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{`&quot;`+viewModel.resumeLiveData.userPresent + `&quot;`}"
+                android:text="@{`&quot;`+viewModel.resumeDetail.userPresent + `&quot;`}"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/spoqahansansneo_regular"
@@ -178,7 +178,7 @@
                         android:fontFamily="@font/spoqahansansneo_medium"
                         android:textColor="@color/m1"
                         android:textSize="14sp"
-                        android:text="@{viewModel.resumeLiveData.allCareer}"
+                        android:text="@{viewModel.resumeDetail.allCareer}"
                         android:layout_marginTop="10dp"/>
                 </LinearLayout>
 
@@ -247,7 +247,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.resumeLiveData.allCareer}"
+                    android:text="@{viewModel.resumeDetail.allCareer}"
                     android:gravity="right"
                     android:fontFamily="@font/spoqahansansneo_medium"
                     android:textColor="@color/m1"
@@ -382,7 +382,7 @@
                     android:fontFamily="@font/spoqahansansneo_regular"
                     android:textColor="@color/g1"
                     android:textSize="16sp"
-                    android:text="@{viewModel.resumeLiveData.dormType}"
+                    android:text="@{viewModel.resumeDetail.dormType}"
                     android:gravity="right"/>
 
             </LinearLayout>
@@ -412,7 +412,7 @@
                     android:textSize="16sp"
                     android:background="@drawable/bg_radius4_nostroke"
                     android:backgroundTint="@color/m5"
-                    android:text="@{viewModel.resumeLiveData.dayData ?? `요일협의`}"
+                    android:text="@{viewModel.resumeDetail.dayData ?? `요일협의`}"
                     android:layout_marginRight="8dp"
                     android:paddingBottom="4dp"
                     android:paddingTop="4dp"
@@ -425,7 +425,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/g1"
                     style="@style/b1_main"
-                    android:text="@{viewModel.resumeLiveData.dayDetailData ?? ``}"
+                    android:text="@{viewModel.resumeDetail.dayDetailData ?? ``}"
                     android:gravity="right" />
 
             </LinearLayout>
@@ -489,7 +489,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:text="@{`#`+viewModel.resumeLiveData.selfHastag.get(0) ?? `성실함`}"/>
+                    android:text="@{`#`+viewModel.resumeDetail.selfHastag.get(0) ?? `성실함`}"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -501,7 +501,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:layout_marginLeft="12dp"
-                    android:text="@{`#`+viewModel.resumeLiveData.selfHastag.get(1) ?? `착실함`}"/>
+                    android:text="@{`#`+viewModel.resumeDetail.selfHastag.get(1) ?? `착실함`}"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -513,7 +513,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:layout_marginLeft="12dp"
-                    android:text="@{`#`+viewModel.resumeLiveData.selfHastag.get(2) ?? `끈기`}"/>
+                    android:text="@{`#`+viewModel.resumeDetail.selfHastag.get(2) ?? `끈기`}"/>
 
             </LinearLayout>
 
@@ -526,7 +526,7 @@
                 style="@style/b2_sub"
                 android:textColor="@color/g2"
                 android:lineSpacingExtra="4sp"
-                android:text="@{viewModel.resumeLiveData.selfInfo}" />
+                android:text="@{viewModel.resumeDetail.selfInfo}" />
 
             <View
                 android:id="@+id/view"

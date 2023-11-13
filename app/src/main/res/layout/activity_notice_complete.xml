@@ -808,7 +808,12 @@
                             android:text="@string/전화"/>
                     </LinearLayout>
                 </LinearLayout>
+
             </LinearLayout>
+            <include
+                android:id="@+id/include_user_score"
+                layout="@layout/user_score_layout"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </ScrollView>
