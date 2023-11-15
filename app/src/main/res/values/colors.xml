@@ -21,5 +21,6 @@
     <color name="unactive">#6FAB86</color>
     <color name="background">#F6F4F1</color>
     <color name="bg">#FDFDFC</color>
+    <color name="shadow">#1E1E1E</color>
 
 </resources>

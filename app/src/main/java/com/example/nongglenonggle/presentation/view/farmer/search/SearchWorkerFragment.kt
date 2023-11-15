@@ -18,7 +18,7 @@ class SearchWorkerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search_worker, container, false)
+        return inflater.inflate(R.layout.fragment_farmer_search, container, false)
     }
 
 }
