@@ -1,14 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.farmer.search.SearchWorkerFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/농글"
+                android:fontFamily="@font/soyo_maple_bold"
+                android:textSize="18sp"
+                android:textColor="@color/m1"
+                android:layout_marginLeft="20dp"
+                android:paddingBottom="19dp"
+                android:paddingTop="19dp"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/bell"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/농부님을_위한"
+            android:textColor="@color/black"
+            style="@style/t3"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:lineSpacingExtra="5sp"
+            android:layout_marginBottom="24dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            tools:listitem="@layout/list_item_farmersearch1"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/g5"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/모든_일손"
+            android:fontFamily="@font/spoqahansansneo_medium"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginLeft="20dp"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/state_filter_category">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/지역별"
+                    android:textColor="@color/g2"
+                    style="@style/b3_small"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/down_small"
+                    app:tint="@color/g2"
+                    android:layout_marginLeft="4dp"
+                    android:paddingRight="10dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/state_filter_category">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/연령별"
+                    android:textColor="@color/g2"
+                    style="@style/b3_small"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/down_small"
+                    app:tint="@color/g2"
+                    android:layout_marginLeft="4dp"
+                    android:paddingRight="10dp"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/state_filter_category">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/희망_근무형태"
+                    style="@style/b3_small"
+                    android:textColor="@color/g2"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/down_small"
+                    app:tint="@color/g2"
+                    android:layout_marginLeft="4dp"
+                    android:paddingRight="10dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/state_filter_category">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/희망_품목별"
+                    style="@style/b3_small"
+                    android:textColor="@color/g2"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/down_small"
+                    app:tint="@color/g2"
+                    android:layout_marginLeft="4dp"
+                    android:paddingRight="10dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        </HorizontalScrollView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            tools:listitem="@layout/list_item_farmersearch_filter"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

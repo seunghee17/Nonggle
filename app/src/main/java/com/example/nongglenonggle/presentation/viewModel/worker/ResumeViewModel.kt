@@ -420,7 +420,7 @@ class ResumeViewModel @Inject constructor(
                     addRefToAddress(docRef,"ResumeFilter",thirdElement!!,fourthElement!!)
                     addRefToAddress(docRef,"ResumeFilter",fifthElement!!,sixthElement!!)
                 }
-                addByAge(docRef,"${userYear}대")
+                addByAge(docRef,"${(userYear/10)*10}대")
                 addRefToCategory("ResumeCategory",docRef,clickedTexts.get(0))
                 addRefToCategory("ResumeCategory",docRef,clickedTexts.get(1))
                 addRefToCategory("ResumeCategory",docRef,clickedTexts.get(2))

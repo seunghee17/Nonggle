@@ -143,7 +143,7 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
             viewModel._activeprivate.postValue(false)
             viewModel._activepublic.postValue(true)
             viewModel.openSetting1 = "public"
-            viewModel.openSetting2 = "publicresume"
+            viewModel.openSetting2 = "publicResume"
         }
         binding.selectLocation.setOnTouchListener{view,event->
             //희망 장소 선택

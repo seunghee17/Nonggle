@@ -10,9 +10,9 @@ data class ResumeContent(
     val userPresent: String="",
     //전체경력
     val allCareer:String="",
-    val resumeData:List<Model.ResumeSummary>? = listOf(),
+    val resumeData:List<Model.ResumeSummary>? = null,
     //자격증입력
-    val careerList: List<String>? = listOf(),
+    val careerList: List<String>? = null,
     //희망근무장소
     val locationSelect:List<String> = listOf(),
     //희망 근무 형태
