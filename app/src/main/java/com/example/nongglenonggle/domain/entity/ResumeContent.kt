@@ -1,7 +1,7 @@
 package com.example.nongglenonggle.domain.entity
 
 data class ResumeContent(
-    val imageurl: String?="",
+    val imageurl: String? = null,
     val userName:String="",
     //00세로 바꿔서 넣기
     val userYear:Int=0,
@@ -10,7 +10,7 @@ data class ResumeContent(
     val userPresent: String="",
     //전체경력
     val allCareer:String="",
-    val resumeData:List<Model.ResumeSummary>? = null,
+    val resumeData:List<ResumeSummary>? = null,
     //자격증입력
     val careerList: List<String>? = null,
     //희망근무장소

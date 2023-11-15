@@ -152,7 +152,6 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
             if(result != null){
                 viewModel.addNoticeContent(result)
                 goToNext()
-
             }
         }
 

@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentResumeBBinding
+import com.example.nongglenonggle.domain.entity.ResumeSummary
 import com.example.nongglenonggle.presentation.base.BaseFragment
 import com.example.nongglenonggle.presentation.view.adapter.ResumeAdapter
 import com.example.nongglenonggle.presentation.view.dialog.CareerAddFragment
@@ -67,7 +68,7 @@ class ResumeBFragment : BaseFragment<FragmentResumeBBinding>(R.layout.fragment_r
         super.onResume()
         resumeAdapter = ResumeAdapter(emptyList())
         binding.recycler.adapter = resumeAdapter
-        viewModel.resumeData.observe(viewLifecycleOwner, Observer {newData->
+        viewModel.resumeData.observe(viewLifecycleOwner, Observer {newData:List<ResumeSummary>->
             resumeAdapter.updateList(newData)
             binding.carrerSum.text = viewModel.getCareerTotal()
         })

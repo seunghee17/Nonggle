@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentResumeDBinding
 import com.example.nongglenonggle.presentation.base.BaseFragment
@@ -25,9 +26,14 @@ import com.example.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
 import com.example.nongglenonggle.presentation.view.adapter.SpinnerAdapter
 import com.example.nongglenonggle.presentation.view.dialog.CareerAddFragment
 import com.example.nongglenonggle.presentation.view.dialog.LocationSelectFragment
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 
 class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_resume_d) {
     private val viewModel: ResumeViewModel by activityViewModels()
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    var opensetting1 = ""
+    var opensetting2 = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +50,7 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
+        val uid = firebaseAuth.currentUser?.uid!!
 
         //기타품목 나타내기용
         viewModel.categoryLive.observe(viewLifecycleOwner, Observer { list->
@@ -136,14 +143,14 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
             viewModel._activeprivate.postValue(true)
             viewModel._activepublic.postValue(false)
             //비공개 설정시 추가적 기능 명세
-            viewModel.openSetting1 = "private"
-            viewModel.openSetting2 = "privateresume"
+            opensetting1 = "private"
+            opensetting2 = "privateresume"
         }
         binding.publicBtn.setOnClickListener{
             viewModel._activeprivate.postValue(false)
             viewModel._activepublic.postValue(true)
-            viewModel.openSetting1 = "public"
-            viewModel.openSetting2 = "publicResume"
+            opensetting1 = "public"
+            opensetting2 = "publicResume"
         }
         binding.selectLocation.setOnTouchListener{view,event->
             //희망 장소 선택
@@ -172,18 +179,23 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
             }
         }
         binding.complete.setOnClickListener{
-            val result = viewModel.setResumeData()
-            if(result != null){
-                viewModel.addResumeContent(result)
-                //Toast.makeText(context, "데이터 저장 완료!", Toast.LENGTH_SHORT).show()
-                //홈화면으로 이동해야함
-                val intent = Intent(context,ResumeCompleteActivity::class.java)
-                intent.putExtra("setting1", viewModel.openSetting1)
-                intent.putExtra("setting2", viewModel.openSetting2)
-                Log.d("ResumeDFragment","${viewModel.openSetting1}%%%${viewModel.openSetting2}")
-                startActivity(intent)
+            lifecycleScope.launch {
+                val result = viewModel.setResumeData()
+                if(result != null){
+                    viewModel.addResumeContent(result,opensetting1,opensetting2)
+                    Toast.makeText(context, "데이터 저장 완료!", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(context,ResumeCompleteActivity::class.java)
+                    intent.putExtra("setting1", opensetting1)
+                    intent.putExtra("setting2", opensetting2)
+                    intent.putExtra("UID_KEY", uid)
+                    Log.d("ResumeDFragment","${opensetting1}%%%${opensetting2}")
+                    startActivity(intent)
+                }
+                else{
+                    Log.e("ResumeDFragment","받아온 데이터가 없습니다")
+                }
             }
-        }
+            }
     }
     // 스피너 어댑터 초기화 함수
     private fun initSpinner(spinner: Spinner, itemsArrayId: Int, hintText: String, viewModelLiveData: MutableLiveData<Boolean>) {

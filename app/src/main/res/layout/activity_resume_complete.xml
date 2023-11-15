@@ -489,7 +489,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:text="@{`#`+viewModel.resumeDetail.selfHastag.get(0) ?? `성실함`}"/>
+                    android:text="#성실함"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -501,7 +501,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:layout_marginLeft="12dp"
-                    android:text="@{`#`+viewModel.resumeDetail.selfHastag.get(1) ?? `착실함`}"/>
+                    android:text="#꾸준함"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -513,7 +513,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:layout_marginLeft="12dp"
-                    android:text="@{`#`+viewModel.resumeDetail.selfHastag.get(2) ?? `끈기`}"/>
+                    android:text="#끈기"/>
 
             </LinearLayout>
 

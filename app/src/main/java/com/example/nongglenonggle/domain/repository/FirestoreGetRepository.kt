@@ -13,7 +13,7 @@ interface FirestoreGetRepository {
     suspend fun getWorkerInfo() : WorkerHomeData?
     suspend fun getNotice(uid:String): Flow<NoticeContent?>
     suspend fun getFarmerHomeInfo() : FarmerHomeData?
-    suspend fun getResume(setting1:String, setting2:String) : Flow<ResumeContent?>
+    suspend fun getResume(setting1:String, setting2:String,uid:String) : Flow<ResumeContent?>
     suspend fun getBasedOnCategory(type:String,category:String):List<DocumentReference>
 
     suspend fun getBasedOnAddress(type:String,first:String,second:String):List<DocumentReference>

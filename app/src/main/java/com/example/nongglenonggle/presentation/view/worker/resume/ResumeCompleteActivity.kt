@@ -8,8 +8,11 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import com.example.nongglenonggle.R
+import com.example.nongglenonggle.databinding.ActivityResumeBindingImpl
 import com.example.nongglenonggle.databinding.ActivityResumeCompleteBinding
+import com.example.nongglenonggle.databinding.ActivityResumeCompleteBindingImpl
 import com.example.nongglenonggle.domain.entity.Model
+import com.example.nongglenonggle.domain.entity.ResumeSummary
 import com.example.nongglenonggle.presentation.base.BaseActivity
 import com.example.nongglenonggle.presentation.view.adapter.ResumeCareerAdapter
 import com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeCompleteViewModel
@@ -27,19 +30,29 @@ class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.lay
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         binding.view.visibility = View.VISIBLE
-        val allCareer = mutableListOf<Model.ResumeSummary>()
+        val allCareer = mutableListOf<ResumeSummary>()
 
         adapter = ResumeCareerAdapter(emptyList())
-        val recycler = binding.recyclerview
-        recycler.adapter = adapter
+        binding.recyclerview.adapter= adapter
 
         val value1 = intent.getStringExtra("setting1") ?: return
         val value2 = intent.getStringExtra("setting2") ?: return
-        viewModel.fetchResumeDetail(value1, value2)
+        val value3 = intent.getStringExtra("UID_KEY") ?: return
+        viewModel.fetchResumeDetail(value1, value2,value3)
+
+        viewModel.resumeDetail.observe(this, Observer {resumeContent->
+            try{
+                resumeContent.resumeData?.let{resumeData->
+                    adapter.updatelist(resumeData)
+                }
+            }catch (e:Exception){
+                Log.e("ResumeCompleteActivity","$e")
+            }
+        })
 
 
-        viewModel.resumeDetail.asLiveData().observe(this, Observer{data->
-            data?.resumeData?.let{resumeData->
+//        viewModel.resumeDetail.observe(this, Observer{data->
+//            data?.resumeData?.let{resumeData->
 //                allCareer.clear()
 //                allCareer.addAll(resumeData)
 //                if(::adapter.isInitialized){
@@ -47,20 +60,19 @@ class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.lay
 //                    Log.d("ResumeCompleteActivity", "update success $resumeData")
 //                }
 //                else{
-//                    adapter = ResumeCareerAdapter(allCareer)
-//                    recycler.adapter = adapter
+//                    adapter.updatelist(allCareer)
 //                }
-                if(resumeData.isNotEmpty()){
-                    allCareer.clear()
-                    allCareer.addAll(resumeData)
-                    adapter.updatelist(allCareer)
-                    Log.e("Resume", "$allCareer")
-                }
-                else{
-                    Log.e("Resume","erroereroejroe")
-                }
-            }
-        })
+//                if(resumeData.isNotEmpty()){
+//                    allCareer.clear()
+//                    allCareer.addAll(resumeData)
+//                    adapter.updatelist(allCareer)
+//                    Log.e("Resume", "$allCareer")
+//                }
+//                else{
+//                    Log.e("Resume","erroereroejroe")
+//                }
+//            }
+//        })
     }
 
 }

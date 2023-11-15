@@ -26,6 +26,7 @@ import com.example.nongglenonggle.presentation.view.adapter.FilterWorkerHomeAdap
 import com.example.nongglenonggle.presentation.view.farmer.notice.NoticeCompleteActivity
 import com.example.nongglenonggle.presentation.view.login.LoginActivity
 import com.example.nongglenonggle.presentation.view.worker.resume.ResumeActivity
+import com.example.nongglenonggle.presentation.view.worker.resume.ResumeCompleteActivity
 import com.example.nongglenonggle.presentation.viewModel.worker.WorkerHomeViewModel
 import com.google.api.Distribution.BucketOptions.Linear
 import com.google.firebase.auth.FirebaseAuth
@@ -63,6 +64,14 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
             }
 
         })
+        //----삭제될 코드--------------------
+//        binding.bell.setOnClickListener{
+//            val intent = Intent(context,ResumeCompleteActivity::class.java)
+//            intent.putExtra("setting1","public")
+//            intent.putExtra("setting2","publicResume")
+//            intent.putExtra("UID_KEY","FVdTauf34XeQPsRN1H0h99nEbgz1")
+//            startActivity(intent)
+//        }
 
         binding.recycler.adapter = adapter
 

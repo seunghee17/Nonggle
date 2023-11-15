@@ -1,8 +1,10 @@
 package com.example.nongglenonggle.presentation.viewModel.worker
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -21,8 +23,10 @@ import javax.inject.Inject
 class ResumeCompleteViewModel @Inject constructor(
     private val getResumeUseCase: GetResumeUseCase
 ): ViewModel(){
-    private val _resumeDetail = MutableStateFlow<ResumeContent?>(null)
-    val resumeDetail:StateFlow<ResumeContent?> get() =  _resumeDetail
+//    private val _resumeDetail = MutableStateFlow<ResumeContent?>(null)
+//    val resumeDetail:StateFlow<ResumeContent?> get() =  _resumeDetail
+    private val _resumeDetail = MutableLiveData<ResumeContent>()
+    val resumeDetail:LiveData<ResumeContent> = _resumeDetail
 
     //val resumeLiveData: LiveData<ResumeContent?> = _resumeDetail.asLiveData()
 
@@ -31,25 +35,40 @@ class ResumeCompleteViewModel @Inject constructor(
     var items:String=""
 
 
-     fun fetchResumeDetail(setting1:String, setting2:String){
+//     fun fetchResumeDetail(setting1:String, setting2:String){
+//        viewModelScope.launch {
+//            getResumeUseCase.invoke(setting1,setting2).collect{data->
+//               if(data != null){
+//                   _resumeDetail.value = data
+//               }
+////                if(data?.careerList != null && resumeLiveData?.value?.careerList != null){
+////                    certification = resumeLiveData?.value?.careerList?.joinToString(",") ?: "자격증 없음"
+////                }
+////                resumeLiveData?.value?.locationSelect?.let{locationList->
+////                    locations = locationList.chunked(2).joinToString( ", " ) { it.joinToString(" ") }
+////                }
+////                resumeLiveData?.value?.desiredItem?.let{desiredItem->
+////                    locations = desiredItem.chunked(2).joinToString( ", " ) { it.joinToString(" ") }
+////                }
+//            }
+//        }
+//
+//
+//    }
+    fun fetchResumeDetail(setting1:String, setting2:String,uid:String) {
         viewModelScope.launch {
-            getResumeUseCase.invoke(setting1,setting2).collect{data->
-               if(data != null){
-                   _resumeDetail.value = data
-               }
-//                if(data?.careerList != null && resumeLiveData?.value?.careerList != null){
-//                    certification = resumeLiveData?.value?.careerList?.joinToString(",") ?: "자격증 없음"
-//                }
-//                resumeLiveData?.value?.locationSelect?.let{locationList->
-//                    locations = locationList.chunked(2).joinToString( ", " ) { it.joinToString(" ") }
-//                }
-//                resumeLiveData?.value?.desiredItem?.let{desiredItem->
-//                    locations = desiredItem.chunked(2).joinToString( ", " ) { it.joinToString(" ") }
-//                }
+            try {
+                getResumeUseCase.invoke(setting1,setting2,uid).collect { data ->
+                    if (data != null) {
+                        _resumeDetail.value = data
+                    } else {
+                        Log.e("ResumeCompleteViewModel", "Data is null")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("ResumeCompleteViewModel", "Error fetching data", e)
             }
         }
-
-
     }
 
 }

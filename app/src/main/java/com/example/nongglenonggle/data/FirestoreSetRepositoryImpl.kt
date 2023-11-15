@@ -115,29 +115,13 @@ class FirestoreSetRepositoryImpl @Inject constructor(
         return@withContext Unit
     }
 
-    //override suspend fun addNoticeRefToUser(docRef: DocumentReference) = withContext(Dispatchers.IO){
-    //        try{
-    //            val currentUid = firebaseAuth.currentUser?.uid
-    //            if(currentUid == null){
-    //                Log.e("error","user is not valid")
-    //            }
-    //            else{
-    //                val userdoc = firestore.collection("Farmer").document(currentUid)
-    //                val update = hashMapOf("refs" to FieldValue.arrayUnion(docRef))
-    //                userdoc.set(update, SetOptions.merge()).await()
-    //            }
-    //        }catch (e:Exception){
-    //            Log.e("error","user is not valid")
-    //        }
-    //        return@withContext Unit
-    //    }
 
     //구직자 개인 테이블 저장용
     override suspend fun addResumeRefToUser(docRef: DocumentReference) = withContext(Dispatchers.IO){
         try{
             val currentUid = firebaseAuth.currentUser?.uid
             if(currentUid == null){
-                Log.e("error","user is not valid")
+                Log.e("addResumeRefToUser","user is not valid")
             }
             else{
                 val userdoc = firestore.collection("Worker").document(currentUid)
@@ -145,7 +129,7 @@ class FirestoreSetRepositoryImpl @Inject constructor(
                 userdoc.set(update, SetOptions.merge()).await()
             }
         }catch (e:Exception){
-            Log.e("error","user is not valid")
+            Log.e("addResumeRefToUser","user is not valid")
         }
         return@withContext Unit
     }

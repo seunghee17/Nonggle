@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.domain.entity.Model
+import com.example.nongglenonggle.domain.entity.ResumeSummary
 
-class ResumeAdapter(private var items: List<Model.ResumeSummary>): RecyclerView.Adapter<ResumeAdapter.ViewHolder>() {
+class ResumeAdapter(private var items: List<ResumeSummary>): RecyclerView.Adapter<ResumeAdapter.ViewHolder>() {
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val title:TextView = itemView.findViewById(R.id.title)
         val date: TextView = itemView.findViewById(R.id.date)
@@ -34,7 +35,7 @@ class ResumeAdapter(private var items: List<Model.ResumeSummary>): RecyclerView.
     override fun getItemCount(): Int {
         return items.size
     }
-    fun updateList(newData:List<Model.ResumeSummary>){
+    fun updateList(newData:List<ResumeSummary>){
         this.items = newData
         notifyDataSetChanged()
     }

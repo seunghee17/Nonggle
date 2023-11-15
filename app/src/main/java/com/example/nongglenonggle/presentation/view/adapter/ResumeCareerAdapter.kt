@@ -7,8 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.domain.entity.Model
+import com.example.nongglenonggle.domain.entity.ResumeSummary
 
-class ResumeCareerAdapter(private var items: List<Model.ResumeSummary>): RecyclerView.Adapter<ResumeCareerAdapter.ViewHolder>() {
+class ResumeCareerAdapter(private var items: List<ResumeSummary>): RecyclerView.Adapter<ResumeCareerAdapter.ViewHolder>() {
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val date : TextView = itemView.findViewById(R.id.dateperiod)
         val workTitle:TextView = itemView.findViewById(R.id.work_title)
@@ -35,7 +36,7 @@ class ResumeCareerAdapter(private var items: List<Model.ResumeSummary>): Recycle
             holder.workTerm.text = list.total
         }
     }
-    fun updatelist(newData:List<Model.ResumeSummary>){
+    fun updatelist(newData:List<ResumeSummary>){
         items = newData.toMutableList()
         notifyDataSetChanged()
     }

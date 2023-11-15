@@ -54,14 +54,14 @@ class FirestoreGetRepositoryImpl @Inject constructor(
     }
 
     //자신의 이력서 불러오기
-    override suspend fun getResume(setting1:String, setting2:String):Flow<ResumeContent?>{
+    override suspend fun getResume(setting1:String, setting2:String,uid:String):Flow<ResumeContent?>{
         return flow{
-            val currentUserUid = firebaseAuth.currentUser?.uid
-            if(currentUserUid==null || setting1.isBlank() || setting2.isBlank()){
-                throw IllegalStateException("Invalid settings or user not logged in")
-                Log.e("getResume", "invlid user")
-            }
-            val docSnapshot = firestore.collection("Resume").document(setting1).collection(setting2).document(currentUserUid!!).get().await()
+            //val currentUserUid = firebaseAuth.currentUser?.uid
+//            if(currentUserUid==null || setting1.isBlank() || setting2.isBlank()){
+//                throw IllegalStateException("Invalid settings or user not logged in")
+//                Log.e("getResume", "invlid user")
+//            }
+            val docSnapshot = firestore.collection("Resume").document(setting1).collection(setting2).document(uid).get().await()
             emit(docSnapshot.toObject(ResumeContent::class.java))
         }.catch {
             e->

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nongglenonggle.domain.entity.Model
 import com.example.nongglenonggle.domain.entity.ResumeContent
+import com.example.nongglenonggle.domain.entity.ResumeSummary
 import com.example.nongglenonggle.domain.usecase.AddByAgeUseCase
 import com.example.nongglenonggle.domain.usecase.AddCategoryUseCase
 import com.example.nongglenonggle.domain.usecase.AddGenderUseCase
@@ -37,7 +38,7 @@ class ResumeViewModel @Inject constructor(
     private val _profileImage = MutableLiveData<String>()
     val profileImage:LiveData<String> = _profileImage
 
-    val resumeData : MutableLiveData<MutableList<Model.ResumeSummary>> = MutableLiveData(mutableListOf())
+    val resumeData : MutableLiveData<MutableList<ResumeSummary>> = MutableLiveData(mutableListOf())
     var allcareer : String=""
     var additional_present:String=""
     var openSetting1:String=""
@@ -219,7 +220,7 @@ class ResumeViewModel @Inject constructor(
             periodOfWorking = "${selectMonthYear.value!!.get(0)}.${selectMonthYear.value!!.get(1)}"
         }
         val current = resumeData.value ?: mutableListOf()
-        current.add(Model.ResumeSummary(title = careerTitle , date = periodOfWorking, total = totalPeriod, description = careerDetail))
+        current.add(ResumeSummary(title = careerTitle , date = periodOfWorking, total = totalPeriod, description = careerDetail))
         resumeData.value = current
     }
 
@@ -402,11 +403,13 @@ class ResumeViewModel @Inject constructor(
     }
 
     //전체 저장용
-    fun addResumeContent(resumeContent: ResumeContent){
+    suspend fun addResumeContent(resumeContent: ResumeContent,opensetting1:String, opensetting2:String){
         viewModelScope.launch {
             try{
-                addResumeUseCase.invoke(resumeContent,openSetting1,openSetting2)
-                val docRef = addResumeUseCase.invoke(resumeContent,openSetting1,openSetting2)
+                addResumeUseCase.invoke(resumeContent,opensetting1,opensetting2)
+                Log.d("ResumeViewModel", "sdf")
+                val docRef = addResumeUseCase.invoke(resumeContent,opensetting1,opensetting2)
+                Log.d("ResumeViewModel", "sdfd")
                 addResumeRefToUser(docRef)
                 if(locationSelect.value?.size == 2){
                     addRefToAddress(docRef,"ResumeFilter",firstElement!!,secondElement!!)
