@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentFarmerHomeBinding
 import com.example.nongglenonggle.domain.entity.OffererHomeFilterContent
@@ -62,7 +63,8 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
             if(data?.refs == null){
                 //공고글 없을때
                 viewModel.fetchNoticeGone()
-                //viewModel.loadNotice()
+                binding.info.text = "공고글 작성하기"
+                binding.num.visibility = View.GONE
             }
             else{
                 //공고글 있을떼
@@ -73,6 +75,8 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
                     viewModel._noticeData.value = data
                 }
                 Log.d("resumenum","${viewModel.resumeNum}")
+                binding.info.text = "지원자 수"
+                binding.num.visibility = View.VISIBLE
             }
         }
 

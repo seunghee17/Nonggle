@@ -40,7 +40,8 @@
             android:exported="false" />
         <activity
             android:name=".presentation.view.worker.home.WorkerMainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".presentation.view.farmer.notice.NoticeActivity"
             android:exported="false"

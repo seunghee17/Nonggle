@@ -23,6 +23,16 @@ class WorkerMainActivity :AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         val navController = navHostFragment.navController
 
+        navController.addOnDestinationChangedListener{_,destination,_->
+            if(destination.id == R.id.workerHomeFragment || destination.id == R.id.workerMypageFragment || destination.id == R.id.workerSearchFragment){
+                bottomNavi.visibility = View.VISIBLE
+            }
+            else{
+                bottomNavi.visibility = View.GONE
+            }
+        }
+
         bottomNavi.setupWithNavController(navController)
     }
+
 }

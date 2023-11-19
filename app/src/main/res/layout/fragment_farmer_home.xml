@@ -51,7 +51,7 @@
                 android:text="@string/농글"
                 android:fontFamily="@font/soyo_maple_bold"
                 android:textColor="@color/m1"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:paddingLeft="20dp"
                 />
             <View
@@ -62,6 +62,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/bell"
+                app:tint="@color/black"
                 android:layout_gravity="right"
                 android:layout_marginRight="20dp"
                 />
@@ -154,6 +155,7 @@
             android:backgroundTint="@color/m1"
             android:clickable="true">
             <TextView
+                android:id="@+id/info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/지원자_수"
@@ -167,6 +169,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
             <TextView
+                android:id="@+id/num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0명"
@@ -175,6 +178,7 @@
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/spoqahansansneo_medium"
                 android:textSize="16sp"
+                android:visibility="visible"
                 android:layout_marginRight="4dp"/>
             <ImageView
                 android:layout_width="20dp"

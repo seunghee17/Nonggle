@@ -31,7 +31,7 @@
         app:itemRippleColor="@null"
         app:itemActiveIndicatorStyle="@null"
         app:itemBackground="@color/white"
-        app:itemIconTint="@color/m1"
+        app:itemIconTint="@drawable/selector_apptint"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

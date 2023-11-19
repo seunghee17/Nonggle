@@ -33,8 +33,7 @@ class AlarmFragment : BaseFragment<FragmentAlarmBinding>(R.layout.fragment_alarm
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = AlarmAdapter(emptyList(), object : AlarmAdapter.onItemClickListener{
-            override fun onItemClickListener(item:AlarmDataModel) {
-                //다이얼로그 띄우기
+            override fun onItemClick(item: AlarmDataModel) {
                 showDialog()
             }
         })

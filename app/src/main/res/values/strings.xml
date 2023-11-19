@@ -244,6 +244,22 @@
     <string name="구인자가_보낸_채용제안">구인자가 보낸 채용제안을\n수락하시겠습니까?</string>
 
     <string name="취소">취소</string>
+    <string name="일손평가하기">일손평가하기</string>
+    <string name="구인자님_어떠셨나요">구인자님,\n%1$s 일손은 어떠셨나요?</string>
+
+    <string name="지각_결근을_하지않고_성실하게_나왔나요">지각,결근을 하지않고 성실하게 나왔나요?</string>
+    <string name="본인이_맡은_일을_잘_처리하나요">본인이 맡은 일을 잘 처리하나요?</string>
+    <string name="알려준_일을_빨리_배우나요">알려준 일을 빨리 배우나요?</string>
+    <string name="일을_회피하지않고">일을 회피하지 않고 본인이 맡은 일을 책임감을 다해 하나요?</string>
+    <string name="추가로_할말이">추가로 할 말이 있다면 적어주세요.</string>
+    <string name="평가하기">평가하기</string>
+
+    <string name="이력서_관리">이력서 관리</string>
+    <string name="지원한_공고">지원한 공고</string>
+    <string name="스크랩_공고">스크랩 공고</string>
+    <string name="농가_평가">농가평가</string>
+
+    <string name="내_정보관리">내 정보관리</string>
 
 
 </resources>

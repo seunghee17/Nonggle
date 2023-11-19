@@ -3,8 +3,10 @@ package com.example.nongglenonggle.presentation.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.domain.entity.NoticeContent
 import com.example.nongglenonggle.domain.entity.WorkerFilterListData
@@ -23,6 +25,7 @@ class WorkerSearchAdapter(
         val deadline : TextView = itemView.findViewById(R.id.deadline)
         val workType:TextView = itemView.findViewById(R.id.workType)
         val payType:TextView = itemView.findViewById(R.id.payType)
+        val imageView: ImageView = itemView.findViewById(R.id.image)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -52,6 +55,10 @@ class WorkerSearchAdapter(
             holder.itemView.setOnClickListener {
                 listener.onItemClick(item.uid)
             }
+            Glide.with(holder.imageView.context)
+                .load(item.imageurl)
+                .into(holder.imageView)
+
         }
     }
     fun updateList(newData:List<WorkerSearchRecommend>){

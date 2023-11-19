@@ -99,7 +99,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="32dp"
                     android:layout_marginBottom="20dp"
-                    android:src="@drawable/kakaobtn" />
+                    android:src="@drawable/img_offer_circle" />
 
             </LinearLayout>
         </FrameLayout>
@@ -153,7 +153,7 @@
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:src="@drawable/kakaobtn"
+                    android:src="@drawable/job_seeker_png"
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="32dp"

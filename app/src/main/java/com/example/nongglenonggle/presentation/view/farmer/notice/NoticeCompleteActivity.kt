@@ -24,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import androidx.lifecycle.asLiveData
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -57,9 +58,10 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
 
         binding.close.setOnClickListener{
             if(viewModel.isDataReady.value == true){
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+//                val intent = Intent(this, MainActivity::class.java)
+//                startActivity(intent)
             }
+            onBackPressed()
         }
         //현재회원이 어떤 유형의 회원인지 알 방법이 필요하다
         binding.topBtn.setImageResource(R.drawable.pencil)
@@ -71,6 +73,7 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
             setQualification()
             setWorkPeriod()
             setWorkTime()
+            setImage()
         })
 
         binding.includeUserScore.applyBtn.setOnClickListener{
@@ -88,6 +91,15 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
         else if(viewModel.noticeDetail.value?.recruitPeriod?.get("type") == "마감기한 설정"){
             binding.recruitDeadline.text = viewModel.noticeDetail?.value?.recruitPeriod?.get("detail").toString()
             binding.recruitType.text = viewModel.noticeDetail?.value?.recruitPeriod?.get("detail").toString()
+        }
+    }
+
+    private fun setImage(){
+        val url = viewModel.noticeDetail.value?.imageUrl
+        if(url != null){
+            Glide.with(this)
+                .load(url)
+                .into(binding.img)
         }
     }
 

@@ -79,8 +79,8 @@ class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.lay
             StoreToFarmerDB(value,firebaseAuth.currentUser!!.uid)
             val date = getCureentDate()
             storeToWorkerDB(value,firebaseAuth.currentUser!!.uid,date)
-            Toast.makeText(this,"채용제안 완료되었습니다!", Toast.LENGTH_SHORT).show()
-            binding.userScoreForfarmer.applyBtn.text = "채용제안 완료"
+            Toast.makeText(this,"일손에게 채용제안 알림을 전송했습니다.", Toast.LENGTH_SHORT).show()
+            binding.userScoreForfarmer.applyBtn.text = "채용제안 완료!"
             binding.userScoreForfarmer.applyBtn.setBackgroundResource(R.color.m3)
         }
 

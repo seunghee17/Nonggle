@@ -3,8 +3,10 @@ package com.example.nongglenonggle.presentation.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.domain.entity.OffererHomeFilterContent
 
@@ -21,6 +23,7 @@ class FilterFarmerHomeAdapter(private var items: List<OffererHomeFilterContent>,
         val userGender:TextView = itemView.findViewById(R.id.gender)
         val userYear:TextView = itemView.findViewById(R.id.year)
         val allCareer : TextView = itemView.findViewById(R.id.careertotal)
+        val profileImg:ImageView = itemView.findViewById(R.id.profile_img)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,6 +45,9 @@ class FilterFarmerHomeAdapter(private var items: List<OffererHomeFilterContent>,
             holder.itemView.setOnClickListener{
                 listener.onItemClickListener(item.uid)
             }
+            Glide.with(holder.profileImg.context)
+                .load(item.imageurl)
+                .into(holder.profileImg)
         }
 
     }

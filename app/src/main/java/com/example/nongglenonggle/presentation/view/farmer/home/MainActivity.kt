@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer,FarmerhomeFragment())
             .commit()
 
-        bottomNavi.setOnNavigationItemSelectedListener { item->
+        bottomNavi.setOnItemSelectedListener { item->
             var selectedFragment: Fragment?=null
             when(item.itemId){
                 R.id.home_farmer -> {
@@ -51,4 +51,10 @@ class MainActivity : AppCompatActivity() {
         val bottomNavi = findViewById<BottomNavigationView>(R.id.bottom_navi)
         bottomNavi.visibility = View.GONE
     }
+
+    fun showBottomNavigation() {
+        val bottomNavi = findViewById<BottomNavigationView>(R.id.bottom_navi)
+        bottomNavi.visibility = View.VISIBLE
+    }
+
 }

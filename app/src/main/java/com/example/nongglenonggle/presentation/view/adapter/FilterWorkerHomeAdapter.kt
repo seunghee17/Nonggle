@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.domain.entity.OffererHomeFilterContent
 import com.example.nongglenonggle.domain.entity.SeekerHomeFilterContent
@@ -25,6 +27,7 @@ class FilterWorkerHomeAdapter(
         val deadline:TextView = itemView.findViewById(R.id.deadline)
         val workType : TextView = itemView.findViewById(R.id.type)
         val payment:TextView = itemView.findViewById(R.id.payment)
+        val image: ImageView = itemView.findViewById(R.id.image)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -54,6 +57,10 @@ class FilterWorkerHomeAdapter(
             holder.itemView.setOnClickListener {
                 listener.onItemClick(item.uid)
             }
+            Glide.with(holder.image.context)
+                .load(item.imageurl)
+                .into(holder.image)
+
         }
     }
     fun updateList(newData:List<SeekerHomeFilterContent>){

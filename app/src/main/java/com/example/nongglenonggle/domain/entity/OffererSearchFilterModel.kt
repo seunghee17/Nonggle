@@ -6,5 +6,6 @@ data class OffererSearchFilterModel(
     val userName:String="",
     val userPresent:String="",
     val allCareer:String="",
+    val imageurl:String="",
     val uid :String=""
 )

@@ -54,17 +54,13 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
         //storage초기화
         fbStorage = FirebaseStorage.getInstance()
         binding.workImageA.setOnClickListener{
-            Log.e("why", "what is wrong")
-            if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                Log.e("why", "what is fuck")
+            if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED){
                 //open album
                 val photoPickerIntent = Intent(Intent.ACTION_PICK)
                 photoPickerIntent.type = "image/*"
                 startActivityForResult(photoPickerIntent, pickImageFromAlbum)
             }
             else{
-                //권한 요청
-                Log.e("why", "what is sdf")
                 requestStoragePermission()
             }
         }

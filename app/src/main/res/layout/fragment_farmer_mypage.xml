@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.presentation.viewModel.farmer.FarmerSearchViewModel" />
+            type="com.example.nongglenonggle.presentation.viewModel.farmer.FarmerMyPageViewModel" />
     </data>
 
 <LinearLayout
@@ -185,7 +185,9 @@
                 android:textColor="@color/g1"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/score"
             android:layout_width="0dp"
+            android:clickable="true"
             android:layout_height="wrap_content"
             android:paddingLeft="24dp"
             android:orientation="vertical"
@@ -208,12 +210,19 @@
 
 
 
+
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/g5"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
         android:paddingLeft="20dp"
         android:paddingBottom="18dp"
         android:clickable="true"

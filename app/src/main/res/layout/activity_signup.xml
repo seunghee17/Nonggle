@@ -32,7 +32,8 @@
             android:layout_height="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/caretleft"
+            android:src="@drawable/arrow_left"
+            app:tint="@color/black"
            />
     </LinearLayout>
 

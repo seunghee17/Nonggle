@@ -20,7 +20,7 @@ class AlarmAdapter(
 ) : RecyclerView.Adapter<AlarmAdapter.ViewHolder>() {
 
     interface onItemClickListener{
-        fun onItemClickListener(item:AlarmDataModel)
+        fun onItemClick(item:AlarmDataModel)
     }
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val info: TextView = itemView.findViewById(R.id.info)
@@ -44,7 +44,7 @@ class AlarmAdapter(
 
             holder.itemView.setOnClickListener{
                 //채용제안 수락 완료 처리
-                listener.onItemClickListener(item)
+                listener.onItemClick(item)
             }
         }
     }
