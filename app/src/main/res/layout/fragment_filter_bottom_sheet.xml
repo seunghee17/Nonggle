@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="bottomSheetVM"
+            type="com.example.nongglenonggle.presentation.viewModel.worker.WorkerSearchViewModel" />
+    </data>
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".presentation.view.dialog.FilterBottomSheetFragment"
+        android:orientation="vertical"
+        android:background="@drawable/bg_career_add">
+
+
+    <TextView
+        android:id="@+id/one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/b1_main"
+        android:text="체류형"
+        android:clickable="true"
+        android:textColor="@color/black"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="20dp"/>
+        <TextView
+            android:id="@+id/two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/b1_main"
+            android:text="출퇴근형"
+            android:clickable="true"
+            android:textColor="@color/black"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="20dp"/>
+
+</LinearLayout>
+</layout>

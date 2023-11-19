@@ -6,12 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentWorkerMypageBinding
 import com.example.nongglenonggle.presentation.base.BaseFragment
 import com.example.nongglenonggle.presentation.view.worker.resume.ResumeCompleteActivity
+import com.example.nongglenonggle.presentation.viewModel.worker.WorkerSearchViewModel
 
 class WorkerMypageFragment : BaseFragment<FragmentWorkerMypageBinding>(R.layout.fragment_worker_mypage) {
+    private val viewModel : WorkerSearchViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +31,7 @@ class WorkerMypageFragment : BaseFragment<FragmentWorkerMypageBinding>(R.layout.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.txt.setOnClickListener{
-            val intent = Intent(context, ResumeCompleteActivity::class.java)
-            intent.putExtra("setting1", "public")
-            intent.putExtra("setting2", "publicresume")
-            startActivity(intent)
-        }
+        binding.viewModel = viewModel
     }
 
 }

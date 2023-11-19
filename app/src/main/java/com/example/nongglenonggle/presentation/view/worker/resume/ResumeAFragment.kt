@@ -33,12 +33,15 @@ import com.example.nongglenonggle.presentation.view.dialog.DatepickerFragment
 @AndroidEntryPoint
 class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_resume_a) {
     private val viewModel:ResumeViewModel by activityViewModels()
-    var pickImageFromAlbum = 0
+    var pickImageFromAlbum = 1
     var fbStorage : FirebaseStorage? = null
     var uriPhoto : Uri? = null
     private val REQUEST_CODE_PERMISSION = 100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //사진 업로드
+        //storage초기화
+        fbStorage = FirebaseStorage.getInstance()
     }
 
     override fun onCreateView(
@@ -46,15 +49,10 @@ class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_r
         savedInstanceState: Bundle?
     ): View? {
         val view= super.onCreateView(inflater, container, savedInstanceState)
-        //사진 업로드
-        //storage초기화
-        fbStorage = FirebaseStorage.getInstance()
+
         binding.profileUpload.setOnClickListener{
             if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                //open album
-                val photoPickerIntent = Intent(Intent.ACTION_PICK)
-                photoPickerIntent.type = "image/*"
-                startActivityForResult(photoPickerIntent, pickImageFromAlbum)
+                openGallery()
             }
             else{
                 //권한 요청
@@ -62,6 +60,12 @@ class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_r
             }
         }
         return view
+    }
+    private fun openGallery(){
+        //open album
+        val photoPickerIntent = Intent(Intent.ACTION_PICK)
+        photoPickerIntent.type = "image/*"
+        startActivityForResult(photoPickerIntent, pickImageFromAlbum)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -219,11 +223,27 @@ class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_r
 
     //권한이 없을때 해당함수 호출
     private fun requestStoragePermission(){
-        ActivityCompat.requestPermissions(
-            requireActivity(),
+        requestPermissions(
             arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
             REQUEST_CODE_PERMISSION
         )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == REQUEST_CODE_PERMISSION){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                openGallery()
+            }else{
+                //권한 거부처리
+                Log.d("image","권한 거부처리")
+                openGallery()
+            }
+        }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -239,6 +259,7 @@ class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_r
             }
             else{
                 //예외처리
+                Log.d("image","예외")
             }
         }
     }

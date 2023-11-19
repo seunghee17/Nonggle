@@ -17,6 +17,7 @@ import com.example.nongglenonggle.domain.usecase.AddResumeUseCase
 import com.example.nongglenonggle.domain.usecase.AddTypeUseCase
 import com.example.nongglenonggle.domain.usecase.UploadImageUsecase
 import com.example.nongglenonggle.domain.usecase.FetchFirestoreDataUseCase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -35,6 +36,7 @@ class ResumeViewModel @Inject constructor(
     private val addGenderUseCase: AddGenderUseCase,
     private val addTypeUseCase: AddTypeUseCase
     ): ViewModel() {
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val _profileImage = MutableLiveData<String>()
     val profileImage:LiveData<String> = _profileImage
 
@@ -397,7 +399,8 @@ class ResumeViewModel @Inject constructor(
             dayDetailData = dayDetailData,
             desiredItem = clickedTexts,
             selfHastag = characterList.value ?: mutableListOf(),
-            selfInfo = additional_present
+            selfInfo = additional_present,
+            uid= firebaseAuth.currentUser?.uid!!
         )
         return allResumeContent
     }

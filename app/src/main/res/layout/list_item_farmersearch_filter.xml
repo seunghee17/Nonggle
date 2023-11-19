@@ -25,6 +25,7 @@
                 android:src="@drawable/example"/>
 
             <TextView
+                android:id="@+id/userInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="여 ∙ 65세"
@@ -38,6 +39,7 @@
             android:orientation="vertical"
             android:layout_marginLeft="16dp">
             <TextView
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="정지원 일손"
@@ -45,6 +47,7 @@
                 android:textColor="@color/black"
                 android:textSize="14sp"/>
             <TextView
+                android:id="@+id/describe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -69,6 +72,7 @@
                     android:textSize="12sp"
                     android:textColor="@color/g1"/>
                 <TextView
+                    android:id="@+id/allcareer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_radius4_nostroke"

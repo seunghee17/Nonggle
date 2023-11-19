@@ -11,6 +11,8 @@ import com.example.nongglenonggle.domain.entity.FarmerHomeData
 import com.example.nongglenonggle.domain.entity.NoticeContent
 import com.example.nongglenonggle.domain.entity.OffererHomeFilterContent
 import com.example.nongglenonggle.domain.usecase.FetchFarmerDataUseCase
+import com.example.nongglenonggle.domain.usecase.GetAllNoticeSubUseCase
+import com.example.nongglenonggle.domain.usecase.GetAllResumeUseCase
 import com.example.nongglenonggle.domain.usecase.GetBasedOnAddressUseCase
 import com.example.nongglenonggle.domain.usecase.GetBasedOnCategoryUseCase
 import com.example.nongglenonggle.domain.usecase.GetNoticeUseCase
@@ -29,7 +31,8 @@ class FarmerHomeViewModel @Inject constructor(
     private val fetchFarmerDataUseCase: FetchFarmerDataUseCase,
     private val getBasedOnCategoryUseCase: GetBasedOnCategoryUseCase,
     private val getBasedOnAddressUseCase: GetBasedOnAddressUseCase,
-    private val getNoticeUseCase: GetNoticeUseCase
+    private val getNoticeUseCase: GetNoticeUseCase,
+    private val getAllResumeUseCase: GetAllResumeUseCase
 )
     : ViewModel(){
     private val firebaseAuth = FirebaseAuth.getInstance()
@@ -61,11 +64,10 @@ class FarmerHomeViewModel @Inject constructor(
             val user = fetchFarmerDataUseCase.invoke()
             _userDetail.value = user
 
-
             Log.d("fetchUserInfo","${userDetail.value?.refs}")
-            //setUserCategoryList()
-            //setRefDataCategory()
-            //setRefDataAddress(userDetail.value?.first!! ,userDetail.value?.second!! )
+            setUserCategoryList()
+            setRefDataCategory()
+            setRefDataAddress(userDetail.value?.first!! ,userDetail.value?.second!! )
         }
     }
     private val _isNotice = MutableLiveData<Boolean>()

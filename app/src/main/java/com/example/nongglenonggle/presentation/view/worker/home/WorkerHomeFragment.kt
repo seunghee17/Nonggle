@@ -17,7 +17,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentWorkerHomeBinding
 import com.example.nongglenonggle.domain.entity.SeekerHomeFilterContent
@@ -40,7 +42,7 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.fetchUserInfo()
-        viewModel.fetchResumeVisible()
+        //viewModel.fetchResumeVisible()
     }
 
     override fun onCreateView(
@@ -54,6 +56,7 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
+
         adapter = FilterWorkerHomeAdapter(emptyList(), object :
             FilterWorkerHomeAdapter.onItemClickListener {
             override fun onItemClick(uid:String) {
@@ -64,23 +67,38 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
             }
 
         })
-        //----삭제될 코드--------------------
-//        binding.bell.setOnClickListener{
-//            val intent = Intent(context,ResumeCompleteActivity::class.java)
-//            intent.putExtra("setting1","public")
-//            intent.putExtra("setting2","publicResume")
-//            intent.putExtra("UID_KEY","FVdTauf34XeQPsRN1H0h99nEbgz1")
-//            startActivity(intent)
-//        }
+
 
         binding.recycler.adapter = adapter
 
-        if(viewModel.isResume.value == true){
-            binding.yesResume.visibility = View.VISIBLE
+        binding.bell.setOnClickListener{
+            findNavController().navigate(R.id.alarmFragment)
         }
-        else if(viewModel.isResume.value == false){
-            binding.nonResume.visibility = View.VISIBLE
-        }
+
+        viewModel.userDetail.observe(viewLifecycleOwner, Observer{userDetail ->
+            if(userDetail?.refs?.isNotEmpty() == true){
+                //공고글 있을때
+                viewModel.viewModelScope.launch {
+                    viewModel._isResume.value = true
+                    val data = viewModel.setUserFromRef(userDetail?.refs!!.get(0))
+                    viewModel._homeResume.value = data
+                }
+            }
+            else{
+                viewModel._isResume.value = false
+            }
+
+        })
+
+        viewModel.homeResume.observe(viewLifecycleOwner, Observer{homeResume->
+            binding.yesResume.title.text = homeResume.userPresent
+            binding.yesResume.wantLocation.text = "희망지역  ${homeResume.locationSelect.get(0)} ${homeResume.locationSelect.get(1)}"
+            setTextColor1(binding.yesResume.wantLocation,binding.yesResume.wantLocation.text.toString(),"${homeResume.locationSelect.get(0)} ${homeResume.locationSelect.get(1)}")
+            binding.yesResume.wantCategory.text = "희망품목 ${homeResume.desiredItem?.get(0)},${homeResume.desiredItem?.get(1)},${homeResume.desiredItem?.get(2)}"
+            setTextColor1(binding.yesResume.wantCategory,binding.yesResume.wantCategory.text.toString(),"${homeResume.desiredItem?.get(0)},${homeResume.desiredItem?.get(1)},${homeResume.desiredItem?.get(2)}")
+        })
+
+
         setTextColor(binding.tipbox,binding.tipbox.text.toString(), "Tip!")
 
         val writeBtn: LinearLayout = binding.root.findViewById(R.id.write_resume_btn)
@@ -115,6 +133,18 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
     }
     private fun setTextColor(textView: TextView, fullText:String, wordsToColor:String){
         val color = ContextCompat.getColor(textView.context, R.color.s1)
+        val spannableStringBuilder = SpannableStringBuilder(fullText)
+        var startIndex = fullText.indexOf(wordsToColor)
+        while(startIndex != -1){
+            val endIndex = startIndex + wordsToColor.length
+            spannableStringBuilder.setSpan(ForegroundColorSpan(color), startIndex,endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            startIndex = fullText.indexOf(wordsToColor, startIndex+1)
+        }
+        textView.text = spannableStringBuilder
+    }
+
+    private fun setTextColor1(textView: TextView, fullText:String, wordsToColor:String){
+        val color = ContextCompat.getColor(textView.context, R.color.m1)
         val spannableStringBuilder = SpannableStringBuilder(fullText)
         var startIndex = fullText.indexOf(wordsToColor)
         while(startIndex != -1){

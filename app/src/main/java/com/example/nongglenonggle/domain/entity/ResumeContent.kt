@@ -23,5 +23,6 @@ data class ResumeContent(
     //희망품목
     val desiredItem : List<String> = listOf(),
     val selfHastag:List<String> = listOf(),
-    val selfInfo:String = ""
+    val selfInfo:String = "",
+    val uid:String=""
 )

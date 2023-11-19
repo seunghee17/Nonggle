@@ -4,7 +4,8 @@
     android:layout_width="170dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/bg_farmer_home_tipbox"
+    android:background="@drawable/bg_shadow_box"
+    android:elevation="4dp"
     android:backgroundTint="@color/white"
     android:layout_marginRight="12dp">
 

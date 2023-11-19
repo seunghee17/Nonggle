@@ -1,16 +1,21 @@
 package com.example.nongglenonggle.presentation.viewModel.worker
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.nongglenonggle.domain.entity.NoticeContent
+import com.example.nongglenonggle.domain.entity.ResumeContent
 import com.example.nongglenonggle.domain.entity.SeekerHomeFilterContent
 import com.example.nongglenonggle.domain.entity.WorkerHomeData
 import com.example.nongglenonggle.domain.usecase.FetchWorkerDataUseCase
 import com.example.nongglenonggle.domain.usecase.GetAllNoticeUseCase
+import com.google.firebase.firestore.DocumentReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,6 +29,9 @@ class WorkerHomeViewModel @Inject constructor(
 
     private val _allNotice = MutableLiveData<List<SeekerHomeFilterContent>>()
     val allNotice:LiveData<List<SeekerHomeFilterContent>> = _allNotice
+
+    val _homeResume = MutableLiveData<ResumeContent>()
+    val homeResume:LiveData<ResumeContent> = _homeResume
 
     fun fetchUserInfo(){
         viewModelScope.launch {
@@ -39,7 +47,7 @@ class WorkerHomeViewModel @Inject constructor(
         }
     }
 
-    private val _isResume = MutableLiveData<Boolean>()
+    val _isResume = MutableLiveData<Boolean>()
     val isResume:LiveData<Boolean> = _isResume
 
     private val _haveData = MutableLiveData<Boolean>()
@@ -57,9 +65,19 @@ class WorkerHomeViewModel @Inject constructor(
     fun fetchResumeVisible(){
         if(_userDetail.value?.refs != null){
             _isResume.value = true
+            Log.d("fetchResumeVisible", "true")
         }
         else{
             _isResume.value = false
+            Log.d("fetchResumeVisible", "false")
+        }
+    }
+    suspend fun setUserFromRef(documentReference: DocumentReference) : ResumeContent?{
+        return try{
+            val documentSnapshot = documentReference.get().await()
+            documentSnapshot.toObject(ResumeContent::class.java)
+        }catch (e:Exception){
+            null
         }
     }
 

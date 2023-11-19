@@ -8,7 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.domain.entity.OffererHomeFilterContent
 
-class FilterFarmerHomeAdapter(private var items: List<OffererHomeFilterContent>): RecyclerView.Adapter<FilterFarmerHomeAdapter.ViewHolder>() {
+class FilterFarmerHomeAdapter(private var items: List<OffererHomeFilterContent>,
+    private var listener:onItemClickListener):
+    RecyclerView.Adapter<FilterFarmerHomeAdapter.ViewHolder>() {
+
+    interface onItemClickListener{
+        fun onItemClickListener(uid:String)
+    }
+
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val userName : TextView = itemView.findViewById(R.id.worker_name)
         val userGender:TextView = itemView.findViewById(R.id.gender)
@@ -26,11 +33,16 @@ class FilterFarmerHomeAdapter(private var items: List<OffererHomeFilterContent>)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val list = items[position]
-        holder.userName.text = "${list.userName} 일손"
-        holder.userGender.text = list.userGender
-        holder.userYear.text = "${list.userYear}세"
-        holder.allCareer.text = "경력 ${list.allCareer}"
+        if(position < items.size){
+            val item = items[position]
+            holder.userName.text = "${item.userName} 일손"
+            holder.userGender.text = item.userGender
+            holder.userYear.text = "${item.userYear}세"
+            holder.allCareer.text = "경력 ${item.allCareer}"
+            holder.itemView.setOnClickListener{
+                listener.onItemClickListener(item.uid)
+            }
+        }
 
     }
     fun updateList(newData:List<OffererHomeFilterContent>){

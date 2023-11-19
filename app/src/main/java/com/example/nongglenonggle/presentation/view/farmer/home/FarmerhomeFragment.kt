@@ -39,7 +39,12 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-        val adapter = FilterFarmerHomeAdapter(emptyList())
+        val adapter = FilterFarmerHomeAdapter(emptyList(), object : FilterFarmerHomeAdapter.onItemClickListener{
+            override fun onItemClickListener(uid: String) {
+                //리스트 선택시 동작 정의
+            }
+        }
+        )
         binding.recyclerWorker.adapter = adapter
         viewModel.fetchNoticeVisible()
         viewModel.resumeNum.observe(viewLifecycleOwner){data->
@@ -61,7 +66,6 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
             }
             else{
                 //공고글 있을떼
-                //viewModel.fetchNoticeVisible()
                 //notice정보 패칭하는 함수 호출
                 viewModel.viewModelScope.launch {
                     viewModel.fetchNoticeVisible()

@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.example.nongglenonggle.presentation.viewModel.worker.ResumeCompleteViewModel" />
@@ -40,6 +41,7 @@
             android:background="@null"/>
 
         <ImageView
+            android:id="@+id/backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/arrow_left"
@@ -152,7 +154,7 @@
                         android:fontFamily="@font/spoqahansansneo_medium"
                         android:textColor="@color/m1"
                         android:textSize="14sp"
-                        android:text="들어갈자리"
+                        android:text="12회"
                         android:layout_marginTop="10dp"/>
                 </LinearLayout>
 
@@ -204,7 +206,7 @@
                         android:fontFamily="@font/spoqahansansneo_medium"
                         android:textColor="@color/m1"
                         android:textSize="14sp"
-                        android:text="들어갈자리"
+                        android:text="5.0"
                         android:layout_marginTop="10dp"/>
                 </LinearLayout>
 
@@ -538,7 +540,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="36dp"
-                android:visibility="gone">
+                android:visibility="@{viewModel.resumeforFarmer ? View.VISIBLE : View.GONE}">
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -547,19 +549,8 @@
                     android:background="@color/g_line"
                     android:layout_marginBottom="36dp"/>
                 <include
+                    android:id="@+id/user_score_forfarmer"
                     layout="@layout/user_score_layout" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_active"
-                    android:text="@string/채용제안하기"
-                    android:textColor="@color/white"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingBottom="16dp"
-                    android:paddingTop="16dp"
-                    android:layout_marginBottom="32dp"/>
             </LinearLayout>
 
         </LinearLayout>

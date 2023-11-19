@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_farmer_home_tipbox"
+    android:orientation="vertical"
+    android:layout_marginBottom="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/alarmcircle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/채용제안이_왔습니다_"
+            android:layout_marginLeft="8dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:fontFamily="@font/spoqahansansneo_medium"
+            android:textSize="16sp"
+            android:textColor="@color/black"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="23.11.13"
+            style="@style/b3_small"
+            android:textColor="@color/g2"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="56dp"
+        android:layout_marginRight="20dp"
+        android:text="송승희 구인자님이 채용제안을 보냈어요. 확인해보세요!"
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:textColor="@color/g1"
+        android:textSize="14sp"
+        android:paddingBottom="24dp"/>
+
+</LinearLayout>
+</layout>

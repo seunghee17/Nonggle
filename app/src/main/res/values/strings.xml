@@ -221,8 +221,29 @@
     <string name="지역별">지역별</string>
     <string name="연령별">연령별</string>
     <string name="희망_품목별">희망 품목별</string>
-    <string name="검색어를_입력하세요">검색어를 입력하세런</string>
+    <string name="검색어를_입력하세요">검색어를 입력하세요</string>
     <string name="모든_일자리">모든 일자리</string>
+    <string name="지원하기">지원하기</string>
+    <string name="농부님_안녕하세요">%1$s 농부님,\n안녕하세요!</string>
+    <string name="구직자님_안녕하세요">%1$s님,\n안녕하세요!</string>
+    <string name="설정">설정</string>
+
+    <string name="마이페이지">마이페이지</string>
+    <string name="평가점수_5">평가점수 5.0</string>
+
+    <string name="공고글_관리">공고글 관리</string>
+    <string name="지원자_관리">지원자 관리</string>
+    <string name="일손평가">일손평가</string>
+    <string name="내_농가관리">내 농가관리</string>
+    <string name="배지관리">배지관리</string>
+    <string name="이용방법">이용방법</string>
+    <string name="알림">알림</string>
+    <string name="채용제안_수락">채용제안 수락</string>
+
+    <string name="채용제안이_왔습니다_">채용제안이 왔습니다.</string>
+    <string name="구인자가_보낸_채용제안">구인자가 보낸 채용제안을\n수락하시겠습니까?</string>
+
+    <string name="취소">취소</string>
 
 
 </resources>

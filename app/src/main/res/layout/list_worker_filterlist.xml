@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="강원도 사과따기"
@@ -51,6 +52,7 @@
                     android:src="@drawable/location_fill"
                     android:layout_marginRight="4dp"/>
                 <TextView
+                    android:id="@+id/address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="충북 보령시"
@@ -69,6 +71,7 @@
                     android:src="@drawable/date_fill"
                     android:layout_marginRight="4dp"/>
                 <TextView
+                    android:id="@+id/deadline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="23.06.16 마감"
@@ -80,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                    android:id="@+id/workType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -93,6 +97,7 @@
                     android:paddingRight="8dp"
                     android:paddingLeft="8dp"/>
                 <TextView
+                    android:id="@+id/payType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"

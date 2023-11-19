@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:orientation="vertical"
@@ -26,7 +28,9 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/bg_farmer_home" />
+            android:src="@drawable/img_seeker_open"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/g_line_light"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,7 +38,7 @@
             android:fontFamily="@font/spoqahansansneo_regular"
             android:textColor="@color/m1"
             android:textSize="12sp"
-            android:text="@string/비공개"
+            android:text="@string/공개"
             android:layout_marginTop="8dp"
             android:layout_gravity="center_horizontal"/>
     </LinearLayout>
@@ -45,6 +49,7 @@
         android:orientation="vertical"
         android:layout_marginLeft="16dp">
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="27dp"
@@ -54,19 +59,21 @@
             android:text="손이 빠르고 열정있는 사람입니다."/>
 
         <TextView
+            android:id="@+id/want_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="희망지역  강원도 전체"
-            android:fontFamily="@font/spoqahansansneo_regular"
+            android:fontFamily="@font/spoqahansansneo_medium"
             android:textSize="12sp"
             android:textColor="@color/g1"
             android:includeFontPadding="false"
             android:layout_marginTop="12dp"/>
         <TextView
+            android:id="@+id/want_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="희망품목  강원도 전체"
-            android:fontFamily="@font/spoqahansansneo_regular"
+            android:fontFamily="@font/spoqahansansneo_medium"
             android:textSize="12sp"
             android:textColor="@color/g1"
             android:includeFontPadding="false"
@@ -134,3 +141,4 @@
     </LinearLayout>
 
 </LinearLayout>
+</layout>

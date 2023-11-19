@@ -9,7 +9,9 @@ import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
@@ -34,6 +36,7 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
         val docRef = FirebaseFirestore.getInstance().collection("Worker")
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        //농부 uid
         val uid = intent.getStringExtra("UID_KEY")
         uid?.let{
             viewModel.fetchNoticeDetail(uid)
@@ -44,7 +47,7 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
                 val document = task.result
                 if(document != null && document.exists()){
                     //문서 id존재, 현재 회원이 구인자다
-                    binding.includeUserScore.visibility = View.VISIBLE
+                    binding.includeUserScore.linear.visibility = View.VISIBLE
                 }
             }else{
                 Log.e("Firestore","$task.exception")
@@ -69,6 +72,12 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
             setWorkPeriod()
             setWorkTime()
         })
+
+        binding.includeUserScore.applyBtn.setOnClickListener{
+            Toast.makeText(this,"지원이 완료되었습니다!",Toast.LENGTH_SHORT).show()
+            binding.includeUserScore.applyBtn.text = "지원완료"
+            binding.includeUserScore.applyBtn.setBackgroundResource(R.color.m3)
+        }
     }
 
     private fun detectDeadline(){

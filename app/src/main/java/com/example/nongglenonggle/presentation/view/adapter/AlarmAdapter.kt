@@ -1,0 +1,58 @@
+package com.example.nongglenonggle.presentation.view.adapter
+
+import android.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.nongglenonggle.R
+import com.example.nongglenonggle.domain.entity.AlarmDataModel
+import com.example.nongglenonggle.presentation.view.dialog.SuggestDialogFragment
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
+class AlarmAdapter(
+    private var items:List<AlarmDataModel> = listOf(),
+    private val listener:onItemClickListener
+) : RecyclerView.Adapter<AlarmAdapter.ViewHolder>() {
+
+    interface onItemClickListener{
+        fun onItemClickListener(item:AlarmDataModel)
+    }
+    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+        val info: TextView = itemView.findViewById(R.id.info)
+        val date : TextView = itemView.findViewById(R.id.date)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_alarm_list,parent,false)
+        return AlarmAdapter.ViewHolder(view)
+    }
+
+    override fun getItemCount(): Int {
+        return items.size
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if(position<items.size){
+            val item= items[position]
+            holder.info.text = "${item.offererName} 구인자님이 채용제안을 보냈어요. 확인해보세요!"
+            holder.date.text = item.currentTime
+
+            holder.itemView.setOnClickListener{
+                //채용제안 수락 완료 처리
+                listener.onItemClickListener(item)
+            }
+        }
+    }
+
+
+    fun updateList(newData:List<AlarmDataModel>){
+        items=newData
+        notifyDataSetChanged()
+    }
+
+}
