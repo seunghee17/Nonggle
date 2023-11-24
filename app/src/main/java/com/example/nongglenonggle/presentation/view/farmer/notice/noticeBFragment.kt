@@ -61,7 +61,10 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
                 startActivityForResult(photoPickerIntent, pickImageFromAlbum)
             }
             else{
-                requestStoragePermission()
+                //requestStoragePermission()
+                val photoPickerIntent = Intent(Intent.ACTION_PICK)
+                photoPickerIntent.type = "image/*"
+                startActivityForResult(photoPickerIntent, pickImageFromAlbum)
             }
         }
         return view
@@ -320,7 +323,7 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
         Log.e("tagg","what")
         requestPermissions(
             //requireActivity(),
-            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
             REQUEST_CODE_PERMISSION
         )
         Log.e("tagg","what done")

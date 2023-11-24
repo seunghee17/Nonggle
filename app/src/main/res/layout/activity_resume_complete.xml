@@ -59,6 +59,7 @@
             android:src="@drawable/pencil"
             app:tint="@color/white"/>
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_profile"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/example"
@@ -303,13 +304,14 @@
                     android:layout_marginRight="35dp"/>
 
                 <TextView
+                    android:id="@+id/certification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/spoqahansansneo_regular"
                     android:textColor="@color/g1"
                     android:textSize="16sp"
                     android:lineSpacingExtra="5sp"
-                    android:text="@{viewModel.certification}"
+                    android:text="운전 면허 1종"
                     android:gravity="left"/>
 
             </LinearLayout>
@@ -350,13 +352,14 @@
                     android:layout_marginRight="20dp"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/wanted_location"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/spoqahansansneo_regular"
                     android:textColor="@color/g1"
                     android:textSize="16sp"
-                    android:text="@{viewModel.locations ?? `선택한 지역이 없습니다.`}"
-                    android:gravity="right"/>
+                    android:text="경기 전체"
+                    android:gravity="left"/>
 
             </LinearLayout>
 
@@ -450,14 +453,15 @@
                     android:layout_marginRight="20dp"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/desiredtxt"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/spoqahansansneo_regular"
                     android:textColor="@color/g1"
                     android:textSize="16sp"
-                    android:text="@{viewModel.items ?? `없음`}"
+                    android:text="과수, 화훼"
                     android:lineSpacingExtra="-3sp"
-                    android:gravity="right"/>
+                    android:gravity="left"/>
 
             </LinearLayout>
             <View

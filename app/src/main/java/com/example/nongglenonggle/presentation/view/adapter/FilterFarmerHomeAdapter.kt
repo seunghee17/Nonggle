@@ -47,7 +47,9 @@ class FilterFarmerHomeAdapter(private var items: List<OffererHomeFilterContent>,
             }
             Glide.with(holder.profileImg.context)
                 .load(item.imageurl)
+                .error(R.drawable.bg_worker_home)
                 .into(holder.profileImg)
+
         }
 
     }

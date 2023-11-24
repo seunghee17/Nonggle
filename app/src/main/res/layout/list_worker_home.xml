@@ -17,15 +17,14 @@
         android:src="@drawable/bg_worker_home"
         android:scaleType="fitXY"/>
 
-
-
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="강원도 사과 따기"
+        android:text="강원도 사과 따기 부터 시작해서 내가"
+        android:maxLines="1"
         android:fontFamily="@font/spoqahansansneo_medium"
         android:textSize="14sp"
         android:textColor="@color/black"/>

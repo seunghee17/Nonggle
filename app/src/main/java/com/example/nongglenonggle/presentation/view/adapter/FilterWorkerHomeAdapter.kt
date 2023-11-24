@@ -58,7 +58,8 @@ class FilterWorkerHomeAdapter(
                 listener.onItemClick(item.uid)
             }
             Glide.with(holder.image.context)
-                .load(item.imageurl)
+                .load(item.imageUrl)
+                .error(R.drawable.bg_farmer_home)
                 .into(holder.image)
 
         }

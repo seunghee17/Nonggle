@@ -88,10 +88,15 @@ class ResumeViewModel @Inject constructor(
             if(result.isSuccess){
                 //여기서 url접근해서 가져오기
                 val imageurl = result.getOrNull()
-                _profileImage.value = imageurl!!
+                Log.d("uploadImage", "${imageurl!!}")
+                if(imageurl != null){
+                    _profileImage.value = imageurl!!
+                }else{
+                    Log.e("uploadImage" , "url null")
+                }
             }
             else{
-                Log.e("error", "이미지 업로드 실패")
+                Log.e("uploadImage", "이미지 업로드 실패")
             }
         }
     }
@@ -385,7 +390,7 @@ class ResumeViewModel @Inject constructor(
 
     fun setResumeData():ResumeContent{
         val allResumeContent = ResumeContent(
-            imageurl = profileImage.toString(),
+            imageurl = profileImage.value.toString(),
             userName = userName,
             userYear = userYear,
             userGender = gender,

@@ -183,12 +183,11 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
                 val result = viewModel.setResumeData()
                 if(result != null){
                     viewModel.addResumeContent(result,opensetting1,opensetting2)
-                    Toast.makeText(context, "데이터 저장 완료!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "이력서 작성을 완료했습니다!", Toast.LENGTH_SHORT).show()
                     val intent = Intent(context,ResumeCompleteActivity::class.java)
                     intent.putExtra("setting1", opensetting1)
                     intent.putExtra("setting2", opensetting2)
                     intent.putExtra("UID_KEY", uid)
-                    Log.d("ResumeDFragment","${opensetting1}%%%${opensetting2}")
                     startActivity(intent)
                 }
                 else{

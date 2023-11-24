@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.ActivityResumeBindingImpl
 import com.example.nongglenonggle.databinding.ActivityResumeCompleteBinding
@@ -73,6 +74,26 @@ class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.lay
             }
         })
 
+        viewModel.resumeDetail.observe(this, Observer{content->
+           try{
+               Glide.with(binding.imageProfile).load(content.imageurl).into(binding.imageProfile)
+//               if(content.careerList != null && content.careerList.size >0){
+//                   val careerString = content.careerList.joinToString(", ")
+//                   binding.certification.text = careerString
+//               }
+//               if(content.locationSelect != null && content.locationSelect.size > 0 ){
+//                   val locationstring = content.locationSelect.joinToString { " " }
+//                   binding.wantedLocation.text = locationstring
+//               }
+//               if(content.desiredItem != null && content.desiredItem.size > 0 ){
+//                   val desiredstring = content.desiredItem.joinToString { ", " }
+//                   binding.desiredtxt.text = desiredstring
+//               }
+           }catch (e:Exception){
+               Log.e("ResumeCompleteActivity","$e")
+           }
+        })
+
 
         binding.userScoreForfarmer.applyBtn.setOnClickListener{
             //채용제안 db로직
@@ -86,7 +107,7 @@ class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.lay
 
 
         binding.backBtn.setOnClickListener{
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this,WorkerMainActivity::class.java)
             startActivity(intent)
         }
 

@@ -33,13 +33,13 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        if(user != null){
-            val uid = user.uid
-            detectUserType(uid)
-        }
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        if(user != null){
+//            val uid = user.uid
+//            detectUserType(uid)
+//        }
+//    }
 
 
 

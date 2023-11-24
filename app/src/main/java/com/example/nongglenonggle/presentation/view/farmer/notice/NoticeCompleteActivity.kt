@@ -25,6 +25,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import androidx.lifecycle.asLiveData
 import com.bumptech.glide.Glide
+import com.example.nongglenonggle.presentation.view.farmer.home.FarmerhomeFragment
+import com.example.nongglenonggle.presentation.view.worker.home.WorkerHomeFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -37,6 +39,12 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
         val docRef = FirebaseFirestore.getInstance().collection("Worker")
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        val farmerHomefragement = FarmerhomeFragment()
+        val workerHomeFargment = WorkerHomeFragment()
         //농부 uid
         val uid = intent.getStringExtra("UID_KEY")
         uid?.let{
@@ -50,6 +58,13 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
                     //문서 id존재, 현재 회원이 구인자다
                     binding.includeUserScore.linear.visibility = View.VISIBLE
                 }
+                else{
+                    //구직자 회원
+//                    binding.close.setOnClickListener {
+//                        fragmentTransaction.replace(R.id.fragment_container,workerHomeFargment)
+//                        fragmentTransaction.commit()
+//                    }
+                }
             }else{
                 Log.e("Firestore","$task.exception")
             }
@@ -58,8 +73,8 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
 
         binding.close.setOnClickListener{
             if(viewModel.isDataReady.value == true){
-//                val intent = Intent(this, MainActivity::class.java)
-//                startActivity(intent)
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             }
             onBackPressed()
         }

@@ -49,6 +49,7 @@ class FilterFarmerSearchAdapter(
             }
             Glide.with(holder.image.context)
                 .load(item.imageurl)
+                .error(R.drawable.bg_worker_home)
                 .into(holder.image)
         }
     }

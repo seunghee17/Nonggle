@@ -6,7 +6,7 @@ data class WorkerSearchRecommend(
     val workType : String="",
     val pay : List<Any> = listOf(),
     val uid:String="",
-    val imageurl:String="",
+    val imageUrl:String="",
     val recruitPeriod : Map<String, Any> = emptyMap(),
 )
 

@@ -56,8 +56,9 @@ class WorkerSearchAdapter(
                 listener.onItemClick(item.uid)
             }
             Glide.with(holder.imageView.context)
-                .load(item.imageurl)
+                .load(item.imageUrl)
                 .into(holder.imageView)
+
 
         }
     }

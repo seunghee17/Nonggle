@@ -211,6 +211,7 @@
             style="@style/b1_main"
             android:textColor="@color/black"
             android:text="@string/일을_회피하지않고"
+            android:textAlignment="center"
             android:layout_gravity="center"
             android:layout_marginTop="12dp"/>
         <SeekBar

@@ -5,7 +5,7 @@ data class SeekerHomeFilterContent(
     val firstAddress : String = "",
     val recruitPeriod : Map<String, Any> = emptyMap(),
     val workType:String = "",
-    val imageurl:String="",
+    val imageUrl:String="",
     val pay : List<Any> = listOf(),
     val uid : String=""
 )
