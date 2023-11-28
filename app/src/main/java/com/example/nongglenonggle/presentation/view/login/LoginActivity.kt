@@ -20,24 +20,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        val loginbtn = binding.loginVerify
 
-        //비밀번호 칸 포커스 여부시 활성화
-        val passwordText = binding.passwordTxt
-        passwordText.setOnFocusChangeListener{
-            _, hasFocus -> viewModel.setEditTextFocused(hasFocus)
-        }
+        setup()
 
-        //아이디칸 포커스 활성화
-        val idTxt = binding.idTxt
-        idTxt.setOnFocusChangeListener{
-            _, hasFocus -> viewModel.setIDEditTextFocused(hasFocus)
-        }
-
-        loginbtn.setOnClickListener {
-            val phnum = idTxt.text.toString()
+        binding.loginVerify.setOnClickListener {
+            val phnum = binding.idTxt.text.toString()
             val email = "$phnum@example.com"
-            viewModel.loginWithEmailAndPassword(email,passwordText.text.toString())
+            viewModel.loginWithEmailAndPassword(email,binding.passwordTxt.text.toString())
             if(viewModel.isLoginAvailable.value == true){
                 viewModel.isFarmer.observe(this, Observer { isFarmer->
                     val intent = Intent(this, MainActivity::class.java)
@@ -50,9 +39,31 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             }
         }
 
-        val signup = binding.signupTxt
-        val intent = Intent(this, SignupActivity::class.java)
-        signup.setOnClickListener{startActivity(intent)}
+    }
+
+    fun setup(){
+        //비밀번호 칸 포커스 여부시 활성화
+        binding.passwordTxt.setOnFocusChangeListener{
+                _, hasFocus -> viewModel.setEditTextFocused(hasFocus)
+        }
+
+        //아이디칸 포커스 활성화
+        binding.idTxt.setOnFocusChangeListener{
+                _, hasFocus -> viewModel.setIDEditTextFocused(hasFocus)
+        }
+
+        binding.deleteBtnID.setOnClickListener{
+            binding.idTxt.text.clear()
+        }
+        binding.deleteBtn.setOnClickListener{
+            binding.passwordTxt.text.clear()
+        }
+
+        binding.signupTxt.setOnClickListener{
+            val intent = Intent(this, SignupActivity::class.java)
+            startActivity(intent)
+
+        }
     }
 
 
