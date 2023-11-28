@@ -5,7 +5,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginRight="16dp"
-    android:background="@drawable/bg_farmer_home_tipbox">
+    android:elevation="20dp"
+    android:background="@drawable/bg_shadow_for_green">
 
 
     <de.hdodenhof.circleimageview.CircleImageView

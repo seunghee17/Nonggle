@@ -3,6 +3,8 @@ package com.example.nongglenonggle.presentation.view.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.nongglenonggle.presentation.view.farmer.home.MainActivity
@@ -65,6 +67,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
         }
     }
+
+    fun googleLoginClick(view: View){
+        Toast.makeText(this,"검수중입니다",Toast.LENGTH_SHORT).show()
+    }
+    fun kakaoLoginClick(view: View){
+        Toast.makeText(this,"검수중입니다",Toast.LENGTH_SHORT).show()
+    }
+
+
 
 
 }

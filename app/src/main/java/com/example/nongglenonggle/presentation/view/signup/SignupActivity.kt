@@ -21,8 +21,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
 
          //이전버튼 정의
         binding.backBtn.setOnClickListener{
-            val intent = Intent(this, com.example.nongglenonggle.presentation.view.FirstActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
 

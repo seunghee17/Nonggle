@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -63,6 +65,12 @@ class FirstActivity : AppCompatActivity() {
         binding.signupBtn.setTextColor(ContextCompat.getColor(this,activeText))
     }
 
+    fun googleSignup(view: View){
+        Toast.makeText(this,"검수 중입니다",Toast.LENGTH_SHORT).show()
+    }
+    fun kakaoSignup(view: View){
+        Toast.makeText(this,"검수 중입니다",Toast.LENGTH_SHORT).show()
+    }
     override fun onPause()
     {
         activityScope.cancel()

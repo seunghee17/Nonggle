@@ -40,6 +40,7 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         val adapter = FilterFarmerHomeAdapter(emptyList(), object : FilterFarmerHomeAdapter.onItemClickListener{
             override fun onItemClickListener(uid: String) {
                 //리스트 선택시 동작 정의
@@ -47,18 +48,30 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
         }
         )
         binding.recyclerWorker.adapter = adapter
+        setupInit()
+        observe()
+
+        viewModel.basedOnCategory.observe(viewLifecycleOwner){doc->
+            viewModel.updateUI()
+            viewModel.viewModelScope.launch {
+                val dataList = mutableListOf<OffererHomeFilterContent>()
+                for(documentReference in viewModel.basedOnCategory.value ?: emptyList()){
+                    val data = viewModel.setDataFromRef(documentReference)
+                    data?.let{
+                        dataList.add(it)
+                    }
+                }
+                adapter.updateList(dataList)
+            }
+        }
+    }
+
+
+    fun setupInit(){
         viewModel.fetchNoticeVisible()
-        viewModel.resumeNum.observe(viewLifecycleOwner){data->
-            Log.d("onViewCreated","$data")
-        }
+    }
 
-        //임시적으로 로그아웃 설정
-        binding.logo.setOnClickListener{
-            FirebaseAuth.getInstance().signOut()
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
-        }
-
+    fun observe(){
         viewModel.userDetail.observe(viewLifecycleOwner){data->
             if(data?.refs == null){
                 //공고글 없을때
@@ -79,7 +92,6 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
                 binding.num.visibility = View.VISIBLE
             }
         }
-
         //홈화면 이력서 미리보기
         viewModel.noticeData.observe(viewLifecycleOwner){noticeContent ->
             binding.yesNotice.title.text = noticeContent.title
@@ -88,19 +100,15 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
             }else{
                 binding.yesNotice.deadline.text = noticeContent.recruitPeriod["detail"].toString()
             }
-        }
-
-        viewModel.basedOnCategory.observe(viewLifecycleOwner){doc->
-            viewModel.updateUI()
-            viewModel.viewModelScope.launch {
-                val dataList = mutableListOf<OffererHomeFilterContent>()
-                for(documentReference in viewModel.basedOnCategory.value ?: emptyList()){
-                    val data = viewModel.setDataFromRef(documentReference)
-                    data?.let{
-                        dataList.add(it)
-                    }
-                }
-                adapter.updateList(dataList)
+            when(noticeContent.categoryItem.get(0)){
+                "식량작물" -> binding.yesNotice.image.setImageResource(R.drawable.img_offer_rice)
+                "채소" -> binding.yesNotice.image.setImageResource(R.drawable.img_offer_greens)
+                "과수" -> binding.yesNotice.image.setImageResource(R.drawable.appleexample)
+                "특용작물" -> binding.yesNotice.image.setImageResource(R.drawable.img_offer_cashcrop)
+                "화훼" -> binding.yesNotice.image.setImageResource(R.drawable.img_offer_flower)
+                "축산" -> binding.yesNotice.image.setImageResource(R.drawable.img_offer_animal)
+                "농기계작업" -> binding.yesNotice.image.setImageResource(R.drawable.img_offer_car)
+                else-> binding.yesNotice.image.setImageResource(R.drawable.img_offer_etc)
             }
         }
     }

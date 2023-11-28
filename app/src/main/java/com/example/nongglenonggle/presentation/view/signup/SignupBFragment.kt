@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewModelScope
@@ -219,6 +220,9 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
                     viewModel.signUpWithEmailPasswordAndPhoneNumber(phoneNumberFinal,passWord,edittext1.text.toString())
                 }
                 moveToNext()
+            }
+            else{
+                Toast.makeText(requireContext(),"회원가입 단계가 완료되지 않았습니다.", Toast.LENGTH_SHORT).show()
             }
         }
 

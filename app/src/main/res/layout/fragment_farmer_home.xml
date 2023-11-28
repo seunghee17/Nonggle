@@ -110,9 +110,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="126dp"
-            android:background="@drawable/bg_farmer_home_shadow"
-            android:elevation="20dp"
-            android:backgroundTint="@color/white"
+            android:background="@drawable/bg_shadow_box"
+            android:elevation="4dp"
             android:clickable="true"
             android:orientation="horizontal"
             android:visibility="@{viewModel.isNotice() ? View.GONE : View.VISIBLE}">

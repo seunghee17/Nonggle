@@ -83,8 +83,7 @@ class SignupCFragment : BaseFragment<FragmentSignupCBinding>(R.layout.fragment_s
         }
         nextbtn.setOnClickListener{
             viewModel.cstepActive.observe(viewLifecycleOwner){ isactive->
-                if(viewModel.isHire.value ==true)
-                {
+                if(viewModel.isHire.value ==true) {
                     moveToNext()
                 }
                 else{
@@ -113,5 +112,7 @@ class SignupCFragment : BaseFragment<FragmentSignupCBinding>(R.layout.fragment_s
         val intent= Intent(context, LoginActivity::class.java)
         startActivity(intent)
     }
+
+
 
 }

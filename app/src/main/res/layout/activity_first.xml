@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.view.FirstActivity">
@@ -23,15 +24,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/spoqahansansneo_medium"
-            android:text="LOGO"
-            android:textSize="20sp"
+            android:fontFamily="@font/soyo_maple_bold"
+            android:text="@string/농글"
+            android:textSize="24sp"
+            android:textColor="@color/m1"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/kakaologin_btn"/>
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/kakaologin_btn"
+            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/googlelogin_btn"
@@ -43,7 +47,7 @@
             android:background="@drawable/kakaologin"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-           >
+            android:onClick="kakaoSignup">
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -75,6 +79,7 @@
             android:layout_marginLeft="20dp"
             android:gravity="center"
             android:clickable="true"
+            android:onClick="googleSignup"
             android:background="@drawable/googlebutton"
             >
             <ImageView
