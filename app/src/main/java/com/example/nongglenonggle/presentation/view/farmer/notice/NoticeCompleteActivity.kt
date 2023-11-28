@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
@@ -24,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import androidx.lifecycle.asLiveData
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.nongglenonggle.presentation.view.farmer.home.FarmerhomeFragment
 import com.example.nongglenonggle.presentation.view.worker.home.WorkerHomeFragment
@@ -39,6 +41,12 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
         val docRef = FirebaseFirestore.getInstance().collection("Worker")
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        val callback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+            }
+
+        }
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -59,28 +67,12 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
                     binding.includeUserScore.linear.visibility = View.VISIBLE
                 }
                 else{
-                    //구직자 회원
-//                    binding.close.setOnClickListener {
-//                        fragmentTransaction.replace(R.id.fragment_container,workerHomeFargment)
-//                        fragmentTransaction.commit()
-//                    }
+
                 }
             }else{
                 Log.e("Firestore","$task.exception")
             }
         }
-
-
-        binding.close.setOnClickListener{
-            if(viewModel.isDataReady.value == true){
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }
-            onBackPressed()
-        }
-        //현재회원이 어떤 유형의 회원인지 알 방법이 필요하다
-        binding.topBtn.setImageResource(R.drawable.pencil)
-
         viewModel.noticeDetail.asLiveData().observe(this, Observer { noticeContent->
             detectDeadline()
             detectPayType()
@@ -91,11 +83,29 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
             setImage()
         })
 
+        if(uid != null){
+            //구직자가 열람하는 것
+            viewModel.noticeForWorker()
+            binding.appBarWorker.backBtn.setOnClickListener{
+                this.onBackPressedDispatcher.addCallback(this, callback)
+            }
+
+        }else{
+            //구인자가 열람
+           viewModel.noticeForFarmer()
+            binding.appBarFarmer.close.setOnClickListener {
+                val intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
+                finishAffinity()
+            }
+        }
+
         binding.includeUserScore.applyBtn.setOnClickListener{
             Toast.makeText(this,"지원이 완료되었습니다!",Toast.LENGTH_SHORT).show()
             binding.includeUserScore.applyBtn.text = "지원완료"
             binding.includeUserScore.applyBtn.setBackgroundResource(R.color.m3)
         }
+
     }
 
     private fun detectDeadline(){

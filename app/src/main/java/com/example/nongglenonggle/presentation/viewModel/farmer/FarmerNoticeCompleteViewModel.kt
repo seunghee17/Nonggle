@@ -24,9 +24,17 @@ class FarmerNoticeCompleteViewModel @Inject constructor(
     private val _noticeDetail = MutableStateFlow<NoticeContent?>(null)
     val isDataReady = MutableLiveData<Boolean>()
     val noticeDetail: StateFlow<NoticeContent?> get() = _noticeDetail
-    init{
-        isDataReady.value = false
+
+    private val _isWorker = MutableLiveData<Boolean>()
+    val isWorker:LiveData<Boolean> = _isWorker
+
+    fun noticeForWorker(){
+        _isWorker.postValue(true)
     }
+    fun noticeForFarmer(){
+        _isWorker.postValue(false)
+    }
+
     fun fetchNoticeDetail(uid:String){
         viewModelScope.launch {
             val data= getNoticeUseCase.invoke(uid).collect{data->
@@ -35,5 +43,10 @@ class FarmerNoticeCompleteViewModel @Inject constructor(
             Log.d("NoticeCompleteVM", "$data")
             isDataReady.value = true
         }
+    }
+
+    init{
+        isDataReady.value = false
+        _isWorker.value = false
     }
 }
