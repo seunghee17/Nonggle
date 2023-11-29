@@ -1,4 +1,6 @@
 # 서울여자대학교 디지털미디어학과 졸업프로젝트
+2023.03 - 2023.11 서울여자대학교 캡스톤디자인 프로젝트 '농글' 입니다.
+
 
 ## 프로젝트 소개
 
@@ -7,7 +9,8 @@
 
 ![로고](https://github.com/songseunghei/CapstoneProject/assets/80136506/3155ed09-c471-4026-8cd8-6de6f8004de6)
 
-농글은 농업일자리 매칭 서비스로 안드로이드 기반 애플리케이션입니다.
+농글은 농업 일자리 매칭 서비스로 안드로이드 기반 애플리케이션입니다.
+
 
 ## 프로젝트 목적
 
@@ -22,6 +25,7 @@
 
 ![목표와 기능](https://github.com/songseunghei/CapstoneProject/assets/80136506/3e7170de-2b69-4685-b0d1-e5e8d8bb3231)
 
+
 ## 정보구조도
 
 ![IA](https://github.com/songseunghei/CapstoneProject/assets/80136506/b70c517b-d8c8-44b6-970e-d052b047e06b)
@@ -30,6 +34,7 @@
 ## 디자인 시스템
 
 ![디자인 시스템](https://github.com/songseunghei/CapstoneProject/assets/80136506/917462a1-3241-4068-8227-78021b44e656)
+
 
 ## 어플리케이션 소개
 
@@ -43,13 +48,18 @@
 
 ![Evaluation](https://github.com/songseunghei/CapstoneProject/assets/80136506/8ebf60c3-6d53-48a8-8eba-84aefb67fc7e)
 
+
 ## Tech Architecture
 
 ![1685500013](https://github.com/songseunghei/CapstoneProject/assets/80136506/cf73abfb-7f2d-40c6-a174-ca657a7301e6)
 
+
 ## ERD
 
+![농글농글](https://github.com/songseunghei/CapstoneProject/assets/80136506/82bd8ddb-4fce-4796-9078-c990d13d5333)
+
 ## 기술 스택
+
 - Android
     - ![Android Studio](https://img.shields.io/badge/Android%20Studio-%233DDC84?logo=androidstudio&logoColor=white)
       ![Retrofit](https://img.shields.io/badge/Retrofit-%23009020)
