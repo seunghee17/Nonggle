@@ -4,7 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/bg_shadow_box"
+    android:elevation="20dp"
+    android:background="@drawable/bg_shadow_for_green"
     android:backgroundTint="@color/white"
     android:layout_marginRight="12dp">
     

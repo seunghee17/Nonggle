@@ -13,6 +13,8 @@ import com.example.nongglenonggle.domain.usecase.GetAllNoticeSubUseCase
 import com.example.nongglenonggle.domain.usecase.GetNoticeBasedOnTypeUseCase
 import com.google.firebase.firestore.DocumentReference
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,6 +30,8 @@ class WorkerSearchViewModel @Inject constructor(
 
     private val _subNotice = MutableLiveData<List<WorkerSearchRecommend>>()
     val subNotice:LiveData<List<WorkerSearchRecommend>> = _subNotice
+
+
 
     val _workType = MutableLiveData<String>()
     val worktype :LiveData<String> = _workType
@@ -57,6 +61,7 @@ class WorkerSearchViewModel @Inject constructor(
                 Log.e("WorkerSearchViewModel", "Error fetching notices: $e")
                 // 에러 처리 로직 (필요한 경우)
             }
+
         }
     }
 

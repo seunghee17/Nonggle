@@ -2,11 +2,16 @@ package com.example.nongglenonggle.presentation.view.farmer.search
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
@@ -46,6 +51,7 @@ class SearchWorkerFragment : BaseFragment<FragmentFarmerSearchBinding>(R.layout.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         adapter1 = FilterFarmerHomeAdapter(emptyList(), object :
             FilterFarmerHomeAdapter.onItemClickListener{
@@ -107,11 +113,29 @@ class SearchWorkerFragment : BaseFragment<FragmentFarmerSearchBinding>(R.layout.
             }
             adapter2.updateList(items)
         }
+
+        setTextColor(binding.title, binding.title.text.toString(), listOf("일손을"))
     }
 
     private fun setupBottomSheet(){
         val bottomsheet = FilterBottomSheetFragment()
         bottomsheet.show(parentFragmentManager,bottomsheet.tag)
+    }
+
+    private fun setTextColor(textView: TextView, fullText:String, wordsToColor:List<String>){
+        val color = ContextCompat.getColor(textView.context, R.color.m1)
+        val spannableStringBuilder = SpannableStringBuilder(fullText)
+        for(word in wordsToColor){
+            var startIndex = fullText.indexOf(word)
+            while(startIndex != -1){
+                val endIndex = startIndex + word.length
+                spannableStringBuilder.setSpan(
+                    ForegroundColorSpan(color),
+                    startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                startIndex = fullText.indexOf(word, startIndex+1)
+            }
+        }
+        textView.text = spannableStringBuilder
     }
 
 }

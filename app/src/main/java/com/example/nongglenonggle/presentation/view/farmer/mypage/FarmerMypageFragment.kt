@@ -34,6 +34,8 @@ class FarmerMypageFragment : BaseFragment<FragmentFarmerMypageBinding>(R.layout.
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        managerApplier()
+
         if (useruid != null) {
             viewModel.getSuggestionData()
         }
@@ -43,6 +45,16 @@ class FarmerMypageFragment : BaseFragment<FragmentFarmerMypageBinding>(R.layout.
             val destination = ScoreApplierFragment()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragmentContainer,destination)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+    }
+
+    fun managerApplier(){
+        val destination = ManagerApplierFragment()
+        binding.manageApplier.setOnClickListener{
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainer, destination)
             transaction.addToBackStack(null)
             transaction.commit()
         }
