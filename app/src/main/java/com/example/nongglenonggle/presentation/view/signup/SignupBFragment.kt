@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.presentation.base.BaseFragment
 import com.example.nongglenonggle.databinding.FragmentSignupBBinding
@@ -231,7 +232,7 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
 
     fun moveToNext()
     {
-        replaceFragment(SignupCFragment(), R.id.signup_fragmentcontainer)
+        findNavController().navigate(R.id.action_signupBFragment_to_signupCFragment)
     }
 
 

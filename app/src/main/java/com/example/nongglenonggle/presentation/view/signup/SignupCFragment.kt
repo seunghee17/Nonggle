@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.presentation.base.BaseFragment
 import com.example.nongglenonggle.databinding.FragmentSignupCBinding
@@ -104,7 +105,8 @@ class SignupCFragment : BaseFragment<FragmentSignupCBinding>(R.layout.fragment_s
     }
     fun moveToNext()
     {
-        replaceFragment(SignupDFragment(), R.id.signup_fragmentcontainer)
+        //replaceFragment(SignupDFragment(), R.id.signup_fragmentcontainer)
+        findNavController().navigate(R.id.action_signupCFragment_to_signupDFragment)
     }
     fun EndSignupWorker()
     {

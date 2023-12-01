@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.presentation.base.BaseFragment
 import com.example.nongglenonggle.databinding.FragmentSignupABinding
@@ -45,15 +46,15 @@ class SignupAFragment : BaseFragment<FragmentSignupABinding>(R.layout.fragment_s
         val nextbtn=binding.nextBtn
         //다음버튼 누를때 동작을 하는 코드
         nextbtn.setOnClickListener{
-            moveToNext()
+            findNavController().navigate(R.id.action_signupAFragment_to_signupBFragment)
         }
 
     }
 
-    fun moveToNext()
-    {
-        replaceFragment(SignupBFragment(), R.id.signup_fragmentcontainer)
-    }
+//    fun moveToNext()
+//    {
+//        replaceFragment(SignupBFragment(), R.id.signup_fragmentcontainer)
+//    }
 
 
 }

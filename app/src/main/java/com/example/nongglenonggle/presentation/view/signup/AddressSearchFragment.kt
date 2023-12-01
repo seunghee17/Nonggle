@@ -52,14 +52,14 @@ class AddressSearchFragment : BaseFragment<FragmentAddressSearchBinding>(R.layou
          //데이터값 유무 상태 변화 호출 동기적으로
              activity?.runOnUiThread() {
                  viewModel.updateAddress(data)
-                 moveToNext()
+                 //moveToNext()
              }
          }
         }
 
-    fun moveToNext(){
-        replaceFragment(SignupDFragment(), R.id.signup_fragmentcontainer)
-    }
+//    fun moveToNext(){
+//        replaceFragment(SignupDFragment(), R.id.signup_fragmentcontainer)
+//    }
 
     }
 

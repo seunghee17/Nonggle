@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.presentation.base.BaseFragment
 import com.example.nongglenonggle.databinding.FragmentSignupDBinding
@@ -79,7 +80,8 @@ class SignupDFragment : BaseFragment<FragmentSignupDBinding>(R.layout.fragment_s
         firestore.collection("Farmer").document(uid!!).set(finalData, SetOptions.merge())
     }
     fun moveToNext() {
-        replaceFragment(AddressSearchFragment(), R.id.signup_fragmentcontainer)
+        //replaceFragment(AddressSearchFragment(), R.id.signup_fragmentcontainer)
+        findNavController().navigate(R.id.action_signupDFragment_to_addressSearchFragment)
     }
     fun moveToEnd(){
         val intent = Intent(context,LoginActivity::class.java)
