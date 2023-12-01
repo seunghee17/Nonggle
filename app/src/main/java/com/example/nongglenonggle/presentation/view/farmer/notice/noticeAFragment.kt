@@ -22,7 +22,6 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e("shit", "oncreate")
     }
 
     override fun onCreateView(

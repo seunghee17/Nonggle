@@ -109,7 +109,7 @@ class SignupBFragment : BaseFragment<FragmentSignupBBinding>(R.layout.fragment_s
 
         //인증번호 전송을 위해 버튼 누를시 오류 텍스트 visile용
         binding.sendnum.setOnClickListener{
-            val phonenum = "+821002020202"
+            val phonenum = "+82${edittext2.text}"
             viewModel.viewModelScope.launch{
                 val ioJob = launch(Dispatchers.IO){
                     viewModel.startPhoneNumberVerification(phonenum)

@@ -27,7 +27,6 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.navController
-
     }
 
 }

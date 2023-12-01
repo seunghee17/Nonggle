@@ -264,8 +264,19 @@
     <string name="품목별">품목별</string>
     <string name="닫기">닫기</string>
 
+    <string name="함께_가꾸어가는_씨앗에서_웃음을_맺기까지">함께 가꾸어가는 씨앗에서\n웃음을 맺기까지</string>
+    <string name="농가평가하기">농가평가하기</string>
 
+    <string name="구직자님_님은_어떠셨나요">구직자님,\n%1$s 농부님은 어떠셨나요?</string>
 
+    <string name="인격모독">인격모독</string>
+    <string name="폭언등_문제되는_행동은_없었나요">폭언 등 문제되는 행동은 없었나요?</string>
+
+    <string name="근로법_준수">근로법 준수</string>
+    <string name="근로법을_준수했나요">근로법을 준수했나요?</string>
+
+    <string name="조건준수">조건준수</string>
+    <string name="공고글에_작성되어_있는_조건들을_지켰나요">공고글에 작성되어있는 조건들을 지켰나요?</string>
 
 
 </resources>

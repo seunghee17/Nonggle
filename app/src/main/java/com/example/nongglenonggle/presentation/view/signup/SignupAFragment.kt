@@ -51,10 +51,4 @@ class SignupAFragment : BaseFragment<FragmentSignupABinding>(R.layout.fragment_s
 
     }
 
-//    fun moveToNext()
-//    {
-//        replaceFragment(SignupBFragment(), R.id.signup_fragmentcontainer)
-//    }
-
-
 }

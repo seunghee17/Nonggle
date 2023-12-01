@@ -42,14 +42,17 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+
         //-------------------삭제될 코드--------------------------
         binding.logo.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(requireContext(), FirstActivity::class.java)
             startActivity(intent)
-
         }
         //-------------------삭제될 코드--------------------------
+
+
         val adapter = FilterFarmerHomeAdapter(emptyList(), object : FilterFarmerHomeAdapter.onItemClickListener{
             override fun onItemClickListener(uid: String) {
                 //리스트 선택시 동작 정의

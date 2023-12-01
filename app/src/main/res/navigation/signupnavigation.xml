@@ -50,5 +50,9 @@
     <fragment
         android:id="@+id/addressSearchFragment"
         android:name="com.example.nongglenonggle.presentation.view.signup.AddressSearchFragment"
-        android:label="AddressSearchFragment" />
+        android:label="AddressSearchFragment" >
+        <action
+            android:id="@+id/action_addressSearchFragment_to_signupDFragment"
+            app:destination="@id/signupDFragment" />
+    </fragment>
 </navigation>

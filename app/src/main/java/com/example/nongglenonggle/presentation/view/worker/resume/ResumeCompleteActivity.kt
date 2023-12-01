@@ -107,10 +107,15 @@ class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.lay
 
 
         binding.backBtn.setOnClickListener{
-            val intent = Intent(this,WorkerMainActivity::class.java)
-            startActivity(intent)
+            if(value != null){
+                //구인자측에서 클릭했다
+                onBackPressed()
+            }
+            else{
+                val intent = Intent(this,WorkerMainActivity::class.java)
+                startActivity(intent)
+            }
         }
-
     }
 
     private fun StoreToFarmerDB(worker : String, user:String){

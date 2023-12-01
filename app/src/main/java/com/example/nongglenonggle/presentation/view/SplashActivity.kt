@@ -1,5 +1,6 @@
 package com.example.nongglenonggle.presentation.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +20,7 @@ class SplashActivity : AppCompatActivity() {
     val firestore = FirebaseFirestore.getInstance()
 
     val activityScope= CoroutineScope(Dispatchers.Main)
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)

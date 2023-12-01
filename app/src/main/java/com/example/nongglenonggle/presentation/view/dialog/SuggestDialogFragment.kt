@@ -6,14 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentHireDatePickerBinding
 import com.example.nongglenonggle.databinding.FragmentSuggestDialogBinding
-
+import com.example.nongglenonggle.presentation.viewModel.worker.WorkerHomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+@AndroidEntryPoint
 class SuggestDialogFragment : DialogFragment() {
     private var _binding : FragmentSuggestDialogBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: WorkerHomeViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,6 +36,15 @@ class SuggestDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.confirm.setOnClickListener{
             dismiss()
+        }
+
+        binding.cancel.setOnClickListener{
+            lifecycleScope.launch {
+                viewModel.alarmSuggestionCancel().collect(){result->
+                    dismiss()
+                    Toast.makeText(requireContext(),"채용제안을 취소했습니다",Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

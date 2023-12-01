@@ -188,6 +188,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginBottom="114dp"
             tools:listitem="@layout/list_item_farmersearch_filter"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 

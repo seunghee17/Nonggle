@@ -11,9 +11,16 @@ import com.example.nongglenonggle.domain.entity.SeekerHomeFilterContent
 import com.example.nongglenonggle.domain.entity.WorkerHomeData
 import com.example.nongglenonggle.domain.usecase.FetchWorkerDataUseCase
 import com.example.nongglenonggle.domain.usecase.GetAllNoticeUseCase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -24,6 +31,9 @@ class WorkerHomeViewModel @Inject constructor(
     private val getAllNoticeUseCase: GetAllNoticeUseCase
 )
     :ViewModel(){
+    private val firestore = FirebaseFirestore.getInstance()
+    private val firebaseAuth = FirebaseAuth.getInstance()
+
     private val _userDetail = MutableLiveData<WorkerHomeData?>()
     val userDetail : LiveData<WorkerHomeData?> = _userDetail
 
@@ -32,6 +42,27 @@ class WorkerHomeViewModel @Inject constructor(
 
     val _homeResume = MutableLiveData<ResumeContent>()
     val homeResume:LiveData<ResumeContent> = _homeResume
+
+    fun alarmSuggestionOk() : Flow<String> = flow{
+        //구인자의 worker배열에 포함
+        //구직자의 applier배열에 포함
+        val FarmerRef = firestore.collection("Worker").document(firebaseAuth.currentUser!!.uid)
+    }
+
+    fun alarmSuggestionCancel(): Flow<String> = callbackFlow{
+        val docRef = firestore.collection("Worker").document(firebaseAuth.currentUser!!.uid)
+        val updates = hashMapOf<String,Any>(
+            "offererName" to FieldValue.delete(),
+            "suggest1" to FieldValue.delete()
+        )
+    docRef.update(updates).addOnCompleteListener{
+        trySend("completed").isSuccess
+    }
+        awaitClose {  }
+    }
+
+
+
 
     fun fetchUserInfo(){
         viewModelScope.launch {
@@ -80,6 +111,8 @@ class WorkerHomeViewModel @Inject constructor(
             null
         }
     }
+
+
 
     init{
         fetchUserInfo()

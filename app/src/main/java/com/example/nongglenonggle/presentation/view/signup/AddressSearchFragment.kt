@@ -8,6 +8,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.presentation.base.BaseFragment
 import com.example.nongglenonggle.databinding.FragmentAddressSearchBinding
@@ -46,20 +47,20 @@ class AddressSearchFragment : BaseFragment<FragmentAddressSearchBinding>(R.layou
         //최초 로드
         webview.loadUrl("https://capstoneproject-11911.web.app")
     }
-     inner class BridgeInterface{//javascript->android
+     inner class BridgeInterface{
         @JavascriptInterface
         fun processDATA(data:String){
          //데이터값 유무 상태 변화 호출 동기적으로
              activity?.runOnUiThread() {
                  viewModel.updateAddress(data)
-                 //moveToNext()
+                 moveToNext()
              }
          }
         }
 
-//    fun moveToNext(){
-//        replaceFragment(SignupDFragment(), R.id.signup_fragmentcontainer)
-//    }
+    fun moveToNext(){
+        findNavController().navigate(R.id.action_addressSearchFragment_to_signupDFragment)
+    }
 
     }
 

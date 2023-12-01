@@ -2,6 +2,7 @@ package com.example.nongglenonggle.presentation.view.signup
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,12 +47,12 @@ class SignupDFragment : BaseFragment<FragmentSignupDBinding>(R.layout.fragment_s
         }
 
         viewModel.addressResult.observe(viewLifecycleOwner){ addressResult->
-            //선택한 주소 입력됨
+
             if(addressResult != null){
                 binding.firstaddressTxt.text = viewModel.addressResult.value
                 binding.addressSearch.hint=""
                 stringArray =splitString(addressResult)
-                //이제 개인정보 넣기 위해 호출해야함
+
                 val addressData = hashMapOf(
                     "first" to stringArray[0],
                     "second" to stringArray[1]
@@ -77,6 +78,7 @@ class SignupDFragment : BaseFragment<FragmentSignupDBinding>(R.layout.fragment_s
             "category2" to data[1],
             "category3" to data[2]
         )
+        Log.d("setToFirestore", "$finalData")
         firestore.collection("Farmer").document(uid!!).set(finalData, SetOptions.merge())
     }
     fun moveToNext() {

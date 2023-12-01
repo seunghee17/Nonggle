@@ -20,8 +20,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.toObject
+import dagger.hilt.android.AndroidEntryPoint
 
 //구직자의 알람페이지
+@AndroidEntryPoint
 class AlarmFragment : BaseFragment<FragmentAlarmBinding>(R.layout.fragment_alarm) {
     private lateinit var adapter : AlarmAdapter
     private val viewModel:WorkerHomeViewModel by viewModels()
@@ -64,6 +66,7 @@ class AlarmFragment : BaseFragment<FragmentAlarmBinding>(R.layout.fragment_alarm
             }
             else{
                 adapter.updateList(emptyList())
+                binding.recycler.visibility = View.GONE
             }
         }
     }
