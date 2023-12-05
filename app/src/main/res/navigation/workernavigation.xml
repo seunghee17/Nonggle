@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/workerHomeFragment"
-        android:name="com.example.nongglenonggle.presentation.view.worker.home.WorkerHomeFragment"
+        android:name="com.capstone.nongglenonggle.presentation.view.worker.home.WorkerHomeFragment"
         android:label="fragment_worker_home"
         tools:layout="@layout/fragment_worker_home" >
         <action
@@ -16,17 +16,17 @@
     </fragment>
     <fragment
         android:id="@+id/workerMypageFragment"
-        android:name="com.example.nongglenonggle.presentation.view.worker.mypage.WorkerMypageFragment"
+        android:name="com.capstone.nongglenonggle.presentation.view.worker.mypage.WorkerMypageFragment"
         android:label="fragment_worker_mypage"
         tools:layout="@layout/fragment_worker_mypage" />
     <fragment
         android:id="@+id/workerSearchFragment"
-        android:name="com.example.nongglenonggle.presentation.view.worker.search.WorkerSearchFragment"
+        android:name="com.capstone.nongglenonggle.presentation.view.worker.search.WorkerSearchFragment"
         android:label="fragment_worker_search"
         tools:layout="@layout/fragment_worker_search" />
     <fragment
         android:id="@+id/alarmFragment"
-        android:name="com.example.nongglenonggle.presentation.view.worker.home.AlarmFragment"
+        android:name="com.capstone.nongglenonggle.presentation.view.worker.home.AlarmFragment"
         android:label="fragment_alarm"
         tools:layout="@layout/fragment_alarm" />
 </navigation>

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.presentation.viewModel.farmer.FarmerMyPageViewModel" />
+            type="com.capstone.nongglenonggle.presentation.viewModel.farmer.FarmerMyPageViewModel" />
     </data>
 
 <LinearLayout

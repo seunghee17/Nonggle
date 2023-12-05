@@ -8,7 +8,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.presentation.viewModel.FirstViewModel" />
+            type="com.capstone.nongglenonggle.presentation.viewModel.FirstViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

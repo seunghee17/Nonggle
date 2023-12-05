@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/signupAFragment"
-        android:name="com.example.nongglenonggle.presentation.view.signup.SignupAFragment"
+        android:name="com.capstone.nongglenonggle.presentation.view.signup.SignupAFragment"
         android:label="SignupAFragment"
         tools:layout="@layout/fragment_signup_a">
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupBFragment"
-        android:name="com.example.nongglenonggle.presentation.view.signup.SignupBFragment"
+        android:name="com.capstone.nongglenonggle.presentation.view.signup.SignupBFragment"
         android:label="SignupBFragment"
         tools:layout="@layout/fragment_signup_b">
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupCFragment"
-        android:name="com.example.nongglenonggle.presentation.view.signup.SignupCFragment"
+        android:name="com.capstone.nongglenonggle.presentation.view.signup.SignupCFragment"
         android:label="SignupCFragment"
         tools:layout="@layout/fragment_signup_c">
         <action
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupDFragment"
-        android:name="com.example.nongglenonggle.presentation.view.signup.SignupDFragment"
+        android:name="com.capstone.nongglenonggle.presentation.view.signup.SignupDFragment"
         android:label="SignupDFragment"
         tools:layout="@layout/fragment_signup_d">
         <action
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/addressSearchFragment"
-        android:name="com.example.nongglenonggle.presentation.view.signup.AddressSearchFragment"
+        android:name="com.capstone.nongglenonggle.presentation.view.signup.AddressSearchFragment"
         android:label="AddressSearchFragment" >
         <action
             android:id="@+id/action_addressSearchFragment_to_signupDFragment"

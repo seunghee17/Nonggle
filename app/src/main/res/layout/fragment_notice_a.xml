@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel" />
+            type="com.capstone.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel" />
     </data>
 
 <LinearLayout

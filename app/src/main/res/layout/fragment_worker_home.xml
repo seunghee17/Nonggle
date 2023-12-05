@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.nongglenonggle.presentation.viewModel.worker.WorkerHomeViewModel" />
+            type="com.capstone.nongglenonggle.presentation.viewModel.worker.WorkerHomeViewModel" />
         <import type="android.view.View"/>
     </data>
     <LinearLayout
