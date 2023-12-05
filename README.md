@@ -1,4 +1,4 @@
-# 서울여자대학교 디지털미디어학과 졸업프로젝트
+# 농촌 인력 매칭 서비스 농글 
 2023.03 - 2023.11 서울여자대학교 캡스톤디자인 프로젝트 '농글' 입니다.
 
 
@@ -62,7 +62,6 @@
 
 - Android
     - ![Android Studio](https://img.shields.io/badge/Android%20Studio-%233DDC84?logo=androidstudio&logoColor=white)
-      ![Retrofit](https://img.shields.io/badge/Retrofit-%23009020)
       ![Jetpack](https://img.shields.io/badge/Jetpack%20-%234285F4?logo=jetpackcompose&logoColor=white)
       ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black)
   
@@ -76,8 +75,8 @@
 ## R&R
 | Name | Kim Ji Won | [Song Seung hee](https://github.com/songseunghei) | Kim Ka Eun | Jeong Hye Ri |
 | --- | --- | --- |--- | --- |
-| Role | PM/ UI/UX Designer/Planner | Frontend Developer/Planner | Graphic Designer | UI/UX Designer |
-| Profile Image | <img src="https://github.com/AlwaysFighting/SeoulEducation_AppService/assets/87655596/78d80a96-4e38-4d29-84bc-96bed3fadb75" width="200"/> | <img src="https://github.com/AlwaysFighting/SeoulEducation_AppService/assets/87655596/3effd961-c190-4013-b46b-3429eb5a8f82" width="200"/> | <img src="https://github.com/AlwaysFighting/SeoulEducation_AppService/assets/87655596/3effd961-c190-4013-b46b-3429eb5a8f82" width="200"/> | <img src="https://github.com/AlwaysFighting/SeoulEducation_AppService/assets/87655596/3effd961-c190-4013-b46b-3429eb5a8f82" width="200"/> |
+| Role | PM/ UI&UX Designer/Planner | Frontend Developer/Planner | Graphic Designer | UI&UX Designer |
+| Profile Image | <img src="https://github.com/songseunghei/Nonggle/assets/80136506/9b3554cc-416b-49a6-ac9f-805c4c38d748" width="200"/> | <img src="https://github.com/AlwaysFighting/SeoulEducation_AppService/assets/87655596/3effd961-c190-4013-b46b-3429eb5a8f82" width="200"/> | <img src="https://github.com/songseunghei/Nonggle/assets/80136506/c912e606-377b-41e0-86fc-6af83fb8f7c0" width="200"/> | <img src="https://github.com/songseunghei/Nonggle/assets/80136506/b040d6f2-9c51-4d38-9402-a29cac7478e2" width="200"/> |
 
 
 
