@@ -59,7 +59,6 @@ class AlarmFragment : BaseFragment<FragmentAlarmBinding>(R.layout.fragment_alarm
                     val dataModel = snapshot.toObject(AlarmDataModel::class.java)
                     dataModel?.let{
                         binding.recycler.visibility = View.VISIBLE
-                        Log.d("offerName","$offererName")
                         adapter.updateList(listOf(it))
                     }
                 }

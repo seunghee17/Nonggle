@@ -11,6 +11,7 @@ import com.example.nongglenonggle.domain.entity.SeekerHomeFilterContent
 import com.example.nongglenonggle.domain.entity.WorkerHomeData
 import com.example.nongglenonggle.domain.usecase.FetchWorkerDataUseCase
 import com.example.nongglenonggle.domain.usecase.GetAllNoticeUseCase
+import com.example.nongglenonggle.domain.usecase.ModifyFarmerDBUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
@@ -28,9 +29,9 @@ import javax.inject.Inject
 @HiltViewModel
 class WorkerHomeViewModel @Inject constructor(
     private val fetchWorkerDataUseCase: FetchWorkerDataUseCase,
-    private val getAllNoticeUseCase: GetAllNoticeUseCase
-)
-    :ViewModel(){
+    private val getAllNoticeUseCase: GetAllNoticeUseCase,
+    private val modifyFarmerDBUseCase: ModifyFarmerDBUseCase
+) :ViewModel(){
     private val firestore = FirebaseFirestore.getInstance()
     private val firebaseAuth = FirebaseAuth.getInstance()
 
@@ -43,10 +44,24 @@ class WorkerHomeViewModel @Inject constructor(
     val _homeResume = MutableLiveData<ResumeContent>()
     val homeResume:LiveData<ResumeContent> = _homeResume
 
-    fun alarmSuggestionOk() : Flow<String> = flow{
-        //구인자의 worker배열에 포함
-        //구직자의 applier배열에 포함
-        val FarmerRef = firestore.collection("Worker").document(firebaseAuth.currentUser!!.uid)
+    val _suggestComplete = MutableLiveData<Boolean>()
+    val suggestComplete:LiveData<Boolean> = _suggestComplete
+
+    suspend fun alarmSuggestionOk(){
+        viewModelScope.launch {
+            val uid = getFarmerUID(firebaseAuth.currentUser!!.uid)
+            modifyFarmerDBUseCase.invoke(uid).collect{result->
+                Log.d("alarmSuggestionOk","${uid}")
+                result.onSuccess {
+                    _suggestComplete.value = true
+                    Log.d("alarmSuggestionOk","${_suggestComplete.value}")
+                }
+                result.onFailure {
+                    _suggestComplete.value = false
+                    Log.d("alarmSuggestionOk","${_suggestComplete.value}")
+                }
+            }
+        }
     }
 
     fun alarmSuggestionCancel(): Flow<String> = callbackFlow{
@@ -60,8 +75,6 @@ class WorkerHomeViewModel @Inject constructor(
     }
         awaitClose {  }
     }
-
-
 
 
     fun fetchUserInfo(){
@@ -112,8 +125,21 @@ class WorkerHomeViewModel @Inject constructor(
         }
     }
 
-
-
+    suspend fun getFarmerUID(uid:String):String{
+        val db = FirebaseFirestore.getInstance()
+        val docRef = db.collection("Worker").document(uid)
+        val doc = docRef.get().await()
+        return try {
+            if(doc.exists()){
+                doc.getString("suggest1") ?: ""
+            }else{
+                ""
+            }
+        }catch (e:Exception){
+            Log.e("error","$e")
+            ""
+        }
+    }
     init{
         fetchUserInfo()
         fetchResumeVisible()

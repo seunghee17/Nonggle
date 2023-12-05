@@ -39,10 +39,10 @@ import kotlinx.coroutines.launch
 class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.fragment_worker_home) {
     private val viewModel : WorkerHomeViewModel by viewModels()
     private lateinit var adapter: FilterWorkerHomeAdapter
+    private val firebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.fetchUserInfo()
-        //viewModel.fetchResumeVisible()
     }
 
     override fun onCreateView(

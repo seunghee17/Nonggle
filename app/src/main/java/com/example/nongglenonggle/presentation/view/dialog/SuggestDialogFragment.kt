@@ -9,6 +9,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.nongglenonggle.R
 import com.example.nongglenonggle.databinding.FragmentHireDatePickerBinding
@@ -35,17 +36,27 @@ class SuggestDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.confirm.setOnClickListener{
-            dismiss()
+            lifecycleScope.launch {
+                viewModel.alarmSuggestionOk()
+                dismiss()
+            }
         }
 
         binding.cancel.setOnClickListener{
             lifecycleScope.launch {
                 viewModel.alarmSuggestionCancel().collect(){result->
                     dismiss()
-                    Toast.makeText(requireContext(),"채용제안을 취소했습니다",Toast.LENGTH_SHORT).show()
                 }
             }
         }
+
+        viewModel.suggestComplete.observe(this, Observer { result->
+            if(result==true){
+                Toast.makeText(requireContext(),"채용제안을 수락했습니다",Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(requireContext(),"채용제안을 취소했습니다",Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     override fun onStart() {
