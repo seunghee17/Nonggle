@@ -27,7 +27,7 @@
            app:layout_constraintTop_toTopOf="parent"
            app:layout_constraintRight_toRightOf="parent"
            app:layout_constraintLeft_toLeftOf="parent"
-           android:visibility="@{viewModel.isWorker ? View.GONE : View.VISIBLE}"/>
+           android:visibility="@{viewModel.isWorker ? View.VISIBLE : View.GONE}"/>
 
         <include
             android:id="@+id/app_bar_worker"
@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:visibility="@{viewModel.isWorker ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{viewModel.isWorker ? View.GONE : View.VISIBLE}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     

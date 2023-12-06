@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/bg_farmer_home_tipbox"
+        android:background="@drawable/bg_applier_box"
         android:backgroundTint="@color/m1"
         android:clickable="true"
         android:elevation="20dp">

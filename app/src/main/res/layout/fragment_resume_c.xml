@@ -46,7 +46,7 @@
         android:textColorHint="@color/g3"
         android:textCursorDrawable="@color/m1"
         android:paddingRight="16dp"
-        android:textSize="16sp"/>
+        style="@style/b1_main"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
             android:textColorHint="@color/g3"
             android:textCursorDrawable="@color/m1"
             android:paddingRight="16dp"
-            android:textSize="16sp"
+            style="@style/b1_main"
             android:layout_weight="1"/>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/confirm"
@@ -211,8 +211,7 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/noticeeditbox"
         android:hint="@string/하고싶은_말이나"
-        android:textSize="16sp"
-        android:fontFamily="@font/spoqahansansneo_regular"
+        style="@style/b1_main"
         android:textColor="@color/black"
         android:textCursorDrawable="@color/m1"
         android:textColorHint="@color/g3"

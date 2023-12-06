@@ -29,7 +29,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="6dp"
         android:layout_marginLeft="20dp"
-        android:text="작업 시작날짜"
+        android:text="날짜"
         android:textColor="@color/black"
         android:fontFamily="@font/spoqahansansneo_medium"
         android:textSize="18sp"

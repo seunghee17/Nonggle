@@ -67,7 +67,11 @@
         <item name="fontFamily">@font/spoqahansansneo_medium</item>
         <item name="android:textSize">16sp</item>
         <item name="android:includeFontPadding">false</item>
-    </style>목
+    </style>
+
+    <style name="BottomSheetDialogRound" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_career_add</item>
+    </style>
 
 
 

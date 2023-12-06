@@ -55,7 +55,7 @@
                 android:textColorHint="@color/g3"
                 android:textCursorDrawable="@color/m1"
                 android:paddingRight="16dp"
-                android:textSize="16sp" />
+                style="@style/b1_main" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -294,7 +294,7 @@
                     android:text="시간입력"
                     android:textColor="@{viewModel.workerTime1 ? @color/m1 : @color/g3}"
                     android:background="@{viewModel.workerTime1 ? @drawable/typebox_active : @drawable/typebox_unactive}"
-                    android:textSize="16sp"
+                    style="@style/b1_main"
                     android:paddingLeft="18.5dp"
                     android:paddingRight="18.5dp"
                     android:paddingTop="14.5dp"
@@ -310,7 +310,7 @@
                     android:text="시간협의"
                     android:textColor="@{viewModel.workerTime2 ? @color/m1 : @color/g3}"
                     android:background="@{viewModel.workerTime2 ? @drawable/typebox_active : @drawable/typebox_unactive}"
-                    android:textSize="16sp"
+                    style="@style/b1_main"
                     android:paddingLeft="18.5dp"
                     android:paddingRight="18.5dp"
                     android:paddingTop="14.5dp"
@@ -430,7 +430,7 @@
                     android:text="식량작물"
                     android:onClick="@{() -> viewModel.onButtonClick(0,`식량작물`)}"
                     android:textColor="@{viewModel.categoryButtons[0] ?@color/m1 : @color/g3}"
-                    android:textSize="16sp" />
+                    style="@style/b1_main" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button2"
@@ -445,7 +445,7 @@
                     android:paddingTop="16dp"
                     android:text="채소"
                     android:textColor="@{viewModel.categoryButtons[1] ?@color/m1 : @color/g3}"
-                    android:textSize="16sp" />
+                    style="@style/b1_main" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button3"
@@ -459,7 +459,7 @@
                     android:paddingTop="16dp"
                     android:text="과수"
                     android:textColor="@{viewModel.categoryButtons[2] ?@color/m1 : @color/g3}"
-                    android:textSize="16sp" />
+                    style="@style/b1_main" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -478,7 +478,7 @@
                     android:textColor="@{viewModel.categoryButtons[3] ?@color/m1 : @color/g3}"
                     android:background="@{viewModel.categoryButtons[3] ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:onClick="@{() -> viewModel.onButtonClick(3,`특용작물`)}"
-                    android:textSize="16sp"
+                    style="@style/b1_main"
                     android:paddingBottom="16dp"
                     android:paddingTop="16dp"
                     android:layout_marginRight="16dp"
@@ -493,7 +493,7 @@
                     android:textColor="@{viewModel.categoryButtons[4] ?@color/m1 : @color/g3}"
                     android:background="@{viewModel.categoryButtons[4] ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:onClick="@{() -> viewModel.onButtonClick(4,`화훼`)}"
-                    android:textSize="16sp"
+                    style="@style/b1_main"
                     android:paddingBottom="16dp"
                     android:paddingTop="16dp"
                     android:layout_marginRight="16dp"
@@ -508,7 +508,7 @@
                     android:textColor="@{viewModel.categoryButtons[5] ?@color/m1 : @color/g3}"
                     android:background="@{viewModel.categoryButtons[5] ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:onClick="@{() -> viewModel.onButtonClick(5,`축산`)}"
-                    android:textSize="16sp"
+                    style="@style/b1_main"
                     android:paddingBottom="16dp"
                     android:paddingTop="16dp"
                     android:layout_weight="1"
@@ -533,7 +533,7 @@
                     android:textColor="@{viewModel.categoryButtons[6] ?@color/m1 : @color/g3}"
                     android:background="@{viewModel.categoryButtons[6] ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:onClick="@{() -> viewModel.onButtonClick(6,`농기계작업`)}"
-                    android:textSize="16sp"
+                    style="@style/b1_main"
                     android:paddingBottom="16dp"
                     android:paddingTop="16dp"
                     android:layout_marginRight="16dp"
@@ -547,7 +547,7 @@
                     android:textColor="@{viewModel.categoryButtons[7] ?@color/m1 : @color/g3}"
                     android:background="@{viewModel.categoryButtons[7] ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:onClick="@{() -> viewModel.onButtonClick(7,`기타`)}"
-                    android:textSize="16sp"
+                    style="@style/b1_main"
                     android:paddingBottom="16dp"
                     android:paddingTop="16dp"
                     android:layout_marginRight="16dp"

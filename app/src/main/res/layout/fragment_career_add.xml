@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
@@ -13,9 +14,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.view.dialog.CareerAddFragment"
-    android:background="@drawable/bg_career_add"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    style="@style/BottomSheetDialogRound">
 
 
     <ImageView
@@ -266,9 +267,9 @@
             android:background="@drawable/noticeeditbox"
             android:layout_marginTop="12dp"
             android:hint="@string/업무내용을_상세히"
+            style="@style/b1_main"
             android:textColorHint="@color/g3"
             android:textColor="@color/black"
-            android:textSize="16sp"
             android:textCursorDrawable="@color/m1"
             android:paddingLeft="16dp"
             android:paddingTop="17dp"
@@ -279,7 +280,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stateListAnimator="@null"
-            android:text="다음"
+            android:text="@string/추가하기"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
             android:layout_marginTop="103dp"

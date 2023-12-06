@@ -290,6 +290,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@{viewModel.isDeadline() ? @color/black : @color/g3}"
                     android:textSize="16sp"
+                    android:fontFamily="@font/spoqahansansneo_regular"
                     android:text="@string/마감기한_날짜를"
                     android:paddingLeft="16dp"
                     android:paddingTop="16dp"
@@ -364,6 +365,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    style="@style/b2_sub"
                     android:text="@string/조건1" />
 
             </LinearLayout>
@@ -391,12 +393,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    style="@style/b2_sub"
                     android:text="@string/조건1"/>
 
             </LinearLayout>
-
-
-
         </LinearLayout>
 
     </ScrollView>

@@ -218,6 +218,7 @@
                     android:background="@{viewModel.categoryButtons[0] ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:onClick="@{() -> viewModel.onButtonClick(0, `식량작물`)}"
                     android:text="@string/식량작물"
+                    style="@style/b1_main"
                     android:paddingBottom="16dp"
                     android:paddingTop="16dp"
                     android:textColor="@{viewModel.categoryButtons[0] ? @color/m1 : @color/g3}" />
@@ -230,6 +231,7 @@
                     android:paddingBottom="16dp"
                     android:paddingTop="16dp"
                     android:layout_weight="1"
+                    style="@style/b1_main"
                     android:background="@{viewModel.categoryButtons[1] ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:onClick="@{() -> viewModel.onButtonClick(1, `채소`)}"
                     android:text="@string/채소"
@@ -245,6 +247,7 @@
                     android:background="@{viewModel.categoryButtons[2] ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:onClick="@{() -> viewModel.onButtonClick(2, `과수`)}"
                     android:text="@string/과수"
+                    style="@style/b1_main"
                     android:textColor="@{viewModel.categoryButtons[2] ? @color/m1 : @color/g3}" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -263,6 +266,7 @@
                     android:layout_weight="1"
                     android:paddingBottom="16dp"
                     android:paddingTop="16dp"
+                    style="@style/b1_main"
                     android:background="@{viewModel.categoryButtons[3] ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:onClick="@{() -> viewModel.onButtonClick(3, `특용작물`)}"
                     android:text="@string/특용작물"
@@ -276,6 +280,7 @@
                     android:layout_weight="1"
                     android:paddingBottom="16dp"
                     android:paddingTop="16dp"
+                    style="@style/b1_main"
                     android:background="@{viewModel.categoryButtons[4] ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:onClick="@{() -> viewModel.onButtonClick(4, `화훼`)}"
                     android:text="@string/화훼"
@@ -288,6 +293,7 @@
                     android:layout_weight="1"
                     android:paddingBottom="16dp"
                     android:paddingTop="16dp"
+                    style="@style/b1_main"
                     android:background="@{viewModel.categoryButtons[5] ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:onClick="@{() -> viewModel.onButtonClick(5, `축산`)}"
                     android:text="@string/축산"
@@ -309,6 +315,7 @@
                     android:paddingBottom="16dp"
                     android:paddingTop="16dp"
                     android:layout_weight="1"
+                    style="@style/b1_main"
                     android:background="@{viewModel.categoryButtons[6] ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:onClick="@{() -> viewModel.onButtonClick(6, `농기계작업`)}"
                     android:text="@string/농기계작업"
@@ -322,6 +329,7 @@
                     android:paddingBottom="16dp"
                     android:paddingTop="16dp"
                     android:layout_weight="1"
+                    style="@style/b1_main"
                     android:background="@{viewModel.categoryButtons[7] ? @drawable/typebox_active : @drawable/typebox_unactive}"
                     android:onClick="@{() -> viewModel.onButtonClick(7, `기타`)}"
                     android:text="@string/기타"
@@ -410,6 +418,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="12dp"
+                style="@style/b1_main"
                 android:background="@{viewModel.activedaySpinner ? @drawable/background_spinner_active : @drawable/background_spinner_unactive}"/>
             <EditText
                 android:id="@+id/spinner_edit"
@@ -419,7 +428,7 @@
                 android:backgroundTint="@{viewModel.focusSpinnerEdit ? @color/m1 : @color/g_line}"
                 android:hint="@string/월화_월수금"
                 android:textColorHint="@color/g3"
-                android:textSize="16sp"
+                style="@style/b1_main"
                 android:textColor="@color/black"
                 android:textCursorDrawable="@color/m1"
                 android:paddingLeft="4dp"

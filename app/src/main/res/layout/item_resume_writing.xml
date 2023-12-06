@@ -76,7 +76,7 @@
             android:id="@+id/rewrite"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/pencil"
+            android:src="@drawable/ppencil"
             android:layout_marginRight="16dp"/>
         <ImageView
             android:id="@+id/deleteBtn"
