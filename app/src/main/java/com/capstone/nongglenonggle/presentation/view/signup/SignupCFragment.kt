@@ -110,8 +110,10 @@ class SignupCFragment : BaseFragment<FragmentSignupCBinding>(R.layout.fragment_s
     }
     fun EndSignupWorker()
     {
+        activity?.finishAffinity()
         //구직자 홈화면으로
         val intent= Intent(context, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
 

@@ -30,11 +30,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             if(viewModel.isLoginAvailable.value == true){
                 viewModel.isFarmer.observe(this, Observer { isFarmer->
                     val intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
+                    finish()
                 })
                 viewModel.isWorker.observe(this, Observer { isWorker->
                     val intent = Intent(this,WorkerMainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
+                    finish()
                 })
             }
         }

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import com.capstone.nongglenonggle.domain.entity.OffererHomeFilterContent
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.presentation.view.FirstActivity
@@ -44,7 +45,9 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
         //-------------------삭제될 코드--------------------------
         binding.logo.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
+            activity?.finishAffinity()
             val intent = Intent(requireContext(), FirstActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
         //-------------------삭제될 코드--------------------------
@@ -121,5 +124,6 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
             }
         }
     }
+
 
 }

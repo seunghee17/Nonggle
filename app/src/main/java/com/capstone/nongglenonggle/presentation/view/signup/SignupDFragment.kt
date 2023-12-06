@@ -86,7 +86,9 @@ class SignupDFragment : BaseFragment<FragmentSignupDBinding>(R.layout.fragment_s
         findNavController().navigate(R.id.action_signupDFragment_to_addressSearchFragment)
     }
     fun moveToEnd(){
+        activity?.finishAffinity()
         val intent = Intent(context,LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
 

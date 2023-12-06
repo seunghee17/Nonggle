@@ -69,6 +69,9 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
         binding.bell.setOnClickListener{
             findNavController().navigate(R.id.alarmFragment)
         }
+        binding.toSearch.setOnClickListener{
+            findNavController().navigate(R.id.workerSearchFragment)
+        }
 
         viewModel.userDetail.observe(viewLifecycleOwner, Observer{userDetail ->
             if(userDetail?.refs?.isNotEmpty() == true){
@@ -104,7 +107,9 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
 
         binding.logo.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
+            activity?.finishAffinity()
             val intent = Intent(requireContext(), LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
 

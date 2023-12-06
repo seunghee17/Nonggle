@@ -98,7 +98,9 @@ class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.lay
         binding.backBtn.setOnClickListener{
             if(viewModel.resumeforFarmer.value == false) {
                 Log.d("resumecomplete","worker")
+                finishAffinity()
                 val intent = Intent(this,WorkerMainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
             }
             else{

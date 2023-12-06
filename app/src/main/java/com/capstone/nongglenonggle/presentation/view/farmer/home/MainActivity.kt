@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer,FarmerhomeFragment())
             .commit()
 
+
         bottomNavi.setOnItemSelectedListener { item->
             var selectedFragment: Fragment?=null
             when(item.itemId){
@@ -42,7 +43,11 @@ class MainActivity : AppCompatActivity() {
 
             }
             if(selectedFragment != null){
-                supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, selectedFragment).commit()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainer, selectedFragment)
+                    .addToBackStack(null)
+                    .commit()
             }
             true
         }

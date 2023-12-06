@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.databinding.FragmentNoticeBinding
@@ -38,12 +39,15 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(R.layout.fragment_not
             startActivity(intent)
         }
         binding.close.setOnClickListener{
-            val intent = Intent(context, MainActivity::class.java)
-            startActivity(intent)
+            fragmentManager?.popBackStack()
+            (activity as MainActivity).showBottomNavigation()
+
         }
         setTextColor(binding.title, binding.title.text.toString(), "공고글 작성은")
 
     }
+
+
 
     private fun setTextColor(textView:TextView, fullText:String, wordsToColor:String){
         val color = ContextCompat.getColor(textView.context, R.color.m1)
@@ -56,5 +60,7 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(R.layout.fragment_not
         }
         textView.text = spannableStringBuilder
     }
+
+
 
 }

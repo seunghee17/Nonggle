@@ -12,7 +12,13 @@
         tools:layout="@layout/fragment_worker_home" >
         <action
             android:id="@+id/action_workerHomeFragment_to_alarmFragment"
-            app:destination="@id/alarmFragment" />
+            app:destination="@id/alarmFragment"
+            app:popUpTo="@id/workerHomeFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_workerHomeFragment_to_workerSearchFragment"
+            app:destination="@id/workerSearchFragment"
+            app:popUpTo="@id/workerHomeFragment"/>
     </fragment>
     <fragment
         android:id="@+id/workerMypageFragment"
