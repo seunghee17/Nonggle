@@ -208,6 +208,7 @@ class ResumeViewModel @Inject constructor(
     init{
         _BirthLine.postValue(false)
         _activeCareerEdit.postValue(false)
+        _activePlus.postValue(false)
     }
     //recyclerview에 넣을 함수 세팅
     fun setResumeSummary(){

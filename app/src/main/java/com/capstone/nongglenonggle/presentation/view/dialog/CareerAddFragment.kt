@@ -1,5 +1,6 @@
 package com.capstone.nongglenonggle.presentation.view.dialog
 
+import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,6 +20,7 @@ import com.capstone.nongglenonggle.presentation.util.hideClearButton
 import com.capstone.nongglenonggle.presentation.util.showClearButton
 import com.capstone.nongglenonggle.presentation.view.adapter.SpinnerAdapter
 import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
@@ -39,6 +41,7 @@ class CareerAddFragment : BottomSheetDialogFragment(){
         binding.lifecycleOwner = this
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

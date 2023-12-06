@@ -28,7 +28,6 @@ class DatepickerFragment : BottomSheetDialogFragment() {
         _binding = FragmentDatepickerBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = this
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -105,10 +104,6 @@ class DatepickerFragment : BottomSheetDialogFragment() {
             val month = month.value
             val day = day.value
 
-//            if(typeviewModel.isHire.value == true){
-//                val currentList = viewModel._DateList.value ?: emptyList()
-//                viewModel._DateList.value = currentList + listOf(year,month,day)
-//            }
 
                 val currentList = workerviewModel._BirthList.value ?: emptyList()
                 workerviewModel._BirthList.value = currentList + listOf(year, month, day)

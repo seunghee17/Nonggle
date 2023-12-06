@@ -23,7 +23,7 @@ class Dialog1Fragment : DialogFragment() {
     closebtn.setOnClickListener{
         dismiss()
     }
-        val resourceId = resources.getIdentifier("clause","raw","com.example.nongglenonggle")
+        val resourceId = resources.getIdentifier("clause","raw","com.capstone.nongglenonggle")
         if(resourceId != 0){
             val inputStream = resources.openRawResource(resourceId)
             val reader=BufferedReader(InputStreamReader(inputStream))

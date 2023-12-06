@@ -96,13 +96,15 @@ class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.lay
 
 
         binding.backBtn.setOnClickListener{
-            if(value != null){
-                //구인자측에서 클릭했다
-                onBackPressed()
-            }
-            else{
+            if(viewModel.resumeforFarmer.value == false) {
+                Log.d("resumecomplete","worker")
                 val intent = Intent(this,WorkerMainActivity::class.java)
                 startActivity(intent)
+            }
+            else{
+                //구인자측에서 클릭했다
+                onBackPressed()
+                Log.d("resumecomplete","farmer")
             }
         }
     }

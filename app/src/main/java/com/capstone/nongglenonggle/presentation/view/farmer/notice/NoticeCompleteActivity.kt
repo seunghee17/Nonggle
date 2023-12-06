@@ -52,8 +52,9 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
             if(task.isSuccessful){
                 val document = task.result
                 if(document != null && document.exists()){
-                    //문서 id존재, 현재 회원이 구인자다
+                    //문서 id존재, 현재 회원이 구인자
                     binding.includeUserScore.linear.visibility = View.VISIBLE
+                    viewModel.noticeForFarmer()
                 }
                 else{
 
@@ -71,23 +72,14 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
             setWorkTime()
             setImage()
         })
-
-        if(uid != null){
-            //구직자가 열람하는 것
-            viewModel.noticeForWorker()
-            binding.appBarWorker.backBtn.setOnClickListener{
-                this.onBackPressedDispatcher.addCallback(this, callback)
-            }
-
-        }else{
-            //구인자가 열람
-           viewModel.noticeForFarmer()
-            binding.appBarFarmer.close.setOnClickListener {
-                val intent = Intent(this,MainActivity::class.java)
-                startActivity(intent)
-                finishAffinity()
-            }
+        binding.appBarWorker.backBtn.setOnClickListener{
+            finish()
         }
+        binding.appBarFarmer.close.setOnClickListener {
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        }
+
 
         binding.includeUserScore.applyBtn.setOnClickListener{
             Toast.makeText(this,"지원이 완료되었습니다!",Toast.LENGTH_SHORT).show()
