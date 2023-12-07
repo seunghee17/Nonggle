@@ -13,12 +13,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.view.farmer.mypage.ScoreWorkerFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/bg">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/bg">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -132,7 +133,7 @@
             android:layout_marginTop="29dp"
             android:layout_marginLeft="20dp"
             android:layout_height="wrap_content"
-            android:max="5"
+            android:max="4"
             android:progress="3"
             android:progressDrawable="@drawable/seekbar_bg"
             android:splitTrack="false"
@@ -163,7 +164,7 @@
             android:layout_marginTop="29dp"
             android:layout_marginLeft="20dp"
             android:layout_height="wrap_content"
-            android:max="5"
+            android:max="4"
             android:progress="3"
             android:progressDrawable="@drawable/seekbar_bg"
             android:splitTrack="false"
@@ -194,7 +195,7 @@
             android:layout_marginTop="29dp"
             android:layout_marginLeft="20dp"
             android:layout_height="wrap_content"
-            android:max="5"
+            android:max="4"
             android:progress="3"
             android:progressDrawable="@drawable/seekbar_bg"
             android:splitTrack="false"
@@ -226,7 +227,7 @@
             android:layout_marginTop="29dp"
             android:layout_marginLeft="20dp"
             android:layout_height="wrap_content"
-            android:max="5"
+            android:max="4"
             android:progress="3"
             android:progressDrawable="@drawable/seekbar_bg"
             android:splitTrack="false"

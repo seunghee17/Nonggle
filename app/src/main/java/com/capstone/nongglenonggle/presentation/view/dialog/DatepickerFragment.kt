@@ -67,6 +67,8 @@ class DatepickerFragment : BottomSheetDialogFragment() {
            year.maxValue=2033
            month.maxValue = 12
            day.maxValue = 31
+
+           year.value = 2023
        }
         else{
            minValue = 1900
@@ -87,6 +89,8 @@ class DatepickerFragment : BottomSheetDialogFragment() {
            year.maxValue=2023
            month.maxValue = 12
            day.maxValue = 31
+
+           year.value = 2023
        }
 
         val yearValue = (minValue..maxValue).map{"${it}년"}.toTypedArray()

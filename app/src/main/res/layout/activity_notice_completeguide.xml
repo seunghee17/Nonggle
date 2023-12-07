@@ -9,7 +9,8 @@
     android:layout_height="match_parent"
     tools:context=".presentation.view.farmer.notice.NoticeCompleteguideActivity"
     android:orientation="vertical"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="@color/bg">
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -18,7 +19,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/notice_complete"
+        android:src="@drawable/notice_complete_final"
         android:layout_gravity="center_horizontal"/>
 
     <TextView
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="@string/공고쓰기가_완료"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/spoqahansansneo_regular"
         android:textSize="18sp"
         android:textColor="@color/g1"/>

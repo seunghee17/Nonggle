@@ -74,6 +74,16 @@
     </style>
 
 
+    <style name="YourCustomSwitchStyle" parent="Widget.AppCompat.CompoundButton.Switch">
+        <!-- 스위치의 배경(track)을 정의 -->
+        <item name="android:track">@drawable/selector_swich</item>
+
+        <!-- 스위치의 버튼(thumb)을 정의 -->
+        <item name="android:thumb">@drawable/switch_thumb</item>
+
+        <!-- 여기에 추가적인 스타일 속성을 정의할 수 있습니다 -->
+    </style>
+
 
 
 

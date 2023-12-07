@@ -9,8 +9,7 @@
     android:layout_marginRight="20dp"
     android:orientation="vertical"
     android:background="@drawable/bg_shadow_box"
-    android:elevation="4dp"
-    android:backgroundTint="@color/white">
+    android:elevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"

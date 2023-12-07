@@ -9,7 +9,6 @@
         </shape>
     </item>
 
-    <!-- Your Actual Background Layer -->
     <item>
         <shape
             android:shape="rectangle">

@@ -11,7 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/bg">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -121,7 +122,6 @@
             android:paddingTop="17dp"
             android:paddingBottom="17dp"
             android:gravity="center_vertical"
-            android:elevation="20dp"
             android:fontFamily="@font/spoqahansansneo_medium"
             android:textColor="@color/g1"
             android:textSize="12sp"/>

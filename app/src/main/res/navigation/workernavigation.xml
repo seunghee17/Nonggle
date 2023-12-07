@@ -18,13 +18,20 @@
         <action
             android:id="@+id/action_workerHomeFragment_to_workerSearchFragment"
             app:destination="@id/workerSearchFragment"
-            app:popUpTo="@id/workerHomeFragment"/>
+            app:popUpTo="@id/workerHomeFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/workerMypageFragment"
         android:name="com.capstone.nongglenonggle.presentation.view.worker.mypage.WorkerMypageFragment"
         android:label="fragment_worker_mypage"
-        tools:layout="@layout/fragment_worker_mypage" />
+        tools:layout="@layout/fragment_worker_mypage" >
+        <action
+            android:id="@+id/action_workerMypageFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:popUpTo="@id/workerMypageFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
     <fragment
         android:id="@+id/workerSearchFragment"
         android:name="com.capstone.nongglenonggle.presentation.view.worker.search.WorkerSearchFragment"
@@ -35,4 +42,9 @@
         android:name="com.capstone.nongglenonggle.presentation.view.worker.home.AlarmFragment"
         android:label="fragment_alarm"
         tools:layout="@layout/fragment_alarm" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.capstone.nongglenonggle.presentation.view.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

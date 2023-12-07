@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.FragmentWorkerMypageBinding
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
@@ -29,6 +30,10 @@ class WorkerMypageFragment : BaseFragment<FragmentWorkerMypageBinding>(R.layout.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
+
+        binding.settingBtn.setOnClickListener{
+            findNavController().navigate(R.id.settingFragment)
+        }
     }
 
 }

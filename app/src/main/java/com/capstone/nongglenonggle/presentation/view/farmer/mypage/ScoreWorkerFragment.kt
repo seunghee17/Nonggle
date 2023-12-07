@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.FragmentScoreWorkerBinding
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
@@ -45,10 +46,10 @@ class ScoreWorkerFragment : BaseFragment<FragmentScoreWorkerBinding>(R.layout.fr
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 val thumb = when(progress){
                     0 -> R.drawable.num1
-                    1 -> R.drawable.num1
-                    2-> R.drawable.num2
-                    3 -> R.drawable.num3
-                    4 -> R.drawable.num4
+                    1 -> R.drawable.num2
+                    2-> R.drawable.num3
+                    3 -> R.drawable.num4
+                    4 -> R.drawable.num5
                     else->R.drawable.num5
                 }
                 seekBar?.thumb = ContextCompat.getDrawable(requireContext(), thumb)
@@ -65,10 +66,10 @@ class ScoreWorkerFragment : BaseFragment<FragmentScoreWorkerBinding>(R.layout.fr
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 val thumb = when(progress){
                     0 -> R.drawable.num1
-                    1 -> R.drawable.num1
-                    2-> R.drawable.num2
-                    3 -> R.drawable.num3
-                    4 -> R.drawable.num4
+                    1 -> R.drawable.num2
+                    2-> R.drawable.num3
+                    3 -> R.drawable.num4
+                    4 -> R.drawable.num5
                     else->R.drawable.num5
                 }
                 seekBar?.thumb = ContextCompat.getDrawable(requireContext(), thumb)
@@ -85,10 +86,10 @@ class ScoreWorkerFragment : BaseFragment<FragmentScoreWorkerBinding>(R.layout.fr
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 val thumb = when(progress){
                     0 -> R.drawable.num1
-                    1 -> R.drawable.num1
-                    2-> R.drawable.num2
-                    3 -> R.drawable.num3
-                    4 -> R.drawable.num4
+                    1 -> R.drawable.num2
+                    2-> R.drawable.num3
+                    3 -> R.drawable.num4
+                    4 -> R.drawable.num5
                     else->R.drawable.num5
                 }
                 seekBar?.thumb = ContextCompat.getDrawable(requireContext(), thumb)
@@ -105,10 +106,10 @@ class ScoreWorkerFragment : BaseFragment<FragmentScoreWorkerBinding>(R.layout.fr
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 val thumb = when(progress){
                     0 -> R.drawable.num1
-                    1 -> R.drawable.num1
-                    2-> R.drawable.num2
-                    3 -> R.drawable.num3
-                    4 -> R.drawable.num4
+                    1 -> R.drawable.num2
+                    2-> R.drawable.num3
+                    3 -> R.drawable.num4
+                    4 -> R.drawable.num5
                     else->R.drawable.num5
                 }
                 seekBar?.thumb = ContextCompat.getDrawable(requireContext(), thumb)
@@ -138,11 +139,7 @@ class ScoreWorkerFragment : BaseFragment<FragmentScoreWorkerBinding>(R.layout.fr
 
         binding.complete.setOnClickListener{
             Toast.makeText(context, "일손평가를 완료했습니다!",Toast.LENGTH_LONG).show()
-            val destination = FarmerMypageFragment()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment,destination)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            findNavController().navigate(R.id.farmerMypageFragment)
         }
 
 }

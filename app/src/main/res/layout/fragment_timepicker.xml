@@ -28,7 +28,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="6dp"
             android:layout_marginLeft="20dp"
-            android:text="@string/근무_시작_시간"
+            android:text="@string/시간선택"
             android:textColor="@color/black"
             android:fontFamily="@font/spoqahansansneo_medium"
             android:textSize="18sp"

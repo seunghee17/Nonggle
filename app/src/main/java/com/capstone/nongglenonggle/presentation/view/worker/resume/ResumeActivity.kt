@@ -2,11 +2,14 @@ package com.capstone.nongglenonggle.presentation.view.worker.resume
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.ActivityResumeBinding
 import com.capstone.nongglenonggle.presentation.base.BaseActivity
 import com.capstone.nongglenonggle.presentation.view.adapter.ViewPager2Adapter
+import com.capstone.nongglenonggle.presentation.view.dialog.LogoutDialogFragment
+import com.capstone.nongglenonggle.presentation.view.dialog.OutDirectionDialogFragment
 import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,8 +21,9 @@ class ResumeActivity : BaseActivity<ActivityResumeBinding>(R.layout.activity_res
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
         binding.backbtn.setOnClickListener{
-            finish()
+            showDialog()
         }
         initViewPager()
     }
@@ -47,5 +51,10 @@ class ResumeActivity : BaseActivity<ActivityResumeBinding>(R.layout.activity_res
                 3-> tab.text = "희망조건"
             }
         }.attach()
+    }
+
+    private fun showDialog(){
+        val dialog = OutDirectionDialogFragment()
+        dialog.show(supportFragmentManager,"dialog")
     }
 }

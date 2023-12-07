@@ -9,6 +9,7 @@
     <string name="다음">다음</string>
     <string name="완료">완료</string>
     <string name="가입완료">가입완료</string>
+    <string name="시간선택">시간선택</string>
 
     <string name="필요인원">필요인원</string>
     <string name="필요인원설명">필요인원수를 숫자만 입력해주세요. 예) 3</string>
@@ -34,7 +35,7 @@
     <string name="성별무관">성별무관</string>
 
     <string name="급여">급여</string>
-    <string name="급여sub">※ 현재 최저 시급은 9160원 입니다.</string>
+    <string name="급여sub">※ 현재 최저 시급은 9,620원 입니다.</string>
     <string name="일급">일급</string>
     <string name="시급">시급</string>음
     <string name="급여협의">급여협의</string>
@@ -279,5 +280,13 @@
     <string name="조건준수">조건준수</string>
     <string name="공고글에_작성되어_있는_조건들을_지켰나요">공고글에 작성되어있는 조건들을 지켰나요?</string>
 
+    <string name="고객센터">고객센터</string>
+    <string name="비밀번호_변경">비밀번호 변경</string>
+    <string name="로그아웃">로그아웃</string>
+    <string name="탈퇴">탈퇴</string>
+    <string name="로그아웃_하시겠습니까_">로그아웃 하시겠습니까?</string>
+
+    <string name="정말_나가시겠어요_">정말 나가시겠어요?</string>
+    <string name="수정하신_정보가_사라져요_">입력하신 정보가 사라져요!</string>
 
 </resources>

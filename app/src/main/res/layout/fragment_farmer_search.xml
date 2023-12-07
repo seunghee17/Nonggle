@@ -158,6 +158,7 @@
                 android:orientation="horizontal"
                 android:clickable="true"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
                 android:gravity="center_vertical"
                 android:background="@drawable/state_filter_category">
                 <TextView

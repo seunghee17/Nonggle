@@ -13,7 +13,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.farmer.notice.noticeCFragment">
+    tools:context=".view.farmer.notice.noticeCFragment"
+    android:background="@color/white">
 
     <ScrollView
         android:id="@+id/scrollview"
@@ -577,6 +578,7 @@
                         app:flexWrap="wrap">
 
                         <LinearLayout
+                            android:id="@+id/cerA"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
@@ -607,6 +609,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/cerB"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
@@ -636,6 +639,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/cerC"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"

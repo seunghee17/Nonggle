@@ -15,7 +15,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.signup.SignupBFragment"
->
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -165,6 +165,7 @@
                     android:hint="전화번호를 입력해주세요"
                     android:paddingTop="15dp"
                     android:paddingBottom="14dp"
+                    android:paddingLeft="16dp"
                     android:textColorHint="@color/g3"
                     android:textCursorDrawable="@color/m1"
                     android:textSize="16sp" />

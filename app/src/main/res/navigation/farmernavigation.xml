@@ -26,6 +26,11 @@
             app:destination="@id/scoreApplierFragment"
             app:popUpTo="@id/farmerMypageFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_farmerMypageFragment_to_settingFragment2"
+            app:destination="@id/settingFragment2"
+            app:popUpTo="@id/farmerMypageFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/noticeFragment"
@@ -45,7 +50,7 @@
         <action
             android:id="@+id/action_scoreApplierFragment_to_scoreWorkerFragment"
             app:destination="@id/scoreWorkerFragment"
-            app:popUpTo="@id/scoreApplierFragment"
+            app:popUpTo="@id/farmerMypageFragment"
             app:popUpToInclusive="true"/>
     </fragment>
     <fragment
@@ -53,4 +58,9 @@
         android:name="com.capstone.nongglenonggle.presentation.view.farmer.mypage.ScoreWorkerFragment"
         android:label="ScoreWorkerFragment"
         tools:layout="@layout/fragment_score_worker"/>
+    <fragment
+        android:id="@+id/settingFragment2"
+        android:name="com.capstone.nongglenonggle.presentation.view.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

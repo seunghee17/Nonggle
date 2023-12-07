@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:background="@drawable/bg_shadow_box"
     android:elevation="4dp"
-    android:backgroundTint="@color/white"
     android:layout_marginBottom="1dp"
     android:layout_marginRight="12dp">
 

@@ -42,16 +42,6 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
         binding.lifecycleOwner = this
 
 
-        //-------------------삭제될 코드--------------------------
-        binding.logo.setOnClickListener{
-            FirebaseAuth.getInstance().signOut()
-            activity?.finishAffinity()
-            val intent = Intent(requireContext(), FirstActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-        }
-        //-------------------삭제될 코드--------------------------
-
 
         val adapter = FilterFarmerHomeAdapter(emptyList(), object : FilterFarmerHomeAdapter.onItemClickListener{
             override fun onItemClickListener(uid: String) {
@@ -78,6 +68,10 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
         }
         binding.toSearch.setOnClickListener{
             findNavController().navigate(R.id.searchWorkerFragment)
+        }
+
+        binding.noticeApplier.setOnClickListener{
+            findNavController().navigate(R.id.noticeFragment)
         }
     }
 
@@ -117,7 +111,7 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
             when(noticeContent.categoryItem.get(0)){
                 "식량작물" -> binding.yesNotice.image.setImageResource(R.drawable.img_offer_rice)
                 "채소" -> binding.yesNotice.image.setImageResource(R.drawable.img_offer_greens)
-                "과수" -> binding.yesNotice.image.setImageResource(R.drawable.appleexample)
+                "과수" -> binding.yesNotice.image.setImageResource(R.drawable.img_offer_fruite)
                 "특용작물" -> binding.yesNotice.image.setImageResource(R.drawable.img_offer_cashcrop)
                 "화훼" -> binding.yesNotice.image.setImageResource(R.drawable.img_offer_flower)
                 "축산" -> binding.yesNotice.image.setImageResource(R.drawable.img_offer_animal)

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.view.dialog.SuggestDialogFragment"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_radius4_nostroke"
+    android:backgroundTint="@color/white"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/t3"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:text="@string/로그아웃"
+        android:gravity="center"
+        android:layout_marginTop="32dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/로그아웃_하시겠습니까_"
+        android:fontFamily="@font/spoqahansansneo_regular"
+        android:textSize="16sp"
+        android:textColor="@color/g2"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:lineSpacingExtra="5sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:weightSum="2"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_radius4_nostroke"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="@color/g4"
+            android:text="@string/취소"
+            style="@style/b4_btn"
+            android:textColor="@color/g1"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/confirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_radius4_nostroke"
+            android:backgroundTint="@color/m1"
+            android:text="@string/확인"
+            style="@style/b4_btn"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+</LinearLayout>
+</layout>

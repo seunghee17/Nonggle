@@ -12,7 +12,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.view.farmer.home.FarmerhomeFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/bg">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -151,6 +152,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:background="@drawable/bg_applier_box"
+            android:elevation="4dp"
             android:backgroundTint="@color/m1"
             android:clickable="true">
             <TextView

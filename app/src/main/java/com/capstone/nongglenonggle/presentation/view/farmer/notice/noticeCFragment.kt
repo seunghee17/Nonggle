@@ -208,6 +208,7 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
                 binding.confirmbtn.setOnClickListener{
                     val currentList = viewModel._certifiList.value ?: emptyList()
                     viewModel._certifiList.value = currentList + listOf(p0.toString())
+                    binding.certificationInfo.text.clear()
                 }
             }
         })
@@ -233,13 +234,16 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
         //추가한 자격증 항목들 지우기
         binding.clearbtnA.setOnClickListener{
             viewModel.removeItemAt(0)
+            binding.cerA.visibility = View.GONE
         }
         binding.clearbtnB.setOnClickListener{
             viewModel.removeItemAt(1)
+            binding.cerB.visibility = View.GONE
         }
 
         binding.clearbtnC.setOnClickListener{
             viewModel.removeItemAt(2)
+            binding.cerC.visibility = View.GONE
         }
 
 

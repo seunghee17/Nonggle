@@ -14,7 +14,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -344,6 +344,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/근무_시작_시간을"
+                        style="@style/b1_main"
                         android:textColor="@{viewModel.haveStartData ? @color/black: @color/g3}"
                         android:layout_marginLeft="16dp"
                         android:paddingTop="15dp"
@@ -377,6 +378,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/근무_종료_시간을"
+                        style="@style/b1_main"
                         android:textColor="@{viewModel.haveEndData ? @color/black : @color/g3}"
                         android:layout_marginLeft="16dp"
                         android:paddingTop="15dp"
