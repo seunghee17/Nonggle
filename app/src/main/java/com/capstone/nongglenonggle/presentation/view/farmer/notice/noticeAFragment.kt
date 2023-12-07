@@ -143,18 +143,15 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
             if(next < viewpager.adapter?.itemCount ?: 0){
                 viewpager.setCurrentItem(next,true)
             }else{
-                Log.e("yet","아직 마지막아님")
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        Log.e("shit", "onresume")
         viewModel.loadAddressData(requireContext())
     }
 
-    //삭제 버튼의 동작을 함수화
     fun EditText.getClearButton(drawableRightId:Int){
         val drawableRight = 2
         val rightDrawable = this.compoundDrawables[drawableRight]
@@ -175,7 +172,6 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
     }
 
     fun moveToWeb(){
-        //replaceFragment(AddressSettingFragment(), R.id.addressSearch)
         val intent = Intent(context,AddressSearchWebActivity::class.java)
         startActivity(intent)
     }

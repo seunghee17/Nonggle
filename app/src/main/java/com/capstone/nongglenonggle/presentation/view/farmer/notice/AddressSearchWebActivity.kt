@@ -37,17 +37,12 @@ class AddressSearchWebActivity : BaseActivity<ActivityAddressSearchWebBinding>(R
                 }
             }
         })
-        //최초 로드
         webview.loadUrl("https://capstoneproject-11911.web.app")
     }
     inner class BridgeInterface{//javascript->android
     @JavascriptInterface
     fun processDATA(data:String){
-        //데이터값 유무 상태 변화 호출 동기적으로
         runOnUiThread {
-//            val intent = Intent(this@AddressSearchWebActivity, NoticeActivity::class.java)
-//            val addressData = data
-//            intent.putExtra("addressData", addressData)
             saveData(data)
             moveToNext()
         }

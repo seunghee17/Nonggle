@@ -38,19 +38,16 @@ class AddressSearchFragment : BaseFragment<FragmentAddressSearchBinding>(R.layou
         webview.addJavascriptInterface(BridgeInterface(),"Android")
         webview.setWebViewClient(object:WebViewClient(){
             override fun onPageFinished(view: WebView, url: String) {
-                //android->javascript 함수 호출
                 GlobalScope.launch(Dispatchers.Main) {
                     webview.loadUrl("javascript:sample2_execDaumPostcode();")
                 }
             }
         })
-        //최초 로드
         webview.loadUrl("https://capstoneproject-11911.web.app")
     }
      inner class BridgeInterface{
         @JavascriptInterface
         fun processDATA(data:String){
-         //데이터값 유무 상태 변화 호출 동기적으로
              activity?.runOnUiThread() {
                  viewModel.updateAddress(data)
                  moveToNext()
@@ -59,7 +56,6 @@ class AddressSearchFragment : BaseFragment<FragmentAddressSearchBinding>(R.layou
         }
 
     fun moveToNext(){
-        //findNavController().navigate(R.id.signupDFragment)
         findNavController().popBackStack()
     }
 

@@ -190,7 +190,6 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
                     startActivity(intent)
                 }
                 else{
-                    Log.e("ResumeDFragment","받아온 데이터가 없습니다")
                 }
             }
             }

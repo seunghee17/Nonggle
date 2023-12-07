@@ -17,7 +17,6 @@ object VerificationModule {
         return object: PhoneAuthProvider.OnVerificationStateChangedCallbacks()
         {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                //이런식으로 작성해도 되는건가..?
                 event.onVerificationCompleted(credential)
 
             }

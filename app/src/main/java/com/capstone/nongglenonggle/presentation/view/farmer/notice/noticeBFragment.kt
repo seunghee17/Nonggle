@@ -46,18 +46,14 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
         savedInstanceState: Bundle?
     ): View? {
         val view= super.onCreateView(inflater, container, savedInstanceState)
-        //사진 업로드
-        //storage초기화
         fbStorage = FirebaseStorage.getInstance()
         binding.workImageA.setOnClickListener{
             if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED){
-                //open album
                 val photoPickerIntent = Intent(Intent.ACTION_PICK)
                 photoPickerIntent.type = "image/*"
                 startActivityForResult(photoPickerIntent, pickImageFromAlbum)
             }
             else{
-                //requestStoragePermission()
                 val photoPickerIntent = Intent(Intent.ACTION_PICK)
                 photoPickerIntent.type = "image/*"
                 startActivityForResult(photoPickerIntent, pickImageFromAlbum)
@@ -103,7 +99,6 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
 
 
         workerTime1.setOnClickListener {
-            //viewModel.setActiveTime1Button()
             viewModel._workerTime1.postValue(true)
             viewModel._workerTime2.postValue(false)
             viewModel.timeType = "시간입력"
@@ -115,8 +110,6 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
             viewModel.timeType = "시간협의"
         }
 
-
-        //spinner 구현 부분
 
         val dayItems = resources.getStringArray(R.array.select_day)
         val dayadapter = SpinnerAdapter(requireContext(), R.layout.item_spinner, dayItems, R.id.list_content)
@@ -278,7 +271,6 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
             if (next < viewpager.adapter?.itemCount ?: 0) {
                 viewpager.setCurrentItem(next, true)
             } else {
-                Log.e("yet", "아직 마지막아님")
             }
         }
     }
@@ -316,13 +308,11 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
 
     //권한이 없을때 해당함수 호출
     private fun requestStoragePermission(){
-        Log.e("tagg","what")
         requestPermissions(
             //requireActivity(),
             arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
             REQUEST_CODE_PERMISSION
         )
-        Log.e("tagg","what done")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

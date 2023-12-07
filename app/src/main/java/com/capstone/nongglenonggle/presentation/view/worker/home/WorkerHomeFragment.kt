@@ -56,7 +56,6 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
             FilterWorkerHomeAdapter.onItemClickListener {
             override fun onItemClick(uid:String) {
                 val intent = Intent(requireContext(), NoticeCompleteActivity::class.java)
-                Log.d("onItemClickListener",uid)
                 intent.putExtra("UID_KEY", uid)
                 startActivity(intent)
             }

@@ -37,7 +37,6 @@ class AlarmAdapter(
             holder.date.text = item.currentTime
 
             holder.itemView.setOnClickListener{
-                //채용제안 수락 완료 처리
                 listener.onItemClick(item)
             }
         }

@@ -35,7 +35,6 @@ abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutRes
         transaction.commit()
     }
 
-    //fragment추가
     protected fun addFragment(fragment: Fragment, containerId: Int, addToBackStack: Boolean = false)
     {
         val transaction = parentFragmentManager.beginTransaction()

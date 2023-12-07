@@ -58,7 +58,6 @@ class FarmerHomeViewModel @Inject constructor(
             val user = fetchFarmerDataUseCase.invoke()
             _userDetail.value = user
 
-            Log.d("fetchUserInfo","${userDetail.value?.refs}")
             setUserCategoryList()
             setRefDataCategory()
             setRefDataAddress(userDetail.value?.first!! ,userDetail.value?.second!! )
@@ -94,7 +93,6 @@ class FarmerHomeViewModel @Inject constructor(
             val allData = mutableListOf<DocumentReference>()
             try {
                 for (i in 0 until categories.size) {
-                    Log.d("FarmerHomeViewModel1", "${categories[i]}")
                     val data = getBasedOnCategoryUseCase("ResumeCategory", categories[i])
                     if(data != null){
                         allData.addAll(data)

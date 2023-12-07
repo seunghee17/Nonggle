@@ -35,8 +35,7 @@ class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_r
     private val REQUEST_CODE_PERMISSION = 100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //사진 업로드
-        //storage초기화
+
         fbStorage = FirebaseStorage.getInstance()
     }
 
@@ -205,7 +204,6 @@ class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_r
             if(next < viewpager.adapter?.itemCount ?: 0){
                 viewpager.setCurrentItem(next,true)
             }else{
-                Log.e("yet","아직 마지막아님")
             }
         }
 
@@ -236,7 +234,6 @@ class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_r
                 openGallery()
             }else{
                 //권한 거부처리
-                Log.d("image","권한 거부처리")
                 openGallery()
             }
         }
@@ -255,7 +252,6 @@ class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_r
             }
             else{
                 //예외처리
-                Log.d("image","예외")
             }
         }
     }

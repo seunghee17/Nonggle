@@ -253,7 +253,6 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
             if(next < viewpager.adapter?.itemCount ?: 0){
                 viewpager.setCurrentItem(next,true)
             }else{
-                Log.e("yet","아직 마지막아님")
             }
         }
 

@@ -40,12 +40,11 @@ class AlarmFragment : BaseFragment<FragmentAlarmBinding>(R.layout.fragment_alarm
         binding.backBtn.setOnClickListener{
             findNavController().popBackStack()
         }
-        //suggest1과 currentTime
+
         val collectionRef = firestore.collection("Worker").document(uid!!)
 
         listenerRegistration = collectionRef.addSnapshotListener{snapshot, e->
             if(e != null){
-                Log.e("AlarmFragment", "$e")
                 return@addSnapshotListener
             }
             if(snapshot != null && snapshot.exists()){

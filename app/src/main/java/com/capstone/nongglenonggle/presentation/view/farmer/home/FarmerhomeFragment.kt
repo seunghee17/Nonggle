@@ -55,7 +55,7 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
 
         val adapter = FilterFarmerHomeAdapter(emptyList(), object : FilterFarmerHomeAdapter.onItemClickListener{
             override fun onItemClickListener(uid: String) {
-                //리스트 선택시 동작 정의
+
             }
         }
         )
@@ -102,7 +102,6 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
                     val data = viewModel.setUserFromRef(data?.refs.get(0))
                     viewModel._noticeData.value = data
                 }
-                Log.d("resumenum","${viewModel.resumeNum}")
                 binding.info.text = "지원자 수"
                 binding.num.visibility = View.VISIBLE
             }

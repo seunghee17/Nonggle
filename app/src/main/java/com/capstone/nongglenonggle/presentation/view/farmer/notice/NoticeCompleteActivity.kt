@@ -60,7 +60,6 @@ class NoticeCompleteActivity : BaseActivity<ActivityNoticeCompleteBinding>(R.lay
 
                 }
             }else{
-                Log.e("Firestore","$task.exception")
             }
         }
         viewModel.noticeDetail.asLiveData().observe(this, Observer { noticeContent->

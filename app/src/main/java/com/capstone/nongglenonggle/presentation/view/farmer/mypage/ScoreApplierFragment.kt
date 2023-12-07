@@ -64,7 +64,6 @@ class ScoreApplierFragment : BaseFragment<FragmentScoreApplierBinding>(R.layout.
                             val scoreData = document.toObject(ScoreDataModel::class.java)
                             scoreData?.let {
                                 viewModel._suggestionData.value = scoreData
-                                Log.d("ScoreApplierFragment","${viewModel._suggestionData.value}")
                                 adapter.updateList(listOf(it))
                             }
                         }

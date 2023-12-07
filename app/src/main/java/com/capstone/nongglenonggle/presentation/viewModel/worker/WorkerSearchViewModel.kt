@@ -53,8 +53,7 @@ class WorkerSearchViewModel @Inject constructor(
                     _subNotice.value = data
                 }
             } catch (e: Exception) {
-                Log.e("WorkerSearchViewModel", "Error fetching notices: $e")
-                // 에러 처리 로직 (필요한 경우)
+                // 에러 처리 로직
             }
 
         }

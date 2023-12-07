@@ -24,9 +24,6 @@ class FarmerNoticeCompleteViewModel @Inject constructor(
     private val _isWorker = MutableLiveData<Boolean>()
     val isWorker:LiveData<Boolean> = _isWorker
 
-//    fun noticeForWorker(){
-//        _isWorker.postValue(true)
-//    }
     fun noticeForFarmer(){
         _isWorker.postValue(false)
     }
@@ -36,7 +33,6 @@ class FarmerNoticeCompleteViewModel @Inject constructor(
             val data= getNoticeUseCase.invoke(uid).collect{data->
                 _noticeDetail.value = data
             }
-            Log.d("NoticeCompleteVM", "$data")
             isDataReady.value = true
         }
     }

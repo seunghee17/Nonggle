@@ -36,7 +36,6 @@ class FarmerMypageFragment : BaseFragment<FragmentFarmerMypageBinding>(R.layout.
         }
 
         binding.score.setOnClickListener{
-            //화면이동
             findNavController().navigate(R.id.scoreApplierFragment)
         }
     }

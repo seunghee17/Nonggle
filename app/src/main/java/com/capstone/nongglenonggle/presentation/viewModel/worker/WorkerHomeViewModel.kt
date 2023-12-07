@@ -48,14 +48,11 @@ class WorkerHomeViewModel @Inject constructor(
         viewModelScope.launch {
             val uid = getFarmerUID(firebaseAuth.currentUser!!.uid)
             modifyFarmerDBUseCase.invoke(uid).collect{result->
-                Log.d("alarmSuggestionOk","${uid}")
                 result.onSuccess {
                     _suggestComplete.value = true
-                    Log.d("alarmSuggestionOk","${_suggestComplete.value}")
                 }
                 result.onFailure {
                     _suggestComplete.value = false
-                    Log.d("alarmSuggestionOk","${_suggestComplete.value}")
                 }
             }
         }
@@ -106,11 +103,9 @@ class WorkerHomeViewModel @Inject constructor(
     fun fetchResumeVisible(){
         if(_userDetail.value?.refs != null){
             _isResume.value = true
-            Log.d("fetchResumeVisible", "true")
         }
         else{
             _isResume.value = false
-            Log.d("fetchResumeVisible", "false")
         }
     }
     suspend fun setUserFromRef(documentReference: DocumentReference) : ResumeContent?{
@@ -133,7 +128,6 @@ class WorkerHomeViewModel @Inject constructor(
                 ""
             }
         }catch (e:Exception){
-            Log.e("error","$e")
             ""
         }
     }

@@ -43,7 +43,6 @@ class WorkerSearchFragment : BaseFragment<FragmentWorkerSearchBinding>(R.layout.
             FilterWorkerHomeAdapter.onItemClickListener {
             override fun onItemClick(uid:String) {
                 val intent = Intent(requireContext(), NoticeCompleteActivity::class.java)
-                Log.d("onItemClickListener",uid)
                 intent.putExtra("UID_KEY", uid)
                 startActivity(intent)
             }
@@ -54,7 +53,6 @@ class WorkerSearchFragment : BaseFragment<FragmentWorkerSearchBinding>(R.layout.
             WorkerSearchAdapter.onItemClickListener {
             override fun onItemClick(uid:String) {
                 val intent = Intent(requireContext(), NoticeCompleteActivity::class.java)
-                Log.d("onItemClickListener",uid)
                 intent.putExtra("UID_KEY", uid)
                 startActivity(intent)
             }
@@ -65,7 +63,6 @@ class WorkerSearchFragment : BaseFragment<FragmentWorkerSearchBinding>(R.layout.
         binding.subRecycler.adapter = adapter2
 
         binding.worktype.setOnClickListener{
-            //bottomsheet
             setupBottomSheet()
         }
 
@@ -74,16 +71,13 @@ class WorkerSearchFragment : BaseFragment<FragmentWorkerSearchBinding>(R.layout.
 
         viewModelHM.allNotice.observe(viewLifecycleOwner){docs->
             val noticeList = mutableListOf<SeekerHomeFilterContent>()
-            //Log.d("allNotice1","$noticeList")
             for(notice in docs){
-                Log.d("allNotice","$notice")
                 noticeList.add(notice)
             }
             adapter1.updateList(noticeList)
         }
         viewModel.subNotice.observe(viewLifecycleOwner){docs->
             val noticeList = mutableListOf<WorkerSearchRecommend>()
-            Log.d("subNotice","$noticeList")
             for(notice in docs){
                 noticeList.add(notice)
             }

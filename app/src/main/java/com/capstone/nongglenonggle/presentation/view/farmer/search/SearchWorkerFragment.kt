@@ -28,7 +28,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-//농부용농부용농부일손찾기
 @AndroidEntryPoint
 class SearchWorkerFragment : BaseFragment<FragmentFarmerSearchBinding>(R.layout.fragment_farmer_search) {
     private val viewModel: FarmerSearchViewModel by viewModels()
@@ -108,7 +107,7 @@ class SearchWorkerFragment : BaseFragment<FragmentFarmerSearchBinding>(R.layout.
             adapter2.updateList(items)
         }
 
-        setTextColor(binding.title, binding.title.text.toString(), listOf("일손을"))
+        setTextColor(binding.title, binding.title.text.toString(), listOf("일손을",))
     }
 
     private fun setupBottomSheet(){

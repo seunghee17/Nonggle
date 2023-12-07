@@ -57,9 +57,6 @@ class LoginViewModel: ViewModel() {
         _isFarmer.postValue(false)
     }
 
-    //사용자 유형 감지하기 위한 uid 데이터 변수
-//    private val _UserUID=MutableLiveData<String>()
-//    val UserUID: LiveData<String> = _UserUID
     var UserUID : String = ""
 
 
@@ -88,32 +85,12 @@ class LoginViewModel: ViewModel() {
     }
 
     suspend fun getUserType(){
-//        farmerpath.get()
-//            .addOnCompleteListener{task->
-//                if(task.isSuccessful){
-//                    val documentSnapshot = task.result
-//                    if(documentSnapshot.exists()){
-//                        _isFarmer.postValue(true)
-//                        Log.e("none","구인")
-//                        Log.e("none","${isFarmer.value}")
-//                    }
-//                    else{
-//                        //구인자 회원이 아님
-//                        _isWorker.postValue(true)
-//                    }
-//                }
-//                else{
-//                    Log.e("none","회원정보 없음")
-//                }
-//            }
         UserUID?.let { uid ->
             val farmerpath = firestore.collection("Farmer").document(uid)
             val documentSnapshot = farmerpath.get().await()
 
             if (documentSnapshot.exists()) {
                 _isFarmer.postValue(true)
-                Log.e("none", "구인")
-                Log.e("none", "${isFarmer.value}")
             } else {
                 // 구인자 회원이 아님
                 _isWorker.postValue(true)

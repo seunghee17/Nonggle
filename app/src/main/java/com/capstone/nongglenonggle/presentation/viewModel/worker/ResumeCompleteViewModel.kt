@@ -39,13 +39,10 @@ class ResumeCompleteViewModel @Inject constructor(
                 getResumeUseCase.invoke(setting1,setting2,uid).collect { data ->
                     if (data != null) {
                         _resumeDetail.value = data
-                        Log.d("ResumeCompleteViewModel","${resumeforFarmer.value}")
                     } else {
-                        Log.e("ResumeCompleteViewModel", "Data is null")
                     }
                 }
             } catch (e: Exception) {
-                Log.e("ResumeCompleteViewModel", "Error fetching data", e)
             }
         }
     }
@@ -57,7 +54,6 @@ class ResumeCompleteViewModel @Inject constructor(
                 val snapshot = firestore.collection("Farmer").document(uid!!).get().await()
                 snapshot.getString("userName").orEmpty()
             }catch (e:Exception){
-                Log.e("getOffererName","${e}")
                 ""
             }
         }

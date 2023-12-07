@@ -61,7 +61,6 @@ class CareerAddFragment : BottomSheetDialogFragment(){
 
         binding.careerEdit.setOnFocusChangeListener{view,isfocus->
             viewModel.activeCareer(isfocus)
-            Log.e("career","${viewModel.activeCareerEdit.value}")
             if(isfocus && binding.careerEdit.text?.isNotEmpty()==true){
                 binding.careerEdit.showClearButton(R.drawable.xcircle)
             }else{
@@ -97,7 +96,7 @@ class CareerAddFragment : BottomSheetDialogFragment(){
 
         binding.selectCalendar.setOnTouchListener{v,event->
             if(event.action == MotionEvent.ACTION_UP){
-                //다이얼로그 띄우기
+
                 val dialog = MonthpickerFragment()
                 dialog.show(parentFragmentManager, "MonthpickerFragmentTag")
             }

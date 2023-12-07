@@ -359,7 +359,6 @@ class FarmerNoticeViewModel @Inject constructor(
                 _farmerImage.value = imageurl!!
             }
             else{
-               Log.e("error", "이미지 업로드 실패")
             }
         }
     }
@@ -463,7 +462,6 @@ class FarmerNoticeViewModel @Inject constructor(
                 addNoticeRefToGender("AnnouncementGender",docRef,noticeGender.value.toString())
                 addNoticeToType("AnnouncementHireType",docRef,workType.value.toString())
             }catch (e:Exception){
-                Log.d("first", "fail to database")
             }
         }
     }
@@ -474,7 +472,6 @@ class FarmerNoticeViewModel @Inject constructor(
             try{
                 addNoticeRefToUserUseCase.invoke(docRef)
             }catch (e:Exception){
-                Log.d("second", "fail to database")
             }
         }
     }
@@ -484,7 +481,6 @@ class FarmerNoticeViewModel @Inject constructor(
             try{
                 addRefToAddressUseCase.invoke(docRef,type,id1, id2)
             }catch (e:Exception){
-                Log.d("third", "fail to address")
             }
         }
     }
@@ -495,7 +491,6 @@ class FarmerNoticeViewModel @Inject constructor(
             try {
                 addNoticeToCategoryUseCase.invoke(name,docRef, id)
             }catch (e:Exception){
-                Log.d("four", "fail to category")
             }
         }
     }
@@ -505,7 +500,6 @@ class FarmerNoticeViewModel @Inject constructor(
             try {
                 addNoticeToGenderUseCase.invoke(name,docRef, id)
             }catch (e:Exception){
-                Log.d("five", "fail to gender")
             }
         }
     }
@@ -516,7 +510,6 @@ class FarmerNoticeViewModel @Inject constructor(
             try {
                 addNoticeToTypeUseCase.invoke(name,docRef, id)
             }catch (e:Exception){
-                Log.d("six", "fail to type")
             }
         }
     }

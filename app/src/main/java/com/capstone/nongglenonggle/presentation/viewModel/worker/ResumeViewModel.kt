@@ -87,15 +87,12 @@ class ResumeViewModel @Inject constructor(
             if(result.isSuccess){
                 //여기서 url접근해서 가져오기
                 val imageurl = result.getOrNull()
-                Log.d("uploadImage", "${imageurl!!}")
                 if(imageurl != null){
                     _profileImage.value = imageurl!!
                 }else{
-                    Log.e("uploadImage" , "url null")
                 }
             }
             else{
-                Log.e("uploadImage", "이미지 업로드 실패")
             }
         }
     }
@@ -415,9 +412,8 @@ class ResumeViewModel @Inject constructor(
         viewModelScope.launch {
             try{
                 addResumeUseCase.invoke(resumeContent,opensetting1,opensetting2)
-                Log.d("ResumeViewModel", "sdf")
                 val docRef = addResumeUseCase.invoke(resumeContent,opensetting1,opensetting2)
-                Log.d("ResumeViewModel", "sdfd")
+
                 addResumeRefToUser(docRef)
                 if(locationSelect.value?.size == 2){
                     addRefToAddress(docRef,"ResumeFilter",firstElement!!,secondElement!!)
@@ -438,7 +434,7 @@ class ResumeViewModel @Inject constructor(
                 addNoticeRefToGender("ResumeGender",docRef,gender)
                 addNoticeToType("ResumeWorkType",docRef,dormType)
             }catch (e:Exception){
-                Log.d("addResumeContent", "$e")
+
             }
         }
     }
@@ -447,7 +443,7 @@ class ResumeViewModel @Inject constructor(
             try{
                 addResumeRefToUserUseCase.invoke(docRef)
             }catch (e:Exception){
-                Log.e("addResumeRefToUser","$e")
+
                 throw e
             }
         }
@@ -457,7 +453,7 @@ class ResumeViewModel @Inject constructor(
                 try{
                     addRefToAddressUseCase.invoke(docRef,type,id1, id2)
                 }catch (e:Exception){
-                    Log.e("addRefToAddress", "$e")
+
                 }
             }
         }
@@ -466,7 +462,7 @@ class ResumeViewModel @Inject constructor(
             try {
                 addResumeByAgeUseCase.invoke(docRef,id)
             }catch (e:Exception){
-                Log.e("addByAge","$e")
+
                 throw e
             }
         }
@@ -476,7 +472,7 @@ class ResumeViewModel @Inject constructor(
                 try {
                     addCategoryUseCase.invoke(name,docRef, id)
                 }catch (e:Exception){
-                    Log.d("addRefToCategory", "fail to category")
+
                 }
             }
         }
@@ -486,7 +482,7 @@ class ResumeViewModel @Inject constructor(
                 try {
                     addGenderUseCase.invoke(name,docRef, id)
                 }catch (e:Exception){
-                    Log.d("five", "fail to gender")
+
                 }
             }
         }
@@ -497,7 +493,7 @@ class ResumeViewModel @Inject constructor(
                 try {
                     addTypeUseCase.invoke(name,docRef, id)
                 }catch (e:Exception){
-                    Log.d("addNoticeToType", "fail to type")
+
                 }
             }
         }

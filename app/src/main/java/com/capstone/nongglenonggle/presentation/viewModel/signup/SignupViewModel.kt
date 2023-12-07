@@ -179,10 +179,8 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
                                 )
                             }
                         }
-                        //코루틴 사용할 수 있지 않을까?
                     }
                     else{
-                        Log.e("signUpWithEmailPasswordAndPhoneNumber", "fail")
                     }
                 }
         }
@@ -238,8 +236,6 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
                 updateMap[category]=true
                 buttonupdateds.value = updateMap
                 buttoncnt++
-                Log.e("please", "${buttonupdateds.value}")
-                Log.e("signup", "success/${UserUID.value}")
             }
         }
         getSelectedCategory()

@@ -33,7 +33,6 @@ class FarmerMyPageViewModel:ViewModel() {
                 _userName.value = document.data?.get("userName").toString()
             }
         }.addOnFailureListener{exception->
-            Log.e("FarmerMyPageViewModel","$exception")
         }
     }
 
@@ -50,10 +49,8 @@ class FarmerMyPageViewModel:ViewModel() {
 //                )
                 //_suggestionData.value = scoreData // LiveData 업데이트
             } else {
-                Log.e("FarmerMyPageViewModel","data is no where")
             }
         }.addOnFailureListener{e->
-            Log.e("FarmerMyPageViewModel","$e")
         }
     }
 //        fun getSuggestionData(uid:String) {
