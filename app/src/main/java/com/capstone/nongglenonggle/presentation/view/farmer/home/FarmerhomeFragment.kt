@@ -66,9 +66,9 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
                 adapter.updateList(dataList)
             }
         }
-        binding.toSearch.setOnClickListener{
-            findNavController().navigate(R.id.searchWorkerFragment)
-        }
+//        binding.toSearch.setOnClickListener{
+//            findNavController().navigate(R.id.searchWorkerFragment)
+//        }
 
         binding.noticeApplier.setOnClickListener{
             findNavController().navigate(R.id.noticeFragment)
