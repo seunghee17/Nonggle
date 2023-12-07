@@ -59,7 +59,8 @@ class AddressSearchFragment : BaseFragment<FragmentAddressSearchBinding>(R.layou
         }
 
     fun moveToNext(){
-        findNavController().navigate(R.id.action_addressSearchFragment_to_signupDFragment)
+        //findNavController().navigate(R.id.signupDFragment)
+        findNavController().popBackStack()
     }
 
     }

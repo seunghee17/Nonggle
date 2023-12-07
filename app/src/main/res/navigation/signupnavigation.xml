@@ -14,7 +14,8 @@
         <action
             android:id="@+id/action_signupAFragment_to_signupBFragment"
             app:destination="@id/signupBFragment"
-            app:popEnterAnim="@anim/from_left_anim"/>
+            app:popEnterAnim="@anim/from_left_anim"
+            app:popUpTo="@id/signupAFragment"/>
     </fragment>
     <fragment
         android:id="@+id/signupBFragment"
@@ -24,7 +25,8 @@
         <action
             android:id="@+id/action_signupBFragment_to_signupCFragment"
             app:destination="@id/signupCFragment"
-            app:popEnterAnim="@anim/from_left_anim"/>
+            app:popEnterAnim="@anim/from_left_anim"
+            app:popUpTo="@id/signupBFragment"/>
     </fragment>
     <fragment
         android:id="@+id/signupCFragment"
@@ -34,7 +36,8 @@
         <action
             android:id="@+id/action_signupCFragment_to_signupDFragment"
             app:destination="@id/signupDFragment"
-            app:popEnterAnim="@anim/from_left_anim"/>
+            app:popEnterAnim="@anim/from_left_anim"
+            app:popUpTo="@id/signupCFragment"/>
     </fragment>
     <fragment
         android:id="@+id/signupDFragment"
@@ -45,14 +48,12 @@
             android:id="@+id/action_signupDFragment_to_addressSearchFragment"
             app:destination="@id/addressSearchFragment"
             app:popEnterAnim="@anim/from_left_anim"
-            app:popExitAnim="@animator/nav_default_exit_anim"/>
+            app:popExitAnim="@animator/nav_default_exit_anim"
+            app:popUpTo="@id/signupDFragment"/>
     </fragment>
     <fragment
         android:id="@+id/addressSearchFragment"
         android:name="com.capstone.nongglenonggle.presentation.view.signup.AddressSearchFragment"
         android:label="AddressSearchFragment" >
-        <action
-            android:id="@+id/action_addressSearchFragment_to_signupDFragment"
-            app:destination="@id/signupDFragment" />
     </fragment>
 </navigation>

@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.presentation.view.farmer.mypage.FarmerMypageFragment
 import com.capstone.nongglenonggle.presentation.view.farmer.notice.NoticeFragment
@@ -18,48 +20,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val bottomNavi = findViewById<BottomNavigationView>(R.id.bottom_navi)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer,FarmerhomeFragment())
-            .commit()
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+        val navController = navHostFragment.navController
 
 
-        bottomNavi.setOnItemSelectedListener { item->
-            var selectedFragment: Fragment?=null
-            when(item.itemId){
-                R.id.home_farmer -> {
-                    selectedFragment=FarmerhomeFragment()
-                }
-                //일손찾기
-                R.id.find_farmer->{
-                    selectedFragment= SearchWorkerFragment()
-                }
-                //공고쓰기
-                R.id.write_farmer->{
-                    selectedFragment= NoticeFragment()
-                }
-                R.id.mypage_farmer->{
-                    selectedFragment= FarmerMypageFragment()
-                }
-
+        navController.addOnDestinationChangedListener{_,destination,_->
+            if(destination.id == R.id.farmerhomeFragment || destination.id==R.id.searchWorkerFragment || destination.id == R.id.farmerMypageFragment){
+                bottomNavi.visibility = View.VISIBLE
+            }else{
+                bottomNavi.visibility = View.GONE
             }
-            if(selectedFragment != null){
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainer, selectedFragment)
-                    .addToBackStack(null)
-                    .commit()
-            }
-            true
         }
-    }
-    fun hideBottomNavi(){
-        val bottomNavi = findViewById<BottomNavigationView>(R.id.bottom_navi)
-        bottomNavi.visibility = View.GONE
-    }
-
-    fun showBottomNavigation() {
-        val bottomNavi = findViewById<BottomNavigationView>(R.id.bottom_navi)
-        bottomNavi.visibility = View.VISIBLE
+        bottomNavi.setupWithNavController(navController)
     }
 
 }

@@ -33,7 +33,6 @@ class ScoreWorkerFragment : BaseFragment<FragmentScoreWorkerBinding>(R.layout.fr
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        (activity as MainActivity)?.hideBottomNavi()
 
         //title
         viewModel.suggestionData.observe(viewLifecycleOwner, Observer { data->
@@ -141,7 +140,7 @@ class ScoreWorkerFragment : BaseFragment<FragmentScoreWorkerBinding>(R.layout.fr
             Toast.makeText(context, "일손평가를 완료했습니다!",Toast.LENGTH_LONG).show()
             val destination = FarmerMypageFragment()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragmentContainer,destination)
+            transaction.replace(R.id.fragment,destination)
             transaction.addToBackStack(null)
             transaction.commit()
         }
@@ -150,6 +149,5 @@ class ScoreWorkerFragment : BaseFragment<FragmentScoreWorkerBinding>(R.layout.fr
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (activity as? MainActivity)?.showBottomNavigation()
     }
 }

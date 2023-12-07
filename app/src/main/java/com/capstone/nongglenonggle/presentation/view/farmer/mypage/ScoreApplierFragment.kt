@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.FragmentScoreApplierBinding
 import com.capstone.nongglenonggle.domain.entity.ScoreDataModel
@@ -40,18 +41,16 @@ class ScoreApplierFragment : BaseFragment<FragmentScoreApplierBinding>(R.layout.
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        (activity as MainActivity)?.hideBottomNavi()
-
         adapter = ScoreForFarmerAdapter(emptyList(), object : ScoreForFarmerAdapter.onItemClickListener{
             override fun onItemClick(item: ScoreDataModel) {
-                val destination = ScoreWorkerFragment()
-                val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fragmentContainer,destination)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                findNavController().navigate(R.id.scoreWorkerFragment)
             }
 
         })
+
+        binding.backBtn.setOnClickListener{
+            findNavController().popBackStack()
+        }
 
         binding.recycler.adapter = adapter
 

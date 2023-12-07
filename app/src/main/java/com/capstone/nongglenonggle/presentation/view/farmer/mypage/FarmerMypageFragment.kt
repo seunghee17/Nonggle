@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.presentation.viewModel.farmer.FarmerMyPageViewModel
 import com.capstone.nongglenonggle.R
@@ -15,7 +16,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class FarmerMypageFragment : BaseFragment<FragmentFarmerMypageBinding>(R.layout.fragment_farmer_mypage) {
     private val viewModel: FarmerMyPageViewModel by activityViewModels()
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     val useruid= firebaseAuth.currentUser?.uid
 
@@ -31,30 +31,15 @@ class FarmerMypageFragment : BaseFragment<FragmentFarmerMypageBinding>(R.layout.
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        managerApplier()
-
         if (useruid != null) {
             viewModel.getSuggestionData()
         }
 
         binding.score.setOnClickListener{
             //화면이동
-            val destination = ScoreApplierFragment()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragmentContainer,destination)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            findNavController().navigate(R.id.scoreApplierFragment)
         }
     }
 
-    fun managerApplier(){
-        val destination = ManagerApplierFragment()
-        binding.manageApplier.setOnClickListener{
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragmentContainer, destination)
-            transaction.addToBackStack(null)
-            transaction.commit()
-        }
-    }
 
 }
