@@ -32,7 +32,9 @@ http://www.swudmgraduate.com/2023/project/detail/70
 
 ## 정보구조도
 
-![IA](https://github.com/songseunghei/CapstoneProject/assets/80136506/b70c517b-d8c8-44b6-970e-d052b047e06b)
+![IA](https://github.com/songseunghei/Nonggle/assets/80136506/1ba43029-d4f3-4070-a1af-fbc7fcb0fcf7)
+
+![IA](https://github.com/songseunghei/Nonggle/assets/80136506/eebeba85-b7b0-4d55-8f13-db54dfb58ba0)
 
 
 ## 디자인 시스템
