@@ -2,10 +2,6 @@
 2023.03 - 2023.11 서울여자대학교 캡스톤디자인 프로젝트 '농글' 입니다.
 
 
-## 소개 페이지
-http://www.swudmgraduate.com/2023/project/detail/70
-
-
 ## 프로젝트 소개
 
 ![표지](https://github.com/songseunghei/CapstoneProject/assets/80136506/cb4bc378-0274-40a5-bc12-555ddaac2209)
