@@ -13,12 +13,12 @@ kotlin{
 
 android {
     namespace 'com.capstone.nongglenonggle'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.capstone.nongglenonggle"
         minSdk 26
-        targetSdk 33
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -62,7 +62,7 @@ dependencies {
     implementation "androidx.compose.ui:ui"
     implementation "androidx.compose.foundation:foundation"
     implementation "androidx.compose.foundation:foundation-layout"
-    implementation "androidx.compose.material3:material3"
+    implementation "androidx.compose.material3:material3:1.3.2"
     implementation "androidx.compose.runtime:runtime-livedata"
     implementation "androidx.compose.ui:ui-tooling"
 
