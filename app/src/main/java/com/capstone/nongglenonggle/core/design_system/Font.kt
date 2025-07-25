@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.design_system
+package com.capstone.nongglenonggle.core.design_system
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontStyle

@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.di
+package com.capstone.nongglenonggle.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
