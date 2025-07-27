@@ -48,9 +48,7 @@ class FarmerNoticeViewModel @Inject constructor(
     val AddressFromWeb:LiveData<String?> = _AddressFromWeb
 
     //시도, 시군구 각각 얻기 위해서
-    val locationArray: Array<String> by lazy {
-        AddressFromWeb.value?.split(" ")?.toTypedArray() ?: arrayOf()
-    }
+    val locationArray: Array<String> = AddressFromWeb.value?.split(" ")?.toTypedArray() ?: arrayOf()
 
     val firstElement: String? by lazy {
         locationArray.getOrNull(0)
