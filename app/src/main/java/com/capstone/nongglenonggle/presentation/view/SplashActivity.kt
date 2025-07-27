@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.presentation.view.farmer.home.MainActivity
+import com.capstone.nongglenonggle.presentation.view.onboarding.FirstActivity
 import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -41,7 +42,7 @@ class SplashActivity : AppCompatActivity() {
                     }
             }
             else{
-                val intent = Intent(this@SplashActivity,FirstActivity::class.java)
+                val intent = Intent(this@SplashActivity, FirstActivity::class.java)
                 startActivity(intent)
                 finish()
             }
