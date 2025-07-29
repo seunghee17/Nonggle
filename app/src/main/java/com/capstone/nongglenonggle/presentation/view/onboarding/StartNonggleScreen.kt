@@ -10,11 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalContext
@@ -196,6 +198,7 @@ fun signUpWithPhoneNumber(
             .fillMaxWidth(),
         onClick = onClick,
         enabled = true,
+        enableContentColor = NonggleTheme.colors.g1,
         enableColor = NonggleTheme.colors.g_line,
         pressedColor = NonggleTheme.colors.m2,
         titleText = "전화번호로 가입하기",
@@ -211,7 +214,10 @@ fun loginButtonText(
         textAlign = TextAlign.Center,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
                 onClick()
             },
         text = "로그인",
