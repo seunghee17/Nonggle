@@ -20,169 +20,173 @@
         app:layout_constraintBottom_toTopOf="@+id/nextBtn">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="가입유형"
-            android:textColor="@color/g2"
-            android:fontFamily="@font/spoqahansansneo_regular"
-            android:textSize="16sp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="가입할 유형을 선택해주세요."
-            android:textColor="@color/black"
-            android:fontFamily="@font/spoqahansansneo_regular"
-            android:textSize="24sp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="10dp"
-            />
-        <FrameLayout
-            android:id="@+id/farmerType"
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginRight="20dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        >-->
+        <androidx.compose.ui.platform.ComposeView
+            android:id = "@+id/compose_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@{viewModel.isHire ? @drawable/typebox_active : @drawable/typebox_unactive}"
-            android:clickable="true"
-            >
+            android:layout_height="match_parent"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="가입유형"-->
+<!--            android:textColor="@color/g2"-->
+<!--            android:fontFamily="@font/spoqahansansneo_regular"-->
+<!--            android:textSize="16sp"-->
+<!--            />-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="가입할 유형을 선택해주세요."-->
+<!--            android:textColor="@color/black"-->
+<!--            android:fontFamily="@font/spoqahansansneo_regular"-->
+<!--            android:textSize="24sp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            />-->
+<!--        <FrameLayout-->
+<!--            android:id="@+id/farmerType"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@{viewModel.isHire ? @drawable/typebox_active : @drawable/typebox_unactive}"-->
+<!--            android:clickable="true"-->
+<!--            >-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="horizontal">-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="35dp"
-                    android:layout_marginBottom="42dp"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="24dp"-->
+<!--                    android:layout_marginTop="35dp"-->
+<!--                    android:layout_marginBottom="42dp"-->
+<!--                    android:orientation="vertical">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:fontFamily="@font/spoqahansansneo_medium"
-                        android:text="구인자 회원"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginBottom="12dp"-->
+<!--                        android:fontFamily="@font/spoqahansansneo_medium"-->
+<!--                        android:text="구인자 회원"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="18sp" />-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/spoqahansansneo_medium"
-                        android:text="일손을 찾고싶어요!"
-                        android:textColor="@color/g2"
-                        android:textSize="14sp" />
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:fontFamily="@font/spoqahansansneo_medium"-->
+<!--                        android:text="일손을 찾고싶어요!"-->
+<!--                        android:textColor="@color/g2"-->
+<!--                        android:textSize="14sp" />-->
+<!--                </LinearLayout>-->
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+<!--                <View-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_weight="1" />-->
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="32dp"
-                    android:layout_marginBottom="20dp"
-                    android:src="@drawable/img_offer_circle" />
+<!--                <ImageView-->
+<!--                    android:layout_width="80dp"-->
+<!--                    android:layout_height="80dp"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:layout_marginRight="32dp"-->
+<!--                    android:layout_marginBottom="20dp"-->
+<!--                    android:src="@drawable/img_offer_circle" />-->
 
-            </LinearLayout>
-        </FrameLayout>
+<!--            </LinearLayout>-->
+<!--        </FrameLayout>-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="16dp"
-            android:orientation="vertical"/>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="16dp"-->
+<!--            android:orientation="vertical"/>-->
 
-        <FrameLayout
-            android:id="@+id/worker_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@{viewModel.isWorker ? @drawable/typebox_active : @drawable/typebox_unactive}"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="35dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginBottom="42dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="구직자 회원"
-                        android:textSize="18sp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/spoqahansansneo_medium"
-                        android:layout_marginBottom="12dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="일자리를 찾고싶어요!"
-                        android:textSize="14sp"
-                        android:textColor="@color/g2"
-                        android:fontFamily="@font/spoqahansansneo_medium"
-                        />
-                </LinearLayout>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+<!--        <FrameLayout-->
+<!--            android:id="@+id/worker_type"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@{viewModel.isWorker ? @drawable/typebox_active : @drawable/typebox_unactive}"-->
+<!--            >-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="horizontal"-->
+<!--                >-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:layout_marginTop="35dp"-->
+<!--                    android:layout_marginLeft="24dp"-->
+<!--                    android:layout_marginBottom="42dp">-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="구직자 회원"-->
+<!--                        android:textSize="18sp"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:fontFamily="@font/spoqahansansneo_medium"-->
+<!--                        android:layout_marginBottom="12dp"-->
+<!--                        />-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="일자리를 찾고싶어요!"-->
+<!--                        android:textSize="14sp"-->
+<!--                        android:textColor="@color/g2"-->
+<!--                        android:fontFamily="@font/spoqahansansneo_medium"-->
+<!--                        />-->
+<!--                </LinearLayout>-->
+<!--                <View-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_weight="1" />-->
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/job_seeker_png"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="32dp"
-                    />
+<!--                <ImageView-->
+<!--                    android:layout_width="80dp"-->
+<!--                    android:layout_height="80dp"-->
+<!--                    android:src="@drawable/job_seeker_png"-->
+<!--                    android:layout_marginBottom="20dp"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:layout_marginRight="32dp"-->
+<!--                    />-->
 
-            </LinearLayout>
-        </FrameLayout>
+<!--            </LinearLayout>-->
+<!--        </FrameLayout>-->
 
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
     </ScrollView>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/nextBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stateListAnimator="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:text="다음"
-        android:paddingTop="14dp"
-        android:paddingBottom="16dp"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:background="@{viewModel.isActiveNext() ? @color/m1 : @color/unactive}"
-        android:textColor="@color/white"
-        android:fontFamily="@font/spoqahansansneo_medium"
-        />
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/nextBtn"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:stateListAnimator="@null"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        android:text="다음"-->
+<!--        android:paddingTop="14dp"-->
+<!--        android:paddingBottom="16dp"-->
+<!--        android:gravity="center"-->
+<!--        android:textSize="16sp"-->
+<!--        android:background="@{viewModel.isActiveNext() ? @color/m1 : @color/unactive}"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:fontFamily="@font/spoqahansansneo_medium"-->
+<!--        />-->
 
 
 
