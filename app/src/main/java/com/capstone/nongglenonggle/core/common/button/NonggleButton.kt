@@ -2,8 +2,10 @@ package com.capstone.nongglenonggle.core.common.button
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,6 +24,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalRippleConfiguration
 import androidx.compose.material3.Text
 import androidx.compose.runtime.CompositionLocalProvider
@@ -31,6 +35,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.capstone.nongglenonggle.R
+import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,8 +81,8 @@ fun FullButton(
     enabled: Boolean,
     onClick: () -> Unit,
     titleText: String,
-    backgroundColor: Color,
-    disableBackGroundColor: Color,
+    backgroundColor: Color = NonggleTheme.colors.m1,
+    disableBackGroundColor: Color = NonggleTheme.colors.unactive,
     titleTextStyle: TextStyle
 ) {
     NonggleButton(
@@ -139,13 +144,13 @@ fun ImageButton(
 @Composable
 fun ContainedButton(
     modifier: Modifier = Modifier,
-    enabled: Boolean,
+    enabled: Boolean = true,
     onClick: () -> Unit,
     titleText: String,
     titleTextStyle: TextStyle,
-    backgroundColor: Color,
-    pressBackgroundColor: Color,
-    disableBackGroundColor: Color,
+    backgroundColor: Color = NonggleTheme.colors.m1,
+    pressBackgroundColor: Color = NonggleTheme.colors.m2,
+    disableBackGroundColor: Color = NonggleTheme.colors.m3,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -249,4 +254,45 @@ fun OutlinedIconButton(
             }
         }
     )
+}
+
+@Composable
+fun NonggleIconButton(
+    modifier: Modifier = Modifier,
+    ImageResourceId: Int,
+    onClick: () -> Unit
+) {
+    IconButton(
+        onClick = onClick,
+        modifier = modifier
+    ) {
+        Icon(
+            painter = painterResource(id = ImageResourceId),
+            modifier = modifier.size(width = 20.dp, height = 20.dp),
+            contentDescription = null,
+        )
+    }
+}
+
+//온보딩의 현재 단계 안내해주는 컴포넌트
+@Composable
+fun stepButton(
+    stepInfo: String,
+    currentStep: String,
+) {
+    Box(
+        modifier = Modifier
+            .size(24.dp)
+            .background(
+                color = if (stepInfo == currentStep) NonggleTheme.colors.m1 else NonggleTheme.colors.g4,
+                shape = CircleShape
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = stepInfo,
+            style = NonggleTheme.typography.b2_sub,
+            color = if (stepInfo == currentStep) Color.White else NonggleTheme.colors.m1
+        )
+    }
 }

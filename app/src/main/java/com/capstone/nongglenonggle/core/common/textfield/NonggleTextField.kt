@@ -53,7 +53,6 @@ fun NonggleTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     isError: Boolean = false,
     isSuccess: Boolean = false,
-    /// keyboard type
     maxLines: Int = 1,
     shape: RoundedCornerShape = RoundedCornerShape(10.dp),
     label: @Composable (() -> Unit)? = null,
