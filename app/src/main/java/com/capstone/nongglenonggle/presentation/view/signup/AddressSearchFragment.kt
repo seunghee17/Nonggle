@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.databinding.FragmentAddressSearchBinding
-import com.capstone.nongglenonggle.presentation.viewModel.signup.SignupViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

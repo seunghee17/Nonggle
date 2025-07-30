@@ -1,7 +1,6 @@
-package com.capstone.nongglenonggle.presentation.viewModel.signup
+package com.capstone.nongglenonggle.presentation.view.signup
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -286,4 +285,11 @@ class SignupViewModel @Inject constructor(private val updateAddressUseCase: Upda
             }
         }
     }
+}
+
+enum class SignupStep {
+    STEP1,
+    STEP2,
+    STEP3,
+    STEP4 //구직자만 해당하는 step
 }

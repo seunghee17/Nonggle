@@ -57,7 +57,7 @@
             android:name=".presentation.view.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.view.FirstActivity"
+            android:name=".presentation.view.onboarding.FirstActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.view.SplashActivity"

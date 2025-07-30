@@ -11,7 +11,6 @@ import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.databinding.FragmentSignupCBinding
 import com.capstone.nongglenonggle.presentation.view.login.LoginActivity
-import com.capstone.nongglenonggle.presentation.viewModel.signup.SignupViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
