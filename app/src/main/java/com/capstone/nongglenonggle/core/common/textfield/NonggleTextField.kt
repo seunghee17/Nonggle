@@ -1,7 +1,12 @@
 package com.capstone.nongglenonggle.core.common.textfield
 
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -18,7 +23,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import androidx.compose.material3.Text
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import com.capstone.nongglenonggle.R
 
 @Composable
 fun NonggleTextField(
@@ -40,6 +49,8 @@ fun NonggleTextField(
     placeholder: @Composable (() -> Unit),
     supportText: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     isError: Boolean = false,
     isSuccess: Boolean = false,
     /// keyboard type
@@ -57,7 +68,8 @@ fun NonggleTextField(
             isError = isError,
             onValueChange = onValueChange,
             keyboardOptions = keyboardOptions,
-            singleLine = true,
+            keyboardActions = keyboardActions,
+            visualTransformation = visualTransformation,
             placeholder = placeholder,
             maxLines = maxLines,
             textStyle = textStyle.copy(color = textColor),
@@ -85,6 +97,8 @@ fun NonggleTextField(
             shape = shape,
             placeholder = placeholder,
             keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
+            visualTransformation = visualTransformation,
             maxLines = maxLines,
             trailingIcon = trailingIcon,
             colors = OutlinedTextFieldDefaults.colors(
@@ -110,15 +124,40 @@ enum class TextFieldType {
 fun PreviewTextField() {
     var title by remember { mutableStateOf("") }
     var isError = false
-    NonggleTextField(
-        textFieldType = TextFieldType.Standard,
-        value = title,
-        onValueChange = {title = it},
-        modifier = Modifier.padding(vertical = 10.dp , horizontal = 24.dp),
-        placeholder = {
-            Text(text = "힌트텍스트", style = NonggleTheme.typography.b1_main)
-        },
-        isError = isError,
-        isSuccess = false,
-    )
+    var title2 by remember { mutableStateOf("") }
+    var isError2 = false
+    Column {
+        NonggleTextField(
+            textFieldType = TextFieldType.Standard,
+            value = title,
+            onValueChange = {title = it},
+            modifier = Modifier.padding(vertical = 10.dp , horizontal = 24.dp),
+            placeholder = {
+                Text(text = "힌트텍스트", style = NonggleTheme.typography.b1_main)
+            },
+            isError = isError,
+            isSuccess = false,
+        )
+
+        NonggleTextField(
+            textFieldType = TextFieldType.Filled,
+            value = title2,
+            onValueChange = {title = it},
+            modifier = Modifier.padding(vertical = 10.dp , horizontal = 24.dp),
+            placeholder = {
+                Text(text = "힌트텍스트", style = NonggleTheme.typography.b1_main)
+            },
+            isError = isError2,
+            trailingIcon = {
+                Image(
+                    modifier = Modifier
+                        .size(width = 20.dp, height = 20.dp),
+                    painter = painterResource(id =R.drawable.bell,),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(color = Color.Green)
+                )
+            },
+            isSuccess = true,
+        )
+    }
 }
