@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,9 +17,12 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
@@ -26,10 +30,69 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
+import com.capstone.nongglenonggle.core.design_system.NongleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
+import kotlinx.coroutines.flow.collectLatest
+
+
+@Composable
+fun SetUserTypeScreen(
+    navController: NavHostController,
+) {
+    val viewModel: SignupComposeViewModel = hiltViewModel()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val effectFlow = viewModel.effect
+    val context = LocalContext.current
+
+    LaunchedEffect(true) {
+        effectFlow.collectLatest { effect ->
+            when(effect) {
+                is SignupContract.Effect.NavigateTo -> {
+                }
+            }
+        }
+    }
+
+    NongleTheme {
+        Column(
+            modifier = Modifier.fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            SelectTypeDescription()
+            Spacer(modifier = Modifier.height(10.dp))
+            userTypeContainer(
+                UserType.MANAGER,
+                modifier = Modifier.padding(horizontal = 20.dp),
+                onClick = {
+                    viewModel.setEvent(SignupContract.Event.SelectUseTypeBox(UserType.MANAGER))
+                },
+                selectType = uiState.userSignupType
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            userTypeContainer(
+                UserType.WORKER,
+                modifier = Modifier.padding(horizontal = 20.dp),
+                onClick = {
+                    viewModel.setEvent(SignupContract.Event.SelectUseTypeBox(UserType.WORKER))
+                },
+                selectType = uiState.userSignupType
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            nextBtn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                enable = true,
+                onClick = {  })
+        }
+    }
+}
 
 @Composable
 fun SelectTypeDescription() {
@@ -132,12 +195,6 @@ fun nextBtn(modifier: Modifier, enable: Boolean, onClick: () -> Unit) {
         enabled = enable,
         onClick = onClick,
         titleText = "다음",
-        backgroundColor = NonggleTheme.colors.m1,
-        disableBackGroundColor = NonggleTheme.colors.unactive,
         titleTextStyle = NonggleTheme.typography.t3
     )
-}
-
-enum class UserType {
-    WORKER, MANAGER, NONE
 }
