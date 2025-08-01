@@ -2,7 +2,11 @@ package com.capstone.nongglenonggle.core.common.textfield
 
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,6 +27,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.VisualTransformation
@@ -57,60 +62,68 @@ fun NonggleTextField(
     shape: RoundedCornerShape = RoundedCornerShape(10.dp),
     label: @Composable (() -> Unit)? = null,
     ) {
-    when(textFieldType) {
-        TextFieldType.Standard -> TextField(
-            modifier = modifier,
-            value = value,
-            label = label,
-            supportingText = supportText,
-            enabled = enabled,
-            isError = isError,
-            onValueChange = onValueChange,
-            keyboardOptions = keyboardOptions,
-            keyboardActions = keyboardActions,
-            visualTransformation = visualTransformation,
-            placeholder = placeholder,
-            maxLines = maxLines,
-            textStyle = textStyle.copy(color = textColor),
-            readOnly = readOnly,
-            trailingIcon = trailingIcon,
-            colors = TextFieldDefaults.colors(
-                focusedIndicatorColor = focusedColor,
-                unfocusedIndicatorColor = if(isSuccess) successColor else enabledColor,
-                disabledIndicatorColor = disabledColor,
-                errorIndicatorColor = errorColor,
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                disabledContainerColor = Color.Transparent,
-                errorContainerColor = Color.Transparent,
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.Start
+    ) {
+        label?.let {
+            Spacer(modifier = Modifier.height(8.dp))
+            it()
+        }
+        when(textFieldType) {
+            TextFieldType.Standard -> TextField(
+                modifier = modifier,
+                value = value,
+                supportingText = supportText,
+                enabled = enabled,
+                isError = isError,
+                onValueChange = onValueChange,
+                keyboardOptions = keyboardOptions,
+                keyboardActions = keyboardActions,
+                visualTransformation = visualTransformation,
+                placeholder = placeholder,
+                maxLines = maxLines,
+                textStyle = textStyle.copy(color = textColor),
+                readOnly = readOnly,
+                trailingIcon = trailingIcon,
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = focusedColor,
+                    unfocusedIndicatorColor = if(isSuccess) successColor else enabledColor,
+                    disabledIndicatorColor = disabledColor,
+                    errorIndicatorColor = errorColor,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent,
+                    errorContainerColor = Color.Transparent,
+                )
             )
-        )
-        TextFieldType.Filled -> OutlinedTextField(
-            modifier = modifier,
-            enabled = enabled,
-            readOnly = readOnly,
-            value = value,
-            onValueChange = onValueChange,
-            supportingText = supportText,
-            textStyle = textStyle.copy(color = textColor),
-            shape = shape,
-            placeholder = placeholder,
-            keyboardOptions = keyboardOptions,
-            keyboardActions = keyboardActions,
-            visualTransformation = visualTransformation,
-            maxLines = maxLines,
-            trailingIcon = trailingIcon,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = focusedColor,
-                unfocusedBorderColor = if(isSuccess) successColor else enabledColor,
-                disabledBorderColor = disabledColor,
-                errorBorderColor = errorColor,
-                focusedContainerColor = containerColor,
-                disabledContainerColor = containerColor,
-                unfocusedContainerColor = containerColor,
-                errorContainerColor = containerColor,
+            TextFieldType.Filled -> OutlinedTextField(
+                modifier = modifier,
+                enabled = enabled,
+                readOnly = readOnly,
+                value = value,
+                onValueChange = onValueChange,
+                supportingText = supportText,
+                textStyle = textStyle.copy(color = textColor),
+                shape = shape,
+                placeholder = placeholder,
+                keyboardOptions = keyboardOptions,
+                keyboardActions = keyboardActions,
+                visualTransformation = visualTransformation,
+                maxLines = maxLines,
+                trailingIcon = trailingIcon,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = focusedColor,
+                    unfocusedBorderColor = if(isSuccess) successColor else enabledColor,
+                    disabledBorderColor = disabledColor,
+                    errorBorderColor = errorColor,
+                    focusedContainerColor = containerColor,
+                    disabledContainerColor = containerColor,
+                    unfocusedContainerColor = containerColor,
+                    errorContainerColor = containerColor,
+                )
             )
-        )
+        }
     }
 }
 

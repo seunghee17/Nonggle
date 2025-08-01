@@ -162,7 +162,7 @@ fun ContainedButton(
         backgroundColor = if(isPressed) pressBackgroundColor else backgroundColor,
         disableContentColor = disableBackGroundColor,
         onClick = onClick,
-        contentPadding = PaddingValues(vertical = 16.dp),
+        contentPadding = PaddingValues(vertical = 16.dp, horizontal = 13.dp),
         interactionSource = interactionSource,
         content = {
             Text(
