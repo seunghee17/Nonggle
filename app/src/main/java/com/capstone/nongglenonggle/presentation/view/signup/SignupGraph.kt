@@ -17,7 +17,7 @@ fun NavGraphBuilder.SignupNavGraph(
             SetUserTypeScreen(navHostController)
         }
         composable(route = Screens.Signup.Step1.route) {
-            SetUserTypeScreen(navHostController)
+            SignupStep1Screen(navHostController)
         }
     }
 }
