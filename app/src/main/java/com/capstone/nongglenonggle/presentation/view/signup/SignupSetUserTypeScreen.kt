@@ -1,9 +1,11 @@
 package com.capstone.nongglenonggle.presentation.view.signup
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,9 +16,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalRippleConfiguration
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -34,26 +39,37 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
+import com.capstone.nongglenonggle.app.Screens
+import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.NongleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
+import com.capstone.nongglenonggle.core.noRippleClickable
 import kotlinx.coroutines.flow.collectLatest
 
 
 @Composable
 fun SetUserTypeScreen(
     navController: NavHostController,
+    viewModel: SignupComposeViewModel
 ) {
-    val viewModel: SignupComposeViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val effectFlow = viewModel.effect
     val context = LocalContext.current
 
+    //ui는 반응만 한다가 핵심
     LaunchedEffect(true) {
         effectFlow.collectLatest { effect ->
             when(effect) {
-                is SignupContract.Effect.NavigateTo -> {
+                is SignupContract.Effect.NavigateToStep1Screen -> {
+                    navController.navigate(Screens.Signup.Step1.route)
+                }
+                is SignupContract.Effect.setToastMessage -> {
+                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    // Handle other effects
                 }
             }
         }
@@ -64,6 +80,10 @@ fun SetUserTypeScreen(
             modifier = Modifier.fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            NonggleAppBar(
+                onBackPressed = { },
+                title = {},
+            )
             SelectTypeDescription()
             Spacer(modifier = Modifier.height(10.dp))
             userTypeContainer(
@@ -89,7 +109,9 @@ fun SetUserTypeScreen(
                     .fillMaxWidth()
                     .wrapContentHeight(),
                 enable = true,
-                onClick = {  })
+                onClick = {
+                    viewModel.setEffect(SignupContract.Effect.NavigateToStep1Screen)
+                })
         }
     }
 }
@@ -121,6 +143,7 @@ fun SelectTypeDescription() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun userTypeContainer(
     type: UserType,
@@ -133,56 +156,58 @@ fun userTypeContainer(
     val imageResourceId =
         if (type == UserType.WORKER) R.drawable.job_seeker_png else R.drawable.img_offer_circle
 
-    OutlinedCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .clickable {
-                onClick()
-            },
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White,
-        ),
-        border = BorderStroke(
-            1.dp,
-            if (type == selectType) NonggleTheme.colors.m1 else NonggleTheme.colors.g_line
-        ),
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 24.dp),
-            verticalAlignment = Alignment.CenterVertically
+    CompositionLocalProvider(LocalRippleConfiguration provides null) {
+        OutlinedCard(
+            modifier = modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .noRippleClickable {
+                    onClick()
+                },
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White,
+            ),
+            border = BorderStroke(
+                1.dp,
+                if (type == selectType) NonggleTheme.colors.m1 else NonggleTheme.colors.g_line
+            ),
         ) {
-            Column(
-                verticalArrangement = Arrangement.Top,
+            Row(
+                modifier = Modifier.padding(horizontal = 24.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = titleText,
-                    style = NonggleTheme.typography.t3,
-                    color = Color.Black
-                )
-                Text(
-                    modifier = Modifier.padding(top = 12.dp),
-                    text = descriptionText,
-                    style = TextStyle(
-                        fontFamily = spoqahanSansneo,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 14.sp,
-                        letterSpacing = 0.sp,
-                        platformStyle = PlatformTextStyle(includeFontPadding = false),
-                    ),
-                    color = NonggleTheme.colors.g2
-                )
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            Column() {
-                Spacer(modifier = Modifier.height(20.dp))
-                Image(
-                    modifier = Modifier
-                        .size(width = 80.dp, height = 80.dp),
-                    painter = painterResource(id = imageResourceId),
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier.height(20.dp))
+                Column(
+                    verticalArrangement = Arrangement.Top,
+                ) {
+                    Text(
+                        text = titleText,
+                        style = NonggleTheme.typography.t3,
+                        color = Color.Black
+                    )
+                    Text(
+                        modifier = Modifier.padding(top = 12.dp),
+                        text = descriptionText,
+                        style = TextStyle(
+                            fontFamily = spoqahanSansneo,
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 14.sp,
+                            letterSpacing = 0.sp,
+                            platformStyle = PlatformTextStyle(includeFontPadding = false),
+                        ),
+                        color = NonggleTheme.colors.g2
+                    )
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                Column() {
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Image(
+                        modifier = Modifier
+                            .size(width = 80.dp, height = 80.dp),
+                        painter = painterResource(id = imageResourceId),
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
             }
         }
     }
