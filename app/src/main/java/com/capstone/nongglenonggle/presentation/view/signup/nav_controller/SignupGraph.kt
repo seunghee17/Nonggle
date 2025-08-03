@@ -25,10 +25,10 @@ fun NavGraphBuilder.SignupNavGraph(
         composable(route = Screens.Signup.Step1.route) {
             SignupStep1Screen(navHostController, signUpComposeViewModel)
         }
-        composable(route = Screens.Signup.Step1.route) {
+        composable(route = Screens.Signup.Step2.route) {
             SignupStep2Scren(navHostController, signUpComposeViewModel)
         }
-        composable(route = Screens.Signup.Step1.route) {
+        composable(route = Screens.Signup.Step3.route) {
             SignupStep3Scren(navHostController, signUpComposeViewModel)
         }
     }
