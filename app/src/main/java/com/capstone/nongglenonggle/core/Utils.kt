@@ -1,5 +1,4 @@
 package com.capstone.nongglenonggle.core
-
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.remember
@@ -14,4 +13,10 @@ fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
         }) {
         onClick()
     }
+}
+
+fun getPhoneNumberForAuth(phoneNumber: String): String {
+    var parsingPhoneNumber = phoneNumber
+    parsingPhoneNumber = parsingPhoneNumber.replaceFirst("0", "+82")
+    return parsingPhoneNumber
 }
