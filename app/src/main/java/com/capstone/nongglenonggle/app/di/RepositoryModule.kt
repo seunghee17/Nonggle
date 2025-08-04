@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.di
+package com.capstone.nongglenonggle.app.di
 
 import com.capstone.nongglenonggle.data.ApplyRepositoryImpl
 import com.capstone.nongglenonggle.data.FirestoreGetRepositoryImpl
@@ -9,7 +9,6 @@ import com.capstone.nongglenonggle.domain.repository.ApplyRepository
 import com.capstone.nongglenonggle.domain.repository.FirestoreGetRepository
 import com.capstone.nongglenonggle.domain.repository.FirestoreSetRepository
 import com.capstone.nongglenonggle.domain.repository.ImageRepository
-import com.capstone.nongglenonggle.domain.usecase.UpdateAddressUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -21,39 +20,18 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object RepositoryModule {
     @Provides
     @Singleton
     fun provideAddressRepository(): AddressRepository = AddressRepository()
 
     @Provides
     @Singleton
-    fun provideUpdateAddressUseCase(repository: AddressRepository): UpdateAddressUseCase = UpdateAddressUseCase(repository)
-
-    @Provides
-    @Singleton
-    fun provideFirebaseStorage(): FirebaseStorage{
-        return FirebaseStorage.getInstance()
-    }
-
-    @Provides
-    @Singleton
-    fun provideFirebaseAuth():FirebaseAuth{
-        return FirebaseAuth.getInstance()
-    }
-
-    @Provides
-    @Singleton
     fun provideImageRepository(
         firebaseStorage: FirebaseStorage,
         firebaseAuth: FirebaseAuth
-    ):ImageRepository{
+    ): ImageRepository {
         return ImageRepositoryImpl(firebaseStorage,firebaseAuth)
-    }
-    @Provides
-    @Singleton
-    fun provideFirestore(): FirebaseFirestore{
-        return FirebaseFirestore.getInstance()
     }
 
     @Provides
@@ -61,7 +39,7 @@ object AppModule {
     fun provideSetRepository(
         firestore: FirebaseFirestore,
         firebaseAuth: FirebaseAuth
-    ):FirestoreSetRepository{
+    ): FirestoreSetRepository {
         return FirestoreSetRepositoryImpl(firestore,firebaseAuth)
     }
 
@@ -70,7 +48,7 @@ object AppModule {
     fun provideGetRepository(
         firestore: FirebaseFirestore,
         firebaseAuth: FirebaseAuth
-    ):FirestoreGetRepository{
+    ): FirestoreGetRepository {
         return FirestoreGetRepositoryImpl(firestore,firebaseAuth)
     }
 
@@ -79,10 +57,7 @@ object AppModule {
     fun provideApplyRepository(
         firestore: FirebaseFirestore,
         firebaseAuth: FirebaseAuth
-    ):ApplyRepository{
+    ): ApplyRepository {
         return ApplyRepositoryImpl(firestore,firebaseAuth)
     }
-
-
-
 }
