@@ -18,7 +18,6 @@ class ImageRepositoryImpl @Inject constructor(
         val storageRef = firebaseStorage.reference.child(folderName).child(imageFileName)
 
         return try{
-            //끝날때까진 대기인가?
             storageRef.putFile(imageEntity.uri).await()
             val imageurl = storageRef.downloadUrl.await()
             //업로드 성공시 이미지 url 반환하도록 구현
