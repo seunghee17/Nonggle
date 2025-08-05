@@ -1,295 +1,239 @@
 package com.capstone.nongglenonggle.presentation.view.signup
 
-import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.capstone.nongglenonggle.presentation.di.VerificationModule.provideVerificationCallbacks
-import com.capstone.nongglenonggle.domain.usecase.UpdateAddressUseCase
-import com.capstone.nongglenonggle.domain.usecase.VerificationEvent
-import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseUser
+import com.capstone.nongglenonggle.core.base.BaseViewModel
+import com.capstone.nongglenonggle.domain.usecase.RequestPhoneNumberVerificationUseCase
+import com.capstone.nongglenonggle.domain.usecase.ResendVerificationCodeUseCase
+import com.capstone.nongglenonggle.domain.usecase.SignInWithPhoneAuthCredentialUseCase
 import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
-class SignupViewModel @Inject constructor(private val updateAddressUseCase: UpdateAddressUseCase, @ApplicationContext private val context: Context) :ViewModel(),
-    VerificationEvent {
-    private val auth = Firebase.auth
-    private val callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks by lazy{
-        provideVerificationCallbacks(this)
-    }
+class SignupComposeViewModel @Inject constructor(
+    private val requestPhoneNumberVerificationUseCase: RequestPhoneNumberVerificationUseCase,
+    private val signInWithPhoneAuthCredentialUseCase: SignInWithPhoneAuthCredentialUseCase,
+    private val resendVerificationCodeUseCase: ResendVerificationCodeUseCase
+) : BaseViewModel<SignupContract.Event, SignupContract.State, SignupContract.Effect>(initialState = SignupContract.State()) {
 
-    override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-        _authcomplete.value = true
-    }
+    var storedVerificationId: String? = ""
+    private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
+    private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
-    override fun onVerificationFailed(e: FirebaseException) {
-        _authcomplete.value=false
-    }
+    //비즈니스 로직에 필요한 변수
+    //토큰 전송 횟수
+    private var tokenSendCount: Int = 0
+    //체크박스 활성화 개수
+    private var activeCheckBoxCount: Int =0
+    lateinit var userCredential: PhoneAuthCredential
 
-    override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
-        this.verificationId = verificationId
-    }
-    //도로명 주소 변수 정의
-    val _addressResult = MutableLiveData<String>()
-    val addressResult:LiveData<String>
-        get() = _addressResult
-    //textview visible용
-    val _isdata = MutableLiveData<Boolean>()
-    val isdata:LiveData<Boolean>
-        get() = _isdata
+    //side Effect를 최소화하고 상태 업데이트 순수기능에만 집중해야함
+    override fun reduceState(event: SignupContract.Event) {
+        viewModelScope.launch {
+            when (event) {
+                //SignupSetUserType에서 가입하는 유저의 타입 정하는 이벤트
+                is SignupContract.Event.SelectUseTypeBox -> {
+                    updateState(currentState.copy(userSignupType = event.type))
+                }
 
-    //다음버튼 활성화용
-    val _isActiveNext = MutableLiveData<Boolean>()
-    val isActiveNext:LiveData<Boolean> = _isActiveNext
+                //사용자 이름 작성
+                is SignupContract.Event.UserInsertName -> {
+                    updateState(currentState.copy(userName = event.userName))
+                }
 
+                //사용자 이름 지우기
+                is SignupContract.Event.ClearUserName -> {
+                    updateState(currentState.copy(userName = ""))
+                }
 
-    //구인자유형 선택
-    val _isHire = MutableLiveData<Boolean>(false)
-    val isHire:LiveData<Boolean> = _isHire
+                //사용자 핸드폰 번호 작성
+                is SignupContract.Event.UserInsertPhoneNumber -> {
+                    updateState(currentState.copy(phoneNumber = event.phoneNumber))
+                }
 
-    //구직자 유형 선택
-    val _isWorker = MutableLiveData<Boolean>()
-    val isWorker:LiveData<Boolean> = _isWorker
+                //사용자 핸드폰 번호 지우기
+                is SignupContract.Event.ClearUserPhoneNumber -> {
+                    updateState(currentState.copy(phoneNumber = ""))
+                }
 
-    //인증성공 여부 에러판단용
-    val _authcomplete = MutableLiveData<Boolean>()
-    val authcomplete: LiveData<Boolean>
-        get() = _authcomplete
-    var verificationId: String = ""
-
-
-    //이름 입력칸
-    val _isFocusName = MutableLiveData<Boolean>()
-    val isFocusName:LiveData<Boolean> = _isFocusName
-
-    //아이디 입력칸
-    val _isFocusId = MutableLiveData<Boolean>()
-    val isFoucsId :LiveData<Boolean> = _isFocusId
-
-    //아이디 입력형식 오류감지
-    val _isIdWrong = MutableLiveData<Boolean>()
-    val isIdWrong:LiveData<Boolean> = _isIdWrong
-
-    //아이디 버튼 활성화
-    val _IdBtnActive = MutableLiveData<Boolean>(false)
-    val IdBtnActive:LiveData<Boolean> = _IdBtnActive
-
-    //인증번호 포커싱
-    val _isFocusVerification = MutableLiveData<Boolean>()
-    val isFocusVerification:LiveData<Boolean> = _isFocusVerification
-
-    //비밀번호 포커싱
-    val _isFocusPW = MutableLiveData<Boolean>()
-    val isFocusPW:LiveData<Boolean> = _isFocusPW
-
-    //비밀번호 형식 판단
-    val _isPWWrong = MutableLiveData<Boolean>()
-    val isPWWrong:LiveData<Boolean> = _isPWWrong
-
-    //비밀번호2 포커싱
-    val _isFocusPW2 = MutableLiveData<Boolean>()
-    val isFocusPW2:LiveData<Boolean> = _isFocusPW2
-
-    //비밀번호 일치여부 판단
-    val _isPWSame = MutableLiveData<Boolean>()
-    val isPWSame:LiveData<Boolean> = _isPWSame
-
-    private val _resultAuthUser = MutableLiveData<Boolean>()
-    val resultAuthUser: LiveData<Boolean>
-        get() = _resultAuthUser
-
-    private val firestore = Firebase.firestore
-
-    var isComplete = false
-        private set
-
-    val _cstepActive = MutableLiveData<Boolean>(false)
-    val cstepActive:LiveData<Boolean> = _cstepActive
-
-    //카테고리 상태 저장용
-    val buttonupdateds: MutableLiveData<MutableMap<String, Boolean>> = MutableLiveData()
-
-    private var buttoncnt = 0
-
-    //유저의 uid값 livedata에 저장
-    private val _UserUID = MutableLiveData<String>()
-    val UserUID : LiveData<String> = _UserUID
-
-    //dstep 다음버튼 활성화
-    private val _dstepActive=MutableLiveData<Boolean>()
-    val dstepActive:LiveData<Boolean> = _dstepActive
-
-
-    fun startPhoneNumberVerification(phonenum:String) {
-        val options = PhoneAuthOptions.newBuilder(auth)
-            .setPhoneNumber(phonenum)
-            .setTimeout(120L, TimeUnit.SECONDS)
-            .setCallbacks(callbacks)
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
-    }
-
-    //회원가입 진행
-    suspend fun signUpWithEmailPasswordAndPhoneNumber(email: String,password:String,name:String) {
-        return suspendCancellableCoroutine {
-                continuation->
-            auth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener{task->
-                    if(task.isSuccessful)
-                    {
-                        val user: FirebaseUser? = auth.currentUser
-                        //구인자
-                        if(isHire.value == true){
-                            user?.let{
-                                val userDocument = firestore.collection("Farmer").document(it.uid)
-                                _UserUID.postValue(it.uid)
-                                userDocument.set(
-                                    mapOf(
-                                        "uid" to it.uid,
-                                        "phoneNum" to email,
-                                        "userName" to name
-                                    )
-                                )
-                            }
+                //인증번호가 매개변수로 넘긴 핸드폰 번호로 전송된다
+                is SignupContract.Event.sendVerificationCode -> {
+                    if (tokenSendCount > 3) {
+                        postEffect(SignupContract.Effect.setToastMessage(message = "인증 횟수를 초과했습니다 앱 종료 후 다시 시도해주세요."))
+                    } else {
+                        if (tokenSendCount == 0) {
+                            requestPhoneNumberVerification()
+                        } else {
+                            resendVerificationCode(
+                                phoneNumber = event.phoneNumber,
+                                token = resendToken
+                            )
                         }
-                        else if(isWorker.value == true){
-                            user?.let{
-                                val userDocument = firestore.collection("Worker").document(it.uid)
-                                _UserUID.postValue(it.uid)
-                                userDocument.set(
-                                    mapOf(
-                                        "uid" to it.uid,
-                                        "phoneNum" to email,
-                                        "userName" to name
-                                    )
-                                )
-                            }
-                        }
-                    }
-                    else{
+                        tokenSendCount++
                     }
                 }
-        }
-    }
 
-    fun updateAddress(data:String)
-    {
-        viewModelScope.launch {
-            updateAddressUseCase.execute(data)
-            _addressResult.value = updateAddressUseCase.getAddress()
-            _isdata.value = updateAddressUseCase.hasData()
-        }
-    }
+                //전송된 인증번호를 작성
+                is SignupContract.Event.UserInsertVerificationCode -> {
+                    updateState(currentState.copy(verificationCode = event.code))
+                }
+                is SignupContract.Event.ClearUserVerificationCode -> {
+                    updateState(currentState.copy(verificationCode = ""))
+                }
 
-    fun updateHireType() {
-        _isHire.value = !(_isHire.value ?: false)
-        _isWorker.value = !(_isHire.value!!)
-        _isActiveNext.value = _isHire.value
-
-    }
-
-    fun updateWorkerType() {
-        _isWorker.value= !(_isWorker.value ?: false)
-        _isHire.value= !(_isWorker.value!!)
-        _isActiveNext.value = _isWorker.value
-    }
-
-
-   //보여지는 첫화면 세팅
-    init{
-       _isdata.postValue(false)
-       _isWorker.postValue(false)
-       _isActiveNext.postValue(false)
-       _isFocusName.postValue(false)
-       _isFocusId.postValue(false)
-       _isIdWrong.postValue(false)
-       _isFocusVerification.postValue(false)
-       _isFocusPW.postValue(false)
-       _isPWWrong.postValue(false)
-       _isPWSame.postValue(true)
-       _isFocusPW2.postValue(false)
-       buttonupdateds.value = mutableMapOf()
-       _dstepActive.postValue(false)
-
-    }
-
-    //버튼클릭시 변경되는
-    fun onButtonClick(category:String){
-        if(buttoncnt <3){
-            val currentColor = buttonupdateds.value?.get(category) ?: false
-            if(!currentColor){
-                val updateMap = buttonupdateds.value?: mutableMapOf()
-                updateMap[category]=true
-                buttonupdateds.value = updateMap
-                buttoncnt++
-            }
-        }
-        getSelectedCategory()
-    }
-
-    val selectedButtonText = mutableListOf<String>()
-
-    //선택한 카테고리 list화
-    fun getSelectedCategory() : List<String>{
-        val selectedButtonId = buttonupdateds.value?.filter { it.value }?.keys ?: emptySet()
-        //데이터베이스에 들어갈 리스트
-
-        for(buttonId in selectedButtonId){
-            when(buttonId){
-                "category1" -> selectedButtonText.add("식량작물")
-                "category2" -> selectedButtonText.add("채소")
-                "category3" -> selectedButtonText.add("과수")
-                "category4" -> selectedButtonText.add("특용작물")
-                "category5" -> selectedButtonText.add("화훼")
-                "category6" -> selectedButtonText.add("축산")
-                "category7" -> selectedButtonText.add("농기계작업")
-                "category8" -> selectedButtonText.add("기타")
-            }
-        }
-        if(selectedButtonText.isNotEmpty()){
-            _dstepActive.postValue(true)
-        }
-        return selectedButtonText
-    }
-
-    suspend fun signInWithPhoneAuthCredential(verificationCode: String):Boolean {
-        return suspendCancellableCoroutine { continuation ->
-            if (verificationId.isNotEmpty() && verificationCode.isNotEmpty()) {
-                val credential = PhoneAuthProvider.getCredential(verificationId, verificationCode)
-                auth.signInWithCredential(credential)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            _resultAuthUser.value = true
-                            _authcomplete.value = _resultAuthUser.value
-                        } else {
-                            _resultAuthUser.value = false
-                            _authcomplete.value = _resultAuthUser.value
-                        }
+                is SignupContract.Event.VerificationCodeCheck -> {
+                    if(storedVerificationId.isNullOrEmpty()) {
+                        sendVerificationError("인증번호가 아직 전송되지 않았습니다.")
+                        return@launch
                     }
-            } else {
-                _resultAuthUser.value = false
-                _authcomplete.value = _resultAuthUser.value
+                    verifyPhoneNumberWithCode(
+                        verificationId = storedVerificationId,
+                        code = event.code
+                    )
+                    val result = signInWithPhoneAuthCredentialUseCase.invoke(credential = userCredential)
+                    result.fold(
+                        onSuccess = {
+                            updateState(currentState.copy(authverificationState = true))
+                            sendVerificationSuccess("인증에 성공하였습니다.")
+                        },
+                        onFailure = {
+                            sendVerificationError("인증에 실패하였습니다.")
+                        }
+                    )
+                }
+
+                is SignupContract.Event.AcitivateAllTermCheckBox -> {
+                    val currentAllCheckboxState = currentState.allCheckBoxState
+                    updateState(currentState.copy(allCheckBoxState = !currentAllCheckboxState))
+                    updateState(
+                        currentState.copy(
+                            ageLimitConfirmCheckBox = !currentAllCheckboxState,
+                            serviceUseTermCheckBox = !currentAllCheckboxState,
+                            personalInfoCheckBox = !currentAllCheckboxState
+                        )
+                    )
+                    if(currentState.allCheckBoxState) {
+                        activeCheckBoxCount =3
+                    } else {
+                        activeCheckBoxCount=0
+                    }
+                }
+
+                is SignupContract.Event.AcitivateAgeLimitCheckBox -> {
+                    updateState(currentState.copy(ageLimitConfirmCheckBox = !currentState.ageLimitConfirmCheckBox))
+                    if(currentState.ageLimitConfirmCheckBox) {
+                        activeCheckBoxCount+=1
+                    } else {
+                        activeCheckBoxCount-=1
+                    }
+                    if(activeCheckBoxCount==3) {
+                        updateState(currentState.copy(allCheckBoxState = true))
+                    } else {
+                        updateState(currentState.copy(allCheckBoxState = false))
+                    }
+                }
+
+                is SignupContract.Event.AcitivateServiceUseTermCheckBox -> {
+                    updateState(currentState.copy(serviceUseTermCheckBox = !currentState.serviceUseTermCheckBox))
+                    if(currentState.serviceUseTermCheckBox) {
+                        activeCheckBoxCount+=1
+                    } else {
+                        activeCheckBoxCount-=1
+                    }
+                    if(activeCheckBoxCount==3) {
+                        updateState(currentState.copy(allCheckBoxState = true))
+                    } else {
+                        updateState(currentState.copy(allCheckBoxState = false))
+                    }
+                }
+
+                is SignupContract.Event.AcitivatePersonalInfoCheckBox -> {
+                    updateState(currentState.copy(personalInfoCheckBox = !currentState.personalInfoCheckBox))
+
+                    if(currentState.personalInfoCheckBox) {
+                        activeCheckBoxCount+=1
+                    } else {
+                        activeCheckBoxCount-=1
+                    }
+                    if(activeCheckBoxCount==3) {
+                        updateState(currentState.copy(allCheckBoxState = true))
+                    } else {
+                        updateState(currentState.copy(allCheckBoxState = false))
+                    }
+                }
+
+                is SignupContract.Event.SelectFarmerCategory -> {
+                    val tmpList = currentState.selectedFarmerCategory.toMutableList()
+                    if(tmpList.contains(event.category)) {
+                        tmpList.remove(event.category)
+                    } else if(tmpList.size < 3) {
+                        tmpList.add(event.category)
+                    }
+                    updateState(currentState.copy(selectedFarmerCategory = tmpList))
+                }
             }
         }
     }
+
+    private fun sendVerificationError(errorMessage: String) {
+        postEffect(SignupContract.Effect.setToastMessage(errorMessage))
+    }
+
+    private fun sendVerificationSuccess(message: String) {
+        postEffect(SignupContract.Effect.setToastMessage(message))
+    }
+
+    private fun requestPhoneNumberVerification() {
+        viewModelScope.launch {
+            val result = requestPhoneNumberVerificationUseCase.invoke(
+                phoneNumber = currentState.phoneNumber,
+                onVerificationCompleted = {
+                    sendVerificationSuccess("인증번호를 전송중입니다. 잠시만 기다려주세요.")
+                },
+                onVerificationFailed = {
+                    sendVerificationError(errorMessage = "에러에러")
+                },
+                onCodeSent = { verificationId, token ->
+                    storedVerificationId = verificationId
+                    resendToken = token
+                }
+            )
+            result.fold(
+                onSuccess = {
+                    callbacks = it
+                },
+                onFailure = {
+                    sendVerificationError("예상치못한 에러가 발생했습니다.")
+                }
+            )
+        }
+    }
+
+    //인증코드 입력된 이후 completed가 호출되면 PhoneAuthCcredential 객체 가져올 수 있음
+    private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
+        userCredential = PhoneAuthProvider.getCredential(verificationId!!, code)
+    }
+
+    private fun resendVerificationCode(
+        phoneNumber: String,
+        token: PhoneAuthProvider.ForceResendingToken?
+    ) {
+        viewModelScope.launch {
+            resendVerificationCodeUseCase.invoke(phoneNumber = phoneNumber, token = token, callbacks = callbacks)
+        }
+    }
+
 }
 
-enum class SignupStep {
-    STEP1,
-    STEP2,
-    STEP3,
-    STEP4 //구직자만 해당하는 step
+enum class SignupStep(val stepNum: Int) {
+    SET_USER_TYPE(0),
+    STEP1(1),
+    STEP2(2),
+    STEP3(3) //구직자만 해당하는 step
+}
+
+enum class UserType {
+    WORKER, MANAGER, NONE
 }

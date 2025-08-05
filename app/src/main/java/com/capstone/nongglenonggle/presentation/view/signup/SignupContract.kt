@@ -19,7 +19,7 @@ class SignupContract @Inject constructor() {
         val serviceUseTermCheckBox: Boolean = false,
         val personalInfoCheckBox: Boolean = false,
         val farmerCategory: Array<String> = arrayOf("식량작물", "채소", "과수", "특용작물", "화훼", "축산", "농기계작업", "기타"),
-        val selectedFarmerCategory: List<String> = listOf(""),
+        val selectedFarmerCategory: List<String> = emptyList(),
     ): UiState
 
     sealed class Event: UiEvent {
@@ -42,12 +42,14 @@ class SignupContract @Inject constructor() {
         object AcitivateAgeLimitCheckBox: Event()
         object AcitivateServiceUseTermCheckBox: Event()
         object AcitivatePersonalInfoCheckBox: Event()
+        data class SelectFarmerCategory(val category: String): Event()
     }
 
     sealed class Effect: UiEffect {
         object NavigateToStep1Screen: Effect()
         object NavigateToStep2Screen: Effect()
         object NavigateToStep3Screen: Effect()
+        object NavigateToLoginScreen: Effect()
         data class setToastMessage(val message: String): Effect()
     }
 }
