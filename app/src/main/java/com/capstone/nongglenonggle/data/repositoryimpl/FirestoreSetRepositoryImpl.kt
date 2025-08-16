@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.data
+package com.capstone.nongglenonggle.data.repositoryimpl
 
 import android.util.Log
 import com.capstone.nongglenonggle.domain.entity.NoticeContent

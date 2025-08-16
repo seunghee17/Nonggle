@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.data
+package com.capstone.nongglenonggle.data.repositoryimpl
 
 import com.capstone.nongglenonggle.domain.entity.Model
 import com.capstone.nongglenonggle.domain.repository.ImageRepository
