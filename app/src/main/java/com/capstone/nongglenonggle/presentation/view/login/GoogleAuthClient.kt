@@ -44,7 +44,7 @@ class GoogleAuthClient(
             SignInResult(
                 data = loginUserInfo?.run {
                     UserData(
-                        userId = uid,
+                        userId = email ?: "",
                         userName = displayName ?: ""
                     )
                 },
