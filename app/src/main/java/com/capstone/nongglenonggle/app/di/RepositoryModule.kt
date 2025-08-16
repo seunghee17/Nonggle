@@ -1,13 +1,11 @@
 package com.capstone.nongglenonggle.app.di
 
-import com.capstone.nongglenonggle.data.ApplyRepositoryImpl
-import com.capstone.nongglenonggle.data.AuthRepositoryImpl
-import com.capstone.nongglenonggle.data.FirestoreGetRepositoryImpl
-import com.capstone.nongglenonggle.data.FirestoreSetRepositoryImpl
-import com.capstone.nongglenonggle.data.ImageRepositoryImpl
+import com.capstone.nongglenonggle.data.repositoryimpl.ApplyRepositoryImpl
+import com.capstone.nongglenonggle.data.repositoryimpl.FirestoreGetRepositoryImpl
+import com.capstone.nongglenonggle.data.repositoryimpl.FirestoreSetRepositoryImpl
+import com.capstone.nongglenonggle.data.repositoryimpl.ImageRepositoryImpl
 import com.capstone.nongglenonggle.domain.repository.AddressRepository
 import com.capstone.nongglenonggle.domain.repository.ApplyRepository
-import com.capstone.nongglenonggle.domain.repository.AuthRepository
 import com.capstone.nongglenonggle.domain.repository.FirestoreGetRepository
 import com.capstone.nongglenonggle.domain.repository.FirestoreSetRepository
 import com.capstone.nongglenonggle.domain.repository.ImageRepository
@@ -23,14 +21,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
-
-    @Provides
-    @Singleton
-    fun provideAuthRepository(
-        firebaseAuth: FirebaseAuth
-    ): AuthRepository {
-        return AuthRepositoryImpl(firebaseAuth)
-    }
 
     @Provides
     @Singleton

@@ -7,13 +7,11 @@ import javax.inject.Inject
 
 class SignupContract @Inject constructor() {
     data class State(
-        val isLoading: Boolean = false,
+        val isLoading: Boolean = true,
         val SignUpStep: SignupStep = SignupStep.SET_USER_TYPE,
         val userSignupType: UserType = UserType.NONE,
         val userName: String = "",
-        val phoneNumber: String = "",
-        val verificationCode: String = "",
-        val authverificationState: Boolean = true,
+        val userId: String = "",
         val allCheckBoxState: Boolean = false,
         val ageLimitConfirmCheckBox: Boolean = false,
         val serviceUseTermCheckBox: Boolean = false,
@@ -27,16 +25,7 @@ class SignupContract @Inject constructor() {
         //사용자 이름 작성과 삭제에 대한 event
         data class UserInsertName(val userName: String): Event()
         object ClearUserName: Event()
-        //사용자 핸드폰 번호 작성과 삭제에 대한 event
-        data class UserInsertPhoneNumber(val phoneNumber: String): Event()
-        object ClearUserPhoneNumber: Event()
-        //인증번호 전송 event
-        data class sendVerificationCode(val phoneNumber: String): Event()
-        //전송된 인증번호 작성과 삭제에 대한 event
-        data class UserInsertVerificationCode(val code: String): Event()
-        object ClearUserVerificationCode: Event()
-        //전송한 인증 코드 검증 event
-        data class VerificationCodeCheck(val code: String): Event()
+
         //약관동의 체크박스에 대한 event
         object AcitivateAllTermCheckBox: Event()
         object AcitivateAgeLimitCheckBox: Event()

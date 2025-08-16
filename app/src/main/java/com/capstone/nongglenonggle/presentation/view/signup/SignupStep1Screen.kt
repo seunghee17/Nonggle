@@ -1,5 +1,6 @@
 package com.capstone.nongglenonggle.presentation.view.signup
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -22,7 +23,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -66,9 +66,7 @@ fun SignupStep1Screen(
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
                 }
 
-                else -> {
-
-                }
+                else -> {}
             }
         }
     }
@@ -86,7 +84,7 @@ fun SignupStep1Screen(
         Text(
             modifier = Modifier.padding(horizontal = 20.dp),
             textAlign = TextAlign.Start,
-            text = "회원가입",
+            text = context.getString(R.string.sign_up),
             style = NonggleTheme.typography.TextInputEditTextStyle,
             color = NonggleTheme.colors.g2,
         )
@@ -99,7 +97,7 @@ fun SignupStep1Screen(
         ) {
             Text(
                 modifier = Modifier.padding(top = 10.dp),
-                text = "개인정보",
+                text = context.getString(R.string.sign_up_personal_information),
                 fontWeight = FontWeight.W400,
                 fontSize = 24.sp,
                 color = Color(0xFF1E1E1E),
@@ -116,6 +114,7 @@ fun SignupStep1Screen(
         Spacer(modifier = Modifier.height(32.dp))
         /// 이름 작성 TextField
         userNameInputTextField(
+            context = context,
             modifier = Modifier.padding(horizontal = 10.dp),
             value = uiState.userName,
             onValueChange = {
@@ -126,53 +125,18 @@ fun SignupStep1Screen(
             },
         )
         Spacer(modifier = Modifier.height(14.dp))
-        /// 핸드폰 번호 TextField
-        userPhoneNumberInputTextField(
+        /// 아이디 TextField
+        userIdInputTextField (
+            context = context,
             modifier = Modifier.padding(horizontal = 20.dp),
-            value = uiState.phoneNumber,
-            onValueChange = {
-                viewModel.setEvent(SignupContract.Event.UserInsertPhoneNumber(it))
-            },
-            clearValueAction = {
-                viewModel.setEvent(SignupContract.Event.ClearUserPhoneNumber)
-            },
-            supportText = {
-                if(uiState.phoneNumber.contains("-")) {
-                    Text(
-                        text = "기호 없이 번호만 입력해주세요.",
-                        style = NonggleTheme.typography.HintTextAppearance.copy(fontSize = 12.sp),
-                        color = NonggleTheme.colors.error,
-                    )
-                }
-            },
-            sendVerificationCode = {
-                viewModel.setEvent(SignupContract.Event.sendVerificationCode(uiState.phoneNumber))
-            }
-        )
-        Spacer(modifier = Modifier.height(14.dp))
-        /// 인증번호 TextField
-        verifyNumberTextField(
-            modifier = Modifier.padding(horizontal = 20.dp),
-            value = uiState.verificationCode,
-            onValueChange = {
-                viewModel.setEvent(SignupContract.Event.UserInsertVerificationCode(it))
-            },
-            clearValueAction = {
-                viewModel.setEvent(SignupContract.Event.ClearUserVerificationCode)
-            },
-            supportText = {
-
-            },
-            checkVerificationCode = {
-                viewModel.setEvent(SignupContract.Event.VerificationCodeCheck(uiState.verificationCode))
-            }
+            value = uiState.userId,
         )
         Spacer(modifier = Modifier.weight(1f))
         nextBtn(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
-            enable = uiState.authverificationState,
+            enable = !uiState.userName.isNullOrEmpty(),
             onClick = {
                 viewModel.setEffect(SignupContract.Effect.NavigateToStep2Screen)
             })
@@ -181,6 +145,7 @@ fun SignupStep1Screen(
 
 @Composable
 fun userNameInputTextField(
+    context: Context,
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
@@ -207,7 +172,7 @@ fun userNameInputTextField(
         },
         placeholder = {
             Text(
-                text = "본인의 이름을 입력해주세요.",
+                text = context.getString(R.string.sign_up_personal_name_input_hint),
                 style = NonggleTheme.typography.HintTextAppearance,
                 color = NonggleTheme.colors.g3,
             )
@@ -215,7 +180,7 @@ fun userNameInputTextField(
         label = {
             Text(
                 modifier = modifier,
-                text = "본인 이름",
+                text = context.getString(R.string.sign_up_personal_name),
                 style = NonggleTheme.typography.b2_sub,
                 color = NonggleTheme.colors.g1,
             )
@@ -224,13 +189,10 @@ fun userNameInputTextField(
 }
 
 @Composable
-fun userPhoneNumberInputTextField(
+fun userIdInputTextField(
+    context: Context,
     modifier: Modifier = Modifier,
     value: String,
-    onValueChange: (String) -> Unit,
-    clearValueAction: () -> Unit,
-    supportText: @Composable (() -> Unit),
-    sendVerificationCode: () -> Unit,
 ) {
     var isTextFieldFocused by remember { mutableStateOf(false) }
     Column(
@@ -249,114 +211,30 @@ fun userPhoneNumberInputTextField(
                 modifier = Modifier
                     .weight(1f)
                     .onFocusChanged { focusState -> isTextFieldFocused = focusState.isFocused },
+                readOnly = true,
+                enabled = false,
                 textFieldType = TextFieldType.Standard,
                 value = value,
-                onValueChange = onValueChange,
                 textStyle = NonggleTheme.typography.TextInputEditTextStyle,
                 textColor = Color(0xFF1E1E1E),
-                trailingIcon = {
-                    if (value.isNotEmpty() && isTextFieldFocused) {
-                        NonggleIconButton(
-                            ImageResourceId = R.drawable.xcircle,
-                            onClick = clearValueAction
-                        )
-                    }
-                },
                 placeholder = {
                     Text(
-                        text = "전화번호를 입력해주세요",
+                        text = "",
                         style = NonggleTheme.typography.HintTextAppearance,
                         color = NonggleTheme.colors.g3,
                     )
                 },
-                supportText = supportText,
                 label = {
                     Text(
-                        text = "아이디",
+                        text = context.getString(R.string.sign_up_userId_input_label),
                         style = NonggleTheme.typography.b2_sub,
                         color = NonggleTheme.colors.g1,
                     )
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            ContainedButton(
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .height(IntrinsicSize.Min),
-                enabled = value.isNotEmpty(),
-                onClick = {
-                    sendVerificationCode()
-                },
-                titleText = "인증번호",
-                titleTextStyle = NonggleTheme.typography.b1_main,
+                onValueChange = {}
             )
         }
-    }
-}
-
-@Composable
-fun verifyNumberTextField(
-    modifier: Modifier = Modifier,
-    value: String,
-    onValueChange: (String) -> Unit,
-    clearValueAction: () -> Unit,
-    supportText: @Composable (() -> Unit),
-    checkVerificationCode: () -> Unit,
-) {
-    var isTextFieldFocused by remember { mutableStateOf(false) }
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Min),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        NonggleTextField(
-            modifier = Modifier
-                .weight(1f)
-                .onFocusChanged { focusState -> isTextFieldFocused = focusState.isFocused },
-            textFieldType = TextFieldType.Standard,
-            value = value,
-            onValueChange = onValueChange,
-            textStyle = NonggleTheme.typography.TextInputEditTextStyle,
-            textColor = Color(0xFF1E1E1E),
-            trailingIcon = {
-                if (value.isNotEmpty() && isTextFieldFocused) {
-                    NonggleIconButton(
-                        ImageResourceId = R.drawable.xcircle,
-                        onClick = clearValueAction
-                    )
-                }
-            },
-            placeholder = {
-                Text(
-                    text = "예) 1234",
-                    style = NonggleTheme.typography.HintTextAppearance,
-                    color = NonggleTheme.colors.g3,
-                )
-            },
-            supportText = supportText,
-            label = {
-                Text(
-                    text = "인증번호",
-                    style = NonggleTheme.typography.b2_sub,
-                    color = NonggleTheme.colors.g1,
-                )
-            },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        )
-        Spacer(modifier = Modifier.width(16.dp))
-        ContainedButton(
-            modifier = Modifier
-                .wrapContentWidth()
-                .height(IntrinsicSize.Min),
-            enabled = value.isNotEmpty() && isTextFieldFocused,
-            onClick = {
-                checkVerificationCode()
-            },
-            titleText = "확인",
-            titleTextStyle = NonggleTheme.typography.b1_main,
-        )
     }
 }
 

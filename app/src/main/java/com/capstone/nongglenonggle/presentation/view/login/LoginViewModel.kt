@@ -17,6 +17,7 @@ class LoginViewModel @Inject constructor() : BaseViewModel<LoginContract.Event, 
             isSignInSuccessful = result.data != null,
             signInError = result.errorMessage,
             isNewUser = result.isNewUser,
+            userData = result.data
         )))
         if(result.data != null) {
             if(result.isNewUser == true) {
@@ -25,10 +26,6 @@ class LoginViewModel @Inject constructor() : BaseViewModel<LoginContract.Event, 
                 setEffect(LoginContract.Effect.NavigateToHome)
             }
         }
-    }
-
-    fun resetState() {
-        updateState(currentState.copy(signInState = SignInState()))
     }
 }
 
