@@ -5,9 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.capstone.nongglenonggle.R
-import com.capstone.nongglenonggle.presentation.view.farmer.home.MainActivity
-import com.capstone.nongglenonggle.presentation.view.onboarding.FirstActivity
-import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
+import com.capstone.nongglenonggle.presentation.view.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
@@ -31,18 +29,24 @@ class SplashActivity : AppCompatActivity() {
                 val uid = user.uid
                 val type = detectUserType(uid)
                     if(type == "Farmer"){
-                        val intent = Intent(this@SplashActivity,MainActivity::class.java)
+//                        val intent = Intent(this@SplashActivity,MainActivity::class.java)
+//                        startActivity(intent)
+//                        finish()
+                        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
                     else{
-                        val intent = Intent(this@SplashActivity,WorkerMainActivity::class.java)
+//                        val intent = Intent(this@SplashActivity,WorkerMainActivity::class.java)
+//                        startActivity(intent)
+//                        finish()
+                        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
             }
             else{
-                val intent = Intent(this@SplashActivity, FirstActivity::class.java)
+                val intent = Intent(this@SplashActivity, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }

@@ -46,7 +46,6 @@ import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.noRippleClickable
-import com.capstone.nongglenonggle.presentation.view.login.LoginActivity
 
 @Composable
 fun SignupStep3Scren(
@@ -61,10 +60,10 @@ fun SignupStep3Scren(
         effectFlow.collect { effect ->
             when(effect) {
                 is SignupContract.Effect.NavigateToLoginScreen -> {
-                    val intent = Intent(context, LoginActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    }
-                    context.startActivity(intent)
+//                    val intent = Intent(context, LoginActivity::class.java).apply {
+//                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    }
+//                    context.startActivity(intent)
                 }
                 else -> {}
             }

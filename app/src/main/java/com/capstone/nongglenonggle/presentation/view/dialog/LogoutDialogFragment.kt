@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import com.capstone.nongglenonggle.databinding.FragmentLogoutDialogBinding
-import com.capstone.nongglenonggle.presentation.view.onboarding.FirstActivity
+import com.capstone.nongglenonggle.presentation.view.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LogoutDialogFragment : DialogFragment() {
@@ -40,7 +40,7 @@ class LogoutDialogFragment : DialogFragment() {
             dismiss()
             FirebaseAuth.getInstance().signOut()
             activity?.finishAffinity()
-            val intent = Intent(requireContext(), FirstActivity::class.java)
+            val intent = Intent(requireContext(), LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
