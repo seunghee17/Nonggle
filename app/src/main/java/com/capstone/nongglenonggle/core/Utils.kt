@@ -14,9 +14,3 @@ fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
         onClick()
     }
 }
-
-fun getPhoneNumberForAuth(phoneNumber: String): String {
-    var parsingPhoneNumber = phoneNumber
-    parsingPhoneNumber = parsingPhoneNumber.replaceFirst("0", "+82")
-    return parsingPhoneNumber
-}
