@@ -7,20 +7,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignupComposeViewModel @Inject constructor() : BaseViewModel<SignupContract.Event, SignupContract.State, SignupContract.Effect>(initialState = SignupContract.State()) {
+class SignupViewModel @Inject constructor() : BaseViewModel<SignupContract.Event, SignupContract.State, SignupContract.Effect>(initialState = SignupContract.State()) {
 
     //비즈니스 로직에 필요한 변수
     //체크박스 활성화 개수
     private var activeCheckBoxCount: Int =0
-
-    init {
-        updateState(
-            currentState.copy(
-                userId = "",
-                userName = ""
-            )
-        )
-    }
 
     //side Effect를 최소화하고 상태 업데이트 순수기능에만 집중해야함
     override fun reduceState(event: SignupContract.Event) {
@@ -101,6 +92,18 @@ class SignupComposeViewModel @Inject constructor() : BaseViewModel<SignupContrac
                     }
                 }
 
+                is SignupContract.Event.updateDoroAddress -> {
+                    getAddress(event.data)
+                }
+
+                is SignupContract.Event.ClearFarmerAddressDetail -> {
+                    clearAddressDetail()
+                }
+
+                is SignupContract.Event.InputFarmerAddressDetail -> {
+                    updateState(currentState.copy(farmerAddressDeatail = event.detailAddress))
+                }
+
                 is SignupContract.Event.SelectFarmerCategory -> {
                     val tmpList = currentState.selectedFarmerCategory.toMutableList()
                     if(tmpList.contains(event.category)) {
@@ -114,11 +117,28 @@ class SignupComposeViewModel @Inject constructor() : BaseViewModel<SignupContrac
         }
     }
 
+    fun getAddress(data: String) {
+        updateState(currentState.copy(farmerAddressSearchFromDoro = data))
+        setEffect(effect = SignupContract.Effect.NavigateToBackScreen)
+    }
+
+    fun clearAddressDetail() {
+        updateState(currentState.copy(farmerAddressDeatail = ""))
+    }
+
+    fun setLoading(loading: Boolean) {
+        updateState(currentState.copy(isLoading = loading))
+    }
+
+    fun navigateToAddressScreen() {
+        setLoading(true)
+        setEffect(SignupContract.Effect.NavigateToAddressSearchScreen)
+    }
 }
 
 enum class SignupStep(val stepNum: Int) {
     SET_USER_TYPE(0),
-    STEP1(1),
+    //STEP1(1),
     STEP2(2),
     STEP3(3) //구직자만 해당하는 step
 }

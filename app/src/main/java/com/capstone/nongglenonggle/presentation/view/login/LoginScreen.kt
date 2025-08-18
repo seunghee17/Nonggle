@@ -42,12 +42,14 @@ fun LoginScreen(
         effectFlow.collectLatest { effect ->
             when (effect) {
                 is LoginContract.Effect.NavigateToEnrollUser -> {
-                    context.startActivity(Intent(context, SignupActivity::class.java))
+                    val intent = Intent(context, SignupActivity::class.java)
+                    context.startActivity(intent)
                 }
                 is LoginContract.Effect.NavigateToHome -> {
                     //context.startActivity(Intent(context, LoginActivity::class.java))
                     //TODO: 임시적으로 회원가입 화면으로 이동
-                    context.startActivity(Intent(context, SignupActivity::class.java))
+                    val intent = Intent(context, SignupActivity::class.java)
+                    context.startActivity(intent)
                 }
 
                 is LoginContract.Effect.unAvailableToastmessage -> {

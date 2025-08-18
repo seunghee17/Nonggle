@@ -1,5 +1,7 @@
 package com.capstone.nongglenonggle.presentation.view.signup
 
+import android.app.Activity
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -49,7 +51,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun SetUserTypeScreen(
     navController: NavHostController,
-    viewModel: SignupComposeViewModel
+    viewModel: SignupViewModel
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val effectFlow = viewModel.effect
@@ -60,7 +62,7 @@ fun SetUserTypeScreen(
         effectFlow.collectLatest { effect ->
             when(effect) {
                 is SignupContract.Effect.NavigateToStep1Screen -> {
-                    navController.navigate(Screens.Signup.Step1.route)
+                    navController.navigate(Screens.Signup.Step2.route)
                 }
                 is SignupContract.Effect.setToastMessage -> {
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
@@ -78,7 +80,11 @@ fun SetUserTypeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             NonggleAppBar(
-                onBackPressed = { },
+                onBackPressed = {
+                    if(!navController.navigateUp()) {
+                        (context as? Activity)?.finish()
+                    }
+                },
                 title = {},
             )
             SelectTypeDescription()
@@ -102,6 +108,7 @@ fun SetUserTypeScreen(
             )
             Spacer(modifier = Modifier.weight(1f))
             nextBtn(
+                context = context,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),
@@ -211,12 +218,12 @@ fun userTypeContainer(
 }
 
 @Composable
-fun nextBtn(modifier: Modifier, enable: Boolean, onClick: () -> Unit) {
+fun nextBtn(context: Context, modifier: Modifier, enable: Boolean, onClick: () -> Unit) {
     FullButton(
         modifier = modifier,
         enabled = enable,
         onClick = onClick,
-        titleText = "다음",
+        titleText = context.getString(R.string.next_btn_Title),
         titleTextStyle = NonggleTheme.typography.t3
     )
 }

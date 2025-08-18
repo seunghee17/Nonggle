@@ -7,8 +7,8 @@ sealed class Screens(val route: String) {
     object StartNonggleScreen: Screens("StartNonggle")
     object Signup: Screens("SignUp") {
         object SetType: Screens("SignUp/SetType")
-        object Step1: Screens("SignUp/Step1")
         object Step2: Screens("SignUp/Step2")
         object Step3: Screens("SignUp/Step3") //구인자만 해당하는 step
+        object AddressSearchWebView: Screens("SignUp/AddressSearch")
     }
 }
