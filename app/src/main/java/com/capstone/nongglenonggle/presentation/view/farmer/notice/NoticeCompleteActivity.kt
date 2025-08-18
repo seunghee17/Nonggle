@@ -2,7 +2,6 @@ package com.capstone.nongglenonggle.presentation.view.farmer.notice
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
