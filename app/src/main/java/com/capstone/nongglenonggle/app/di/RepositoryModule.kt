@@ -1,11 +1,12 @@
 package com.capstone.nongglenonggle.app.di
 
 import com.capstone.nongglenonggle.data.repositoryimpl.ApplyRepositoryImpl
+import com.capstone.nongglenonggle.data.repositoryimpl.AuthenticationRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.FirestoreGetRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.FirestoreSetRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.ImageRepositoryImpl
-import com.capstone.nongglenonggle.domain.repository.AddressRepository
 import com.capstone.nongglenonggle.domain.repository.ApplyRepository
+import com.capstone.nongglenonggle.domain.repository.AuthenticationRepository
 import com.capstone.nongglenonggle.domain.repository.FirestoreGetRepository
 import com.capstone.nongglenonggle.domain.repository.FirestoreSetRepository
 import com.capstone.nongglenonggle.domain.repository.ImageRepository
@@ -24,7 +25,12 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideAddressRepository(): AddressRepository = AddressRepository()
+    fun provideAuthenticationRepository(
+        firestore: FirebaseFirestore,
+        firebaseAuth: FirebaseAuth
+    ) : AuthenticationRepository {
+        return AuthenticationRepositoryImpl(firestore,firebaseAuth)
+    }
 
     @Provides
     @Singleton
