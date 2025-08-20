@@ -33,12 +33,6 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect>(
         }
     }
 
-    fun setEffect(effect: Effect) {
-        viewModelScope.launch {
-            _effect.send(effect)
-        }
-    }
-
     protected fun updateState(currentState: State) {
         _uiState.value = currentState
     }
