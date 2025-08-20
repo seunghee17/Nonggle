@@ -39,7 +39,7 @@ import com.capstone.nongglenonggle.core.noRippleClickable
 
 
 @Composable
-fun SignupAgreeTerms(
+fun SignupAgreeTermsScreen (
     navController: NavHostController,
     viewModel: SignupViewModel,
 ) {
@@ -58,9 +58,7 @@ fun SignupAgreeTerms(
                 is SignupContract.Effect.NavigateToHomeScreen -> {
 
                 }
-                else -> {
-
-                }
+                else -> {}
             }
         }
     }
@@ -150,9 +148,9 @@ fun SignupAgreeTerms(
             enable = true,
             onClick = {
                 if(uiState.userSignupType == UserType.MANAGER) {
-                    viewModel.setEffect(SignupContract.Effect.NavigateToStep3Screen)
+                    viewModel.setEvent(event = SignupContract.Event.navigateToStep3Button)
                 } else {
-                    viewModel.setEffect(SignupContract.Effect.NavigateToHomeScreen)
+                    viewModel.setEvent(event = SignupContract.Event.navigateToHomeButton)
                 }
             })
     }

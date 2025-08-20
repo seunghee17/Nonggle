@@ -9,7 +9,7 @@ import com.capstone.nongglenonggle.app.Screens
 import com.capstone.nongglenonggle.presentation.view.signup.FarmerAddressSearchScreen
 import com.capstone.nongglenonggle.presentation.view.signup.SetUserTypeScreen
 import com.capstone.nongglenonggle.presentation.view.signup.SignupViewModel
-import com.capstone.nongglenonggle.presentation.view.signup.SignupAgreeTerms
+import com.capstone.nongglenonggle.presentation.view.signup.SignupAgreeTermsScreen
 import com.capstone.nongglenonggle.presentation.view.signup.SignupGetFarmerInfoScreen
 
 fun NavGraphBuilder.SignupNavGraph(navHostController: NavHostController) {
@@ -26,7 +26,7 @@ fun NavGraphBuilder.SignupNavGraph(navHostController: NavHostController) {
         composable(route = Screens.Signup.Step2.route) { entry ->
             val parent = remember(entry) {navHostController.getBackStackEntry(Screens.Signup.route)}
             val viewModel : SignupViewModel = hiltViewModel(parent)
-            SignupAgreeTerms(navHostController, viewModel)
+            SignupAgreeTermsScreen(navHostController, viewModel)
         }
         composable(route = Screens.Signup.Step3.route) { entry ->
             val parent = remember(entry) {navHostController.getBackStackEntry(Screens.Signup.route)}
