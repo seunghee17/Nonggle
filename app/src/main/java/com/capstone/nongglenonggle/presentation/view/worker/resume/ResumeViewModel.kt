@@ -34,7 +34,7 @@ class ResumeViewModel @Inject constructor(
     private val addGenderUseCase: AddGenderUseCase,
     private val addTypeUseCase: AddTypeUseCase
     ): ViewModel() {
-    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance() //authenticationrepostiory 정의
     private val _profileImage = MutableLiveData<String>()
     val profileImage:LiveData<String> = _profileImage
 
