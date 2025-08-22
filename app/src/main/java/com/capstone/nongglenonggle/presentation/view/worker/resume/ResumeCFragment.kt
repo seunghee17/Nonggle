@@ -3,7 +3,6 @@ package com.capstone.nongglenonggle.presentation.view.worker.resume
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import com.capstone.nongglenonggle.databinding.FragmentResumeCBinding
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.presentation.util.hideClearButton
 import com.capstone.nongglenonggle.presentation.util.showClearButton
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
 
 class ResumeCFragment : BaseFragment<FragmentResumeCBinding>(R.layout.fragment_resume_c) {
     private val viewModel: ResumeViewModel by activityViewModels()

@@ -7,11 +7,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.Composable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
@@ -19,7 +19,6 @@ import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.FragmentResumeABinding
 import com.capstone.nongglenonggle.domain.entity.Model
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
 import com.capstone.nongglenonggle.presentation.util.hideClearButton
@@ -28,7 +27,7 @@ import com.capstone.nongglenonggle.presentation.view.dialog.DatepickerFragment
 
 @AndroidEntryPoint
 class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_resume_a) {
-    private val viewModel:ResumeViewModel by activityViewModels()
+    private val viewModel: ResumeViewModel by activityViewModels()
     var pickImageFromAlbum = 1
     var fbStorage : FirebaseStorage? = null
     var uriPhoto : Uri? = null
@@ -256,5 +255,10 @@ class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_r
         }
     }
 
+
+}
+
+@Composable
+fun ResumeStep1Screen() {
 
 }

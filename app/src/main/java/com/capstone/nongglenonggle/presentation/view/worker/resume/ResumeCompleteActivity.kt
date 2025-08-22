@@ -15,7 +15,6 @@ import com.capstone.nongglenonggle.domain.entity.ResumeSummary
 import com.capstone.nongglenonggle.presentation.base.BaseActivity
 import com.capstone.nongglenonggle.presentation.view.adapter.ResumeCareerAdapter
 import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeCompleteViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions

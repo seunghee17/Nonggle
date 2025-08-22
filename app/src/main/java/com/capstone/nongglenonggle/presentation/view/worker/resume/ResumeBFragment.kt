@@ -1,7 +1,6 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -15,7 +14,6 @@ import com.capstone.nongglenonggle.domain.entity.ResumeSummary
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.presentation.view.adapter.ResumeAdapter
 import com.capstone.nongglenonggle.presentation.view.dialog.CareerAddFragment
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
 
 
 class ResumeBFragment : BaseFragment<FragmentResumeBBinding>(R.layout.fragment_resume_b) {

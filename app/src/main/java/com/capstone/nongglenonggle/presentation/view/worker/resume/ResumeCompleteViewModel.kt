@@ -1,6 +1,5 @@
-package com.capstone.nongglenonggle.presentation.viewModel.worker
+package com.capstone.nongglenonggle.presentation.view.worker.resume
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

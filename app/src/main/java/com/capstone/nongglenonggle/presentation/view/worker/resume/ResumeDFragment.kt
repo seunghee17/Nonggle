@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -21,7 +20,6 @@ import com.capstone.nongglenonggle.databinding.FragmentResumeDBinding
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.presentation.util.hideClearButton
 import com.capstone.nongglenonggle.presentation.util.showClearButton
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
 import com.capstone.nongglenonggle.presentation.view.dialog.LocationSelectFragment
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch

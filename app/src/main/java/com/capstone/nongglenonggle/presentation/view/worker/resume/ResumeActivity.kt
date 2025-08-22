@@ -2,15 +2,12 @@ package com.capstone.nongglenonggle.presentation.view.worker.resume
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.ActivityResumeBinding
 import com.capstone.nongglenonggle.presentation.base.BaseActivity
 import com.capstone.nongglenonggle.presentation.view.adapter.ViewPager2Adapter
-import com.capstone.nongglenonggle.presentation.view.dialog.LogoutDialogFragment
 import com.capstone.nongglenonggle.presentation.view.dialog.OutDirectionDialogFragment
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 

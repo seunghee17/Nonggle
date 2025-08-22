@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.capstone.nongglenonggle.databinding.FragmentMonthpickerBinding
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeViewModel
 
 
 class MonthpickerFragment : DialogFragment() {

@@ -10,7 +10,7 @@ import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.FragmentLocationSelectBinding
 import com.capstone.nongglenonggle.presentation.view.adapter.RegionFirstAdapter
 import com.capstone.nongglenonggle.presentation.view.adapter.RegionSecondAdapter
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class LocationSelectFragment : BottomSheetDialogFragment() {

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.capstone.nongglenonggle.presentation.view.signup.nav_controller.SignupNavGraph
+import com.capstone.nongglenonggle.presentation.view.worker.resume.WorkerResumeGraph
 
 @Composable
 fun NonggleNavHost() {
@@ -15,5 +16,6 @@ fun NonggleNavHost() {
         startDestination = Screens.Signup.route
     ) {
         SignupNavGraph(navHostController = navHostController)
+        WorkerResumeGraph(navHostController = navHostController)
     }
 }

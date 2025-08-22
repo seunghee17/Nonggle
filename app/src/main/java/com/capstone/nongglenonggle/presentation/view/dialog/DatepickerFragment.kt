@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.capstone.nongglenonggle.databinding.FragmentDatepickerBinding
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 

@@ -22,7 +22,7 @@ import com.capstone.nongglenonggle.presentation.view.dialog.FilterBottomSheetFra
 import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeCompleteActivity
 import com.capstone.nongglenonggle.presentation.viewModel.farmer.FarmerHomeViewModel
 import com.capstone.nongglenonggle.presentation.viewModel.farmer.FarmerSearchViewModel
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeCompleteViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeCompleteViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
