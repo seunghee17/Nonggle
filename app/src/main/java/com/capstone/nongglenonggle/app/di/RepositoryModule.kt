@@ -28,7 +28,7 @@ object RepositoryModule {
     fun provideAuthenticationRepository(
         firestore: FirebaseFirestore,
         firebaseAuth: FirebaseAuth
-    ): AuthenticationRepository {
+    ) : AuthenticationRepository {
         return AuthenticationRepositoryImpl(firestore,firebaseAuth)
     }
 

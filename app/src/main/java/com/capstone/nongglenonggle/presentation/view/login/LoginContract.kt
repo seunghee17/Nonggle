@@ -16,6 +16,7 @@ class LoginContract @Inject constructor( ){
     ): UiState
 
     sealed class Event: UiEvent {
+        object kakaoLoginButtonClick: Event()
     }
 
     sealed class Effect: UiEffect {

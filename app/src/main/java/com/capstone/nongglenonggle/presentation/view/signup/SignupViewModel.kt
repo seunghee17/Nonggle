@@ -2,12 +2,17 @@ package com.capstone.nongglenonggle.presentation.view.signup
 
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
+import com.capstone.nongglenonggle.data.model.sign_up.UserDataClass
+import com.capstone.nongglenonggle.domain.usecase.SetUserSignUpUseCase
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignupViewModel @Inject constructor() : BaseViewModel<SignupContract.Event, SignupContract.State, SignupContract.Effect>(initialState = SignupContract.State()) {
+class SignupViewModel @Inject constructor(
+    private val setUserSignUpUseCase: SetUserSignUpUseCase
+) : BaseViewModel<SignupContract.Event, SignupContract.State, SignupContract.Effect>(initialState = SignupContract.State()) {
 
     //비즈니스 로직에 필요한 변수
     //체크박스 활성화 개수
@@ -113,13 +118,20 @@ class SignupViewModel @Inject constructor() : BaseViewModel<SignupContract.Event
                     }
                     updateState(currentState.copy(selectedFarmerCategory = tmpList))
                 }
+                is SignupContract.Event.navigateToStep3Button -> {
+                    postEffect(effect = SignupContract.Effect.NavigateToStep3Screen)
+                }
+                is SignupContract.Event.navigateToHomeButton -> {
+                    //사용자 정보 제출할 로직 작성
+                    postEffect(effect = SignupContract.Effect.NavigateToHomeScreen)
+                }
             }
         }
     }
 
     fun getAddress(data: String) {
         updateState(currentState.copy(farmerAddressSearchFromDoro = data))
-        setEffect(effect = SignupContract.Effect.NavigateToBackScreen)
+        postEffect(effect = SignupContract.Effect.NavigateToBackScreen)
     }
 
     fun clearAddressDetail() {
@@ -132,7 +144,17 @@ class SignupViewModel @Inject constructor() : BaseViewModel<SignupContract.Event
 
     fun navigateToAddressScreen() {
         setLoading(true)
-        setEffect(SignupContract.Effect.NavigateToAddressSearchScreen)
+        postEffect(SignupContract.Effect.NavigateToAddressSearchScreen)
+    }
+
+    fun sendUserInfoToDB() {
+        viewModelScope.launch {
+            setUserSignUpUseCase.invoke(userData = UserDataClass(
+                signUpType = currentState.userSignupType.toString(),
+                farmerCategory = currentState.selectedFarmerCategory,
+                farmerAddress = currentState.farmerAddressSearchFromDoro
+            ))
+        }
     }
 }
 

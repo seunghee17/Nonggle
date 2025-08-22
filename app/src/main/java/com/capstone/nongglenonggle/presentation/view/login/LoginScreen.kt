@@ -75,7 +75,7 @@ fun LoginScreen(
             AppLogoForLogin()
             Spacer(modifier = Modifier.weight(1f))
             kakaoLoginButton(onClick = {
-                viewModel.setEffect(LoginContract.Effect.unAvailableToastmessage("점검 중입니다. 다른 로그인 수단을 이용해주세요."))
+                viewModel.setEvent(LoginContract.Event.kakaoLoginButtonClick)
             })
             Spacer(modifier = Modifier.height(16.dp))
             googleLoginButton(onClick = {

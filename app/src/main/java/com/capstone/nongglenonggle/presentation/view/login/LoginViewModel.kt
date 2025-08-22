@@ -10,6 +10,12 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor() : BaseViewModel<LoginContract.Event, LoginContract.State, LoginContract.Effect>(initialState = LoginContract.State()) {
 
     override fun reduceState(event: LoginContract.Event) {
+        when(event) {
+            is LoginContract.Event.kakaoLoginButtonClick -> {
+                postEffect(LoginContract.Effect.unAvailableToastmessage("점검 중입니다. 다른 로그인 수단을 이용해주세요."))
+                postEffect(LoginContract.Effect.NavigateToHome)
+            }
+        }
     }
 
     fun onSingInResult(result: SignInResult) {
@@ -21,9 +27,9 @@ class LoginViewModel @Inject constructor() : BaseViewModel<LoginContract.Event, 
         )))
         if(result.data != null) {
             if(result.isNewUser == true) {
-                setEffect(LoginContract.Effect.NavigateToEnrollUser)
+                postEffect(LoginContract.Effect.NavigateToEnrollUser)
             } else if(result.isNewUser == false) {
-                setEffect(LoginContract.Effect.NavigateToHome)
+                postEffect(LoginContract.Effect.NavigateToHome)
             }
         }
     }
