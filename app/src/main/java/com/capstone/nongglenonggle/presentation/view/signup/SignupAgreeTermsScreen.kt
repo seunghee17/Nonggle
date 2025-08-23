@@ -1,5 +1,6 @@
 package com.capstone.nongglenonggle.presentation.view.signup
 
+import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,9 +34,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
-import com.capstone.nongglenonggle.core.common.button.stepButton
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.noRippleClickable
+import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
 
 
 @Composable
@@ -55,8 +56,11 @@ fun SignupAgreeTermsScreen (
                 is SignupContract.Effect.NavigateToStep3Screen -> {
                     navController.navigate("signup/step3")
                 }
-                is SignupContract.Effect.NavigateToHomeScreen -> {
-
+                is SignupContract.Effect.NavigateToHomeScreen -> { //구직자회원의 홈화면으로
+                    val intent = Intent(context, WorkerMainActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    }
+                    context.startActivity(intent)
                 }
                 else -> {}
             }
@@ -92,18 +96,6 @@ fun SignupAgreeTermsScreen (
                 fontSize = 24.sp,
                 color = Color(0xFF1E1E1E),
             )
-            Spacer(modifier = Modifier.weight(1f))
-            Row(
-                verticalAlignment = Alignment.Bottom
-            ) {
-                stepButton("1", SignupStep.STEP2.stepNum.toString())
-                Spacer(modifier = Modifier.width(10.dp))
-                stepButton("2", SignupStep.STEP2.stepNum.toString())
-                if (uiState.userSignupType == UserType.MANAGER) {
-                    Spacer(modifier = Modifier.width(10.dp))
-                    stepButton("3", SignupStep.STEP2.stepNum.toString())
-                }
-            }
         }
         Spacer(modifier = Modifier.height(32.dp))
         termsAllCheckBoxButton(

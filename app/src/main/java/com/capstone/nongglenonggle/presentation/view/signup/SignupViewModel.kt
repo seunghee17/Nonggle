@@ -17,7 +17,6 @@ class SignupViewModel @Inject constructor(
     //체크박스 활성화 개수
     private var activeCheckBoxCount: Int =0
 
-    //side Effect를 최소화하고 상태 업데이트 순수기능에만 집중해야함
     override fun reduceState(event: SignupContract.Event) {
         viewModelScope.launch {
             when (event) {
@@ -124,8 +123,7 @@ class SignupViewModel @Inject constructor(
                     postEffect(effect = SignupContract.Effect.NavigateToStep3Screen)
                 }
                 is SignupContract.Event.navigateToHomeButton -> {
-                    //사용자 정보 제출할 로직 작성
-                    postEffect(effect = SignupContract.Effect.NavigateToHomeScreen)
+                    sendUserInfoToDB()
                 }
             }
         }
@@ -150,21 +148,27 @@ class SignupViewModel @Inject constructor(
     }
 
     fun sendUserInfoToDB() {
+        if(currentState.submitState is SignupContract.SubmitState.Loading) return
+
+        updateState(currentState.copy(isLoading = true))
+        val userData = UserDataClass(
+            signUpType = currentState.userSignupType.name,
+            farmerCategory = currentState.selectedFarmerCategory,
+            farmerAddress = currentState.farmerAddressSearchFromDoro
+        )
         viewModelScope.launch {
-            setUserSignUpUseCase.invoke(userData = UserDataClass(
-                signUpType = currentState.userSignupType.toString(),
-                farmerCategory = currentState.selectedFarmerCategory,
-                farmerAddress = currentState.farmerAddressSearchFromDoro
-            ))
+            updateState(currentState.copy(submitState = SignupContract.SubmitState.Loading))
+            setUserSignUpUseCase.invoke(userData = userData)
+                .onSuccess {
+                    updateState(currentState.copy(submitState = SignupContract.SubmitState.Success))
+                    postEffect(effect = SignupContract.Effect.NavigateToHomeScreen)
+                }
+                .onFailure { e->
+                    val errorMessage = e.message ?: "데이터 전송에 실패했습니다."
+                    updateState(currentState.copy(submitState = SignupContract.SubmitState.Error(errorMessage)))
+                }
         }
     }
-}
-
-enum class SignupStep(val stepNum: Int) {
-    SET_USER_TYPE(0),
-    //STEP1(1),
-    STEP2(2),
-    STEP3(3) //구직자만 해당하는 step
 }
 
 enum class UserType {

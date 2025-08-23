@@ -5,6 +5,7 @@ import com.capstone.nongglenonggle.data.repositoryimpl.AuthenticationRepositoryI
 import com.capstone.nongglenonggle.data.repositoryimpl.FirestoreGetRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.FirestoreSetRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.ImageRepositoryImpl
+import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
 import com.capstone.nongglenonggle.domain.repository.ApplyRepository
 import com.capstone.nongglenonggle.domain.repository.AuthenticationRepository
 import com.capstone.nongglenonggle.domain.repository.FirestoreGetRepository
@@ -17,6 +18,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
@@ -27,9 +29,10 @@ object RepositoryModule {
     @Singleton
     fun provideAuthenticationRepository(
         firestore: FirebaseFirestore,
-        firebaseAuth: FirebaseAuth
+        firebaseAuth: FirebaseAuth,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) : AuthenticationRepository {
-        return AuthenticationRepositoryImpl(firestore,firebaseAuth)
+        return AuthenticationRepositoryImpl(firestore,firebaseAuth, ioDispatcher)
     }
 
     @Provides

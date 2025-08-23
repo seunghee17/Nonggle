@@ -2,6 +2,6 @@ package com.capstone.nongglenonggle.domain.qualifiers
 
 import javax.inject.Qualifier
 
-@Retention(AnnotationRetention.BINARY)
 @Qualifier
+@Retention(AnnotationRetention.BINARY)
 annotation class IoDispatcher

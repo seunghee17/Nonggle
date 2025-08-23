@@ -1,17 +1,16 @@
 package com.capstone.nongglenonggle.presentation.view.signup
 
 import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -40,11 +39,11 @@ import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.app.Screens
 import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
 import com.capstone.nongglenonggle.core.common.button.NonggleIconButton
-import com.capstone.nongglenonggle.core.common.button.stepButton
 import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.noRippleClickable
+import com.capstone.nongglenonggle.presentation.view.farmer.home.MainActivity
 
 @Composable
 fun SignupGetFarmerInfoScreen(
@@ -58,7 +57,11 @@ fun SignupGetFarmerInfoScreen(
     LaunchedEffect(true) {
         effectFlow.collect { effect ->
             when (effect) {
-                is SignupContract.Effect.NavigateToHomeScreen -> {
+                is SignupContract.Effect.NavigateToHomeScreen -> { //구인자 홈화면으로
+                    val intent = Intent(context, MainActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    }
+                    context.startActivity(intent)
                 }
 
                 is SignupContract.Effect.NavigateToAddressSearchScreen -> {
@@ -103,16 +106,6 @@ fun SignupGetFarmerInfoScreen(
                         fontSize = 24.sp,
                         color = Color(0xFF1E1E1E),
                     )
-                    Spacer(modifier = Modifier.weight(1f))
-                    Row(
-                        verticalAlignment = Alignment.Bottom
-                    ) {
-                        stepButton("1", SignupStep.STEP3.stepNum.toString())
-                        Spacer(modifier = Modifier.width(10.dp))
-                        stepButton("2", SignupStep.STEP3.stepNum.toString())
-                        Spacer(modifier = Modifier.width(10.dp))
-                        stepButton("3", SignupStep.STEP3.stepNum.toString())
-                    }
                 }
                 Text(
                     modifier = Modifier

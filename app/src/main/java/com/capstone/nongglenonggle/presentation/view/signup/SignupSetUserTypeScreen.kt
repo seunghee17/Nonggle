@@ -1,6 +1,5 @@
 package com.capstone.nongglenonggle.presentation.view.signup
 
-import android.app.Activity
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -39,10 +38,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.app.Screens
-import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
-import com.capstone.nongglenonggle.core.design_system.NongleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
 import kotlinx.coroutines.flow.collectLatest
@@ -57,7 +54,6 @@ fun SetUserTypeScreen(
     val effectFlow = viewModel.effect
     val context = LocalContext.current
 
-    //ui는 반응만 한다가 핵심
     LaunchedEffect(true) {
         effectFlow.collectLatest { effect ->
             when(effect) {
@@ -74,49 +70,40 @@ fun SetUserTypeScreen(
         }
     }
 
-    NongleTheme {
-        Column(
-            modifier = Modifier.fillMaxHeight(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            NonggleAppBar(
-                onBackPressed = {
-                    if(!navController.navigateUp()) {
-                        (context as? Activity)?.finish()
-                    }
-                },
-                title = {},
-            )
-            SelectTypeDescription()
-            Spacer(modifier = Modifier.height(10.dp))
-            userTypeContainer(
-                UserType.MANAGER,
-                modifier = Modifier.padding(horizontal = 20.dp),
-                onClick = {
-                    viewModel.setEvent(SignupContract.Event.SelectUseTypeBox(UserType.MANAGER))
-                },
-                selectType = uiState.userSignupType
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            userTypeContainer(
-                UserType.WORKER,
-                modifier = Modifier.padding(horizontal = 20.dp),
-                onClick = {
-                    viewModel.setEvent(SignupContract.Event.SelectUseTypeBox(UserType.WORKER))
-                },
-                selectType = uiState.userSignupType
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            nextBtn(
-                context = context,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                enable = true,
-                onClick = {
-                    viewModel.setEvent(SignupContract.Event.navigateToStep1Button)
-                })
-        }
+    Column(
+        modifier = Modifier.fillMaxHeight(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(10.dp))
+        SelectTypeDescription()
+        Spacer(modifier = Modifier.height(10.dp))
+        userTypeContainer(
+            UserType.MANAGER,
+            modifier = Modifier.padding(horizontal = 20.dp),
+            onClick = {
+                viewModel.setEvent(SignupContract.Event.SelectUseTypeBox(UserType.MANAGER))
+            },
+            selectType = uiState.userSignupType
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        userTypeContainer(
+            UserType.WORKER,
+            modifier = Modifier.padding(horizontal = 20.dp),
+            onClick = {
+                viewModel.setEvent(SignupContract.Event.SelectUseTypeBox(UserType.WORKER))
+            },
+            selectType = uiState.userSignupType
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        nextBtn(
+            context = context,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            enable = true,
+            onClick = {
+                viewModel.setEvent(SignupContract.Event.navigateToStep1Button)
+            })
     }
 }
 

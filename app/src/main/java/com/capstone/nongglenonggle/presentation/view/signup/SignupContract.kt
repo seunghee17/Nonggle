@@ -6,9 +6,15 @@ import com.capstone.nongglenonggle.core.base.UiState
 import javax.inject.Inject
 
 class SignupContract @Inject constructor() {
+    sealed interface SubmitState {
+        object Idle: SubmitState
+        object Loading: SubmitState
+        object Success: SubmitState
+        class Error(val message: String): SubmitState
+    }
+
     data class State(
         val isLoading: Boolean = true,
-        val SignUpStep: SignupStep = SignupStep.SET_USER_TYPE,
         val userSignupType: UserType = UserType.NONE,
         val userName: String = "",
         val userId: String = "",
@@ -20,6 +26,7 @@ class SignupContract @Inject constructor() {
         val selectedFarmerCategory: List<String> = emptyList(),
         val farmerAddressSearchFromDoro: String = "",
         val farmerAddressDeatail: String = "",
+        val submitState: SubmitState = SubmitState.Idle
     ): UiState
 
     sealed class Event: UiEvent {
@@ -44,7 +51,6 @@ class SignupContract @Inject constructor() {
 
     sealed class Effect: UiEffect {
         object NavigateToStep1Screen: Effect()
-        //object NavigateToStep2Screen: Effect()
         object NavigateToStep3Screen: Effect()
         object NavigateToHomeScreen: Effect()
         object NavigateToBackScreen: Effect()

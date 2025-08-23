@@ -1,29 +1,28 @@
 package com.capstone.nongglenonggle.app.di
 
-import com.capstone.nongglenonggle.domain.qualifiers.DefaultDispatcher
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
-import com.capstone.nongglenonggle.domain.qualifiers.MainDispatcher
+import com.capstone.nongglenonggle.domain.qualifiers.defaultDispatcher
+import com.capstone.nongglenonggle.domain.qualifiers.mainDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DispatcherModule {
 
     @Provides
-    @DefaultDispatcher
+    @defaultDispatcher
     fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
     @Provides
     @IoDispatcher
-    fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.IO
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 
     @Provides
-    @MainDispatcher
+    @mainDispatcher
     fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
 }
