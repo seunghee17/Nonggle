@@ -1,5 +1,6 @@
 package com.capstone.nongglenonggle.presentation.view.login
 
+import android.app.Activity
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,13 +43,17 @@ fun LoginScreen(
         effectFlow.collectLatest { effect ->
             when (effect) {
                 is LoginContract.Effect.NavigateToEnrollUser -> {
-                    val intent = Intent(context, SignupActivity::class.java)
+                    val intent = Intent(context, SignupActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    }
                     context.startActivity(intent)
                 }
                 is LoginContract.Effect.NavigateToHome -> {
                     //context.startActivity(Intent(context, LoginActivity::class.java))
-                    //TODO: 임시적으로 회원가입 화면으로 이동
-                    val intent = Intent(context, SignupActivity::class.java)
+                    /// FIXME: 임시적으로 회원가입 화면으로 이동
+                    val intent = Intent(context, SignupActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    }
                     context.startActivity(intent)
                 }
 
