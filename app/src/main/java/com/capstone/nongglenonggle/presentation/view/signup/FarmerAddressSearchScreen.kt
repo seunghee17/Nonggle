@@ -44,7 +44,7 @@ fun FarmerAddressSearchScreen(
     val context = LocalContext.current
     val effectFlow = viewModel.effect
 
-₩₩    LaunchedEffect(true) {
+   LaunchedEffect(true) {
         effectFlow.collect { effect ->
             when(effect) {
                 is SignupContract.Effect.NavigateToBackScreen -> {

@@ -195,7 +195,7 @@ fun SignupGetFarmerInfoScreen(
                 .align(Alignment.BottomCenter),
             enable = true,
             onClick = {
-                viewModel.setEffect(SignupContract.Effect.NavigateToHomeScreen)
+                viewModel.setEvent(SignupContract.Event.navigateToHomeButton)
             }
         )
     }

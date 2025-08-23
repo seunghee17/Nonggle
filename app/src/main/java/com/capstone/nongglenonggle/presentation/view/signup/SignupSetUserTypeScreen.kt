@@ -114,7 +114,7 @@ fun SetUserTypeScreen(
                     .wrapContentHeight(),
                 enable = true,
                 onClick = {
-                    viewModel.setEffect(SignupContract.Effect.NavigateToStep1Screen)
+                    viewModel.setEvent(SignupContract.Event.navigateToStep1Button)
                 })
         }
     }

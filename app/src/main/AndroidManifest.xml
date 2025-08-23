@@ -20,12 +20,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="tiramisu">
         <activity
-            android:name=".presentation.view.signup.ExampleActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.view.worker.home.SelectNoticeActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.view.worker.resume.ResumeCompleteActivity"
             android:exported="false" />
         <activity

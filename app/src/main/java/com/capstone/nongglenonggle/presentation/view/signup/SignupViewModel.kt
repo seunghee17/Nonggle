@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import com.capstone.nongglenonggle.data.model.sign_up.UserDataClass
 import com.capstone.nongglenonggle.domain.usecase.SetUserSignUpUseCase
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -117,6 +116,9 @@ class SignupViewModel @Inject constructor(
                         tmpList.add(event.category)
                     }
                     updateState(currentState.copy(selectedFarmerCategory = tmpList))
+                }
+                is SignupContract.Event.navigateToStep1Button -> {
+                    postEffect(effect = SignupContract.Effect.NavigateToStep1Screen)
                 }
                 is SignupContract.Event.navigateToStep3Button -> {
                     postEffect(effect = SignupContract.Effect.NavigateToStep3Screen)

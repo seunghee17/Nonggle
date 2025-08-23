@@ -37,6 +37,7 @@ class SignupContract @Inject constructor() {
         data class InputFarmerAddressDetail(val detailAddress: String): Event()
         object ClearFarmerAddressDetail: Event()
         data class SelectFarmerCategory(val category: String): Event()
+        object navigateToStep1Button: Event()
         object navigateToStep3Button: Event()
         object navigateToHomeButton: Event()
     }
