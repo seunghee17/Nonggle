@@ -29,6 +29,8 @@ import com.capstone.nongglenonggle.core.design_system.soYo
 import com.capstone.nongglenonggle.presentation.view.signup.SignupActivity
 import kotlinx.coroutines.flow.collectLatest
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.capstone.nongglenonggle.presentation.view.farmer.home.MainActivity
+import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
 
 @Composable
 fun LoginScreen(
@@ -48,10 +50,17 @@ fun LoginScreen(
                     }
                     context.startActivity(intent)
                 }
-                is LoginContract.Effect.NavigateToHome -> {
-                    //context.startActivity(Intent(context, LoginActivity::class.java))
+                is LoginContract.Effect.NavigateToFarmerHome -> {
                     /// FIXME: 임시적으로 회원가입 화면으로 이동
-                    val intent = Intent(context, SignupActivity::class.java).apply {
+                    val intent = Intent(context, MainActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    }
+                    context.startActivity(intent)
+                }
+
+                is LoginContract.Effect.NavigateToWorkerHome -> {
+                    /// FIXME: 임시적으로 회원가입 화면으로 이동
+                    val intent = Intent(context, WorkerMainActivity::class.java).apply {
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     }
                     context.startActivity(intent)

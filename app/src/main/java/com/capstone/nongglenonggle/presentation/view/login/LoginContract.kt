@@ -21,7 +21,8 @@ class LoginContract @Inject constructor( ){
 
     sealed class Effect: UiEffect {
         object NavigateToEnrollUser: Effect()
-        object NavigateToHome: Effect()
+        object NavigateToFarmerHome: Effect()
+        object NavigateToWorkerHome: Effect()
         data class unAvailableToastmessage(val message: String): Effect()
     }
 }
