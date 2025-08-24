@@ -84,6 +84,7 @@ fun SignupGetFarmerInfoScreen(
             item {
                 NonggleAppBar(
                     onBackPressed = { navController.popBackStack() },
+                    backAction = true,
                     title = {},
                 )
                 Text(

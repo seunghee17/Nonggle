@@ -74,6 +74,7 @@ fun SignupAgreeTermsScreen (
     ) {
         NonggleAppBar(
             onBackPressed = { navController.popBackStack() },
+            backAction = true,
             title = {},
         )
         Text(

@@ -176,7 +176,7 @@ fun ContainedButton(
 @Composable
 fun OutlinedButton(
     modifier: Modifier = Modifier,
-    enabled: Boolean,
+    enabled: Boolean = true,
     enableColor: Color,
     enableContentColor: Color,
     pressedColor: Color,
@@ -270,29 +270,6 @@ fun NonggleIconButton(
             painter = painterResource(id = ImageResourceId),
             modifier = modifier.size(width = 20.dp, height = 20.dp),
             contentDescription = null,
-        )
-    }
-}
-
-//온보딩의 현재 단계 안내해주는 컴포넌트
-@Composable
-fun stepButton(
-    stepInfo: String,
-    currentStep: String,
-) {
-    Box(
-        modifier = Modifier
-            .size(24.dp)
-            .background(
-                color = if (stepInfo == currentStep) NonggleTheme.colors.m1 else NonggleTheme.colors.g4,
-                shape = CircleShape
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = stepInfo,
-            style = NonggleTheme.typography.b2_sub,
-            color = if (stepInfo == currentStep) Color.White else NonggleTheme.colors.m1
         )
     }
 }

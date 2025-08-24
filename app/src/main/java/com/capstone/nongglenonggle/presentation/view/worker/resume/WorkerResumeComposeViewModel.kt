@@ -24,6 +24,9 @@ class WorkerResumeComposeViewModel @Inject constructor(
     private val addTypeUseCase: AddTypeUseCase
 ): BaseViewModel<WorkerResumeContract.Event, WorkerResumeContract.State, WorkerResumeContract.Effect>(initialState = WorkerResumeContract.State()) {
     override fun reduceState(event: WorkerResumeContract.Event) {
+    }
+
+    private fun openGallery() {
 
     }
 

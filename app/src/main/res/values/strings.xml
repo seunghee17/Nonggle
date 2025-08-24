@@ -18,6 +18,11 @@
     <string name="sign_up_Farmer_AddressInputTextFieldLabel">농가 주소</string>
     <string name="sign_up_Farmer_AddressDetailInfoInputTextFieldHintText">농가 상세 주소를 입력해주세요.</string>
 
+    <string name="worker_ResumeScreen_TabTitle_1">기본정보</string>
+    <string name="worker_ResumeScreen_TabTitle_2">작업내용</string>
+    <string name="worker_ResumeScreen_TabTitle_3">고용정보</string>
+    <string name="worker_ResumeScreen_TabTitle_4">추가내용</string>
+
 
 
     <string name="공고글작성">공고글작성</string>

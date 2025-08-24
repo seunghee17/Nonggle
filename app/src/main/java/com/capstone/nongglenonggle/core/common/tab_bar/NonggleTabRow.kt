@@ -1,6 +1,8 @@
 package com.capstone.nongglenonggle.core.common.tab_bar
 
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -8,59 +10,53 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun NonggleTabRow(
     modifier: Modifier = Modifier,
     tabs: List<String>,
-    selectedTabIndex: MutableState<Int>,
+    pagerState: PagerState,
 ) {
-    val density = LocalDensity.current
-    TabRow(
+    val scope = rememberCoroutineScope()
+    ScrollableTabRow (
         modifier = modifier,
-        selectedTabIndex = selectedTabIndex.value,
+        selectedTabIndex = pagerState.currentPage,
         containerColor = Color.Transparent,
         contentColor = NonggleTheme.colors.g3,
         indicator = { tabPositions ->
-            TabRowDefaults.Indicator(
+            TabRowDefaults.SecondaryIndicator(
                 modifier = Modifier
                     .tabIndicatorOffset(
-                        tabPositions[selectedTabIndex.value],
+                        tabPositions[pagerState.currentPage],
                     )// 넓이, 애니메이션 지정
-                    .graphicsLayer {
-                        shape = RoundedCornerShape(
-                            topStart = 16.dp,
-                            topEnd = 16.dp,
-                            bottomStart = 16.dp,
-                            bottomEnd = 16.dp
-                        )
-                        clip = true
-                    }, // 모양 지정
+                    .clip(RoundedCornerShape(16.dp)),// 모양 지정
                 color = NonggleTheme.colors.m1 // 색상 지정
             )
         },
-        divider = {},
-
     ) {
         tabs.forEachIndexed { index, title ->
             Tab(
-                selected = selectedTabIndex.value == index,
+                selected = pagerState.currentPage == index,
                 onClick = {
-                    selectedTabIndex.value = index
+                    scope.launch { pagerState.animateScrollToPage(index) }
                 },
                 text = {
                     Text(
                         text = title,
-                        color = if(selectedTabIndex.value == index) NonggleTheme.colors.m1 else NonggleTheme.colors.g3,
+                        color = if(pagerState.currentPage == index) NonggleTheme.colors.m1 else NonggleTheme.colors.g3,
                     )
                 }
             )
         }
+        //HorizontalDivider
     }
 }

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.capstone.nongglenonggle.presentation.view.signup.nav_controller.SignupNavGraph
-import com.capstone.nongglenonggle.presentation.view.worker.resume.WorkerResumeGraph
+import com.capstone.nongglenonggle.presentation.view.worker.resume.nav_controller.WorkerResumeGraph
 
 @Composable
 fun NonggleNavHost() {

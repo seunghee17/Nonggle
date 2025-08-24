@@ -2,6 +2,7 @@ package com.capstone.nongglenonggle.core.common.appbar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,6 +21,8 @@ fun NonggleAppBar(
     title: @Composable () -> Unit,
     titleColor: Color = Color.Black,
     backgroundColor: Color = Color.White,
+    closeAction: Boolean? = false,
+    backAction: Boolean? = false,
 ) {
     TopAppBar(
         modifier = modifier,
@@ -33,7 +36,11 @@ fun NonggleAppBar(
         ),
         navigationIcon = {
             IconButton(onClick = onBackPressed) {
-                Icon(Icons.Filled.ArrowBack, null)
+                if(closeAction == true) {
+                    Icon(Icons.Filled.Close, null)
+                } else if(backAction == true) {
+                    Icon(Icons.Filled.ArrowBack, null)
+                }
             }
         },
 
