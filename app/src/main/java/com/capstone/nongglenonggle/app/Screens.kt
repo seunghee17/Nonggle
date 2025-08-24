@@ -13,10 +13,7 @@ sealed class Screens(val route: String) {
     }
 
     object WorkerResumeWriting: Screens("WorkerResume") {
-        object ResumeStep1: Screens("WorkerResume/Setp1")
-        object ResumeStep2: Screens("WorkerResume/Setp2")
-        object ResumeStep3: Screens("WorkerResume/Setp3")
-        object ResumeStep4: Screens("WorkerResume/Setp4")
+        object ResumeTabInputScreen: Screens("WorkerResume/main")
         object ResumeComplete: Screens("WorkerResume/Complete")
     }
 }
