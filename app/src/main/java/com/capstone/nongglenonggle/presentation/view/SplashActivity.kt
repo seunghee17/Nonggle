@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.presentation.view.login.LoginActivity
+import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
@@ -32,7 +33,7 @@ class SplashActivity : AppCompatActivity() {
 //                        val intent = Intent(this@SplashActivity,MainActivity::class.java)
 //                        startActivity(intent)
 //                        finish()
-                        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                        val intent = Intent(this@SplashActivity, WorkerMainActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
@@ -40,7 +41,7 @@ class SplashActivity : AppCompatActivity() {
 //                        val intent = Intent(this@SplashActivity,WorkerMainActivity::class.java)
 //                        startActivity(intent)
 //                        finish()
-                        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                        val intent = Intent(this@SplashActivity, WorkerMainActivity::class.java)
                         startActivity(intent)
                         finish()
                     }

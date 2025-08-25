@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.compose.runtime.Composable
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -229,5 +230,10 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
         val newFrament = LocationSelectFragment()
         newFrament.show(parentFragmentManager,"locationselectfragment")
     }
+
+}
+
+@Composable
+fun ResumeStep4Screen() {
 
 }

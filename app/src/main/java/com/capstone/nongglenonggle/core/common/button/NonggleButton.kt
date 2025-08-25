@@ -183,7 +183,7 @@ fun OutlinedButton(
     disableContentColor: Color? = null,
     titleText: String,
     titleTextStyle: TextStyle,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()

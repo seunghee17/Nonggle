@@ -4,13 +4,13 @@ import com.capstone.nongglenonggle.data.repositoryimpl.ApplyRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.AuthenticationRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.FirestoreGetRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.FirestoreSetRepositoryImpl
-import com.capstone.nongglenonggle.data.repositoryimpl.ImageRepositoryImpl
+import com.capstone.nongglenonggle.data.repositoryimpl.WorkerResumeRepositoryImpl
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
 import com.capstone.nongglenonggle.domain.repository.ApplyRepository
 import com.capstone.nongglenonggle.domain.repository.AuthenticationRepository
 import com.capstone.nongglenonggle.domain.repository.FirestoreGetRepository
 import com.capstone.nongglenonggle.domain.repository.FirestoreSetRepository
-import com.capstone.nongglenonggle.domain.repository.ImageRepository
+import com.capstone.nongglenonggle.domain.repository.WorkerResumeRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -31,17 +31,18 @@ object RepositoryModule {
         firestore: FirebaseFirestore,
         firebaseAuth: FirebaseAuth,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
-    ) : AuthenticationRepository {
-        return AuthenticationRepositoryImpl(firestore,firebaseAuth, ioDispatcher)
+    ): AuthenticationRepository {
+        return AuthenticationRepositoryImpl(firestore, firebaseAuth, ioDispatcher)
     }
 
     @Provides
     @Singleton
-    fun provideImageRepository(
+    fun provideWorkerResumeRepository(
         firebaseStorage: FirebaseStorage,
-        firebaseAuth: FirebaseAuth
-    ): ImageRepository {
-        return ImageRepositoryImpl(firebaseStorage,firebaseAuth)
+        firebaseAuth: FirebaseAuth,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ): WorkerResumeRepository {
+        return WorkerResumeRepositoryImpl(firebaseStorage, firebaseAuth, ioDispatcher)
     }
 
     @Provides
@@ -50,7 +51,7 @@ object RepositoryModule {
         firestore: FirebaseFirestore,
         firebaseAuth: FirebaseAuth
     ): FirestoreSetRepository {
-        return FirestoreSetRepositoryImpl(firestore,firebaseAuth)
+        return FirestoreSetRepositoryImpl(firestore, firebaseAuth)
     }
 
     @Provides
@@ -59,7 +60,7 @@ object RepositoryModule {
         firestore: FirebaseFirestore,
         firebaseAuth: FirebaseAuth
     ): FirestoreGetRepository {
-        return FirestoreGetRepositoryImpl(firestore,firebaseAuth)
+        return FirestoreGetRepositoryImpl(firestore, firebaseAuth)
     }
 
     @Provides
@@ -68,6 +69,6 @@ object RepositoryModule {
         firestore: FirebaseFirestore,
         firebaseAuth: FirebaseAuth
     ): ApplyRepository {
-        return ApplyRepositoryImpl(firestore,firebaseAuth)
+        return ApplyRepositoryImpl(firestore, firebaseAuth)
     }
 }

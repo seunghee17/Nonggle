@@ -18,7 +18,7 @@ fun NavGraphBuilder.WorkerResumeGraph(navHostController: NavHostController) {
         composable(route = Screens.WorkerResumeWriting.ResumeTabInputScreen.route) { entry ->
             val parent = remember(entry) {navHostController.getBackStackEntry(Screens.WorkerResumeWriting.route)}
             val viewModel : WorkerResumeComposeViewModel = hiltViewModel(parent)
-            ResumeScreen(navHostController, viewModel)
+            ResumeScreen(viewModel = viewModel, navController = navHostController)
         }
     }
 }

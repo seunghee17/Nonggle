@@ -1,6 +1,7 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.capstone.nongglenonggle.R
@@ -24,6 +25,7 @@ class ResumeActivity : BaseActivity<ActivityResumeBinding>(R.layout.activity_res
         }
         initViewPager()
     }
+
     private fun initViewPager(){
         var viewPager2Adapter = ViewPager2Adapter(this)
         viewPager2Adapter.addfragment(ResumeAFragment())

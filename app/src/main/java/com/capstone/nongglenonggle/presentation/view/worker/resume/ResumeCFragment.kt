@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.Composable
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.capstone.nongglenonggle.R
@@ -150,7 +151,7 @@ class ResumeCFragment : BaseFragment<FragmentResumeCBinding>(R.layout.fragment_r
         })
 
         binding.nextBtn.setOnClickListener{
-            val viewpager = requireActivity().findViewById<ViewPager2>(R.id.viewPager)
+            val viewpager = requireActivity().findViewById<ViewPager2>(R.id.viewpager)
             val current = viewpager.currentItem
             val next = current+1
             if(next < viewpager.adapter?.itemCount ?: 0){
@@ -160,5 +161,10 @@ class ResumeCFragment : BaseFragment<FragmentResumeCBinding>(R.layout.fragment_r
         }
 
     }
+
+}
+
+@Composable
+fun ResumeStep3Screen() {
 
 }

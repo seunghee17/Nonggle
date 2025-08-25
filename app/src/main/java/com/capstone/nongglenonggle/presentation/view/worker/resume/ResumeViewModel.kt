@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.capstone.nongglenonggle.domain.entity.Model
 import com.capstone.nongglenonggle.domain.entity.ResumeContent
 import com.capstone.nongglenonggle.domain.entity.ResumeSummary
 import com.capstone.nongglenonggle.domain.usecase.AddByAgeUseCase
@@ -14,7 +13,6 @@ import com.capstone.nongglenonggle.domain.usecase.AddRefToAddressUseCase
 import com.capstone.nongglenonggle.domain.usecase.AddResumeRefToUserUseCase
 import com.capstone.nongglenonggle.domain.usecase.AddResumeUseCase
 import com.capstone.nongglenonggle.domain.usecase.AddTypeUseCase
-import com.capstone.nongglenonggle.domain.usecase.UploadImageUsecase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +23,6 @@ import java.util.Calendar
 import javax.inject.Inject
 @HiltViewModel
 class ResumeViewModel @Inject constructor(
-    private val uploadImageUsecase: UploadImageUsecase,
     private val addResumeUseCase: AddResumeUseCase,
     private val addResumeRefToUserUseCase: AddResumeRefToUserUseCase,
     private val addRefToAddressUseCase: AddRefToAddressUseCase,
@@ -80,21 +77,21 @@ class ResumeViewModel @Inject constructor(
 
 
 
-    fun uploadImage(imageEntity: Model.ImageEntity){
-        viewModelScope.launch {
-            val result = uploadImageUsecase.uploadImage(imageEntity,"ResumeImages")
-            if(result.isSuccess){
-                //여기서 url접근해서 가져오기
-                val imageurl = result.getOrNull()
-                if(imageurl != null){
-                    _profileImage.value = imageurl!!
-                }else{
-                }
-            }
-            else{
-            }
-        }
-    }
+//    fun uploadImage(imageEntity: Model.ImageEntity){
+//        viewModelScope.launch {
+//            val result = uploadImageUsecase.uploadImage(imageEntity,"ResumeImages")
+//            if(result.isSuccess){
+//                //여기서 url접근해서 가져오기
+//                val imageurl = result.getOrNull()
+//                if(imageurl != null){
+//                    _profileImage.value = imageurl!!
+//                }else{
+//                }
+//            }
+//            else{
+//            }
+//        }
+//    }
     //성별
     private val _activateWomen = MutableLiveData<Boolean>()
     val activateWomen:LiveData<Boolean> = _activateWomen

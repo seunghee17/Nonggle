@@ -60,7 +60,7 @@ class FarmerHomeViewModel @Inject constructor(
 
             setUserCategoryList()
             setRefDataCategory()
-            setRefDataAddress(userDetail.value?.first!! ,userDetail.value?.second!! )
+            setRefDataAddress("" ,"") /// FIXME: 오류가 발생하여 임시적으로 이렇게 처리
         }
     }
     private val _isNotice = MutableLiveData<Boolean>()

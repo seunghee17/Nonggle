@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
@@ -66,10 +67,10 @@ fun ResumeScreen(
                horizontalAlignment = Alignment.CenterHorizontally
            ) {
                when(page) {
-                   0 -> ResumeStep1Screen()
-                   1 -> ResumeStep2Screen()
-                   2 -> ResumeStep2Screen()
-                   3 -> ResumeStep2Screen()
+                   0 -> ResumeStep1Screen(viewModel = viewModel)
+                   1 -> ResumeStep2Screen(viewModel = viewModel)
+                   2 -> ResumeStep3Screen()
+                   3 -> ResumeStep4Screen()
                }
            }
        }
