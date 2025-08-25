@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.capstone.nongglenonggle.domain.entity.OffererHomeFilterContent
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.presentation.view.adapter.FilterFarmerHomeAdapter
-import com.capstone.nongglenonggle.presentation.viewModel.farmer.FarmerHomeViewModel
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.FragmentFarmerHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,9 +61,9 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
                 adapter.updateList(dataList)
             }
         }
-//        binding.toSearch.setOnClickListener{
-//            findNavController().navigate(R.id.searchWorkerFragment)
-//        }
+        binding.toSearch.setOnClickListener{
+            findNavController().navigate(R.id.searchWorkerFragment)
+        }
 
         binding.noticeApplier.setOnClickListener{
             findNavController().navigate(R.id.noticeFragment)

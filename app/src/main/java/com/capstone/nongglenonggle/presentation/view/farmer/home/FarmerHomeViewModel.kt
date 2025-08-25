@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.viewModel.farmer
+package com.capstone.nongglenonggle.presentation.view.farmer.home
 
 import android.util.Log
 import androidx.lifecycle.LiveData
