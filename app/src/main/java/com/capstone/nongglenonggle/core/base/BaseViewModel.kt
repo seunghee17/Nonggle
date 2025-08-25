@@ -33,8 +33,8 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect>(
         }
     }
 
-    protected fun updateState(currentState: State) {
-        _uiState.value = currentState
+    protected fun updateState(newState: State) {
+        _uiState.value = newState
     }
 
     protected fun postEffect(effect: Effect) {
