@@ -20,7 +20,7 @@ import com.capstone.nongglenonggle.presentation.view.adapter.FilterFarmerHomeAda
 import com.capstone.nongglenonggle.presentation.view.adapter.FilterFarmerSearchAdapter
 import com.capstone.nongglenonggle.presentation.view.dialog.FilterBottomSheetFragment
 import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeCompleteActivity
-import com.capstone.nongglenonggle.presentation.viewModel.farmer.FarmerHomeViewModel
+import com.capstone.nongglenonggle.presentation.view.farmer.home.FarmerHomeViewModel
 import com.capstone.nongglenonggle.presentation.viewModel.farmer.FarmerSearchViewModel
 import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeCompleteViewModel
 import com.google.firebase.auth.FirebaseAuth

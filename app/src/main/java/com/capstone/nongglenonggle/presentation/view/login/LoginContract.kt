@@ -1,5 +1,7 @@
 package com.capstone.nongglenonggle.presentation.view.login
 
+import android.content.Intent
+import android.content.IntentSender
 import com.capstone.nongglenonggle.core.base.UiEffect
 import com.capstone.nongglenonggle.core.base.UiEvent
 import com.capstone.nongglenonggle.core.base.UiState
@@ -16,13 +18,16 @@ class LoginContract @Inject constructor( ){
     ): UiState
 
     sealed class Event: UiEvent {
-        object kakaoLoginButtonClick: Event()
+        object KakaoLoginButtonClick: Event()
+        object GoogleLoginButtonClick: Event()
+        data class OnGoogleSignInResult(val intent: Intent): Event()
     }
 
     sealed class Effect: UiEffect {
         object NavigateToEnrollUser: Effect()
         object NavigateToFarmerHome: Effect()
         object NavigateToWorkerHome: Effect()
-        data class unAvailableToastmessage(val message: String): Effect()
+        data class UnAvailableToastmessage(val message: String): Effect()
+        data class LaunchGoogleSignIn(val intentSender: IntentSender) : Effect()
     }
 }

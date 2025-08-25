@@ -8,18 +8,20 @@ import com.capstone.nongglenonggle.data.model.login.SignInResult
 import com.capstone.nongglenonggle.data.model.login.UserData
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions
-import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.tasks.await
 import kotlin.coroutines.cancellation.CancellationException
+import javax.inject.Inject
 
-class GoogleAuthClient(
-    private val context: Context,
-    private val onTapClient: SignInClient
+class GoogleAuthClient @Inject constructor(
+    @ApplicationContext private val context: Context
 ) {
     private val auth = Firebase.auth
+    private val onTapClient = Identity.getSignInClient(context)
 
     suspend fun signIn(): IntentSender? {
         val result = try {

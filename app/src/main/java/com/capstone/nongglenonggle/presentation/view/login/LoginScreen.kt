@@ -1,7 +1,8 @@
 package com.capstone.nongglenonggle.presentation.view.login
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -35,7 +37,7 @@ import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActiv
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel,
-    onSignInClick: () -> Unit
+    onLaunchGoogleSignIn: (IntentSender) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val effectFlow = viewModel.effect
@@ -50,8 +52,8 @@ fun LoginScreen(
                     }
                     context.startActivity(intent)
                 }
+
                 is LoginContract.Effect.NavigateToFarmerHome -> {
-                    /// FIXME: 임시적으로 회원가입 화면으로 이동
                     val intent = Intent(context, MainActivity::class.java).apply {
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     }
@@ -59,15 +61,18 @@ fun LoginScreen(
                 }
 
                 is LoginContract.Effect.NavigateToWorkerHome -> {
-                    /// FIXME: 임시적으로 회원가입 화면으로 이동
                     val intent = Intent(context, WorkerMainActivity::class.java).apply {
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     }
                     context.startActivity(intent)
                 }
 
-                is LoginContract.Effect.unAvailableToastmessage -> {
+                is LoginContract.Effect.UnAvailableToastmessage -> {
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+                }
+
+                is LoginContract.Effect.LaunchGoogleSignIn -> {
+                    onLaunchGoogleSignIn(effect.intentSender)
                 }
             }
         }
@@ -75,7 +80,7 @@ fun LoginScreen(
 
     LaunchedEffect(key1 = uiState.signInState.signInError) {
         uiState.signInState.signInError?.let { error ->
-            if(!uiState.signInState.signInError.isNullOrEmpty()) {
+            if (!uiState.signInState.signInError.isNullOrEmpty()) {
                 Toast.makeText(context, error, Toast.LENGTH_LONG).show()
             }
         }
@@ -89,12 +94,12 @@ fun LoginScreen(
             AppLogoForLogin()
             Spacer(modifier = Modifier.weight(1f))
             kakaoLoginButton(onClick = {
-                viewModel.setEvent(LoginContract.Event.kakaoLoginButtonClick)
-            })
+                viewModel.setEvent(LoginContract.Event.KakaoLoginButtonClick)
+            }, context)
             Spacer(modifier = Modifier.height(16.dp))
             googleLoginButton(onClick = {
-                onSignInClick()
-            })
+                viewModel.setEvent(LoginContract.Event.GoogleLoginButtonClick)
+            }, context)
             Spacer(modifier = Modifier.height(20.dp))
         }
     }
@@ -119,14 +124,15 @@ fun AppLogoForLogin() {
 
 @Composable
 fun kakaoLoginButton(
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    context: Context
 ) {
     ImageButton(
         modifier = Modifier
             .padding(horizontal = 20.dp)
             .fillMaxWidth(),
         onClick = onClick,
-        titleText = "카카오로 시작하기",
+        titleText = context.getString(R.string.start_with_kakao),
         contentColor = NonggleTheme.colors.g1,
         backgroundColor = Color(0xFFF9E000),
         titleTextStyle = NonggleTheme.typography.b4_btn,
@@ -136,14 +142,15 @@ fun kakaoLoginButton(
 
 @Composable
 fun googleLoginButton(
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    context: Context
 ) {
     ImageButton(
         modifier = Modifier
             .padding(horizontal = 20.dp)
             .fillMaxWidth(),
         onClick = onClick,
-        titleText = "Google로 로그인 하기",
+        titleText = context.getString(R.string.start_with_kakao),
         contentColor = NonggleTheme.colors.g2,
         backgroundColor = NonggleTheme.colors.g4,
         titleTextStyle = NonggleTheme.typography.b4_btn,

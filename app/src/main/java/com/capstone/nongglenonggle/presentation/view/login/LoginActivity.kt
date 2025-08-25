@@ -18,13 +18,6 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LoginActivity : ComponentActivity() {
 
-    private val googleAuthClient by lazy {
-        GoogleAuthClient(
-            context = applicationContext,
-            onTapClient = Identity.getSignInClient(applicationContext)
-        )
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,11 +31,8 @@ class LoginActivity : ComponentActivity() {
                         contract = ActivityResultContracts.StartIntentSenderForResult(),
                         onResult = { result ->
                             if (result.resultCode == RESULT_OK) {
-                                lifecycleScope.launch {
-                                    val signInResult = googleAuthClient.signInWithIntent(
-                                        intent = result.data ?: return@launch,
-                                    )
-                                    viewModel.onSingInResult(signInResult)
+                                result.data?.let {
+                                    viewModel.setEvent(LoginContract.Event.OnGoogleSignInResult(it))
                                 }
                             }
                         }
@@ -50,14 +40,10 @@ class LoginActivity : ComponentActivity() {
 
                     LoginScreen(
                         viewModel = viewModel,
-                        onSignInClick = {
-                            lifecycleScope.launch {
-                                val signInIntentSender = googleAuthClient.signIn()
-                                launcher.launch(
-                                    IntentSenderRequest.Builder(signInIntentSender ?: return@launch)
-                                        .build()
-                                )
-                            }
+                        onLaunchGoogleSignIn = { intentSender ->
+                            launcher.launch(
+                                IntentSenderRequest.Builder(intentSender).build()
+                            )
                         }
                     )
                 }
