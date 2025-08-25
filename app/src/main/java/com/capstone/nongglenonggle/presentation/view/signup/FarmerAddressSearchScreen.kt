@@ -28,7 +28,6 @@ import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 class JsBridge(private val onData: (String) -> Unit) {
     @JavascriptInterface
     fun processDATA(data: String) {
-        Log.d("TTAG", "고른 주소는 ${data}")
         onData(data)
     }
 }
