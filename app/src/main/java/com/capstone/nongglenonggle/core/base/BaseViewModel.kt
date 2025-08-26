@@ -48,14 +48,14 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect>(
     }
 
     // ViewModel 생명주기 동안 event를 구독하여 상태를 업데이트한다.
-    // collect된 이벤트는 reduceState()로 처리된다.
+    // collect된 이벤트는 handleEvent()로 처리된다.
     private fun subScribeEvent() {
         viewModelScope.launch {
             event.collect{
-                reduceState(it)
+                handleEvent(it)
             }
         }
     }
 
-    abstract fun reduceState(event: Event)
+    abstract fun handleEvent(event: Event)
 }

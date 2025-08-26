@@ -12,7 +12,7 @@ import javax.inject.Inject
 class WorkerResumeComposeViewModel @Inject constructor(
     private val setWorkerProfileImageUseCase: SetWorkderProfileImageUseCase,
 ): BaseViewModel<WorkerResumeContract.Event, WorkerResumeContract.State, WorkerResumeContract.Effect>(initialState = WorkerResumeContract.State()) {
-    override fun reduceState(event: WorkerResumeContract.Event) {
+    override fun handleEvent(event: WorkerResumeContract.Event) {
         when(event) {
             is WorkerResumeContract.Event.SetGenderType -> {
                 updateState(currentState.copy(selectedGender = event.gender))

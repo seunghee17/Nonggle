@@ -17,7 +17,7 @@ class SignupViewModel @Inject constructor(
     //체크박스 활성화 개수
     private var activeCheckBoxCount: Int =0
 
-    override fun reduceState(event: SignupContract.Event) {
+    override fun handleEvent(event: SignupContract.Event) {
         viewModelScope.launch {
             when (event) {
                 //SignupSetUserType에서 가입하는 유저의 타입 정하는 이벤트

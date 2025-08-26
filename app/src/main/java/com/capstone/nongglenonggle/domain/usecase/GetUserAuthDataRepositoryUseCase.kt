@@ -11,7 +11,6 @@ class GetUserAuthDataRepositoryUseCase @Inject constructor(
     private val authenticationRepository: AuthenticationRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend operator fun invoke(): Result<UserDataClass> {
-        return withContext(ioDispatcher) { authenticationRepository.getUserData() }
-    }
+    suspend operator fun invoke(): Result<UserDataClass> =
+        withContext(ioDispatcher) { authenticationRepository.getUserData() }
 }

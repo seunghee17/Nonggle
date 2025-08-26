@@ -42,13 +42,37 @@ class AuthenticationRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getUserData(): Result<UserDataClass> {
+    override suspend fun getUserData(): Result<UserDataClass> =
         withContext(ioDispatcher) {
             val user = firebaseAuth.currentUser
-                ?: return@withContext Result.failure(IllegalStateException("Not authenticated"))
-            val data = firestore.collection("personal").document(user.uid).get().await()
+                ?: return@withContext Result.failure<UserDataClass>(
+                    IllegalStateException("Not authenticated")
+                )
+
+            val doc = firestore.collection("personal").document(user.uid)
+
+            try {
+                val snapshot = withTimeout(10_000) { doc.get().await() }
+
+                if (!snapshot.exists()) {
+                    return@withContext Result.failure<UserDataClass>(
+                        NoSuchElementException("User data not found")
+                    )
+                }
+
+                val model = snapshot.toObject(UserDataClass::class.java)
+                    ?: return@withContext Result.failure<UserDataClass>(
+                        IllegalStateException("Malformed user data")
+                    )
+
+                Result.success(model)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Result.failure(mapFirebaseException(e))
+            }
         }
-    }
+
 
 
     private fun mapFirebaseException(e: Throwable): Throwable = when (e) {

@@ -5,6 +5,7 @@ import com.capstone.nongglenonggle.core.base.BaseViewModel
 import com.capstone.nongglenonggle.data.model.login.SignInResult
 import com.capstone.nongglenonggle.data.model.login.SignInState
 import com.capstone.nongglenonggle.domain.usecase.GetUserAuthDataRepositoryUseCase
+import com.capstone.nongglenonggle.presentation.view.signup.UserType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,7 +16,7 @@ class LoginViewModel @Inject constructor(
     private val googleAuthClient: GoogleAuthClient,
 ) : BaseViewModel<LoginContract.Event, LoginContract.State, LoginContract.Effect>(initialState = LoginContract.State()) {
 
-    override fun reduceState(event: LoginContract.Event) {
+    override fun handleEvent(event: LoginContract.Event) {
         when(event) {
             is LoginContract.Event.KakaoLoginButtonClick -> {
                 handleKakaoLogin()
@@ -52,9 +53,27 @@ class LoginViewModel @Inject constructor(
             if(result.isNewUser == true) {
                 postEffect(LoginContract.Effect.NavigateToEnrollUser)
             } else if(result.isNewUser == false) {
-                //db에서 회원정보 가져오는 로직 추가
-                postEffect(LoginContract.Effect.NavigateToEnrollUser)
+                getUserLoginType()
             }
+        }
+    }
+
+    fun getUserLoginType() {
+        viewModelScope.launch {
+            getUserAuthDataRepositoryUseCase.invoke()
+                .onSuccess {
+                    if(UserType.valueOf(it.signUpType) == UserType.WORKER) {
+                        postEffect(LoginContract.Effect.NavigateToWorkerHome)
+                    } else if(UserType.valueOf(it.signUpType) == UserType.MANAGER) {
+                        postEffect(LoginContract.Effect.NavigateToFarmerHome)
+                    } else {
+                        postEffect(LoginContract.Effect.NavigateToEnrollUser)
+                    }
+                }
+                .onFailure { e ->
+                    val errorMessage = e.message ?: "사용자 가입 형식 로드에 실패했습니다."
+                    updateState(currentState.copy(errorMessage = errorMessage))
+                }
         }
     }
 

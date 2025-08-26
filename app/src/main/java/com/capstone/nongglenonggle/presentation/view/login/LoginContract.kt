@@ -14,7 +14,8 @@ class LoginContract @Inject constructor( ){
         val isLoading: Boolean = false,
         val signInState: SignInState = SignInState(
             userData = UserData(userId = "", userName = ""),
-        )
+        ),
+        val errorMessage: String = ""
     ): UiState
 
     sealed class Event: UiEvent {
