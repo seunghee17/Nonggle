@@ -42,9 +42,13 @@ class AuthenticationRepositoryImpl @Inject constructor(
             }
         }
 
-//    override suspend fun getUserData(uid: String): Result<Boolean> {
-//
-//    }
+    override suspend fun getUserData(): Result<UserDataClass> {
+        withContext(ioDispatcher) {
+            val user = firebaseAuth.currentUser
+                ?: return@withContext Result.failure(IllegalStateException("Not authenticated"))
+            val data = firestore.collection("personal").document(user.uid).get().await()
+        }
+    }
 
 
     private fun mapFirebaseException(e: Throwable): Throwable = when (e) {
