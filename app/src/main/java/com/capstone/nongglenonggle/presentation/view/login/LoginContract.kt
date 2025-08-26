@@ -9,7 +9,7 @@ import com.capstone.nongglenonggle.data.model.login.SignInState
 import com.capstone.nongglenonggle.data.model.login.UserData
 import javax.inject.Inject
 
-class LoginContract @Inject constructor( ){
+class LoginContract {
     data class State(
         val isLoading: Boolean = false,
         val signInState: SignInState = SignInState(

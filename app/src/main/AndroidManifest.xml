@@ -52,7 +52,7 @@
             android:name=".presentation.view.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.view.SplashActivity"
+            android:name=".presentation.view.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>

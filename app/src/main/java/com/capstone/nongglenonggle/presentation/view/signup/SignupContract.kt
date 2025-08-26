@@ -5,7 +5,7 @@ import com.capstone.nongglenonggle.core.base.UiEvent
 import com.capstone.nongglenonggle.core.base.UiState
 import javax.inject.Inject
 
-class SignupContract @Inject constructor() {
+class SignupContract {
     sealed interface SubmitState {
         object Idle: SubmitState
         object Loading: SubmitState
