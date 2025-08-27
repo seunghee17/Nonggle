@@ -28,15 +28,16 @@ import com.capstone.nongglenonggle.core.common.button.ImageButton
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.NongleTheme
 import com.capstone.nongglenonggle.core.design_system.soYo
-import com.capstone.nongglenonggle.presentation.view.signup.SignupActivity
 import kotlinx.coroutines.flow.collectLatest
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.presentation.view.farmer.home.MainActivity
 import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
 
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel,
+    navController: NavHostController,
     onLaunchGoogleSignIn: (IntentSender) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -47,10 +48,11 @@ fun LoginScreen(
         effectFlow.collectLatest { effect ->
             when (effect) {
                 is LoginContract.Effect.NavigateToEnrollUser -> {
-                    val intent = Intent(context, SignupActivity::class.java).apply {
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    }
-                    context.startActivity(intent)
+//                    val intent = Intent(context, SignupActivity::class.java).apply {
+//                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                    }
+//                    context.startActivity(intent)
+                    navController.navigate("signup/step3")
                 }
 
                 is LoginContract.Effect.NavigateToFarmerHome -> {
