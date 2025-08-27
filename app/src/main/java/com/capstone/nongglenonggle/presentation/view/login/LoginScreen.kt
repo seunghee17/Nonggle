@@ -31,6 +31,7 @@ import com.capstone.nongglenonggle.core.design_system.soYo
 import kotlinx.coroutines.flow.collectLatest
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.capstone.nongglenonggle.app.Screens
 import com.capstone.nongglenonggle.presentation.view.farmer.home.MainActivity
 import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
 
@@ -48,11 +49,11 @@ fun LoginScreen(
         effectFlow.collectLatest { effect ->
             when (effect) {
                 is LoginContract.Effect.NavigateToEnrollUser -> {
-//                    val intent = Intent(context, SignupActivity::class.java).apply {
-//                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                    }
-//                    context.startActivity(intent)
-                    navController.navigate("signup/step3")
+                    navController.navigate(Screens.Signup.route) {
+                        popUpTo(Screens.Login.route) {inclusive = true} //로그인 그래프 통째 제거
+                        launchSingleTop = true
+                    }
+
                 }
 
                 is LoginContract.Effect.NavigateToFarmerHome -> {
