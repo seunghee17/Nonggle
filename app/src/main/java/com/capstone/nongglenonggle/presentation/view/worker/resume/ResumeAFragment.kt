@@ -23,11 +23,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -54,6 +58,7 @@ import androidx.viewpager2.widget.ViewPager2
 import coil.compose.AsyncImage
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.addFocusCleaner
+import com.capstone.nongglenonggle.core.common.button.ImageButton
 import com.capstone.nongglenonggle.core.common.button.NonggleIconButton
 import com.capstone.nongglenonggle.core.common.button.OutlinedButton
 import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
@@ -368,7 +373,7 @@ fun ResumeStep1Screen(
                 style = NonggleTheme.typography.b2_sub,
                 color = NonggleTheme.colors.g2
             )
-            if(uiState.imageProfileUri == null) {
+            if (uiState.imageProfileUri == null) {
                 Image(
                     modifier = Modifier
                         .size(width = 96.dp, height = 96.dp)
@@ -621,4 +626,38 @@ fun certificationButton(
         enableContentColor = if (certificateAvailable && title == "있음") NonggleTheme.colors.m1 else NonggleTheme.colors.g3,
         pressedColor = NonggleTheme.colors.m1,
     )
+}
+
+@Composable
+fun certificationResultChip(
+    modifier: Modifier = Modifier,
+    removeChip: () -> Unit,
+    certificationTitle: String,
+) {
+    OutlinedCard(
+        modifier = modifier
+            .height(48.dp)
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White,
+        ),
+    ) {
+        Row(
+            modifier = modifier
+        ) {
+            Text(
+                certificationTitle,
+                modifier = Modifier.padding(end = 16.dp),
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = spoqahanSansneo,
+                    fontWeight = FontWeight.Normal,
+                    color = NonggleTheme.colors.g2
+                )
+            )
+//            ImageButton(
+//                onClick = removeChip
+//            )
+        }
+    }
 }
