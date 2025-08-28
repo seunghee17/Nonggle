@@ -16,7 +16,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
+import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.common.tab_bar.NonggleTabRow
+import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 
 @Composable
 fun ResumeScreen(
@@ -74,5 +76,12 @@ fun ResumeScreen(
                }
            }
        }
+        FullButton(
+            //modifier = modifier,
+            enabled = true,
+            onClick = {},
+            titleText = context.getString(R.string.next_btn_Title),
+            titleTextStyle = NonggleTheme.typography.t3
+        )
     }
 }
