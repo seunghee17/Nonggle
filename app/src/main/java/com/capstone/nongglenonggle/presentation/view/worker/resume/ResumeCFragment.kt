@@ -7,9 +7,13 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
@@ -226,13 +230,42 @@ fun ResumeStep3Screen(
                 ),
                 color = NonggleTheme.colors.g1
             )
-
+            expressMyPersonalityTextField(context = context)
+            Text(
+                modifier = Modifier.padding(top = 32.dp),
+                text = context.getString(R.string.나의성격),
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    fontFamily = spoqahanSansneo,
+                    fontWeight = FontWeight.Medium
+                ),
+                color = NonggleTheme.colors.g1
+            )
+            Text(
+                modifier = Modifier.padding(top = 32.dp),
+                text = context.getString(R.string.추가코멘트),
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    fontFamily = spoqahanSansneo,
+                    fontWeight = FontWeight.Medium
+                ),
+                color = NonggleTheme.colors.g1
+            )
+            additionalInputTextField(
+                modifier = Modifier.padding(top = 12.dp),
+                context = context,
+                additionalValue = "",
+                onValueChange = {},
+            )
         }
     }
 }
 
+
+//성격 입력
 @Composable
-fun expressMyPersonality(
+fun expressMyPersonalityTextField(
+    modifier: Modifier = Modifier,
     context: Context,
 ) {
     NonggleTextField(
@@ -240,7 +273,7 @@ fun expressMyPersonality(
             .padding(bottom = 14.dp)
             .fillMaxWidth()
             .wrapContentHeight()
-            .onFocusChanged {  },
+            .onFocusChanged { },
         textFieldType = TextFieldType.Standard,
         value = "",
         onValueChange = {
@@ -260,4 +293,38 @@ fun expressMyPersonality(
             )
         },
     )
+}
+
+//추가 코멘트입력
+@Composable
+fun additionalInputTextField(
+    modifier: Modifier = Modifier,
+    context: Context,
+    additionalValue: String,
+    onValueChange: (String) -> Unit,
+) {
+    Row {
+        NonggleTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .onFocusChanged { },
+            textFieldType = TextFieldType.Standard,
+            value = additionalValue,
+            onValueChange = onValueChange,
+            textStyle = NonggleTheme.typography.b1_main,
+            textColor = Color.Black,
+            trailingIcon = {
+
+            },
+
+            placeholder = {
+                Text(
+                    text = context.getString(R.string.하고싶은_말이나),
+                    style = NonggleTheme.typography.b1_main,
+                    color = NonggleTheme.colors.g3,
+                )
+            },
+        )
+    }
 }

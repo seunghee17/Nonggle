@@ -14,6 +14,7 @@ sealed class Screens(val route: String) {
 
     object WorkerResumeWriting: Screens("WorkerResume") {
         object ResumeTabInputScreen: Screens("WorkerResume/main")
+        object AddressSearchWebView: Screens("WorkerResume/search_address")
         object ResumeComplete: Screens("WorkerResume/Complete")
     }
 }
