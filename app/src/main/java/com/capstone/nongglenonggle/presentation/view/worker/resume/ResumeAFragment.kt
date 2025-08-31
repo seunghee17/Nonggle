@@ -2,6 +2,7 @@ package com.capstone.nongglenonggle.presentation.view.worker.resume
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -18,19 +19,22 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,7 +48,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -59,15 +62,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.viewpager2.widget.ViewPager2
 import coil.compose.AsyncImage
 import com.capstone.nongglenonggle.R
-import com.capstone.nongglenonggle.core.addFocusCleaner
-import com.capstone.nongglenonggle.core.common.button.ImageButton
+import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.common.button.NonggleIconButton
 import com.capstone.nongglenonggle.core.common.button.OutlinedButton
+import com.capstone.nongglenonggle.core.common.date_spinner.DateSpinner
+import com.capstone.nongglenonggle.core.common.dialog.NonggleBottomSheet
 import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
-import com.capstone.nongglenonggle.core.noRippleClickable
 import com.capstone.nongglenonggle.databinding.FragmentResumeABinding
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.google.firebase.storage.FirebaseStorage
@@ -75,6 +78,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import com.capstone.nongglenonggle.presentation.util.hideClearButton
 import com.capstone.nongglenonggle.presentation.util.showClearButton
 import com.capstone.nongglenonggle.presentation.view.dialog.DatepickerFragment
+import java.time.LocalDate
+import java.time.YearMonth
+import java.util.Date
+import kotlin.math.min
 
 @AndroidEntryPoint
 class ResumeAFragment : BaseFragment<FragmentResumeABinding>(R.layout.fragment_resume_a) {
@@ -323,6 +330,7 @@ fun ResumeStep1Screen(
 
     var isNameTextFieldFocused by rememberSaveable { mutableStateOf(false) }
     var isCerTificateTextFieldFocused by rememberSaveable { mutableStateOf(false) }
+    var showDatePickerSheet by remember { mutableStateOf(false) }
 
     val pickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
@@ -353,18 +361,36 @@ fun ResumeStep1Screen(
                         getContentLauncher.launch("image/*")
                     }
                 }
+                is WorkerResumeContract.Effect.OpenBirthBottomSheet -> {
+                    showDatePickerSheet = true
+                }
+                else -> {}
             }
         }
+    }
+
+    if (showDatePickerSheet) {
+        dateSpinnerBottomSheet(
+            context = context,
+            onConfirm = { picked ->
+                viewModel.setEvent(WorkerResumeContract.Event.SetBirthDate(picked))
+                showDatePickerSheet = false         // 닫기
+            },
+            onDismissRequest = { showDatePickerSheet = false },
+            initialDate = LocalDate.now().minusYears(20),
+            minDate = LocalDate.of(1900, 1, 1),
+            maxDate = LocalDate.now()
+        )
     }
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp)
-            .addFocusCleaner(focusManager = focusManager)
     ) {
         item {
             Text(
+                modifier = Modifier.padding(top = 24.dp),
                 text = context.getString(R.string.프로필_이미지),
                 style = NonggleTheme.typography.b2_sub,
                 color = NonggleTheme.colors.g1
@@ -380,7 +406,7 @@ fun ResumeStep1Screen(
                     modifier = Modifier
                         .size(width = 96.dp, height = 96.dp)
                         .padding(top = 16.dp)
-                        .noRippleClickable {
+                        .clickable {
                             viewModel.openGallery()
                         },
                     painter = painterResource(id = R.drawable.imageupload),
@@ -408,7 +434,7 @@ fun ResumeStep1Screen(
                 textFieldType = TextFieldType.Standard,
                 value = uiState.addressTextfieldData,
                 onValueChange = {
-                    viewModel.setEvent(WorkerResumeContract.Event.InputAddressDetail(it))
+                    viewModel.setEvent(WorkerResumeContract.Event.InputName(it))
                 },
                 textStyle = NonggleTheme.typography.b1_main,
                 textColor = Color.Black,
@@ -417,7 +443,7 @@ fun ResumeStep1Screen(
                         NonggleIconButton(
                             ImageResourceId = R.drawable.xcircle,
                             onClick = {
-                                viewModel.setEvent(WorkerResumeContract.Event.ClearAddressData)
+                                viewModel.setEvent(WorkerResumeContract.Event.ClearName)
                             }
                         )
                     }
@@ -445,16 +471,23 @@ fun ResumeStep1Screen(
                         BorderStroke(1.dp, NonggleTheme.colors.g_line),
                         shape = RoundedCornerShape(4.dp)
                     )
-
+                    .clickable {
+                        showDatePickerSheet = true
+                    }
             ) {
-                Row {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp, horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
-                        modifier = Modifier.padding(vertical = 16.dp, horizontal = 16.dp),
-                        text = context.getString(R.string.생년월일을_선택),
+                        text = uiState.birthDatePresnet,
                         style = NonggleTheme.typography.b4_btn,
                         textAlign = TextAlign.Start
                         //color =  생년월일 유무에 따라 다른 색상 배정
                     )
+                    Spacer(modifier = Modifier.weight(1f))
                     Image(
                         painter = painterResource(id = R.drawable.date),
                         contentDescription = null,
@@ -665,4 +698,100 @@ fun certificationResultChip(
             )
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun dateSpinnerBottomSheet(
+    onConfirm: (Date) -> Unit,
+    onDismissRequest: () -> Unit,
+    context: Context,
+    initialDate: LocalDate = LocalDate.now(),
+    minDate: LocalDate = LocalDate.of(1900, 1, 1),
+    maxDate: LocalDate = LocalDate.of(2100, 12, 31),
+) {
+    var year by rememberSaveable(initialDate) { mutableStateOf(initialDate.year) }
+    var month by rememberSaveable(initialDate) { mutableStateOf(initialDate.monthValue) }
+    var day by rememberSaveable(initialDate) { mutableStateOf(initialDate.dayOfMonth) }
+
+    val minYear = minDate.year
+    val maxYear = maxDate.year
+
+    // 선택된 연도에 따른 월 범위 동적 제한
+    val monthMin = if (year == minYear) minDate.monthValue else 1
+    val monthMax = if (year == maxYear) maxDate.monthValue else 12
+    month = month.coerceIn(monthMin, monthMax)
+
+    val daysInMonth = YearMonth.of(year, month).lengthOfMonth()
+    val dayMin =
+        if (year == minYear && month == minDate.monthValue) minDate.dayOfMonth else 1
+    val dayMax =
+        if (year == maxYear && month == maxDate.monthValue) min(maxDate.dayOfMonth, daysInMonth)
+        else daysInMonth
+    day = day.coerceIn(dayMin, dayMax)
+
+    NonggleBottomSheet(
+        onDismissRequest = onDismissRequest,
+        content = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .imePadding()
+            ) {
+                Row(
+                    modifier = Modifier.padding(top = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = context.getString(R.string.날짜),
+                        style = TextStyle(
+                            fontFamily = spoqahanSansneo,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.Black,
+                            fontSize = 18.sp
+                        )
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Image(
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable { onDismissRequest() },
+                        painter = painterResource(id = R.drawable.close),
+                        contentDescription = null
+                    )
+                }
+
+                // 스피너는 화면별로 제공하신 DateSpinner 사용
+                DateSpinner(
+                    year = year,
+                    month = month,
+                    day = day,
+                    onYearChange = { year = it },
+                    onMonthChange = { month = it },
+                    onDayChange = { day = it },
+                    minDate = minDate,
+                    maxDate = maxDate
+                )
+
+                Spacer(Modifier.height(16.dp))
+
+                FullButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        onConfirm(Date(year, month, day))
+                        onDismissRequest()
+                    },
+                    titleText = context.getString(R.string.확인),
+                    titleTextStyle = TextStyle(
+                        fontFamily = spoqahanSansneo,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 16.sp,
+                        color = Color.White
+                    ),
+                    enabled = true
+                )
+            }
+        }
+    )
 }

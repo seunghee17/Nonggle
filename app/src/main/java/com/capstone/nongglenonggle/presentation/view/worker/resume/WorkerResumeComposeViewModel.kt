@@ -20,11 +20,17 @@ class WorkerResumeComposeViewModel @Inject constructor(
             is WorkerResumeContract.Event.ChangeCertificateState -> {
                 updateState(currentState.copy(haveCertification = event.value))
             }
-            is WorkerResumeContract.Event.InputAddressDetail -> {
-                updateState(currentState.copy(addressTextfieldData = event.detailAddress))
+            is WorkerResumeContract.Event.InputName -> {
+                updateState(currentState.copy(addressTextfieldData = event.name))
             }
-            is WorkerResumeContract.Event.ClearAddressData -> {
+            is WorkerResumeContract.Event.ClearName -> {
                 updateState(currentState.copy(addressTextfieldData = ""))
+            }
+            is WorkerResumeContract.Event.SetBirthDate -> {
+                updateState(currentState.copy(
+                    birthDate = event.birthDate,
+                    birthDatePresnet = "${event.birthDate.year} 년 ${event.birthDate.month}월 ${event.birthDate.date}일"
+                ))
             }
         }
     }

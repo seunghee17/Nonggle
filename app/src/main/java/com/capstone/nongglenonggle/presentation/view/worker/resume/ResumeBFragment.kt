@@ -69,13 +69,13 @@ class ResumeBFragment : BaseFragment<FragmentResumeBBinding>(R.layout.fragment_r
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
 
-        binding.nextBtn.setOnClickListener{
+        binding.nextBtn.setOnClickListener {
             val viewpager = requireActivity().findViewById<ViewPager2>(R.id.viewpager)
             val current = viewpager.currentItem
-            val next = current+1
-            if(next < viewpager.adapter?.itemCount ?: 0){
-                viewpager.setCurrentItem(next,true)
-            }else{
+            val next = current + 1
+            if (next < viewpager.adapter?.itemCount ?: 0) {
+                viewpager.setCurrentItem(next, true)
+            } else {
             }
         }
 
@@ -162,18 +162,20 @@ fun ResumeStep2Screen(
                     ),
 
                 ) {
-                Text(
-                    modifier = Modifier.padding(vertical = 16.dp),
-                    textAlign = TextAlign.Center,
-                    text = context.getString(R.string.경력_총),
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        fontFamily = spoqahanSansneo,
-                        fontWeight = FontWeight.Medium,
-                        color = NonggleTheme.colors.m1
-                    ),
-
-                    )
+                Row {
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(
+                        modifier = Modifier.padding(vertical = 16.dp),
+                        textAlign = TextAlign.Center,
+                        text = context.getString(R.string.경력_총),
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = spoqahanSansneo,
+                            fontWeight = FontWeight.Medium,
+                            color = NonggleTheme.colors.m1
+                        ))
+                    Spacer(modifier = Modifier.weight(1f))
+                }
             }
 
             Box(
@@ -188,7 +190,7 @@ fun ResumeStep2Screen(
                     .noRippleClickable {
 
                     },
-                ) {
+            ) {
                 Row(
                     //modifier = Modifier.align(alignment = Alignment.Horizontal)
                 ) {
@@ -201,7 +203,8 @@ fun ResumeStep2Screen(
                             fontFamily = spoqahanSansneo,
                             fontWeight = FontWeight.Medium,
                             color = NonggleTheme.colors.m1
-                        ))
+                        )
+                    )
                     Spacer(modifier = Modifier.weight(weight = 1f))
                     Image(
                         modifier = Modifier.size(width = 24.dp, height = 24.dp),

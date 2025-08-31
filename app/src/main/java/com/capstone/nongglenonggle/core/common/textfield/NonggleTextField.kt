@@ -2,10 +2,9 @@ package com.capstone.nongglenonggle.core.common.textfield
 
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -72,7 +71,8 @@ fun NonggleTextField(
         }
         when(textFieldType) {
             TextFieldType.Standard -> TextField(
-                modifier = modifier,
+                modifier = modifier
+                    .padding(PaddingValues(start = 4.dp, end = 16.dp, top = 16.dp, bottom = 16.dp)),
                 value = value,
                 supportingText = supportText,
                 enabled = enabled,

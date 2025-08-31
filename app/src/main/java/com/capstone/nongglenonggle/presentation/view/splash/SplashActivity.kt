@@ -29,7 +29,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.soYo
-import com.capstone.nongglenonggle.presentation.view.farmer.home.MainActivity
 import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -67,7 +66,11 @@ fun SpalashScreen(
             when (effect) {
 
                 is SplashContract.Effect.NavigateToFarmerHome -> {
-                    val intent = Intent(context, MainActivity::class.java).apply {
+//                    val intent = Intent(context, MainActivity::class.java).apply {
+//                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                    }
+//                    context.startActivity(intent)
+                    val intent = Intent(context, WorkerMainActivity::class.java).apply {
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     }
                     context.startActivity(intent)

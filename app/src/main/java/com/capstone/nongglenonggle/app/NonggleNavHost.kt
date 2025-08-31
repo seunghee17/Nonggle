@@ -21,3 +21,14 @@ fun NonggleNavHost() {
         WorkerResumeGraph(navHostController = navHostController)
     }
 }
+
+@Composable
+fun ResumeNavHost() {
+    val navHostController = rememberNavController()
+    NavHost(
+        navController = navHostController,
+        startDestination = Screens.WorkerResumeWriting.route
+    ) {
+        WorkerResumeGraph(navHostController = navHostController)
+    }
+}
