@@ -1,6 +1,75 @@
-# 농촌 인력 매칭 서비스 농글 
-2023.03 - 2023.11 서울여자대학교 캡스톤디자인 프로젝트 '농글' 입니다.
+# 농촌 인력 매칭 서비스 농글
 
+# 🛠️ Jetpack Compose 기반 로그인/회원가입 마이그레이션
+
+기존 XML 기반으로 구성된 로그인 및 회원가입 화면을 Jetpack Compose로 마이그레이션하고 아키텍처를 MVVM → MVI 클린 아키텍처로 재설계하였습니다. Jetpack Navigation, Hilt, ViewModel을 활용하여 UI/로직/데이터 계층을 분리하며 확장성과 유지보수성을 높였습니다.
+
+---
+
+## ✅ 주요 변경사항 요약
+
+| 항목 | 변경 전 | 변경 후 |
+|------|---------|---------|
+| UI 구현 | XML + ViewBinding | **Jetpack Compose** |
+| 화면 전환 | Intent 기반 | **Jetpack Navigation** |
+| 아키텍처 | MVVM + Clean Architecture | **MVI + Clean Architecture** |
+| DI(의존성 주입) | Hilt | **Hilt (DI 모듈 및 싱글톤 관리 개선)** |
+| 테스트 | 미작성 | **ViewModel 단위 테스트 작성** |
+
+---
+
+## 🧱 아키텍처 구조
+
+### 🧭 MVI + Clean Architecture
+
+상태 관리의 예측 가능성과 안정성을 위해 `MVI 패턴`을 Clean Architecture에 적용하여 아래와 같은 구조로 상태를 관리합니다.
+
+🧱 아키텍처 계층 구조
+
+📍 Presentation (UI Layer)
+
+UiState
+→ StateFlow 기반으로 UI의 최신 상태를 구독하고 표현합니다.
+
+UiEvent
+→ SharedFlow 기반으로 사용자 입력을 순차적으로 처리하여 이벤트 누락을 방지합니다.
+
+UiEffect
+→ Channel 기반으로 Toast, Navigation 등 단발성 이벤트를 전달합니다.
+
+📍 Domain
+
+UseCases
+→ 하나의 목적/유즈케이스에 집중된 비즈니스 로직을 담당하며 UI와 데이터 계층을 분리합니다.
+
+📍 Data
+
+Repository
+→ Firebase, Google Auth 등 외부 데이터 소스를 추상화하고 UseCase에서 사용할 수 있도록 제공합니다.
+
+
+> 이 구조를 통해 화면 구성과 상태 흐름을 명확히 분리하고 중복 이벤트 처리나 메모리 누수 가능성을 최소화할 수 있도록 설계했습니다.
+
+---
+
+## 🧪 테스트를 통한 안정성 확보
+
+### 🔍 ViewModel 단위 테스트 작성
+
+MVI 구조의 핵심인 `State`, `Event`, `Effect`가 올바르게 동작하는지 검증하기 위해 **ViewModel 단위 테스트를 작성**하여 안정성과 예측 가능성을 높였습니다.
+
+#### ✅ 테스트 커버리지 예시
+
+- 사용자가 카카오 로그인 버튼 클릭 시 Toast 메시지 출력 여부 확인
+- Google 로그인 성공 시 intent sender가 효과로 전달되는지 검증
+- 신규 유저일 경우 `Enroll` 화면으로 이동하는지 확인
+- 기존 유저 + `WORKER` 타입일 경우 홈 화면으로 이동하는지 확인
+- 로그인 유형 정보를 가져오는 UseCase 실패 시 에러 메시지 업데이트 확인
+- Google 로그인 결과 처리 시 상태가 정확히 갱신되는지 확인
+
+Jetpack Compose와 함께 아키텍처를 새롭게 재정립하는 경험은 UI 프레임워크 이상의 변화를 요구했습니다.
+기능 구현 그 이상의 구조적 개선을 목표로 상태 흐름을 명확히 하고 유지보수 가능한 코드를 만들기 위해 고민하며 개발했습니다.
+단위 테스트를 통해 안정성을 확보하고 기능 추가 및 유지보수가 용이한 구조로 성장 중입니다.
 
 ## 프로젝트 소개
 
@@ -10,32 +79,6 @@
 ![로고](https://github.com/songseunghei/CapstoneProject/assets/80136506/3155ed09-c471-4026-8cd8-6de6f8004de6)
 
 농글은 농업 일자리 매칭 서비스로 안드로이드 기반 애플리케이션입니다.
-
-
-## 프로젝트 목적
-
-![목적1](https://github.com/songseunghei/CapstoneProject/assets/80136506/f50028bf-cefe-4cbf-b785-9a50b8ea1a05)
-
-![목적2](https://github.com/songseunghei/CapstoneProject/assets/80136506/fec92c50-2fc1-4152-82ca-29ef41286efc)
-
-![목적3](https://github.com/songseunghei/CapstoneProject/assets/80136506/132b01ce-78b7-46e2-9e24-10f50ca765fc)
-
-
-## 프로젝트 목표
-
-![목표와 기능](https://github.com/songseunghei/CapstoneProject/assets/80136506/3e7170de-2b69-4685-b0d1-e5e8d8bb3231)
-
-
-## 정보구조도
-
-![IA](https://github.com/songseunghei/Nonggle/assets/80136506/1ba43029-d4f3-4070-a1af-fbc7fcb0fcf7)
-
-![IA](https://github.com/songseunghei/Nonggle/assets/80136506/eebeba85-b7b0-4d55-8f13-db54dfb58ba0)
-
-
-## 디자인 시스템
-
-![디자인 시스템](https://github.com/songseunghei/CapstoneProject/assets/80136506/917462a1-3241-4068-8227-78021b44e656)
 
 
 ## 어플리케이션 소개
