@@ -6,13 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.capstone.nongglenonggle.databinding.FragmentDatepickerBinding
-import com.capstone.nongglenonggle.presentation.viewModel.signup.SignupViewModel
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
 class DatepickerFragment : BottomSheetDialogFragment() {
-    private val typeviewModel:SignupViewModel by activityViewModels()
     private val workerviewModel : ResumeViewModel by activityViewModels()
     private var _binding : FragmentDatepickerBinding? = null
     private val binding get() = _binding!!
@@ -48,7 +46,7 @@ class DatepickerFragment : BottomSheetDialogFragment() {
         var DayMaxValue=0
         var DayMinValue=0
 
-       if(typeviewModel.isHire.value == true){
+       if(true){
            minValue = 2022
            maxValue = 2033
            monthMinValue = 1

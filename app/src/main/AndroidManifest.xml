@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
-        android:name=".presentation.di.App"
+        android:name=".app.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,12 +19,6 @@
         android:theme="@style/Theme.Nongglenonggle"
         android:usesCleartextTraffic="true"
         tools:targetApi="tiramisu">
-        <activity
-            android:name=".presentation.view.signup.ExampleActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.view.worker.home.SelectNoticeActivity"
-            android:exported="false" />
         <activity
             android:name=".presentation.view.worker.resume.ResumeCompleteActivity"
             android:exported="false" />
@@ -49,18 +43,12 @@
             android:name=".presentation.view.farmer.notice.NoticeActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".presentation.view.signup.SignupActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".presentation.view.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.view.FirstActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.view.SplashActivity"
+            android:name=".presentation.view.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>

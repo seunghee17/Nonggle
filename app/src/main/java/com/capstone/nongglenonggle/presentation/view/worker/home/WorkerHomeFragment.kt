@@ -23,7 +23,6 @@ import com.capstone.nongglenonggle.domain.entity.SeekerHomeFilterContent
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.presentation.view.adapter.FilterWorkerHomeAdapter
 import com.capstone.nongglenonggle.presentation.view.farmer.notice.NoticeCompleteActivity
-import com.capstone.nongglenonggle.presentation.view.login.LoginActivity
 import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeActivity
 import com.capstone.nongglenonggle.presentation.viewModel.worker.WorkerHomeViewModel
 import com.google.firebase.auth.FirebaseAuth

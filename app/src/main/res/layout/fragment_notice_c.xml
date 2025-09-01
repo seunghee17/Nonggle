@@ -694,7 +694,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:fontFamily="@font/spoqahansansneo_medium"
-        android:text="@string/다음"
+        android:text="@string/next_btn_Title"
 
         />
 

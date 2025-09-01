@@ -1,10 +1,8 @@
 package com.capstone.nongglenonggle.presentation.view.dialog
 
-import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -19,13 +17,12 @@ import com.capstone.nongglenonggle.databinding.FragmentCareerAddBinding
 import com.capstone.nongglenonggle.presentation.util.hideClearButton
 import com.capstone.nongglenonggle.presentation.util.showClearButton
 import com.capstone.nongglenonggle.presentation.view.adapter.SpinnerAdapter
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
 class CareerAddFragment : BottomSheetDialogFragment(){
-    private val viewModel:  ResumeViewModel by activityViewModels()
+    private val viewModel: ResumeViewModel by activityViewModels()
     private var _binding:FragmentCareerAddBinding? =null
     private val binding get() = _binding!!
 

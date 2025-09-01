@@ -1,16 +1,18 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.fragment.app.FragmentManager
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.viewpager2.widget.ViewPager2
 import com.capstone.nongglenonggle.R
+import com.capstone.nongglenonggle.app.ResumeNavHost
 import com.capstone.nongglenonggle.databinding.ActivityResumeBinding
 import com.capstone.nongglenonggle.presentation.base.BaseActivity
 import com.capstone.nongglenonggle.presentation.view.adapter.ViewPager2Adapter
-import com.capstone.nongglenonggle.presentation.view.dialog.LogoutDialogFragment
 import com.capstone.nongglenonggle.presentation.view.dialog.OutDirectionDialogFragment
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
+import com.capstone.nongglenonggle.presentation.view.splash.SpalashScreen
+import com.capstone.nongglenonggle.presentation.view.splash.SplashViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,14 +21,18 @@ class ResumeActivity : BaseActivity<ActivityResumeBinding>(R.layout.activity_res
     private val viewModel: ResumeViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
-
-        binding.backbtn.setOnClickListener{
-            showDialog()
+//        binding.viewModel = viewModel
+//        binding.lifecycleOwner = this
+//
+//        binding.backbtn.setOnClickListener{
+//            showDialog()
+//        }
+//        initViewPager()
+        setContent {
+            ResumeNavHost()
         }
-        initViewPager()
     }
+
     private fun initViewPager(){
         var viewPager2Adapter = ViewPager2Adapter(this)
         viewPager2Adapter.addfragment(ResumeAFragment())

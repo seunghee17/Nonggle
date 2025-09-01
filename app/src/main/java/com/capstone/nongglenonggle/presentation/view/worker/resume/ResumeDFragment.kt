@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -12,16 +11,31 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.capstone.nongglenonggle.R
+import com.capstone.nongglenonggle.core.design_system.NonggleTheme
+import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.databinding.FragmentResumeDBinding
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.presentation.util.hideClearButton
 import com.capstone.nongglenonggle.presentation.util.showClearButton
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeViewModel
 import com.capstone.nongglenonggle.presentation.view.dialog.LocationSelectFragment
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
@@ -232,4 +246,41 @@ class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_r
         newFrament.show(parentFragmentManager,"locationselectfragment")
     }
 
+}
+
+@Composable
+fun ResumeStep4Screen(
+    viewModel: WorkerResumeComposeViewModel,
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val effectFlow = viewModel.effect
+
+    LaunchedEffect(Unit) {
+        effectFlow.collect { effect ->
+            when (effect) {
+                else -> {}
+            }
+        }
+    }
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 20.dp)
+    ) {
+        item {
+            Text(
+                modifier = Modifier.padding(top = 24.dp),
+                text = context.getString(R.string.희망_근무지역),
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    color = NonggleTheme.colors.g1,
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = spoqahanSansneo
+                )
+            )
+
+        }
+    }
 }

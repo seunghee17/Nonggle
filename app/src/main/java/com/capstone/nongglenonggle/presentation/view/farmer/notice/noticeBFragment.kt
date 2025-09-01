@@ -21,7 +21,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.databinding.FragmentNoticeBBinding
-import com.capstone.nongglenonggle.domain.entity.Model
 import com.capstone.nongglenonggle.presentation.view.adapter.SpinnerAdapter
 import com.capstone.nongglenonggle.presentation.view.dialog.HireDatePickerFragment
 import com.capstone.nongglenonggle.presentation.view.dialog.TimepickerFragment
@@ -323,8 +322,8 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
                 //화면에 사진을 보여준다
                 binding.workImageA.setImageURI(uriPhoto)
                 uriPhoto?.let{uri->
-                    val imageEntity = Model.ImageEntity(uri)
-                    viewModel.uploadImage(imageEntity)
+//                    val imageEntity = Model.ImageEntity(uri)
+//                    viewModel.uploadImage(imageEntity)
                 }
             }
             else{

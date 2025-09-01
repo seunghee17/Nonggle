@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.capstone.nongglenonggle.domain.entity.Model
 import com.capstone.nongglenonggle.domain.entity.NoticeContent
 import com.capstone.nongglenonggle.domain.usecase.AddNoticeRefToUserUseCase
 import com.capstone.nongglenonggle.domain.usecase.AddCategoryUseCase
@@ -14,7 +13,6 @@ import com.capstone.nongglenonggle.domain.usecase.AddGenderUseCase
 import com.capstone.nongglenonggle.domain.usecase.AddTypeUseCase
 import com.capstone.nongglenonggle.domain.usecase.AddNoticeUseCase
 import com.capstone.nongglenonggle.domain.usecase.AddRefToAddressUseCase
-import com.capstone.nongglenonggle.domain.usecase.UploadImageUsecase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +21,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FarmerNoticeViewModel @Inject constructor(
-    private val uploadImageUsecase: UploadImageUsecase,
     private val addNoticeUseCase: AddNoticeUseCase,
     private val addNoticeRefToUserUseCase: AddNoticeRefToUserUseCase,
     private val addRefToAddressUseCase: AddRefToAddressUseCase,
@@ -48,9 +45,7 @@ class FarmerNoticeViewModel @Inject constructor(
     val AddressFromWeb:LiveData<String?> = _AddressFromWeb
 
     //시도, 시군구 각각 얻기 위해서
-    val locationArray: Array<String> by lazy {
-        AddressFromWeb.value?.split(" ")?.toTypedArray() ?: arrayOf()
-    }
+    val locationArray: Array<String> = AddressFromWeb.value?.split(" ")?.toTypedArray() ?: arrayOf()
 
     val firstElement: String? by lazy {
         locationArray.getOrNull(0)
@@ -350,18 +345,18 @@ class FarmerNoticeViewModel @Inject constructor(
 
 
 
-    fun uploadImage(imageEntity: Model.ImageEntity){
-        viewModelScope.launch {
-            val result = uploadImageUsecase.uploadImage(imageEntity,"NoticeImages")
-            if(result.isSuccess){
-                //여기서 url접근해서 가져오기
-                val imageurl = result.getOrNull()
-                _farmerImage.value = imageurl!!
-            }
-            else{
-            }
-        }
-    }
+//    fun uploadImage(imageEntity: Model.ImageEntity){
+//        viewModelScope.launch {
+//            val result = uploadImageUsecase.uploadImage(imageEntity,"NoticeImages")
+//            if(result.isSuccess){
+//                //여기서 url접근해서 가져오기
+//                val imageurl = result.getOrNull()
+//                _farmerImage.value = imageurl!!
+//            }
+//            else{
+//            }
+//        }
+//    }
 
 
     fun loadAddressData(context:Context){

@@ -1,8 +1,6 @@
 package com.capstone.nongglenonggle.presentation.view.farmer.home
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +9,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.capstone.nongglenonggle.domain.entity.OffererHomeFilterContent
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
-import com.capstone.nongglenonggle.presentation.view.FirstActivity
 import com.capstone.nongglenonggle.presentation.view.adapter.FilterFarmerHomeAdapter
-import com.capstone.nongglenonggle.presentation.viewModel.farmer.FarmerHomeViewModel
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.FragmentFarmerHomeBinding
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -66,9 +61,9 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
                 adapter.updateList(dataList)
             }
         }
-//        binding.toSearch.setOnClickListener{
-//            findNavController().navigate(R.id.searchWorkerFragment)
-//        }
+        binding.toSearch.setOnClickListener{
+            findNavController().navigate(R.id.searchWorkerFragment)
+        }
 
         binding.noticeApplier.setOnClickListener{
             findNavController().navigate(R.id.noticeFragment)

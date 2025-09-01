@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -20,7 +19,7 @@ import com.capstone.nongglenonggle.presentation.view.adapter.FilterWorkerHomeAda
 import com.capstone.nongglenonggle.presentation.view.adapter.WorkerSearchAdapter
 import com.capstone.nongglenonggle.presentation.view.dialog.FilterBottomSheetFragment
 import com.capstone.nongglenonggle.presentation.view.farmer.notice.NoticeCompleteActivity
-import com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeCompleteViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeCompleteViewModel
 import com.capstone.nongglenonggle.presentation.viewModel.worker.WorkerHomeViewModel
 import com.capstone.nongglenonggle.presentation.viewModel.worker.WorkerSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint

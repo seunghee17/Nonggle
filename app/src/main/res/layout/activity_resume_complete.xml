@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.capstone.nongglenonggle.presentation.viewModel.worker.ResumeCompleteViewModel" />
+            type="com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeCompleteViewModel" />
     </data>
 <LinearLayout
     android:layout_width="match_parent"

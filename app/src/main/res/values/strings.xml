@@ -1,4 +1,34 @@
 <resources>
+    <string name ="start_with_kakao">카카오로 시작하기</string>
+    <string name ="start_with_google">Google로 시작하기</string>
+    <string name ="sign_up_Title">회원가입</string>
+    <string name ="sign_up_personal_information">개인정보</string>
+    <string name="sign_up_personal_name">본인 이름</string>
+    <string name="sign_up_personal_name_input_hint">본인의 이름을 입력해주세요.</string>
+    <string name ="sign_up_userId_input_label">아이디</string>
+    <string name="sign_up_agree_rules_subTitle">약관 동의</string>
+    <string name="sign_up_agree_content_allAgree">모두 동의합니다.</string>
+    <string name="sign_up_agree_content_ageLimit">(필수) 만 15세 이상입니다.</string>
+    <string name="sign_up_agree_content_serviceAgree">서비스 이용약관 동의</string>
+    <string name="sign_up_agree_content_personalCollectInfoAgree">개인정보 수집 및 이용 동의</string>
+    <string name="sign_up_Farmer_InfoTitle">농가정보</string>
+    <string name="sign_up_Farmer_AddressInfoSubTitle">농가 주소 정보</string>
+    <string name="sign_up_Farmer_MathchingDescriptionSubTitle">농가 주소와 가까운 구직자를 매칭해드립니다.</string>
+    <string name="sign_up_Farmer_ChoiceCropTitle">농가 재배품목 정보(최대 3개)</string>
+    <string name="sign_up_Farmer_ChoiceCropSubTitle">농가 재배품목에 관심있는 구직자를 매칭해드립니다.</string>
+    <string name="sign_up_Farmer_AddressInputTextFieldHintText">본인의 농가 도로명 주소를 검색해주세요.</string>
+    <string name="sign_up_Farmer_AddressInputTextFieldLabel">농가 주소</string>
+    <string name="sign_up_Farmer_AddressDetailInfoInputTextFieldHintText">농가 상세 주소를 입력해주세요.</string>
+
+    <string name="worker_ResumeScreen_TabTitle_1">기본정보</string>
+    <string name="worker_ResumeScreen_TabTitle_2">작업내용</string>
+    <string name="worker_ResumeScreen_TabTitle_3">고용정보</string>
+    <string name="worker_ResumeScreen_TabTitle_4">추가내용</string>
+
+    <string name="날짜">날짜</string>
+
+
+
     <string name="공고글작성">공고글작성</string>
     <string name="공고쓰기">공고쓰기</string>
     <string name="대표주소">대표주소</string>
@@ -6,7 +36,7 @@
     <string name="app_name">농글</string>
     <string name="hello_blank_fragment">heelo</string>
 
-    <string name="다음">다음</string>
+    <string name="next_btn_Title">다음</string>
     <string name="완료">완료</string>
     <string name="가입완료">가입완료</string>
     <string name="시간선택">시간선택</string>
