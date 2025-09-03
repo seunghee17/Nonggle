@@ -62,6 +62,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.viewpager2.widget.ViewPager2
 import coil.compose.AsyncImage
 import com.capstone.nongglenonggle.R
+import com.capstone.nongglenonggle.core.common.button.ContainedButton
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.common.button.NonggleIconButton
 import com.capstone.nongglenonggle.core.common.button.OutlinedButton
@@ -361,9 +362,11 @@ fun ResumeStep1Screen(
                         getContentLauncher.launch("image/*")
                     }
                 }
+
                 is WorkerResumeContract.Effect.OpenBirthBottomSheet -> {
                     showDatePickerSheet = true
                 }
+
                 else -> {}
             }
         }
@@ -568,51 +571,60 @@ fun ResumeStep1Screen(
                     certificateAvailable = uiState.haveCertification ?: false
                 )
             }
-//            Row {
-//                NonggleTextField(
-//                    modifier = Modifier
-//                        .padding(top = 12.dp, end = 16.dp)
-//                        .weight(1f)
-//                        .wrapContentHeight()
-//                        .onFocusChanged { focusState ->
-//                            isCerTificateTextFieldFocused = focusState.isFocused
-//                        },
-//                    textFieldType = TextFieldType.Standard,
-//                    value = doroAddressDetail,
-//                    onValueChange = onValueChange,
-//                    textStyle = NonggleTheme.typography.b1_main,
-//                    textColor = Color.Black,
-//                    trailingIcon = {
-//                        if (doroAddressDetail.isNotEmpty() && isCerTificateTextFieldFocused) {
-//                            NonggleIconButton(
-//                                ImageResourceId = R.drawable.xcircle,
-//                                onClick = clearValueAction
-//                            )
-//                        }
-//                    },
-//                    placeholder = {
-//                        Text(
-//                            text = context.getString(R.string.본인의_이름을),
-//                            style = NonggleTheme.typography.b1_main,
-//                            color = NonggleTheme.colors.g3,
-//                        )
-//                    },
-//                )
-//                ContainedButton(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .wrapContentHeight(),
-//                    enabled = ,
-//                    onClick = {},
-//                    titleText = context.getString(R.string.확인),
-//                    titleTextStyle = TextStyle(
-//                        fontFamily = spoqahanSansneo,
-//                        fontSize = 16.sp,
-//                        fontWeight = FontWeight.Medium,
-//                        color = Color.White
-//                    ),
-//                )
-//            }
+            if (uiState.haveCertification == true) {
+                Row {
+                    NonggleTextField(
+                        modifier = Modifier
+                            .padding(top = 12.dp, end = 16.dp)
+                            .weight(1f)
+                            .wrapContentHeight()
+                            .onFocusChanged { focusState ->
+                                isCerTificateTextFieldFocused = focusState.isFocused
+                            },
+                        textFieldType = TextFieldType.Standard,
+                        value = uiState.userCertificateType,
+                        onValueChange = {
+                            viewModel.setEvent(WorkerResumeContract.Event.WritingUserCertificateDetail(it))
+                        },
+                        textStyle = NonggleTheme.typography.b1_main,
+                        textColor = Color.Black,
+                        trailingIcon = {
+                            if (uiState.userCertificateType.isNotEmpty() && isCerTificateTextFieldFocused) {
+                                NonggleIconButton(
+                                    ImageResourceId = R.drawable.xcircle,
+                                    onClick = {
+                                        viewModel.setEvent(WorkerResumeContract.Event.ClearTextFieldUserCertificateDetail)
+                                    }
+                                )
+                            }
+                        },
+                        placeholder = {
+                            Text(
+                                text = context.getString(R.string.본인의_이름을),
+                                style = NonggleTheme.typography.b1_main,
+                                color = NonggleTheme.colors.g3,
+                            )
+                        },
+                    )
+                    //자격증 추가 버튼
+                    ContainedButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
+                        enabled = uiState.userCertificateType.isNotEmpty(),
+                        onClick = {
+                            viewModel.setEvent(WorkerResumeContract.Event.addCertificationChip(uiState.userCertificateType))
+                        },
+                        titleText = context.getString(R.string.확인),
+                        titleTextStyle = TextStyle(
+                            fontFamily = spoqahanSansneo,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.White
+                        ),
+                    )
+                }
+            }
 
         }
     }

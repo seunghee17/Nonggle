@@ -4,10 +4,6 @@ import android.net.Uri
 import com.capstone.nongglenonggle.core.base.UiEffect
 import com.capstone.nongglenonggle.core.base.UiEvent
 import com.capstone.nongglenonggle.core.base.UiState
-import com.capstone.nongglenonggle.data.model.worker.ResumeDataClass
-import com.capstone.nongglenonggle.domain.entity.ResumeSummary
-import com.capstone.nongglenonggle.presentation.view.signup.SignupContract
-import com.capstone.nongglenonggle.presentation.view.signup.SignupContract.Event
 import java.util.Date
 
 class WorkerResumeContract {
@@ -18,7 +14,9 @@ class WorkerResumeContract {
         val haveCertification: Boolean? = null,
         val imageProfileUri: Uri? = null,
         val birthDate: Date? = null,
-        val birthDatePresnet: String = "생년월일을 선택해주세요."
+        val birthDatePresnet: String = "생년월일을 선택해주세요.",
+        val userCertificateType: String = "",
+        val userCertificationList: MutableList<String> = mutableListOf()
     ): UiState
 
     sealed class Event: UiEvent {
@@ -27,6 +25,9 @@ class WorkerResumeContract {
         object ClearName: Event()
         data class InputName(val name: String): Event()
         data class SetBirthDate(val birthDate: Date): Event()
+        data class WritingUserCertificateDetail(val certificate: String): Event()
+        object ClearTextFieldUserCertificateDetail: Event()
+        data class addCertificationChip(val certificationTitle: String): Event()
     }
 
     sealed class Effect: UiEffect {
