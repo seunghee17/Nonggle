@@ -216,3 +216,8 @@ fun ResumeStep2Screen(
         }
     }
 }
+
+@Composable
+fun careerAddBottomSheetContent() {
+
+}
