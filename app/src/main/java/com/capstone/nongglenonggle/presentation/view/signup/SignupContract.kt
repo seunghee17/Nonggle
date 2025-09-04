@@ -3,7 +3,6 @@ package com.capstone.nongglenonggle.presentation.view.signup
 import com.capstone.nongglenonggle.core.base.UiEffect
 import com.capstone.nongglenonggle.core.base.UiEvent
 import com.capstone.nongglenonggle.core.base.UiState
-import javax.inject.Inject
 
 class SignupContract {
     sealed interface SubmitState {
