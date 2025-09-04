@@ -7,8 +7,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.capstone.nongglenonggle.app.Screens
-import com.capstone.nongglenonggle.presentation.view.worker.resume.WorkerResumeComposeViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeScreen
+import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeComposeViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.ResumeScreen
 
 fun NavGraphBuilder.WorkerResumeGraph(navHostController: NavHostController) {
     navigation(

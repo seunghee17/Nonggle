@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume
+package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +18,10 @@ import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.common.tab_bar.NonggleTabRow
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
+import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep1Screen
+import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep2Screen
+import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep3Screen
+import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep4Screen
 
 @Composable
 fun ResumeScreen(
