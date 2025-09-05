@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume
+package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration
 
 import android.content.Context
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -57,8 +57,6 @@ import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeComposeViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeContract
 import java.time.LocalDate
 import java.time.YearMonth
 import java.util.Date
