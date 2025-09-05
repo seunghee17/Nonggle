@@ -2,7 +2,6 @@ package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_inte
 
 import android.content.Context
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -26,7 +25,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -66,9 +64,8 @@ import kotlin.math.min
 fun ResumeStep1Screen(
     viewModel: WorkerResumeComposeViewModel,
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.select { it.step1 }.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    val effectFlow = viewModel.effect
     val focusManager = LocalFocusManager.current
 
     var isNameTextFieldFocused by rememberSaveable { mutableStateOf(false) }
@@ -78,7 +75,7 @@ fun ResumeStep1Screen(
     val pickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
     ) { uri ->
-        uri?.let { viewModel.onImagePicked(it) } // VM이 Uri를 받아 업로드까지 처리
+        uri?.let { viewModel.onImagePicked(it) }
     }
 
     // Photo Picker 미지원 기기 fallback (거의 드물지만 대비)
@@ -91,34 +88,11 @@ fun ResumeStep1Screen(
         ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable()
     }
 
-    LaunchedEffect(Unit) {
-        effectFlow.collect { effect ->
-            when (effect) {
-                is WorkerResumeContract.Effect.OpenGallery -> {
-                    if (isPhotoPickerAvailable) {
-                        pickerLauncher.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                        )
-                    } else {
-                        // 구형 기기/환경 fallback
-                        getContentLauncher.launch("image/*")
-                    }
-                }
-
-                is WorkerResumeContract.Effect.OpenBirthBottomSheet -> {
-                    showDatePickerSheet = true
-                }
-
-                else -> {}
-            }
-        }
-    }
-
     if (showDatePickerSheet) {
         dateSpinnerBottomSheet(
             context = context,
             onConfirm = { picked ->
-                viewModel.setEvent(WorkerResumeContract.Event.SetBirthDate(picked))
+                viewModel.setEvent(WorkerResumeContract.Event.Step1.SetBirthDate(picked))
                 showDatePickerSheet = false         // 닫기
             },
             onDismissRequest = { showDatePickerSheet = false },
@@ -132,6 +106,7 @@ fun ResumeStep1Screen(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp)
+            .clickable { focusManager.clearFocus() }
     ) {
         item {
             Text(
@@ -177,18 +152,18 @@ fun ResumeStep1Screen(
                     .wrapContentHeight()
                     .onFocusChanged { focusState -> isNameTextFieldFocused = focusState.isFocused },
                 textFieldType = TextFieldType.Standard,
-                value = uiState.addressTextfieldData,
+                value = uiState.userName,
                 onValueChange = {
-                    viewModel.setEvent(WorkerResumeContract.Event.InputName(it))
+                    viewModel.setEvent(WorkerResumeContract.Event.Step1.SetUserName(it))
                 },
                 textStyle = NonggleTheme.typography.b1_main,
                 textColor = Color.Black,
                 trailingIcon = {
-                    if (uiState.addressTextfieldData.isNotEmpty() && isNameTextFieldFocused) {
+                    if (uiState.userName.isNotEmpty() && isNameTextFieldFocused) {
                         NonggleIconButton(
                             ImageResourceId = R.drawable.xcircle,
                             onClick = {
-                                viewModel.setEvent(WorkerResumeContract.Event.ClearName)
+                                viewModel.setEvent(WorkerResumeContract.Event.Step1.ClearUserName)
                             }
                         )
                     }
@@ -256,11 +231,9 @@ fun ResumeStep1Screen(
                     gender = context.getString(R.string.여),
                     selectGender = {
                         viewModel.setEvent(
-                            WorkerResumeContract.Event.SetGenderType(
-                                context.getString(
+                            WorkerResumeContract.Event.Step1.SetGenderType(context.getString(
                                     R.string.여
-                                )
-                            )
+                                ))
                         )
                     },
                     selectedGender = uiState.selectedGender
@@ -272,11 +245,9 @@ fun ResumeStep1Screen(
                     gender = context.getString(R.string.남),
                     selectGender = {
                         viewModel.setEvent(
-                            WorkerResumeContract.Event.SetGenderType(
-                                context.getString(
+                            WorkerResumeContract.Event.Step1.SetGenderType(context.getString(
                                     R.string.남
-                                )
-                            )
+                                ))
                         )
                     },
                     selectedGender = uiState.selectedGender
@@ -298,7 +269,7 @@ fun ResumeStep1Screen(
                         .padding(end = 16.dp),
                     title = context.getString(R.string.있음),
                     changeCertificateState = {
-                        viewModel.setEvent(WorkerResumeContract.Event.ChangeCertificateState(value = true))
+                        viewModel.setEvent(WorkerResumeContract.Event.Step1.SetCertificateAvailable(value = true))
                     },
                     certificateAvailable = uiState.haveCertification ?: false
                 )
@@ -308,7 +279,7 @@ fun ResumeStep1Screen(
                         .wrapContentHeight(),
                     title = context.getString(R.string.없음),
                     changeCertificateState = {
-                        viewModel.setEvent(WorkerResumeContract.Event.ChangeCertificateState(value = false))
+                        viewModel.setEvent(WorkerResumeContract.Event.Step1.SetCertificateAvailable(value = false))
                     },
                     certificateAvailable = uiState.haveCertification ?: false
                 )
@@ -326,7 +297,7 @@ fun ResumeStep1Screen(
                         textFieldType = TextFieldType.Standard,
                         value = uiState.userCertificateType,
                         onValueChange = {
-                            viewModel.setEvent(WorkerResumeContract.Event.WritingUserCertificateDetail(it))
+                            viewModel.setEvent(WorkerResumeContract.Event.Step1.SetUserCertificateDetail(it))
                         },
                         textStyle = NonggleTheme.typography.b1_main,
                         textColor = Color.Black,
@@ -335,7 +306,7 @@ fun ResumeStep1Screen(
                                 NonggleIconButton(
                                     ImageResourceId = R.drawable.xcircle,
                                     onClick = {
-                                        viewModel.setEvent(WorkerResumeContract.Event.ClearTextFieldUserCertificateDetail)
+                                        viewModel.setEvent(WorkerResumeContract.Event.Step1.ClearUserCertificateDetail)
                                     }
                                 )
                             }
@@ -355,7 +326,7 @@ fun ResumeStep1Screen(
                             .wrapContentHeight(),
                         enabled = uiState.userCertificateType.isNotEmpty(),
                         onClick = {
-                            viewModel.setEvent(WorkerResumeContract.Event.addCertificationChip(uiState.userCertificateType))
+                            viewModel.setEvent(WorkerResumeContract.Event.Step1.AddCertificationChip(uiState.userCertificateType))
                         },
                         titleText = context.getString(R.string.확인),
                         titleTextStyle = TextStyle(

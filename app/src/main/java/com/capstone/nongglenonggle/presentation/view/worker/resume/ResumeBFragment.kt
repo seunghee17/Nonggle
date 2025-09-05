@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -110,22 +112,17 @@ class ResumeBFragment : BaseFragment<FragmentResumeBBinding>(R.layout.fragment_r
 fun ResumeStep2Screen(
     viewModel: WorkerResumeComposeViewModel,
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.select { it.step2 }.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    val effectFlow = viewModel.effect
-
-    LaunchedEffect(Unit) {
-        effectFlow.collect { effect ->
-            when (effect) {
-                else -> {}
-            }
-        }
-    }
+    val focusManager = LocalFocusManager.current
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp)
+            .clickable(
+                onClick = { focusManager.clearFocus() }
+            )
     ) {
         item {
             Text(

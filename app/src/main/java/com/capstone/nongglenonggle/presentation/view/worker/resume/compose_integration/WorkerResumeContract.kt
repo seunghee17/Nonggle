@@ -1,37 +1,45 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration
 
-import android.net.Uri
 import com.capstone.nongglenonggle.core.base.UiEffect
 import com.capstone.nongglenonggle.core.base.UiEvent
 import com.capstone.nongglenonggle.core.base.UiState
+import com.capstone.nongglenonggle.data.model.worker.ResumeStep1State
+import com.capstone.nongglenonggle.data.model.worker.ResumeStep2State
 import java.util.Date
 
 class WorkerResumeContract {
     data class State(
-        val isLoading: Boolean = true,
-        val addressTextfieldData: String = "",
-        val selectedGender: String = "",
-        val haveCertification: Boolean? = null,
-        val imageProfileUri: Uri? = null,
-        val birthDate: Date? = null,
-        val birthDatePresnet: String = "생년월일을 선택해주세요.",
-        val userCertificateType: String = "",
-        val userCertificationList: MutableList<String> = mutableListOf()
-    ): UiState
+        val step1: ResumeStep1State = ResumeStep1State(),
+        val step2: ResumeStep2State = ResumeStep2State(),
+    ) : UiState
 
-    sealed class Event: UiEvent {
-        data class SetGenderType(val gender: String): Event()
-        data class ChangeCertificateState(val value: Boolean): Event()
-        object ClearName: Event()
-        data class InputName(val name: String): Event()
-        data class SetBirthDate(val birthDate: Date): Event()
-        data class WritingUserCertificateDetail(val certificate: String): Event()
-        object ClearTextFieldUserCertificateDetail: Event()
-        data class addCertificationChip(val certificationTitle: String): Event()
+    sealed interface Event : UiEvent {
+        sealed interface Step1 : Event {
+            data class SetGenderType(val gender: String) : Step1
+            data class SetCertificateAvailable(val value: Boolean) : Step1
+            object ClearUserName : Step1
+            data class SetUserName(val name: String) : Step1
+            data class SetBirthDate(val birthDate: Date) : Step1
+            data class SetUserCertificateDetail(val certificate: String) : Step1
+            object ClearUserCertificateDetail : Step1
+            data class AddCertificationChip(val certificationTitle: String) : Step1
+        }
+
+        sealed interface Step2 : Event {
+            data class SetCareerTitle(val title: String) : Step2
+            object ClearCareerTitle : Step2
+        }
+
+        sealed interface Step3 : Event { /* ... */ }
+        sealed interface Step4 : Event {/* ... */}
     }
 
-    sealed class Effect: UiEffect {
-        object OpenGallery: Effect()
-        object OpenBirthBottomSheet: Effect()
+    sealed interface Effect : UiEffect {
+        sealed interface Step1 : Effect {
+            object OpenGallery : Step1
+        }
+        sealed interface Step2: Effect {
+
+        }
     }
 }

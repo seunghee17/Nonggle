@@ -1,5 +1,7 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration
 
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,7 +20,6 @@ import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.common.tab_bar.NonggleTabRow
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
-import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep1Screen
 import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep2Screen
 import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep3Screen
 import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep4Screen
@@ -44,6 +45,22 @@ fun ResumeScreen(
     LaunchedEffect(true) {
         effectFlow.collect { effect ->
             when (effect) {
+                is WorkerResumeContract.Effect.Step1 -> {
+                    if(pageState.currentPage == 0) {
+                        when(effect) {
+                            is WorkerResumeContract.Effect.Step1.OpenGallery -> {
+                                if (isPhotoPickerAvailable) {
+                                    pickerLauncher.launch(
+                                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                    )
+                                } else {
+                                    // 구형 기기/환경 fallback
+                                    getContentLauncher.launch("image/*")
+                                }
+                            }
+                        }
+                    }
+                }
                 else -> {}
             }
         }

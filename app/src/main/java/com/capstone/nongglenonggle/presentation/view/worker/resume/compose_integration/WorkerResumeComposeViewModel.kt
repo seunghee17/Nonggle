@@ -3,56 +3,83 @@ package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_inte
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
-import com.capstone.nongglenonggle.data.model.worker.ResumeModelClass
 import com.capstone.nongglenonggle.domain.usecase.SetWorkderProfileImageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 // Compose 전환에 사용될 viewmodel
 @HiltViewModel
 class WorkerResumeComposeViewModel @Inject constructor(
     private val setWorkerProfileImageUseCase: SetWorkderProfileImageUseCase,
-): BaseViewModel<WorkerResumeContract.Event, WorkerResumeContract.State, WorkerResumeContract.Effect>(initialState = WorkerResumeContract.State()) {
-    //viewmodel에 종속된 화면에서 사용할 데이터 정의
-    val workerResume = ResumeModelClass()
-    val certifications: MutableList<String> = mutableListOf()
+) : BaseViewModel<WorkerResumeContract.Event, WorkerResumeContract.State, WorkerResumeContract.Effect>(
+    initialState = WorkerResumeContract.State()
+) {
 
-    override fun handleEvent(event: WorkerResumeContract.Event) {
-        when(event) {
-            is WorkerResumeContract.Event.SetGenderType -> {
-                updateState(currentState.copy(selectedGender = event.gender))
-            }
-            is WorkerResumeContract.Event.ChangeCertificateState -> {
-                updateState(currentState.copy(haveCertification = event.value))
-            }
-            is WorkerResumeContract.Event.InputName -> {
-                updateState(currentState.copy(addressTextfieldData = event.name))
-            }
-            is WorkerResumeContract.Event.ClearName -> {
-                updateState(currentState.copy(addressTextfieldData = ""))
-            }
-            is WorkerResumeContract.Event.SetBirthDate -> {
-                updateState(currentState.copy(
-                    birthDate = event.birthDate,
-                    birthDatePresnet = "${event.birthDate.year} 년 ${event.birthDate.month}월 ${event.birthDate.date}일"
-                ))
-            }
-            is WorkerResumeContract.Event.WritingUserCertificateDetail -> {
-                updateState(currentState.copy(userCertificateType = event.certificate))
-            }
-            is WorkerResumeContract.Event.ClearTextFieldUserCertificateDetail -> {
-                updateState(currentState.copy(userCertificateType = ""))
-            }
-            is WorkerResumeContract.Event.addCertificationChip -> {
-                val tmpList = currentState.userCertificationList
-                tmpList.add(event.certificationTitle)
-                updateState(currentState.copy(userCertificationList = tmpList))
+    init {
+        onEvent<WorkerResumeContract.Event.Step1> { e ->
+            when (e) {
+                is WorkerResumeContract.Event.Step1.SetGenderType -> {
+                    updateState(
+                        currentState.copy(
+                            step1 = currentState.step1.copy(selectedGender = e.gender)
+                        )
+                    )
+                }
+
+                is WorkerResumeContract.Event.Step1.SetCertificateAvailable -> {
+                    currentState.copy(
+                        step1 = currentState.step1.copy(haveCertification = e.value)
+                    )
+                }
+
+                is WorkerResumeContract.Event.Step1.SetUserName -> {
+                    currentState.copy(
+                        step1 = currentState.step1.copy(userName = e.name)
+                    )
+                }
+
+                is WorkerResumeContract.Event.Step1.ClearUserName -> {
+                    currentState.copy(
+                        step1 = currentState.step1.copy(userName = "")
+                    )
+                }
+
+                is WorkerResumeContract.Event.Step1.SetBirthDate -> {
+                    val userBirth = e.birthDate
+                    currentState.copy(
+                        step1 = currentState.step1.copy(
+                            birthDate = userBirth,
+                            birthDatePresnet = "${userBirth.year}년 ${userBirth.month}월 ${userBirth.date}일"
+                        )
+                    )
+                }
+
+                is WorkerResumeContract.Event.Step1.SetUserCertificateDetail -> {
+                    currentState.copy(
+                        step1 = currentState.step1.copy(userCertificateType = e.certificate)
+                    )
+                }
+
+                is WorkerResumeContract.Event.Step1.ClearUserCertificateDetail -> {
+                    currentState.copy(
+                        step1 = currentState.step1.copy(userCertificateType = "")
+                    )
+                }
+
+                is WorkerResumeContract.Event.Step1.AddCertificationChip -> {
+                    val tmpList = currentState.step1.userCertificationList
+                    tmpList.add(e.certificationTitle)
+                    currentState.copy(
+                        step1 = currentState.step1.copy(userCertificationList = tmpList)
+                    )
+                }
             }
         }
     }
 
     fun openGallery() {
-        postEffect(WorkerResumeContract.Effect.OpenGallery)
+        postEffect(WorkerResumeContract.Effect.Step1.OpenGallery)
     }
 
     fun onImagePicked(uri: Uri) {
@@ -60,5 +87,4 @@ class WorkerResumeComposeViewModel @Inject constructor(
             setWorkerProfileImageUseCase.invoke(imageUri = uri)
         }
     }
-
 }
