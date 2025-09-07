@@ -23,7 +23,7 @@
             android:name=".presentation.view.worker.resume.ResumeCompleteActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.view.farmer.notice.NoticeCompleteguideActivity"
+            android:name=".presentation.view.farmer.notice.compose_integration.NoticeWritingFinalScreenActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.view.farmer.notice.NoticeCompleteActivity"
