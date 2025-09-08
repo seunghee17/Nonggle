@@ -3,13 +3,9 @@ package com.capstone.nongglenonggle.presentation.view.farmer.home
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.capstone.nongglenonggle.R
-import com.capstone.nongglenonggle.presentation.view.farmer.mypage.FarmerMypageFragment
-import com.capstone.nongglenonggle.presentation.view.farmer.notice.NoticeFragment
-import com.capstone.nongglenonggle.presentation.view.farmer.search.SearchWorkerFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
