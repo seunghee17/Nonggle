@@ -5,12 +5,14 @@ import com.capstone.nongglenonggle.core.base.UiEvent
 import com.capstone.nongglenonggle.core.base.UiState
 import com.capstone.nongglenonggle.data.model.worker.ResumeStep1State
 import com.capstone.nongglenonggle.data.model.worker.ResumeStep2State
+import com.capstone.nongglenonggle.data.model.worker.ResumeStep3State
 import java.util.Date
 
 class WorkerResumeContract {
     data class State(
         val step1: ResumeStep1State = ResumeStep1State(),
         val step2: ResumeStep2State = ResumeStep2State(),
+        val step3: ResumeStep3State = ResumeStep3State()
     ) : UiState
 
     sealed interface Event : UiEvent {
@@ -30,7 +32,13 @@ class WorkerResumeContract {
             object ClearCareerTitle : Step2
         }
 
-        sealed interface Step3 : Event { /* ... */ }
+        sealed interface Step3 : Event {
+            data class SetIntroduceDetail(val detail: String) :Step3
+            object ClearIntroduceDetail: Step3
+            data class SetPersonalityType(val type: String): Step3
+            object ClearPersonalityType
+            data class SetAdditionalDetailComment(val comment: String): Step3
+        }
         sealed interface Step4 : Event {/* ... */}
     }
 
