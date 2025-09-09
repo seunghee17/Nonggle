@@ -5,6 +5,6 @@ data class ResumeStep2State(
     val careerTextFieldValue: String = "",
 )
 
-data class ResumeStep2UserCareerListItem(
+data class ResumeStep2UserCareerListItem (
     val careerTitle: String = ""
 )

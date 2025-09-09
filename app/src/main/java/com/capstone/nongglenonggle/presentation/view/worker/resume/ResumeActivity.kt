@@ -9,10 +9,7 @@ import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.app.ResumeNavHost
 import com.capstone.nongglenonggle.databinding.ActivityResumeBinding
 import com.capstone.nongglenonggle.presentation.base.BaseActivity
-import com.capstone.nongglenonggle.presentation.view.adapter.ViewPager2Adapter
 import com.capstone.nongglenonggle.presentation.view.dialog.OutDirectionDialogFragment
-import com.capstone.nongglenonggle.presentation.view.splash.SpalashScreen
-import com.capstone.nongglenonggle.presentation.view.splash.SplashViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,13 +18,6 @@ class ResumeActivity : BaseActivity<ActivityResumeBinding>(R.layout.activity_res
     private val viewModel: ResumeViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        binding.viewModel = viewModel
-//        binding.lifecycleOwner = this
-//
-//        binding.backbtn.setOnClickListener{
-//            showDialog()
-//        }
-//        initViewPager()
         setContent {
             ResumeNavHost()
         }
