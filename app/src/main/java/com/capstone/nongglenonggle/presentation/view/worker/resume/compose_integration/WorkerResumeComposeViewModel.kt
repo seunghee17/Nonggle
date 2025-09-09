@@ -76,6 +76,36 @@ class WorkerResumeComposeViewModel @Inject constructor(
                 }
             }
         }
+        onEvent<WorkerResumeContract.Event.Step2> { e ->
+            when(e) {
+                is WorkerResumeContract.Event.Step2.SetCareerTitle -> {
+                    updateState(
+                        currentState.copy(
+                            step2 = currentState.step2.copy(careerTextFieldValue = e.title)
+                        )
+                    )
+                }
+                is WorkerResumeContract.Event.Step2.ClearCareerTitle -> {
+                    updateState(
+                        currentState.copy(
+                            step2 = currentState.step2.copy(careerTextFieldValue = "")
+                        )
+                    )
+                }
+                is WorkerResumeContract.Event.Step2.SetWorkPeriodRange -> {
+                    updateState(
+                        currentState.copy(
+                            step2 = currentState.step2.copy(
+                                careerAddBottomSheetState = currentState.step2.careerAddBottomSheetState.copy(
+                                    isLongerThenMonth = e.isMonthOver
+                                )
+                            )
+                        )
+                    )
+                }
+            }
+        }
+
     }
 
     fun openGallery() {

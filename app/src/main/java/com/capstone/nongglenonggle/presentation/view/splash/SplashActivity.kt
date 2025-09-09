@@ -67,7 +67,11 @@ fun SpalashScreen(
         effectFlow.collectLatest { effect ->
             when (effect) {
                 is SplashContract.Effect.NavigateToFarmerHome -> {
-                    val intent = Intent(context, MainActivity::class.java).apply {
+//                    val intent = Intent(context, MainActivity::class.java).apply {
+//                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                    }
+//                    context.startActivity(intent)
+                    val intent = Intent(context, WorkerMainActivity::class.java).apply {
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     }
                     context.startActivity(intent)

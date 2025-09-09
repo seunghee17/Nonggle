@@ -1,14 +1,11 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration
 
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +15,7 @@ import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
 import com.capstone.nongglenonggle.core.common.button.FullButton
-import com.capstone.nongglenonggle.core.common.tab_bar.NonggleTabRow
+import com.capstone.nongglenonggle.core.common.component.NonggleTabRow
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep2Screen
 import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep3Screen
@@ -42,29 +39,6 @@ fun ResumeScreen(
 
     val pageState = rememberPagerState { tabBarTitleList.size }
 
-    LaunchedEffect(true) {
-        effectFlow.collect { effect ->
-            when (effect) {
-                is WorkerResumeContract.Effect.Step1 -> {
-                    if(pageState.currentPage == 0) {
-                        when(effect) {
-                            is WorkerResumeContract.Effect.Step1.OpenGallery -> {
-                                if (isPhotoPickerAvailable) {
-                                    pickerLauncher.launch(
-                                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                                    )
-                                } else {
-                                    // 구형 기기/환경 fallback
-                                    getContentLauncher.launch("image/*")
-                                }
-                            }
-                        }
-                    }
-                }
-                else -> {}
-            }
-        }
-    }
 
     Column(
         modifier = Modifier

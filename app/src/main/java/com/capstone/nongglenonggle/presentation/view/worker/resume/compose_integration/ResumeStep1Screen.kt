@@ -2,6 +2,7 @@ package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_inte
 
 import android.content.Context
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -25,6 +26,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -61,11 +63,10 @@ import java.util.Date
 import kotlin.math.min
 
 @Composable
-fun ResumeStep1Screen(
-    viewModel: WorkerResumeComposeViewModel,
-) {
+fun ResumeStep1Screen(viewModel: WorkerResumeComposeViewModel) {
     val uiState by viewModel.select { it.step1 }.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val effectFlow = viewModel.effect
     val focusManager = LocalFocusManager.current
 
     var isNameTextFieldFocused by rememberSaveable { mutableStateOf(false) }
@@ -86,6 +87,24 @@ fun ResumeStep1Screen(
     //요청할 권한
     val isPhotoPickerAvailable = remember {
         ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable()
+    }
+
+    LaunchedEffect(true) {
+        effectFlow.collect { effect ->
+            when (effect) {
+                is WorkerResumeContract.Effect.Step1.OpenGallery -> {
+                    if (isPhotoPickerAvailable) {
+                        pickerLauncher.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                        )
+                    } else {
+                        // 구형 기기/환경 fallback
+                        getContentLauncher.launch("image/*")
+                    }
+                }
+                else -> {}
+            }
+        }
     }
 
     if (showDatePickerSheet) {
@@ -457,36 +476,38 @@ fun dateSpinnerBottomSheet(
 
     NonggleBottomSheet(
         onDismissRequest = onDismissRequest,
-        content = {
+        header = {
+            Row(
+                modifier = Modifier.padding(top = 16.dp, start = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = context.getString(R.string.날짜),
+                    style = TextStyle(
+                        fontFamily = spoqahanSansneo,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.Black,
+                        fontSize = 18.sp
+                    )
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Image(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .padding(end = 20.dp)
+                        .clickable { onDismissRequest() },
+                    painter = painterResource(id = R.drawable.close),
+                    contentDescription = null
+                )
+            }
+        },
+        bodyContent = {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
                     .imePadding()
             ) {
-                Row(
-                    modifier = Modifier.padding(top = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = context.getString(R.string.날짜),
-                        style = TextStyle(
-                            fontFamily = spoqahanSansneo,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Black,
-                            fontSize = 18.sp
-                        )
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    Image(
-                        modifier = Modifier
-                            .size(24.dp)
-                            .clickable { onDismissRequest() },
-                        painter = painterResource(id = R.drawable.close),
-                        contentDescription = null
-                    )
-                }
-
                 // 스피너는 화면별로 제공하신 DateSpinner 사용
                 DateSpinner(
                     year = year,
@@ -500,23 +521,24 @@ fun dateSpinnerBottomSheet(
                 )
 
                 Spacer(Modifier.height(16.dp))
-
-                FullButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        onConfirm(Date(year, month, day))
-                        onDismissRequest()
-                    },
-                    titleText = context.getString(R.string.확인),
-                    titleTextStyle = TextStyle(
-                        fontFamily = spoqahanSansneo,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 16.sp,
-                        color = Color.White
-                    ),
-                    enabled = true
-                )
             }
+        },
+        footer = {
+            FullButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    onConfirm(Date(year, month, day))
+                    onDismissRequest()
+                },
+                titleText = context.getString(R.string.확인),
+                titleTextStyle = TextStyle(
+                    fontFamily = spoqahanSansneo,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp,
+                    color = Color.White
+                ),
+                enabled = true
+            )
         }
     )
 }

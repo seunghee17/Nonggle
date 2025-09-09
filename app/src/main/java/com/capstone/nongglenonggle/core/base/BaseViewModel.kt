@@ -30,7 +30,7 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect>(
     private val _event: MutableSharedFlow<Event> = MutableSharedFlow()
     val event = _event.asSharedFlow()
 
-    private val _effect: Channel<Effect> = Channel()
+    private val _effect = Channel<Effect>(Channel.BUFFERED)
     val effect = _effect.receiveAsFlow() // 단일소비모델
 
     fun setEvent(event: Event) {
@@ -58,16 +58,6 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect>(
         }
     }
 
-    // ViewModel 생명주기 동안 event를 구독하여 상태를 업데이트한다.
-    // collect된 이벤트는 handleEvent()로 처리된다.
-//    private fun subScribeEvent() {
-//        viewModelScope.launch {
-//            event.collect{
-//                handleEvent(it)
-//            }
-//        }
-//    }
-
     protected inline fun <reified T : Event> onEvent(
         crossinline block: (T) -> Unit
     ) {
@@ -77,7 +67,6 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect>(
         }
     }
 
-    ///FIXME: 이렇게 Public 형태여도 되는가
     fun<T> select(
         selector: (State) -> T
     ): StateFlow<T> =
@@ -85,6 +74,4 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect>(
             .distinctUntilChanged()
             .stateIn(viewModelScope, SharingStarted.Eagerly, selector(currentState))
 
-
-    //abstract fun handleEvent(event: Event)
 }

@@ -23,12 +23,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,68 +51,69 @@ import com.capstone.nongglenonggle.domain.entity.ResumeSummary
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.presentation.view.adapter.ResumeAdapter
 import com.capstone.nongglenonggle.presentation.view.dialog.CareerAddFragment
+import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.ResumeCareerAddBottomSheet
 import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeComposeViewModel
 
 
-class ResumeBFragment : BaseFragment<FragmentResumeBBinding>(R.layout.fragment_resume_b) {
-    private lateinit var resumeAdapter: ResumeAdapter
-    private val viewModel: ResumeViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.viewModel = viewModel
-
-        binding.nextBtn.setOnClickListener {
-            val viewpager = requireActivity().findViewById<ViewPager2>(R.id.viewpager)
-            val current = viewpager.currentItem
-            val next = current + 1
-            if (next < viewpager.adapter?.itemCount ?: 0) {
-                viewpager.setCurrentItem(next, true)
-            } else {
-            }
-        }
-
-
-        binding.addCareer.setOnTouchListener { view, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                showAddCareer()
-                //초기화 코드 추가하기
-                viewModel.getClearData()
-            }
-            false
-        }
-
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        resumeAdapter = ResumeAdapter(emptyList())
-        binding.recycler.adapter = resumeAdapter
-        viewModel.resumeData.observe(viewLifecycleOwner, Observer { newData: List<ResumeSummary> ->
-            resumeAdapter.updateList(newData)
-            binding.carrerSum.text = viewModel.getCareerTotal()
-        })
-    }
-
-    private fun showAddCareer() {
-        val newFrament = CareerAddFragment()
-        newFrament.show(parentFragmentManager, "careerAdd")
-    }
-
-}
+//class ResumeBFragment : BaseFragment<FragmentResumeBBinding>(R.layout.fragment_resume_b) {
+//    private lateinit var resumeAdapter: ResumeAdapter
+//    private val viewModel: ResumeViewModel by activityViewModels()
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//    }
+//
+//    override fun onCreateView(
+//        inflater: LayoutInflater, container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View? {
+//        val view = super.onCreateView(inflater, container, savedInstanceState)
+//        return view
+//    }
+//
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        binding.viewModel = viewModel
+//
+//        binding.nextBtn.setOnClickListener {
+//            val viewpager = requireActivity().findViewById<ViewPager2>(R.id.viewpager)
+//            val current = viewpager.currentItem
+//            val next = current + 1
+//            if (next < viewpager.adapter?.itemCount ?: 0) {
+//                viewpager.setCurrentItem(next, true)
+//            } else {
+//            }
+//        }
+//
+//
+//        binding.addCareer.setOnTouchListener { view, event ->
+//            if (event.action == MotionEvent.ACTION_UP) {
+//                showAddCareer()
+//                //초기화 코드 추가하기
+//                viewModel.getClearData()
+//            }
+//            false
+//        }
+//
+//
+//    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        resumeAdapter = ResumeAdapter(emptyList())
+//        binding.recycler.adapter = resumeAdapter
+//        viewModel.resumeData.observe(viewLifecycleOwner, Observer { newData: List<ResumeSummary> ->
+//            resumeAdapter.updateList(newData)
+//            binding.carrerSum.text = viewModel.getCareerTotal()
+//        })
+//    }
+//
+//    private fun showAddCareer() {
+//        val newFrament = CareerAddFragment()
+//        newFrament.show(parentFragmentManager, "careerAdd")
+//    }
+//
+//}
 
 @Composable
 fun ResumeStep2Screen(
@@ -115,6 +122,17 @@ fun ResumeStep2Screen(
     val uiState by viewModel.select { it.step2 }.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
+
+    //경력 추가 bottomsheet 상태 변수
+    var showCareerAddBottomSheet by rememberSaveable{ mutableStateOf(false) }
+
+    if(showCareerAddBottomSheet) {
+        ResumeCareerAddBottomSheet(
+            viewModel = viewModel,
+            context = context,
+            onDismissRequest = { showCareerAddBottomSheet = false }
+        )
+    }
 
     LazyColumn(
         modifier = Modifier
@@ -182,21 +200,22 @@ fun ResumeStep2Screen(
                         shape = RoundedCornerShape(4.dp)
                     )
                     .noRippleClickable {
-
+                        showCareerAddBottomSheet = true
                     },
             ) {
                 Row(
-                    //modifier = Modifier.align(alignment = Alignment.Horizontal)
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         modifier = Modifier.padding(vertical = 16.dp, horizontal = 16.dp),
                         textAlign = TextAlign.Center,
-                        text = context.getString(R.string.경력_총),
+                        text = context.getString(R.string.경력추가하기),
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontFamily = spoqahanSansneo,
                             fontWeight = FontWeight.Medium,
-                            color = NonggleTheme.colors.m1
+                            color = NonggleTheme.colors.g3
                         )
                     )
                     Spacer(modifier = Modifier.weight(weight = 1f))
@@ -211,7 +230,6 @@ fun ResumeStep2Screen(
     }
 }
 //리서치 필요 부분
-//1. 화면의 일정부분 차지하는 bottomsheet
 @Composable
 fun careerAddBottomSheetContent() {
 

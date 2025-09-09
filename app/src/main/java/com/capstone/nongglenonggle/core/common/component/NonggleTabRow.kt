@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.core.common.tab_bar
+package com.capstone.nongglenonggle.core.common.component
 import android.annotation.SuppressLint
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
