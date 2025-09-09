@@ -28,6 +28,7 @@ class WorkerResumeContract {
         sealed interface Step2 : Event {
             data class SetCareerTitle(val title: String) : Step2
             object ClearCareerTitle : Step2
+            data class SetWorkPeriodRange(val isMonthOver: Boolean): Step2
         }
 
         sealed interface Step3 : Event { /* ... */ }
