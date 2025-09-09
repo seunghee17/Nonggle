@@ -370,17 +370,17 @@ fun ResumeStep4Screen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                items(
-                    count = ,
-                ) { index ->
-                    prefersWorkChip(
-                        onClick = {
-                            viewModel.setEvent(SignupContract.Event.SelectFarmerCategory(uiState.farmerCategory[index]))
-                        },
-                        cropItem = uiState.farmerCategory[index],
-                        selectCropList = uiState.selectedFarmerCategory
-                    )
-                }
+//                items(
+//                    count = ,
+//                ) { index ->
+//                    prefersWorkChip(
+//                        onClick = {
+//                            viewModel.setEvent(SignupContract.Event.SelectFarmerCategory(uiState.farmerCategory[index]))
+//                        },
+//                        cropItem = uiState.farmerCategory[index],
+//                        selectCropList = uiState.selectedFarmerCategory
+//                    )
+//                }
             }
         }
     }
