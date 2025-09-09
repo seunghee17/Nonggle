@@ -105,7 +105,25 @@ class WorkerResumeComposeViewModel @Inject constructor(
                 }
             }
         }
+        onEvent<WorkerResumeContract.Event.Step4> { e->
+            when(e) {
+                is WorkerResumeContract.Event.Step4.AddWorkCategoryChip -> {
+                    val tempList = currentState.step4.preferWorkCategoryList
+                    if(tempList.size!=3) {
+                        tempList.add(e.value)
+                    } else {
+                        postEffect(effect = WorkerResumeContract.Effect.UnAvailableToastmessage("3개 이상 초과할 수 없습니다")) //개수 초과해서 추가 불가능함을 알리기
+                    }
+                }
+                is WorkerResumeContract.Event.Step4.RemoveWorkCategoryChip -> {
+                    val tempList = currentState.step4.preferWorkCategoryList
+                    if(tempList.size!=0) {
+                        tempList.remove(e.value)
+                    }
+                }
+            }
 
+        }
     }
 
     fun openGallery() {

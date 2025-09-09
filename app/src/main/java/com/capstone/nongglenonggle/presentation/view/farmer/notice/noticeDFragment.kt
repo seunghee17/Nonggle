@@ -14,6 +14,7 @@ import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.FragmentNoticeDBinding
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.presentation.view.dialog.HireDatePickerFragment
+import com.capstone.nongglenonggle.presentation.view.farmer.notice.compose_integration.NoticeWritingFinalScreenActivity
 import com.capstone.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel
 
 class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_notice_d) {
@@ -168,7 +169,7 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
     }
 
     private fun goToNext(){
-        val intent = Intent(requireContext(),NoticeCompleteguideActivity::class.java)
+        val intent = Intent(requireContext(), NoticeWritingFinalScreenActivity::class.java)
         startActivity(intent)
     }
 
