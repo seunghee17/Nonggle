@@ -2,8 +2,10 @@ package com.capstone.nongglenonggle.presentation.view.login
 
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
+import com.capstone.nongglenonggle.core.common.logger.AppResultMessageProvider
 import com.capstone.nongglenonggle.data.model.login.SignInResult
 import com.capstone.nongglenonggle.data.model.login.SignInState
+import com.capstone.nongglenonggle.data.network.AppResult
 import com.capstone.nongglenonggle.domain.usecase.GetUserAuthDataRepositoryUseCase
 import com.capstone.nongglenonggle.presentation.view.signup.UserType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -60,20 +62,22 @@ class LoginViewModel @Inject constructor(
 
     fun getUserLoginType() {
         viewModelScope.launch {
-            getUserAuthDataRepositoryUseCase.invoke()
-                .onSuccess {
-                    if(UserType.valueOf(it.signUpType) == UserType.WORKER) {
+            val result = getUserAuthDataRepositoryUseCase.invoke()
+            when(result) {
+                is AppResult.Success -> {
+                    if (UserType.valueOf(result.data.signUpType) == UserType.WORKER) {
                         postEffect(LoginContract.Effect.NavigateToWorkerHome)
-                    } else if(UserType.valueOf(it.signUpType) == UserType.MANAGER) {
+                    } else if (UserType.valueOf(result.data.signUpType) == UserType.MANAGER) {
                         postEffect(LoginContract.Effect.NavigateToFarmerHome)
                     } else {
                         postEffect(LoginContract.Effect.NavigateToEnrollUser)
                     }
                 }
-                .onFailure { e ->
-                    val errorMessage = e.message ?: "사용자 가입 형식 로드에 실패했습니다."
-                    updateState(currentState.copy(errorMessage = errorMessage))
+                is AppResult.Failure -> {
+                    val errorMsg = AppResultMessageProvider.message(result)
+                    postEffect(LoginContract.Effect.UnAvailableToastmessage(errorMsg))
                 }
+            }
         }
     }
 

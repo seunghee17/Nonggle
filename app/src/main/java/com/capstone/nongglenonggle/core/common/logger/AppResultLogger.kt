@@ -1,13 +1,11 @@
 package com.capstone.nongglenonggle.core.common.logger
-
 import com.capstone.nongglenonggle.data.network.AppResult
 
 object AppResultLogger {
-    fun logFailure(tag: String, failure: AppResult.Failure) {
+    fun logFailure(failure: AppResult.Failure) {
         val caller = Throwable().stackTrace
             .firstOrNull { !it.className.contains("AppResultLogger") }
-        val tag =
-            "${caller?.className ?: "Unknown class"}#${caller?.methodName ?: "Unknown method"}"
+        val tag = "${caller?.className ?: "Unknown class"}#${caller?.methodName ?: "Unknown method"}"
 
         when (failure) {
             is AppResult.Failure.NetworkError -> {
@@ -20,6 +18,14 @@ object AppResultLogger {
 
             is AppResult.Failure.NotFound -> {
                 AppLogger.e("$tag: 데이터 없음 오류 발생", failure.throwable)
+            }
+
+            is AppResult.Failure.Internal -> {
+                AppLogger.e("$tag: 내부 시스템 오류 발생", failure.throwable)
+            }
+
+            is AppResult.Failure.OutOfRange -> {
+                AppLogger.e("$tag: 범위 오류 발생", failure.throwable)
             }
 
             is AppResult.Failure.Unknown -> {
@@ -42,6 +48,14 @@ inline fun <reified T> AppResultLogger.logFailure(
 
         is AppResult.Failure.NotFound ->
             AppLogger.e("$tag - 데이터 없음", failure.throwable)
+
+        is AppResult.Failure.Internal -> {
+            AppLogger.e("$tag: 내부 시스템 오류 발생", failure.throwable)
+        }
+
+        is AppResult.Failure.OutOfRange -> {
+            AppLogger.e("$tag: 범위 오류 발생", failure.throwable)
+        }
 
         is AppResult.Failure.Unknown ->
             AppLogger.e("$tag - 알 수 없는 오류", failure.throwable)

@@ -2,8 +2,11 @@ package com.capstone.nongglenonggle.presentation.view.signup
 
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
+import com.capstone.nongglenonggle.core.common.logger.AppResultMessageProvider
 import com.capstone.nongglenonggle.data.model.sign_up.UserDataClass
+import com.capstone.nongglenonggle.data.network.AppResult
 import com.capstone.nongglenonggle.domain.usecase.SetUserSignUpUseCase
+import com.capstone.nongglenonggle.presentation.view.login.LoginContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -158,15 +161,26 @@ class SignupViewModel @Inject constructor(
         )
         viewModelScope.launch {
             updateState(currentState.copy(submitState = SignupContract.SubmitState.Loading))
-            setUserSignUpUseCase.invoke(userData = userData)
-                .onSuccess {
+//            setUserSignUpUseCase.invoke(userData = userData)
+//                .onSuccess {
+//                    updateState(currentState.copy(submitState = SignupContract.SubmitState.Success))
+//                    postEffect(effect = SignupContract.Effect.NavigateToHomeScreen)
+//                }
+//                .onFailure { e->
+//                    val errorMessage = e.message ?: "데이터 전송에 실패했습니다."
+//                    updateState(currentState.copy(submitState = SignupContract.SubmitState.Error(errorMessage)))
+//                }
+            val result = setUserSignUpUseCase.invoke(userData = userData)
+            when(result) {
+                is AppResult.Success -> {
                     updateState(currentState.copy(submitState = SignupContract.SubmitState.Success))
                     postEffect(effect = SignupContract.Effect.NavigateToHomeScreen)
                 }
-                .onFailure { e->
-                    val errorMessage = e.message ?: "데이터 전송에 실패했습니다."
-                    updateState(currentState.copy(submitState = SignupContract.SubmitState.Error(errorMessage)))
+                is AppResult.Failure -> {
+                    val errorMsg = AppResultMessageProvider.message(result)
+                    postEffect(SignupContract.Effect.SetToastMessage(errorMsg))
                 }
+            }
         }
     }
 }

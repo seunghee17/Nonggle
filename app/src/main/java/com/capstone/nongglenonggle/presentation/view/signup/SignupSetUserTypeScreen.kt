@@ -60,7 +60,7 @@ fun SetUserTypeScreen(
                 is SignupContract.Effect.NavigateToStep1Screen -> {
                     navController.navigate(Screens.Signup.Step2.route)
                 }
-                is SignupContract.Effect.setToastMessage -> {
+                is SignupContract.Effect.SetToastMessage -> {
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
                 }
                 else -> {

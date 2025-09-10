@@ -2,7 +2,10 @@ package com.capstone.nongglenonggle.presentation.view.splash
 
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
+import com.capstone.nongglenonggle.core.common.logger.AppResultMessageProvider
+import com.capstone.nongglenonggle.data.network.AppResult
 import com.capstone.nongglenonggle.domain.usecase.GetUserAuthDataRepositoryUseCase
+import com.capstone.nongglenonggle.presentation.view.login.LoginContract
 import com.capstone.nongglenonggle.presentation.view.signup.UserType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -19,19 +22,21 @@ class SplashViewModel @Inject constructor(
 
     fun getUserLoginType() {
         viewModelScope.launch {
-            getUserAuthDataRepositoryUseCase.invoke()
-                .onSuccess {
-                    if(UserType.valueOf(it.signUpType) == UserType.WORKER) {
+            val result = getUserAuthDataRepositoryUseCase.invoke()
+            when (result) {
+                is AppResult.Success -> {
+                    if (UserType.valueOf(result.data.signUpType) == UserType.WORKER) {
                         postEffect(SplashContract.Effect.NavigateToWorkerHome)
-                    } else if(UserType.valueOf(it.signUpType) == UserType.MANAGER) {
+                    } else if (UserType.valueOf(result.data.signUpType) == UserType.MANAGER) {
                         postEffect(SplashContract.Effect.NavigateToFarmerHome)
                     } else {
                         postEffect(SplashContract.Effect.NavigateToLogin)
                     }
                 }
-                .onFailure { e ->
+                is AppResult.Failure -> {
                     postEffect(SplashContract.Effect.NavigateToLogin)
                 }
+            }
         }
     }
 }

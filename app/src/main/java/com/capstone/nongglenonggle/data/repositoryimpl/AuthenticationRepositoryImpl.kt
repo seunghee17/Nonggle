@@ -7,9 +7,11 @@ import com.capstone.nongglenonggle.data.model.sign_up.UserDataClass
 import com.capstone.nongglenonggle.domain.repository.AuthenticationRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.capstone.nongglenonggle.data.network.AppResult
+import com.capstone.nongglenonggle.data.network.AppResult.Failure.Internal
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.FirebaseFirestoreException.Code.INTERNAL
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.tasks.await
@@ -46,11 +48,11 @@ class AuthenticationRepositoryImpl @Inject constructor(
                     UNAVAILABLE -> AppResult.Failure.NetworkError(e)
                     else -> AppResult.Failure.Unknown(e)
                 }
-                AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                AppResultLogger.logFailure(failure)
                 failure
             } catch (e: Exception) {
                 val failure = AppResult.Failure.Unknown(e)
-                AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                AppResultLogger.logFailure(failure)
                 failure
             }
         }
@@ -61,7 +63,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
             val user = firebaseAuth.currentUser
             if (user == null) {
                 val failure = AppResult.Failure.Unknown(Throwable("회원정보 저장에 실패했습니다. 다시 시도해주세요."))
-                AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                AppResultLogger.logFailure(failure)
                 failure
 
             } else {
@@ -78,13 +80,14 @@ class AuthenticationRepositoryImpl @Inject constructor(
                     val failure = when (e.code) {
                         PERMISSION_DENIED -> AppResult.Failure.PermissionDenied(e)
                         UNAVAILABLE -> AppResult.Failure.NetworkError(e)
+                        INTERNAL -> AppResult.Failure.Internal(e)
                         else -> AppResult.Failure.Unknown(e)
                     }
-                    AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                    AppResultLogger.logFailure(failure)
                     failure
                 } catch (e: Exception) {
                     val failure = AppResult.Failure.Unknown(e)
-                    AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                    AppResultLogger.logFailure(failure)
                     failure
                 }
             }

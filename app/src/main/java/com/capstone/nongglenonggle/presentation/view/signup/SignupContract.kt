@@ -54,6 +54,6 @@ class SignupContract {
         object NavigateToHomeScreen: Effect()
         object NavigateToBackScreen: Effect()
         object NavigateToAddressSearchScreen: Effect()
-        data class setToastMessage(val message: String): Effect()
+        data class SetToastMessage(val message: String): Effect()
     }
 }

@@ -13,12 +13,16 @@ sealed interface AppResult<out T> {
         data class NetworkError(val throwable: Throwable) : Failure
         data class PermissionDenied(val throwable: Throwable) : Failure
         data class NotFound(val throwable: Throwable) : Failure
+        data class OutOfRange(val throwable: Throwable) : Failure
+        data class Internal(val throwable: Throwable) : Failure
         data class Unknown(val throwable: Throwable) : Failure
 
         fun asThrowable(): Throwable = when (this) {
             is NetworkError -> throwable
             is PermissionDenied -> throwable
             is NotFound -> throwable
+            is OutOfRange -> throwable
+            is Internal -> throwable
             is Unknown -> throwable
         }
     }
@@ -26,12 +30,6 @@ sealed interface AppResult<out T> {
     companion object {
         // Success 생성 헬퍼
         fun <T> success(data: T): AppResult<T> = Success(data)
-
-        // Failure 생성 헬퍼
-        fun networkError(t: Throwable): AppResult<Nothing> = Failure.NetworkError(t)
-        fun permissionDenied(t: Throwable): AppResult<Nothing> = Failure.PermissionDenied(t)
-        fun notFound(t: Throwable): AppResult<Nothing> = Failure.NotFound(t)
-        fun unknown(t: Throwable): AppResult<Nothing> = Failure.Unknown(t)
     }
 }
 
