@@ -13,7 +13,6 @@ import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.ActivityResumeCompleteBinding
 import com.capstone.nongglenonggle.domain.entity.ResumeSummary
 import com.capstone.nongglenonggle.presentation.base.BaseActivity
-import com.capstone.nongglenonggle.presentation.view.adapter.ResumeCareerAdapter
 import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,7 +26,7 @@ import java.util.Locale
 @AndroidEntryPoint
 class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.layout.activity_resume_complete) {
     private val viewModel : ResumeCompleteViewModel by viewModels()
-    private lateinit var  adapter: ResumeCareerAdapter
+    //private lateinit var  adapter: ResumeCareerAdapter
     private val firebaseAuth:FirebaseAuth = FirebaseAuth.getInstance()
     private val firestore = FirebaseFirestore.getInstance()
     private lateinit var name:String
@@ -41,8 +40,8 @@ class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.lay
         binding.userScoreForfarmer.applyBtn.text = "채용제안하기"
         val allCareer = mutableListOf<ResumeSummary>()
 
-        adapter = ResumeCareerAdapter(emptyList())
-        binding.recyclerview.adapter= adapter
+        //dapter = ResumeCareerAdapter(emptyList())
+        //binding.recyclerview.adapter= adapter
 
         val value = intent.getStringExtra("UID_KEY") ?: return
         viewModel.fetchResumeDetail("public", "publicResume",value)
@@ -55,7 +54,7 @@ class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.lay
             try{
                 Log.d("ResumeCompleteActivity","$resumeContent")
                 resumeContent.resumeData?.let{resumeData->
-                    adapter.updatelist(resumeData)
+                    //adapter.updatelist(resumeData)
                 }
             }catch (e:Exception){
                 Log.e("ResumeCompleteActivity","$e")
