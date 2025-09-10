@@ -45,8 +45,8 @@ import androidx.compose.ui.unit.toSize
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.button.FullButton
-import com.capstone.nongglenonggle.core.common.component.ExposedDropMenuStateHolder
-import com.capstone.nongglenonggle.core.common.component.rememberExposedMenuStateHolder
+import com.capstone.nongglenonggle.presentation.view.worker.resume.component.ExposedDropMenuStateHolder
+import com.capstone.nongglenonggle.presentation.view.worker.resume.component.rememberExposedMenuStateHolder
 import com.capstone.nongglenonggle.core.common.dialog.NonggleBottomSheet
 import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
