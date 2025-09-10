@@ -54,6 +54,7 @@ android {
 dependencies {
     //play service 정의
     implementation 'com.google.android.gms:play-services-auth:21.4.0'
+    implementation 'androidx.media3:media3-common-ktx:1.8.0'
 
 
     //Compose 정의
