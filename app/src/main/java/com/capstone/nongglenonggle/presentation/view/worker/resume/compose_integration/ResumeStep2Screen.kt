@@ -119,6 +119,14 @@ fun ResumeStep2Screen(
                     Spacer(modifier = Modifier.weight(1f))
                 }
             }
+        }
+        this.items(
+            items = uiState.careerList,
+            key = { it.id } // 또는 id 필드
+        ) { item ->
+            careerItem(item, {}, {}) /// FIXME: 실제 동작 넣어 수정하기
+        }
+        item {
 
             Box(
                 modifier = Modifier
@@ -134,11 +142,10 @@ fun ResumeStep2Screen(
                     },
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.padding(vertical = 16.dp, horizontal = 16.dp).fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        modifier = Modifier.padding(vertical = 16.dp, horizontal = 16.dp),
                         textAlign = TextAlign.Center,
                         text = context.getString(R.string.경력추가하기),
                         style = TextStyle(
@@ -156,12 +163,6 @@ fun ResumeStep2Screen(
                     )
                 }
             }
-        }
-        this.items(
-            items = uiState.careerList,
-            key = { it.id } // 또는 id 필드
-        ) { item ->
-            careerItem(item, {}, {}) /// FIXME: 실제 동작 넣어 수정하기
         }
     }
 }

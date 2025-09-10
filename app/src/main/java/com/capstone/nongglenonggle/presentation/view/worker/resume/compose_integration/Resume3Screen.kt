@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume
+package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration
 
 import android.content.Context
 import androidx.compose.foundation.layout.Row
@@ -25,22 +25,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capstone.nongglenonggle.R
+import com.capstone.nongglenonggle.core.common.button.NonggleIconButton
 import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeComposeViewModel
 
 @Composable
-fun ResumeStep3Screen(
-    viewModel: WorkerResumeComposeViewModel,
-) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+fun ResumeStep3Screen(viewModel: WorkerResumeComposeViewModel, ) {
+
+    val uiState by viewModel.select { it.step3 }.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val effectFlow = viewModel.effect
     val focusManager = LocalFocusManager.current
 
-    var isPersonalityFieldFocused by rememberSaveable { mutableStateOf(false) }
+    var isPersonalityFieldFocused by rememberSaveable { mutableStateOf(false) } //자기소개 textfield focus
 
     LaunchedEffect(Unit) {
         effectFlow.collect { effect ->
@@ -66,7 +65,38 @@ fun ResumeStep3Screen(
                 ),
                 color = NonggleTheme.colors.g1
             )
-            expressMyPersonalityTextField(context = context)
+            NonggleTextField(
+                modifier = Modifier
+                    .padding(bottom = 14.dp)
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .onFocusChanged { focusState -> isPersonalityFieldFocused = focusState.isFocused },
+                textFieldType = TextFieldType.Standard,
+                value = "",
+                onValueChange = {
+
+                },
+                textStyle = NonggleTheme.typography.b1_main,
+                textColor = Color.Black,
+                trailingIcon = {
+                    if (uiState.introduceDetail.isNotEmpty() && isPersonalityFieldFocused) {
+                        NonggleIconButton(
+                            ImageResourceId = R.drawable.xcircle,
+                            onClick = {
+                                viewModel.setEvent(WorkerResumeContract.Event.Step3.ClearIntroduceDetail)
+                            }
+                        )
+                    }
+                },
+
+                placeholder = {
+                    Text(
+                        text = context.getString(R.string.본인을_한문장으로),
+                        style = NonggleTheme.typography.b1_main,
+                        color = NonggleTheme.colors.g3,
+                    )
+                },
+            )
             Text(
                 modifier = Modifier.padding(top = 32.dp),
                 text = context.getString(R.string.나의성격),
@@ -99,37 +129,45 @@ fun ResumeStep3Screen(
 
 
 //성격 입력
-@Composable
-fun expressMyPersonalityTextField(
-    modifier: Modifier = Modifier,
-    context: Context,
-) {
-    NonggleTextField(
-        modifier = Modifier
-            .padding(bottom = 14.dp)
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .onFocusChanged { },
-        textFieldType = TextFieldType.Standard,
-        value = "",
-        onValueChange = {
-
-        },
-        textStyle = NonggleTheme.typography.b1_main,
-        textColor = Color.Black,
-        trailingIcon = {
-
-        },
-
-        placeholder = {
-            Text(
-                text = context.getString(R.string.본인을_한문장으로),
-                style = NonggleTheme.typography.b1_main,
-                color = NonggleTheme.colors.g3,
-            )
-        },
-    )
-}
+//@Composable
+//fun expressMyPersonalityTextField(
+//    modifier: Modifier = Modifier,
+//    context: Context,
+//    introduceDetail: String,
+//) {
+//    NonggleTextField(
+//        modifier = Modifier
+//            .padding(bottom = 14.dp)
+//            .fillMaxWidth()
+//            .wrapContentHeight()
+//            .onFocusChanged { focusState -> isPersonalityFieldFocused = focusState.isFocused },
+//        textFieldType = TextFieldType.Standard,
+//        value = "",
+//        onValueChange = {
+//
+//        },
+//        textStyle = NonggleTheme.typography.b1_main,
+//        textColor = Color.Black,
+//        trailingIcon = {
+//            if (introduceDetail.isNotEmpty() && isPersonalityFieldFocused) {
+//                NonggleIconButton(
+//                    ImageResourceId = R.drawable.xcircle,
+//                    onClick = {
+//                        viewModel.setEvent(WorkerResumeContract.Event.Step1.ClearUserName)
+//                    }
+//                )
+//            }
+//        },
+//
+//        placeholder = {
+//            Text(
+//                text = context.getString(R.string.본인을_한문장으로),
+//                style = NonggleTheme.typography.b1_main,
+//                color = NonggleTheme.colors.g3,
+//            )
+//        },
+//    )
+//}
 
 //추가 코멘트입력
 @Composable
