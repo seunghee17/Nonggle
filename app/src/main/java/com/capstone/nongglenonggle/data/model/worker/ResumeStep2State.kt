@@ -1,6 +1,7 @@
 package com.capstone.nongglenonggle.data.model.worker
 
 import java.util.Date
+import java.util.UUID
 
 data class ResumeStep2State(
     val isLoading: Boolean = false,
@@ -21,10 +22,9 @@ data class CareerAddBottomSheetState(
 )
 
 data class ResumeStep2UserCareerListItem(
+    val id: String = UUID.randomUUID().toString(), // 고유 ID
     val careerTitle: String = "",
-    val isLongerThenMonth: Boolean? = null,
-    val careerStartDate: Date = Date(),
-    val careerEndDate: Date?,
-    val careerPeriodDay: String?,
-    val careerDetailContent: String = "",
+    val careerPeriod: String = "",
+    val careerPeriodDetail: String = "",
+    val careerContent: String = ""
 )
