@@ -1,6 +1,7 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration
 
 import android.content.Context
+import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -10,6 +11,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +21,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
@@ -36,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -45,7 +49,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.button.ContainedButton
 import com.capstone.nongglenonggle.core.common.button.FullButton
@@ -76,6 +81,9 @@ fun ResumeStep1Screen(viewModel: WorkerResumeComposeViewModel) {
     val pickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
     ) { uri ->
+        if (uri != null) {
+            context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
         uri?.let { viewModel.onImagePicked(it) }
     }
 
@@ -152,10 +160,20 @@ fun ResumeStep1Screen(viewModel: WorkerResumeComposeViewModel) {
                     contentDescription = null,
                 )
             } else {
-                AsyncImage(
-                    model = uiState.imageProfileUri,
-                    contentDescription = "",
-                    modifier = Modifier.fillMaxWidth()
+                val galleryPhotoPainter = rememberAsyncImagePainter(
+                    model = ImageRequest.Builder(context)
+                        .data(uiState.imageProfileUri)
+                        .placeholder(R.drawable.imageupload)
+                        .build()
+                )
+                Image(
+                    painter = galleryPhotoPainter,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(96.dp)
+                        .padding(top = 16.dp)
+                        .clickable { viewModel.openGallery() }
                 )
             }
             Text(
@@ -279,7 +297,7 @@ fun ResumeStep1Screen(viewModel: WorkerResumeComposeViewModel) {
                 color = NonggleTheme.colors.g1
             )
             Row(
-                modifier = Modifier.padding(top = 12.dp)
+                modifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
             ) {
                 certificationButton(
                     modifier = Modifier
@@ -304,7 +322,12 @@ fun ResumeStep1Screen(viewModel: WorkerResumeComposeViewModel) {
                 )
             }
             if (uiState.haveCertification == true) {
-                Row {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = if(uiState.userCertificationList.isNotEmpty()) 12.dp else 40.dp),
+                    //verticalAlignment = Alignment.CenterVertically
+                ) {
                     NonggleTextField(
                         modifier = Modifier
                             .padding(top = 12.dp, end = 16.dp)
@@ -332,7 +355,7 @@ fun ResumeStep1Screen(viewModel: WorkerResumeComposeViewModel) {
                         },
                         placeholder = {
                             Text(
-                                text = context.getString(R.string.본인의_이름을),
+                                text = context.getString(R.string.자격증_입력),
                                 style = NonggleTheme.typography.b1_main,
                                 color = NonggleTheme.colors.g3,
                             )
@@ -341,8 +364,9 @@ fun ResumeStep1Screen(viewModel: WorkerResumeComposeViewModel) {
                     //자격증 추가 버튼
                     ContainedButton(
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .wrapContentWidth()
                             .wrapContentHeight(),
+                        contentPadding = PaddingValues(horizontal = 30.dp, vertical = 13.dp),
                         enabled = uiState.userCertificateType.isNotEmpty(),
                         onClick = {
                             viewModel.setEvent(WorkerResumeContract.Event.Step1.AddCertificationChip(uiState.userCertificateType))
@@ -401,8 +425,8 @@ fun certificationButton(
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp
         ),
-        enableColor = if (certificateAvailable && title == "있음") NonggleTheme.colors.m1 else NonggleTheme.colors.g_line,
-        enableContentColor = if (certificateAvailable && title == "있음") NonggleTheme.colors.m1 else NonggleTheme.colors.g3,
+        enableColor = if (certificateAvailable && title == "있음" || !certificateAvailable && title == "없음") NonggleTheme.colors.m1 else NonggleTheme.colors.g_line,
+        enableContentColor = if (certificateAvailable && title == "있음" || !certificateAvailable && title == "없음") NonggleTheme.colors.m1 else NonggleTheme.colors.g3,
         pressedColor = NonggleTheme.colors.m1,
     )
 }
@@ -475,6 +499,7 @@ fun dateSpinnerBottomSheet(
     day = day.coerceIn(dayMin, dayMax)
 
     NonggleBottomSheet(
+        occupyWeight = 0.5f,
         onDismissRequest = onDismissRequest,
         header = {
             Row(

@@ -12,5 +12,5 @@ data class ResumeStep1State (
     val birthDate: Date? = null,
     val birthDatePresnet: String = "생년월일을 선택해주세요.",
     val userCertificateType: String = "",
-    val userCertificationList: MutableList<String> = mutableListOf()
+    val userCertificationList: MutableList<String> = mutableListOf(),
 )
