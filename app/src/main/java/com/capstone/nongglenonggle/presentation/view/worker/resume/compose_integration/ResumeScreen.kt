@@ -17,7 +17,6 @@ import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.common.component.NonggleTabRow
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
-import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep2Screen
 import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep3Screen
 import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep4Screen
 

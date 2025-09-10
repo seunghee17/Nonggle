@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume
+package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -27,24 +27,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.motion.widget.MotionScene.Transition.TransitionOnClick
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
 import com.capstone.nongglenonggle.data.model.worker.ResumeStep2UserCareerListItem
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.ResumeCareerAddBottomSheet
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeComposeViewModel
 
 
 @Composable
@@ -164,7 +161,7 @@ fun ResumeStep2Screen(
             items = uiState.careerList,
             key = { it.id } // 또는 id 필드
         ) { item ->
-            careerItem(item)
+            careerItem(item, {}, {}) /// FIXME: 실제 동작 넣어 수정하기
         }
     }
 }
@@ -172,6 +169,8 @@ fun ResumeStep2Screen(
 @Composable
 fun careerItem(
     resumeUserCareerListItem: ResumeStep2UserCareerListItem,
+    deleteAction: () -> Unit,
+    modifyAction: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -213,6 +212,26 @@ fun careerItem(
                         fontWeight = FontWeight.Medium,
                         color = Color.Black
                     )
+                )
+                Image(
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .size(24.dp)
+                        .noRippleClickable {
+                            modifyAction()
+                        },
+                    painter = painterResource(id = R.drawable.ppencil),
+                    contentDescription = null
+                )
+                Image(
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .size(24.dp)
+                        .noRippleClickable {
+                            deleteAction()
+                        },
+                    painter = painterResource(id = R.drawable.delete),
+                    contentDescription = null
                 )
             }
             Text(
