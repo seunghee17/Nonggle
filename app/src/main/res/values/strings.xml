@@ -49,6 +49,7 @@
 
     <string name="근무_시작_시간을">근무 시작 시간을 선택해주세요.</string>
     <string name="근무_종료_시간을">근무 종료 시간을 선택해주세요.</string>
+    <string name="근무_일">근무 일 선택</string>
     <string name="작업기간">작업기간</string>
     <string name="작업_시작_날짜를">작업 시작 날짜를 선택해주세요.</string>
     <string name="작업_종료_날짜를">작업 종료 날짜를 선택해주세요.</string>

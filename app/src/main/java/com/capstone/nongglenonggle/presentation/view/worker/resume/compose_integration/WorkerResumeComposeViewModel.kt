@@ -116,6 +116,17 @@ class WorkerResumeComposeViewModel @Inject constructor(
                         )
                     )
                 }
+                is WorkerResumeContract.Event.Step2.SetCareerDetail -> {
+                    updateState(
+                        currentState.copy(
+                            step2 = currentState.step2.copy(
+                                careerAddBottomSheetState = currentState.step2.careerAddBottomSheetState.copy(
+                                    careerDetailContent = e.detail
+                                )
+                            )
+                        )
+                    )
+                }
             }
         }
         onEvent<WorkerResumeContract.Event.Step4> { e->

@@ -44,7 +44,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capstone.nongglenonggle.R
+import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.common.component.ExposedDropMenuStateHolder
+import com.capstone.nongglenonggle.core.common.component.rememberExposedMenuStateHolder
 import com.capstone.nongglenonggle.core.common.dialog.NonggleBottomSheet
 import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
@@ -151,7 +153,9 @@ fun ResumeCareerAddBottomSheet(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         periodOfWork(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier
+                                .weight(0.5f)
+                                .wrapContentHeight(),
                             onClick = {
                                 viewModel.setEvent(
                                     WorkerResumeContract.Event.Step2.SetWorkPeriodRange(false)
@@ -161,18 +165,20 @@ fun ResumeCareerAddBottomSheet(
                             isActivate = uiState.careerAddBottomSheetState.isLongerThenMonth == false,
                         )
                         periodOfWork(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier
+                                .weight(0.5f)
+                                .wrapContentHeight(),
                             onClick = {
                                 viewModel.setEvent(
-                                    WorkerResumeContract.Event.Step2.SetWorkPeriodRange(
-                                        true
-                                    )
+                                    WorkerResumeContract.Event.Step2.SetWorkPeriodRange(true)
                                 )
                             },
                             title = context.getString(R.string.개월_이상),
                             isActivate = uiState.careerAddBottomSheetState.isLongerThenMonth == true
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    if(uiState.careerAddBottomSheetState.isLongerThenMonth != null) {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -180,21 +186,72 @@ fun ResumeCareerAddBottomSheet(
                             horizontalArrangement = Arrangement.spacedBy(16.dp),
                         ) {
                             selectCalendarBox(
-                            modifier = Modifier.fillMaxWidth(),
-                            onClick = {showCalendarDialog = true},
-                            title = if (uiState.careerAddBottomSheetState.careerStartDate == null) context.getString(R.string.근무시작일) else (uiState.careerAddBottomSheetState.showCareerStartDate ?: ""),
-                            titleColor = if(uiState.careerAddBottomSheetState.careerStartDate == null) Color.Black else Color.Black,
+                                modifier = Modifier
+                                    .weight(0.5f)
+                                    .wrapContentHeight(),
+                                onClick = {showCalendarDialog = true},
+                                title = if (uiState.careerAddBottomSheetState.careerStartDate == null) context.getString(R.string.근무시작일) else (uiState.careerAddBottomSheetState.showCareerStartDate ?: ""),
+                                titleColor = if(uiState.careerAddBottomSheetState.careerStartDate == null) NonggleTheme.colors.g3 else Color.Black,
                             )
+                            if(uiState.careerAddBottomSheetState.isLongerThenMonth == true) {
+                                selectCalendarBox(
+                                    modifier = Modifier
+                                        .weight(0.5f)
+                                        .wrapContentHeight(),
+                                    onClick = {showCalendarDialog = true}, //FIXME: state 값 업데이트는 아직 안이뤄짐
+                                    title = if (uiState.careerAddBottomSheetState.careerEndDate == null) context.getString(R.string.근무시작일) else (uiState.careerAddBottomSheetState.showCareerEndDate ?: ""),
+                                    titleColor = if(uiState.careerAddBottomSheetState.careerEndDate == null) NonggleTheme.colors.g3 else Color.Black,
+                                )
+                            } else if(uiState.careerAddBottomSheetState.isLongerThenMonth == false) {
+                                selectDateBox(
+                                    modifier = Modifier
+                                        .weight(0.5f),
+                                    onClick = {},
+                                    title = if (uiState.careerAddBottomSheetState.careerPeriodDay == null) context.getString(R.string.근무_일) else (uiState.careerAddBottomSheetState.showCareerEndDate ?: ""),
+                                    titleColor = if(uiState.careerAddBottomSheetState.careerPeriodDay == null) NonggleTheme.colors.g3 else Color.Black,
+                                    stateHolder = rememberExposedMenuStateHolder()
+                                )
+                            }
                         }
                     }
+                    Text(
+                        context.getString(R.string.작업내용),
+                        modifier = Modifier.padding(top = 32.dp),
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontFamily = spoqahanSansneo,
+                            fontWeight = FontWeight.Medium,
+                            color = NonggleTheme.colors.g1
+                        )
+                    )
+                    NonggleTextField(
+                        modifier = Modifier
+                            .padding(top = 12.dp)
+                            .fillMaxWidth()
+                            .height(144.dp),
+                        containerColor = Color.White,
+                        textFieldType = TextFieldType.Filled,
+                        value = uiState.careerAddBottomSheetState.careerDetailContent,
+                        onValueChange = {
+                            viewModel.setEvent(event = WorkerResumeContract.Event.Step2.SetCareerDetail(it))
+                        },
+                        placeholder = {
+                            Text(text = context.getString(R.string.업무내용을_상세히), style = NonggleTheme.typography.b1_main.copy(color = NonggleTheme.colors.g3))
+                        },
+                    )
                 }
             }
         },
         footer = {
-//            ContainedButton(
-//
-//                enabled =
-//            )
+            FullButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp),
+                enabled = true,
+                onClick = {}, //FIXME: 경력 추가 하는 기능 구현하기
+                titleText = context.getString(R.string.추가하기),
+                titleTextStyle = NonggleTheme.typography.t3
+            )
         }
     )
 }
