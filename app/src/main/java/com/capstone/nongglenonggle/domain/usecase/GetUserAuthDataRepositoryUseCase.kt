@@ -1,6 +1,7 @@
 package com.capstone.nongglenonggle.domain.usecase
 
 import com.capstone.nongglenonggle.data.model.sign_up.UserDataClass
+import com.capstone.nongglenonggle.data.network.AppResult
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
 import com.capstone.nongglenonggle.domain.repository.AuthenticationRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -11,6 +12,6 @@ class GetUserAuthDataRepositoryUseCase @Inject constructor(
     private val authenticationRepository: AuthenticationRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend operator fun invoke(): Result<UserDataClass> =
+    suspend operator fun invoke(): AppResult<UserDataClass> =
         withContext(ioDispatcher) { authenticationRepository.getUserData() }
 }

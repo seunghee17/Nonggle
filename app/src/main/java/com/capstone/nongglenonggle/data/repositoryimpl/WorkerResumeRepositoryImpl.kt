@@ -1,10 +1,15 @@
 package com.capstone.nongglenonggle.data.repositoryimpl
 
 import android.net.Uri
+import com.capstone.nongglenonggle.core.common.logger.AppResultLogger
+import com.capstone.nongglenonggle.core.common.logger.logFailure
+import com.capstone.nongglenonggle.data.network.AppResult
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
 import com.capstone.nongglenonggle.domain.repository.WorkerResumeRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED
+import com.google.firebase.firestore.FirebaseFirestoreException.Code.UNAVAILABLE
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.tasks.await
@@ -20,7 +25,7 @@ class WorkerResumeRepositoryImpl @Inject constructor(
 
     override suspend fun setWorkerProfileImage(
         imageUri: Uri,
-    ): Result<String> {
+    ): AppResult<String> {
         return withContext(ioDispatcher) {
             val user = firebaseAuth.currentUser
             val uid = user?.uid ?: "unKnownUser"
@@ -32,38 +37,20 @@ class WorkerResumeRepositoryImpl @Inject constructor(
                 storageRef.putFile(imageUri).await()
                 val imageurl = storageRef.downloadUrl.await()
                 //업로드 성공시 이미지 url 반환하도록 구현
-                Result.success(imageurl.toString())
-            } catch (e: CancellationException) {
-                // 코루틴 취소는 그대로 전파
-                throw e
+                AppResult.success(imageurl.toString())
+            } catch (e: FirebaseFirestoreException) {
+                val failure = when (e.code) {
+                    PERMISSION_DENIED -> AppResult.Failure.PermissionDenied(e)
+                    UNAVAILABLE -> AppResult.Failure.NetworkError(e)
+                    else -> AppResult.Failure.Unknown(e)
+                }
+                AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                failure
             } catch (e: Exception) {
-                Result.failure(mapFirebaseStorageException(e))
+                val failure = AppResult.Failure.Unknown(e)
+                AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                failure
             }
         }
-    }
-
-    private fun mapFirebaseStorageException(e: Throwable): Throwable = when (e) {
-        is FirebaseFirestoreException -> when (e.code) {
-            FirebaseFirestoreException.Code.PERMISSION_DENIED ->
-                SecurityException("권한이 없습니다.", e)
-
-            else -> SecurityException("기타 에러", e)
-        }
-//            FirebaseFirestoreException.Code.CANCELLED ->
-//            FirebaseFirestoreException.Code.UNKNOWN ->
-//            FirebaseFirestoreException.Code.INVALID_ARGUMENT ->
-//            FirebaseFirestoreException.Code.DEADLINE_EXCEEDED ->
-//            FirebaseFirestoreException.Code.NOT_FOUND ->
-//            FirebaseFirestoreException.Code.ALREADY_EXISTS ->
-//            FirebaseFirestoreException.Code.RESOURCE_EXHAUSTED ->
-//            FirebaseFirestoreException.Code.FAILED_PRECONDITION ->
-//            FirebaseFirestoreException.Code.ABORTED ->
-//            FirebaseFirestoreException.Code.OUT_OF_RANGE ->
-//            FirebaseFirestoreException.Code.UNIMPLEMENTED ->
-//            FirebaseFirestoreException.Code.INTERNAL ->
-//            FirebaseFirestoreException.Code.UNAVAILABLE ->
-//            FirebaseFirestoreException.Code.DATA_LOSS ->
-//            FirebaseFirestoreException.Code.UNAUTHENTICATED ->
-        else -> e
     }
 }

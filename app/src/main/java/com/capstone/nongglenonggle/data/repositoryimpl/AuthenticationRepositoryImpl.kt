@@ -1,9 +1,12 @@
 package com.capstone.nongglenonggle.data.repositoryimpl
 
+
+import com.capstone.nongglenonggle.core.common.logger.AppResultLogger
+import com.capstone.nongglenonggle.core.common.logger.logFailure
 import com.capstone.nongglenonggle.data.model.sign_up.UserDataClass
 import com.capstone.nongglenonggle.domain.repository.AuthenticationRepository
 import com.google.firebase.auth.FirebaseAuth
-import android.util.Log
+import com.capstone.nongglenonggle.data.network.AppResult
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
@@ -13,6 +16,8 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
+import com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED
+import com.google.firebase.firestore.FirebaseFirestoreException.Code.UNAVAILABLE
 import kotlin.coroutines.cancellation.CancellationException
 
 class AuthenticationRepositoryImpl @Inject constructor(
@@ -22,68 +27,68 @@ class AuthenticationRepositoryImpl @Inject constructor(
 ) : AuthenticationRepository {
 
     //회원 정보 저장
-    override suspend fun setUserData(userData: UserDataClass): Result<Unit> =
-        withContext(ioDispatcher) {
-            val user = firebaseAuth.currentUser
-                ?: return@withContext Result.failure(IllegalStateException("Not authenticated"))
+    override suspend fun setUserData(userData: UserDataClass): AppResult<Unit> {
+        val user = firebaseAuth.currentUser
+            ?: return AppResult.Failure.Unknown(Throwable("회원정보 저장에 실패했습니다. 다시 시도해주세요."))
 
-            val doc = firestore.collection("personal").document(user.uid)
-
+        return withContext(ioDispatcher) {
             try {
                 withTimeout(10_000) {
-                    doc.set(userData.toMap(), SetOptions.merge()).await()
+                    firestore.collection("personal")
+                        .document(user.uid)
+                        .set(userData.toMap(), SetOptions.merge())
+                        .await()
                 }
-                Result.success(Unit)
-            } catch (e: CancellationException) {
-                // 코루틴 취소는 그대로 전파 (중요)
-                throw e
+                AppResult.success(Unit)
+            } catch (e: FirebaseFirestoreException) {
+                val failure = when (e.code) {
+                    PERMISSION_DENIED -> AppResult.Failure.PermissionDenied(e)
+                    UNAVAILABLE -> AppResult.Failure.NetworkError(e)
+                    else -> AppResult.Failure.Unknown(e)
+                }
+                AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                failure
             } catch (e: Exception) {
-                Result.failure(mapFirebaseException(e))
+                val failure = AppResult.Failure.Unknown(e)
+                AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                failure
             }
         }
+    }
 
-    override suspend fun getUserData(): Result<UserDataClass> =
+    override suspend fun getUserData(): AppResult<UserDataClass> =
         withContext(ioDispatcher) {
             val user = firebaseAuth.currentUser
-                ?: return@withContext Result.failure<UserDataClass>(
-                    IllegalStateException("Not authenticated")
-                )
+            if (user == null) {
+                val failure = AppResult.Failure.Unknown(Throwable("회원정보 저장에 실패했습니다. 다시 시도해주세요."))
+                AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                failure
 
-            val doc = firestore.collection("personal").document(user.uid)
+            } else {
+                val doc = firestore.collection("personal").document(user.uid)
 
-            try {
-                val snapshot = withTimeout(10_000) { doc.get().await() }
+                try {
+                    val snapshot = withTimeout(10_000) { doc.get().await() }
 
-                if (!snapshot.exists()) {
-                    return@withContext Result.failure<UserDataClass>(
-                        NoSuchElementException("User data not found")
-                    )
+                    val model = snapshot.toObject(UserDataClass::class.java) ?: throw Exception()
+                    AppResult.success(model)
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: FirebaseFirestoreException) {
+                    val failure = when (e.code) {
+                        PERMISSION_DENIED -> AppResult.Failure.PermissionDenied(e)
+                        UNAVAILABLE -> AppResult.Failure.NetworkError(e)
+                        else -> AppResult.Failure.Unknown(e)
+                    }
+                    AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                    failure
+                } catch (e: Exception) {
+                    val failure = AppResult.Failure.Unknown(e)
+                    AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                    failure
                 }
-
-                val model = snapshot.toObject(UserDataClass::class.java)
-                    ?: return@withContext Result.failure<UserDataClass>(
-                        IllegalStateException("Malformed user data")
-                    )
-
-                Result.success(model)
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Result.failure(mapFirebaseException(e))
             }
+
         }
-
-
-
-    private fun mapFirebaseException(e: Throwable): Throwable = when (e) {
-        is FirebaseFirestoreException -> when (e.code) {
-            FirebaseFirestoreException.Code.PERMISSION_DENIED ->
-                SecurityException("권한이 없습니다.", e)
-
-            else -> e
-        }
-
-        else -> e
-    }
 
 }
