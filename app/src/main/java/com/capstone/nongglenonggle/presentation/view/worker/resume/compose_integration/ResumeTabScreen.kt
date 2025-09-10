@@ -21,7 +21,7 @@ import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep3Sc
 import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeStep4Screen
 
 @Composable
-fun ResumeScreen(
+fun ResumeTabScreen(
     navController: NavHostController,
     viewModel: WorkerResumeComposeViewModel,
 ) {

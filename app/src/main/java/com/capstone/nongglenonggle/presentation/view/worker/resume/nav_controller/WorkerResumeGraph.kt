@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.capstone.nongglenonggle.app.Screens
 import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeComposeViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.ResumeScreen
+import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.ResumeTabScreen
 
 fun NavGraphBuilder.WorkerResumeGraph(navHostController: NavHostController) {
     navigation(
@@ -18,7 +18,7 @@ fun NavGraphBuilder.WorkerResumeGraph(navHostController: NavHostController) {
         composable(route = Screens.WorkerResumeWriting.ResumeTabInputScreen.route) { entry ->
             val parent = remember(entry) {navHostController.getBackStackEntry(Screens.WorkerResumeWriting.route)}
             val viewModel : WorkerResumeComposeViewModel = hiltViewModel(parent)
-            ResumeScreen(viewModel = viewModel, navController = navHostController)
+            ResumeTabScreen(viewModel = viewModel, navController = navHostController)
         }
     }
 }
