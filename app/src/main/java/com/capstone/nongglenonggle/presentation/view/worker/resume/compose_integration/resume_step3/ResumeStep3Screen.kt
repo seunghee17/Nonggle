@@ -30,8 +30,6 @@ import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeComposeViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeContract
 
 @Composable
 fun ResumeStep3Screen(viewModel: WorkerResumeComposeViewModel, ) {

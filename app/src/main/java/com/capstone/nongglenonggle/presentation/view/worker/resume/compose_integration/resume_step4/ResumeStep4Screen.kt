@@ -39,7 +39,6 @@ import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeComposeViewModel
 
 //class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_resume_d) {
 //    private val viewModel: ResumeViewModel by activityViewModels()
@@ -251,7 +250,7 @@ import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integ
 
 @Composable
 fun ResumeStep4Screen(
-    viewModel: WorkerResumeComposeViewModel,
+    viewModel: ResumeStep4ViewModel,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current

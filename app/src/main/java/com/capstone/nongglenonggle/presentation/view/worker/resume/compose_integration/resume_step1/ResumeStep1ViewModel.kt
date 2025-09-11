@@ -13,32 +13,41 @@ class ResumeStep1ViewModel @Inject constructor() :
         initialState = ResumeStep1Contract.State()
     ) {
     override fun handleEvent(event: event) {
-        when(event) {
+        when (event) {
             is event.SetGenderType -> {
                 updateState(currentState.copy(selectedGender = event.gender))
             }
+
             is event.SetCertificateAvailable -> {
                 updateState(currentState.copy(haveCertification = event.value))
             }
+
             is event.SetUserName -> {
                 updateState(currentState.copy(userName = event.name))
             }
+
             is event.ClearUserName -> {
                 updateState(currentState.copy(userName = ""))
             }
+
             is event.SetBirthDate -> {
                 val userBirth = event.birthDate
-                updateState(currentState.copy(
-                    birthDate = userBirth,
-                    birthDatePresnet = "${userBirth.year}년 ${userBirth.month}월 ${userBirth.date}일"
-                ))
+                updateState(
+                    currentState.copy(
+                        birthDate = userBirth,
+                        birthDatePresnet = "${userBirth.year}년 ${userBirth.month}월 ${userBirth.date}일"
+                    )
+                )
             }
+
             is event.SetUserCertificateDetail -> {
                 updateState(currentState.copy(userCertificateType = event.certificate))
             }
+
             is event.ClearUserCertificateDetail -> {
                 updateState(currentState.copy(userCertificateType = ""))
             }
+
             is event.AddCertificationChip -> {
                 val tmpList = currentState.userCertificationList
                 tmpList.add(event.certificationTitle)

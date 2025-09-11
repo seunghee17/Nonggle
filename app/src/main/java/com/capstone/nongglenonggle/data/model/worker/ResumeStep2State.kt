@@ -3,14 +3,8 @@ package com.capstone.nongglenonggle.data.model.worker
 import java.util.Date
 import java.util.UUID
 
-data class ResumeStep2State(
-    val isLoading: Boolean = false,
-    val careerTextFieldValue: String = "",
-    val careerAddBottomSheetState: CareerAddBottomSheetState = CareerAddBottomSheetState(),
-    val careerList: List<ResumeStep2UserCareerListItem> = emptyList()
-    )
-
 //경력 추가 bottomsheet
+//FIXME: 마이그레이션 해야할 부분
 data class CareerAddBottomSheetState(
     val isLongerThenMonth: Boolean? = null,
     val careerStartDate: Date? = null,

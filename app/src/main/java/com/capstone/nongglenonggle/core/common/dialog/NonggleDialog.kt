@@ -26,7 +26,6 @@ import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.button.ContainedButton
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeContract
 
 //취소 확인 버튼 포함한 다이얼로그
 @Composable

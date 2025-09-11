@@ -53,19 +53,20 @@ import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
 import com.capstone.nongglenonggle.presentation.view.worker.resume.component.ExposedDropMenuStateHolder
 import com.capstone.nongglenonggle.presentation.view.worker.resume.component.rememberExposedMenuStateHolder
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeComposeViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeContract
+import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step2.ResumeStep2ViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step2.ResumeStep2Contract.Effect as effect
+import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step2.ResumeStep2Contract.Event as event
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResumeCareerAddBottomSheet(
     modifier: Modifier = Modifier,
-    viewModel: WorkerResumeComposeViewModel,
+    viewModel: ResumeStep2ViewModel,
     context: Context,
     onDismissRequest: () -> Unit,
 ) {
-    val uiState by viewModel.select { it.step2 }.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     var showCalendarDialog by remember { mutableStateOf(false) }
 
@@ -128,7 +129,7 @@ fun ResumeCareerAddBottomSheet(
                         textFieldType = TextFieldType.Standard,
                         value = uiState.careerTextFieldValue,
                         onValueChange = {
-                            viewModel.setEvent(WorkerResumeContract.Event.Step2.SetCareerTitle(it))
+                            viewModel.setEvent(event.SetCareerTitle(it))
                         },
                         placeholder = {
                             Text(
@@ -161,7 +162,7 @@ fun ResumeCareerAddBottomSheet(
                                 .wrapContentHeight(),
                             onClick = {
                                 viewModel.setEvent(
-                                    WorkerResumeContract.Event.Step2.SetWorkPeriodRange(false)
+                                    event.SetWorkPeriodRange(false)
                                 )
                             },
                             title = context.getString(R.string.개월_미만),
@@ -173,7 +174,7 @@ fun ResumeCareerAddBottomSheet(
                                 .wrapContentHeight(),
                             onClick = {
                                 viewModel.setEvent(
-                                    WorkerResumeContract.Event.Step2.SetWorkPeriodRange(true)
+                                    event.SetWorkPeriodRange(true)
                                 )
                             },
                             title = context.getString(R.string.개월_이상),
@@ -239,7 +240,7 @@ fun ResumeCareerAddBottomSheet(
                         textFieldType = TextFieldType.Filled,
                         value = uiState.careerAddBottomSheetState.careerDetailContent,
                         onValueChange = {
-                            viewModel.setEvent(event = WorkerResumeContract.Event.Step2.SetCareerDetail(
+                            viewModel.setEvent(event = event.SetCareerDetail(
                                 it
                             )
                             )
