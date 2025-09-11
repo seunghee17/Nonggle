@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step1
+package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1
 
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -51,11 +51,12 @@ import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step1.component.certificationButton
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step1.component.dateSpinnerBottomSheet
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step1.component.genderSelectButton
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step1.ResumeStep1Contract.Effect as effect
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step1.ResumeStep1Contract.Event as event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component.certificationButton
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component.dateSpinnerBottomSheet
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component.genderSelectButton
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Effect as Step1Effect
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Event as Step1Event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.State as Step1State
 import java.time.LocalDate
 
 @Composable
@@ -91,7 +92,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
     LaunchedEffect(true) {
         effectFlow.collect { effect ->
             when (effect) {
-                is effect.OpenGallery -> {
+                is Step1Effect.OpenGallery -> {
                     if (isPhotoPickerAvailable) {
                         pickerLauncher.launch(
                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
@@ -110,7 +111,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
         dateSpinnerBottomSheet(
             context = context,
             onConfirm = { picked ->
-                viewModel.setEvent(event.SetBirthDate(picked))
+                viewModel.setEvent(Step1Event.SetBirthDate(picked))
                 showDatePickerSheet = false         // 닫기
             },
             onDismissRequest = { showDatePickerSheet = false },
@@ -182,7 +183,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                 textFieldType = TextFieldType.Standard,
                 value = uiState.userName,
                 onValueChange = {
-                    viewModel.setEvent(event.SetUserName(it))
+                    viewModel.setEvent(Step1Event.SetUserName(it))
                 },
                 textStyle = NonggleTheme.typography.b1_main,
                 textColor = Color.Black,
@@ -191,7 +192,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         NonggleIconButton(
                             ImageResourceId = R.drawable.xcircle,
                             onClick = {
-                                viewModel.setEvent(event.ClearUserName)
+                                viewModel.setEvent(Step1Event.ClearUserName)
                             }
                         )
                     }
@@ -258,7 +259,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         .padding(end = 16.dp),
                     gender = context.getString(R.string.여),
                     selectGender = {
-                        viewModel.setEvent(event.SetGenderType(context.getString(
+                        viewModel.setEvent(Step1Event.SetGenderType(context.getString(
                                     R.string.여
                                 )))
                     },
@@ -270,7 +271,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         .wrapContentHeight(),
                     gender = context.getString(R.string.남),
                     selectGender = {
-                        viewModel.setEvent(event.SetGenderType(context.getString(
+                        viewModel.setEvent(Step1Event.SetGenderType(context.getString(
                                     R.string.남
                                 )))
                     },
@@ -293,7 +294,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         .padding(end = 16.dp),
                     title = context.getString(R.string.있음),
                     changeCertificateState = {
-                        viewModel.setEvent(event.SetCertificateAvailable(value = true))
+                        viewModel.setEvent(Step1Event.SetCertificateAvailable(value = true))
                     },
                     certificateAvailable = uiState.haveCertification ?: false
                 )
@@ -303,7 +304,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         .wrapContentHeight(),
                     title = context.getString(R.string.없음),
                     changeCertificateState = {
-                        viewModel.setEvent(event.SetCertificateAvailable(value = false))
+                        viewModel.setEvent(Step1Event.SetCertificateAvailable(value = false))
                     },
                     certificateAvailable = uiState.haveCertification ?: false
                 )
@@ -313,7 +314,6 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = if(uiState.userCertificationList.isNotEmpty()) 12.dp else 40.dp),
-                    //verticalAlignment = Alignment.CenterVertically
                 ) {
                     NonggleTextField(
                         modifier = Modifier
@@ -326,7 +326,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         textFieldType = TextFieldType.Standard,
                         value = uiState.userCertificateType,
                         onValueChange = {
-                            viewModel.setEvent(event.SetUserCertificateDetail(it))
+                            viewModel.setEvent(Step1Event.SetUserCertificateDetail(it))
                         },
                         textStyle = NonggleTheme.typography.b1_main,
                         textColor = Color.Black,
@@ -335,7 +335,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                                 NonggleIconButton(
                                     ImageResourceId = R.drawable.xcircle,
                                     onClick = {
-                                        viewModel.setEvent(event.ClearUserCertificateDetail)
+                                        viewModel.setEvent(Step1Event.ClearUserCertificateDetail)
                                     }
                                 )
                             }
@@ -357,7 +357,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         enabled = uiState.userCertificateType.isNotEmpty(),
                         onClick = {
                             viewModel.setEvent(
-                                event.AddCertificationChip(
+                                Step1Event.AddCertificationChip(
                                     uiState.userCertificateType
                                 )
                             )

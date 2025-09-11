@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step2.component
+package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.component
 
 import android.content.Context
 import androidx.compose.foundation.BorderStroke
@@ -51,11 +51,10 @@ import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
-import com.capstone.nongglenonggle.presentation.view.worker.resume.component.ExposedDropMenuStateHolder
-import com.capstone.nongglenonggle.presentation.view.worker.resume.component.rememberExposedMenuStateHolder
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step2.ResumeStep2ViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step2.ResumeStep2Contract.Effect as effect
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step2.ResumeStep2Contract.Event as event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.parent_component.ExposedDropMenuStateHolder
+import com.capstone.nongglenonggle.presentation.view.worker.resume.parent_component.rememberExposedMenuStateHolder
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2ViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Event as event
 
 
 @OptIn(ExperimentalMaterial3Api::class)

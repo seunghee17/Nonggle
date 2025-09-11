@@ -1,10 +1,11 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step2
+package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2
 
 import com.capstone.nongglenonggle.core.base.BaseViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step2.ResumeStep2Contract.Effect as effect
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step2.ResumeStep2Contract.Event as event
+import dagger.hilt.android.lifecycle.HiltViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Event as event
 import javax.inject.Inject
 
+@HiltViewModel
 class ResumeStep2ViewModel @Inject constructor() : BaseViewModel<ResumeStep2Contract.Event, ResumeStep2Contract.State, ResumeStep2Contract.Effect>(
     initialState = ResumeStep2Contract.State()
 ) {

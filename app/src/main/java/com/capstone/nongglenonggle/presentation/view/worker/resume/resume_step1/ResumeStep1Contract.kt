@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step1
+package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1
 
 import android.net.Uri
 import com.capstone.nongglenonggle.core.base.UiEffect

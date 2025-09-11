@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step3
+package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3
 
 import com.capstone.nongglenonggle.core.base.UiEffect
 import com.capstone.nongglenonggle.core.base.UiEvent

@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step1.component
+package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component
 
 import android.content.Context
 import androidx.compose.foundation.Image

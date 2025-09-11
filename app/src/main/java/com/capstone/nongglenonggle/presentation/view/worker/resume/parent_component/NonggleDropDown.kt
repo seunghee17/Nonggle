@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume.component
+package com.capstone.nongglenonggle.presentation.view.worker.resume.parent_component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step4
+package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

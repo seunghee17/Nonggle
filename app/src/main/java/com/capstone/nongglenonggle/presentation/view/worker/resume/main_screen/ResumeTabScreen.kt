@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.main_screen
+package com.capstone.nongglenonggle.presentation.view.worker.resume.main_screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,15 +17,23 @@ import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.common.component.NonggleTabRow
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step1.ResumeStep1Screen
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step2.ResumeStep2Screen
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step3.ResumeStep3Screen
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step4.ResumeStep4Screen
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Screen
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1ViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Screen
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2ViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Screen
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3ViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Screen
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4ViewModel
 
 @Composable
 fun ResumeTabScreen(
     navController: NavHostController,
-    viewModel: WorkerResumeComposeViewModel,
+    viewModel: ResumeMainViewModel,
+    step1ViewModel: ResumeStep1ViewModel,
+    step2ViewModel: ResumeStep2ViewModel,
+    step3ViewModel: ResumeStep3ViewModel,
+    step4ViewModel: ResumeStep4ViewModel,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val effectFlow = viewModel.effect
@@ -67,10 +75,10 @@ fun ResumeTabScreen(
                horizontalAlignment = Alignment.CenterHorizontally
            ) {
                when(page) {
-                   0 -> ResumeStep1Screen(viewModel = viewModel)
-                   1 -> ResumeStep2Screen(viewModel = viewModel)
-                   2 -> ResumeStep3Screen(viewModel = viewModel)
-                   3 -> ResumeStep4Screen(viewModel = viewModel)
+                   0 -> ResumeStep1Screen(viewModel = step1ViewModel)
+                   1 -> ResumeStep2Screen(viewModel = step2ViewModel)
+                   2 -> ResumeStep3Screen(viewModel = step3ViewModel)
+                   3 -> ResumeStep4Screen(viewModel = step4ViewModel)
                }
            }
        }

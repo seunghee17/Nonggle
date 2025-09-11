@@ -1,36 +1,37 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step1
+package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1
 
 import android.net.Uri
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step1.ResumeStep1Contract.Effect as effect
-import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step1.ResumeStep1Contract.Event as event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Effect as Step1Effect
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Event as Step1Event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.State as Step1State
 
 @HiltViewModel
 class ResumeStep1ViewModel @Inject constructor() :
-    BaseViewModel<ResumeStep1Contract.Event, ResumeStep1Contract.State, ResumeStep1Contract.Effect>(
+    BaseViewModel<Step1Event, Step1State, Step1Effect>(
         initialState = ResumeStep1Contract.State()
     ) {
-    override fun handleEvent(event: event) {
+    override fun handleEvent(event: Step1Event) {
         when (event) {
-            is event.SetGenderType -> {
+            is Step1Event.SetGenderType -> {
                 updateState(currentState.copy(selectedGender = event.gender))
             }
 
-            is event.SetCertificateAvailable -> {
+            is Step1Event.SetCertificateAvailable -> {
                 updateState(currentState.copy(haveCertification = event.value))
             }
 
-            is event.SetUserName -> {
+            is Step1Event.SetUserName -> {
                 updateState(currentState.copy(userName = event.name))
             }
 
-            is event.ClearUserName -> {
+            is Step1Event.ClearUserName -> {
                 updateState(currentState.copy(userName = ""))
             }
 
-            is event.SetBirthDate -> {
+            is Step1Event.SetBirthDate -> {
                 val userBirth = event.birthDate
                 updateState(
                     currentState.copy(
@@ -40,15 +41,15 @@ class ResumeStep1ViewModel @Inject constructor() :
                 )
             }
 
-            is event.SetUserCertificateDetail -> {
+            is Step1Event.SetUserCertificateDetail -> {
                 updateState(currentState.copy(userCertificateType = event.certificate))
             }
 
-            is event.ClearUserCertificateDetail -> {
+            is Step1Event.ClearUserCertificateDetail -> {
                 updateState(currentState.copy(userCertificateType = ""))
             }
 
-            is event.AddCertificationChip -> {
+            is Step1Event.AddCertificationChip -> {
                 val tmpList = currentState.userCertificationList
                 tmpList.add(event.certificationTitle)
                 updateState(currentState.copy(userCertificationList = tmpList))
@@ -61,6 +62,6 @@ class ResumeStep1ViewModel @Inject constructor() :
     }
 
     fun openGallery() {
-        postEffect(effect = effect.OpenGallery)
+        postEffect(effect = Step1Effect.OpenGallery)
     }
 }

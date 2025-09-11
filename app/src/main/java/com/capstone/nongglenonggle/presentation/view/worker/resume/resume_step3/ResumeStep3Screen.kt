@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step3
+package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3
 
 import android.content.Context
 import androidx.compose.foundation.layout.Row
@@ -30,11 +30,13 @@ import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.Event as Event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.Effect as Effect
 
 @Composable
-fun ResumeStep3Screen(viewModel: WorkerResumeComposeViewModel, ) {
+fun ResumeStep3Screen(viewModel: ResumeStep3ViewModel) {
 
-    val uiState by viewModel.select { it.step3 }.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val effectFlow = viewModel.effect
     val focusManager = LocalFocusManager.current
@@ -83,7 +85,7 @@ fun ResumeStep3Screen(viewModel: WorkerResumeComposeViewModel, ) {
                         NonggleIconButton(
                             ImageResourceId = R.drawable.xcircle,
                             onClick = {
-                                viewModel.setEvent(WorkerResumeContract.Event.Step3.ClearIntroduceDetail)
+                                viewModel.setEvent(Event.ClearIntroduceDetail)
                             }
                         )
                     }
