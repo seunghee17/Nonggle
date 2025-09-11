@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration
+package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step3
 
 import android.content.Context
 import androidx.compose.foundation.layout.Row
@@ -30,6 +30,8 @@ import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
+import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeComposeViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeContract
 
 @Composable
 fun ResumeStep3Screen(viewModel: WorkerResumeComposeViewModel, ) {

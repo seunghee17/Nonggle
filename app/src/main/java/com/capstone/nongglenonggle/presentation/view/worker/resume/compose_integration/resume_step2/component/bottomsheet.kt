@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration
+package com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.resume_step2.component
 
 import android.content.Context
 import androidx.compose.foundation.BorderStroke
@@ -45,14 +45,17 @@ import androidx.compose.ui.unit.toSize
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.button.FullButton
-import com.capstone.nongglenonggle.presentation.view.worker.resume.component.ExposedDropMenuStateHolder
-import com.capstone.nongglenonggle.presentation.view.worker.resume.component.rememberExposedMenuStateHolder
 import com.capstone.nongglenonggle.core.common.dialog.NonggleBottomSheet
 import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
+import com.capstone.nongglenonggle.presentation.view.worker.resume.component.ExposedDropMenuStateHolder
+import com.capstone.nongglenonggle.presentation.view.worker.resume.component.rememberExposedMenuStateHolder
+import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeComposeViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.compose_integration.WorkerResumeContract
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -190,7 +193,8 @@ fun ResumeCareerAddBottomSheet(
                                     .weight(0.5f)
                                     .wrapContentHeight(),
                                 onClick = {showCalendarDialog = true},
-                                title = if (uiState.careerAddBottomSheetState.careerStartDate == null) context.getString(R.string.근무시작일) else (uiState.careerAddBottomSheetState.showCareerStartDate ?: ""),
+                                title = if (uiState.careerAddBottomSheetState.careerStartDate == null) context.getString(
+                                    R.string.근무시작일) else (uiState.careerAddBottomSheetState.showCareerStartDate ?: ""),
                                 titleColor = if(uiState.careerAddBottomSheetState.careerStartDate == null) NonggleTheme.colors.g3 else Color.Black,
                             )
                             if(uiState.careerAddBottomSheetState.isLongerThenMonth == true) {
@@ -199,7 +203,8 @@ fun ResumeCareerAddBottomSheet(
                                         .weight(0.5f)
                                         .wrapContentHeight(),
                                     onClick = {showCalendarDialog = true}, //FIXME: state 값 업데이트는 아직 안이뤄짐
-                                    title = if (uiState.careerAddBottomSheetState.careerEndDate == null) context.getString(R.string.근무시작일) else (uiState.careerAddBottomSheetState.showCareerEndDate ?: ""),
+                                    title = if (uiState.careerAddBottomSheetState.careerEndDate == null) context.getString(
+                                        R.string.근무시작일) else (uiState.careerAddBottomSheetState.showCareerEndDate ?: ""),
                                     titleColor = if(uiState.careerAddBottomSheetState.careerEndDate == null) NonggleTheme.colors.g3 else Color.Black,
                                 )
                             } else if(uiState.careerAddBottomSheetState.isLongerThenMonth == false) {
@@ -207,7 +212,8 @@ fun ResumeCareerAddBottomSheet(
                                     modifier = Modifier
                                         .weight(0.5f),
                                     onClick = {},
-                                    title = if (uiState.careerAddBottomSheetState.careerPeriodDay == null) context.getString(R.string.근무_일) else (uiState.careerAddBottomSheetState.showCareerEndDate ?: ""),
+                                    title = if (uiState.careerAddBottomSheetState.careerPeriodDay == null) context.getString(
+                                        R.string.근무_일) else (uiState.careerAddBottomSheetState.showCareerEndDate ?: ""),
                                     titleColor = if(uiState.careerAddBottomSheetState.careerPeriodDay == null) NonggleTheme.colors.g3 else Color.Black,
                                     stateHolder = rememberExposedMenuStateHolder()
                                 )
@@ -233,7 +239,10 @@ fun ResumeCareerAddBottomSheet(
                         textFieldType = TextFieldType.Filled,
                         value = uiState.careerAddBottomSheetState.careerDetailContent,
                         onValueChange = {
-                            viewModel.setEvent(event = WorkerResumeContract.Event.Step2.SetCareerDetail(it))
+                            viewModel.setEvent(event = WorkerResumeContract.Event.Step2.SetCareerDetail(
+                                it
+                            )
+                            )
                         },
                         placeholder = {
                             Text(text = context.getString(R.string.업무내용을_상세히), style = NonggleTheme.typography.b1_main.copy(color = NonggleTheme.colors.g3))

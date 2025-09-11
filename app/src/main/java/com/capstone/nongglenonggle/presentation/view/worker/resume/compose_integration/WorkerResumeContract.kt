@@ -12,7 +12,6 @@ import java.util.Date
 
 class WorkerResumeContract {
     data class State(
-        val step1: ResumeStep1State = ResumeStep1State(),
         val step2: ResumeStep2State = ResumeStep2State(),
         val step3: ResumeStep3State = ResumeStep3State(),
         val step4: ResumeStep4State = ResumeStep4State(),
