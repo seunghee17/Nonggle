@@ -11,14 +11,11 @@ class ResumeStep4Contract {
     ) : UiState
 
     sealed interface Event : UiEvent {
-        data class AddWorkCategoryChip(val value: String) :
-            com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Contract.Event
-        data class RemoveWorkCategoryChip(val value: String) :
-            com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Contract.Event
+        data class AddWorkCategoryChip(val value: String) :Event
+        data class RemoveWorkCategoryChip(val value: String) :Event
     }
 
     sealed interface Effect : UiEffect {
-        data class FailToastMessage(val message: String):
-            com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Contract.Effect
+        data class FailToastMessage(val message: String):Effect
     }
 }
