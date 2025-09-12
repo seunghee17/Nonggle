@@ -1,16 +1,11 @@
 package com.capstone.nongglenonggle.data.local_datasource
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.InvalidationTracker
-import androidx.room.RoomDatabase
+import androidx.room.PrimaryKey
 
 @Entity(tableName = "region")
-data class RegionEntity: RoomDatabase() {
-    override fun clearAllTables() {
-        TODO("Not yet implemented")
-    }
-
-    override fun createInvalidationTracker(): InvalidationTracker {
-        TODO("Not yet implemented")
-    }
-}
+data class RegionEntity (
+    @PrimaryKey val id: String,
+    @ColumnInfo(name = "categoryTitle") val parentRegion: String
+)
