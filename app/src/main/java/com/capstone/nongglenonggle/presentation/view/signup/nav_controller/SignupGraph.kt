@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.capstone.nongglenonggle.app.Screens
+import com.capstone.nongglenonggle.app.navigation.Screens
 import com.capstone.nongglenonggle.presentation.view.signup.FarmerAddressSearchScreen
 import com.capstone.nongglenonggle.presentation.view.signup.SetUserTypeScreen
 import com.capstone.nongglenonggle.presentation.view.signup.SignupViewModel

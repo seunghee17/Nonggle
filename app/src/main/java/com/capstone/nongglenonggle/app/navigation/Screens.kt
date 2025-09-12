@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.app
+package com.capstone.nongglenonggle.app.navigation
 
 //Jetpack Compose Navigation을 사용할 때 경로가 문자열로 관리되기 때문에
 //어디로 이동하는지 명확하지 않은 경우가 많음

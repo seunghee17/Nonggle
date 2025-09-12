@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.capstone.nongglenonggle.app.Screens
+import com.capstone.nongglenonggle.app.navigation.Screens
 
 fun NavGraphBuilder.WorkerResumeGraph(navHostController: NavHostController) {
     navigation(

@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -31,7 +30,7 @@ import com.capstone.nongglenonggle.core.design_system.soYo
 import kotlinx.coroutines.flow.collectLatest
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.capstone.nongglenonggle.app.Screens
+import com.capstone.nongglenonggle.app.navigation.Screens
 import com.capstone.nongglenonggle.presentation.view.farmer.home.MainActivity
 import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
 

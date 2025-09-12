@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.app
+package com.capstone.nongglenonggle.app.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost

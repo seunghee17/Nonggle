@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
-import com.capstone.nongglenonggle.app.Screens
+import com.capstone.nongglenonggle.app.navigation.Screens
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
