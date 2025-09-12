@@ -3,33 +3,44 @@ package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Contract.Effect as Effect
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Contract.Event as Event
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Contract.State as State
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Contract.Effect as Step4Effect
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Contract.Event as Step4Event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Contract.State as Step4State
 
 @HiltViewModel
 class ResumeStep4ViewModel @Inject constructor() :
-    BaseViewModel<Event, State, Effect>(
-        initialState = State()
+    BaseViewModel<Step4Event, Step4State, Step4Effect>(
+        initialState = Step4State()
     ) {
-    override fun handleEvent(event: Event) {
+    override fun handleEvent(event: Step4Event) {
         super.handleEvent(event)
         when(event) {
-            is Event.AddWorkCategoryChip -> {
-                val tempList = currentState.preferWorkCategoryList
-                if(tempList.size!=3) {
-                    tempList.add(event.value)
-                    updateState(currentState.copy(preferWorkCategoryList = tempList))
-                } else {
-                    postEffect(effect = Effect.FailToastMessage("3개 이상 초과할 수 없습니다")) //개수 초과해서 추가 불가능함을 알리기
-                }
+            is Step4Event.ShowRegionBottomSheet -> {
+                val currentBottomSheetVisibility = currentState.showSelectLocationBottomSheet
+                updateState(currentState.copy(showSelectLocationBottomSheet = !currentBottomSheetVisibility))
             }
-            is Event.RemoveWorkCategoryChip -> {
-                val tempList = currentState.preferWorkCategoryList
-                if(tempList.size!=0) {
-                    tempList.remove(event.value)
+            is Step4Event.AddPreferLocation -> {
+                val tmpList = currentState.preferLocationList
+                if(tmpList.size == 3) postEffect(effect = Step4Effect.FailToastMessage("3개 이상 선택할 수 없습니다."))
+                tmpList.add(event.region)
+                updateState(currentState.copy(preferLocationList = tmpList))
+            }
+            is Step4Event.RemovePreferLocation -> {
+                val tmpList = currentState.preferLocationList
+                tmpList.remove(event.region)
+                updateState(currentState.copy(preferLocationList = tmpList))
+            }
+
+            is Step4Event.UpdateCategoryChipState -> {
+                val tempMap = currentState.totalPreferWorkCategoryMap
+                val currentState = tempMap[event.key] ?: false
+                val activateCount = tempMap.count { it.value }
+                if(currentState==false && activateCount==3) {
+                    postEffect(effect = Step4Effect.FailToastMessage("3개 이상 선택할 수 없습니다."))
+                    return
                 }
-                updateState(currentState.copy(preferWorkCategoryList = tempList))
+                tempMap.replace(event.key, !currentState)
+                updateState(currentState.copy(totalPreferWorkCategoryList = tempMap))
             }
         }
     }

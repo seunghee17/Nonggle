@@ -2,6 +2,7 @@ package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -39,6 +41,11 @@ import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.component.preferRegionChip
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.component.workCategoryChip
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Contract.Effect as Step4Effect
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Contract.Event as Step4Event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Contract.State as Step4State
 
 //class ResumeDFragment : BaseFragment<FragmentResumeDBinding>(R.layout.fragment_resume_d) {
 //    private val viewModel: ResumeViewModel by activityViewModels()
@@ -288,16 +295,19 @@ fun ResumeStep4Screen(
                         BorderStroke(1.dp, NonggleTheme.colors.g_line),
                         shape = RoundedCornerShape(4.dp)
                     )
-                    .noRippleClickable {},
+                    .noRippleClickable {
+                        viewModel.setEvent(event = Step4Event.ShowRegionBottomSheet)
+                    },
 
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 12.dp, vertical = 12.dp)
+                        .padding(horizontal = 12.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "가변적 값",
+                        text = context.getString(R.string.희망_근무지역),
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium,
@@ -313,6 +323,30 @@ fun ResumeStep4Screen(
                     )
                 }
             }
+        }
+        item {
+            LazyVerticalGrid(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 200.dp)
+                    .padding(top = 12.dp),
+                columns = GridCells.Fixed(3),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                items(
+                    count = uiState.preferLocationList.size,
+                ) {
+                    preferRegionChip(
+                        onClick = {
+                            viewModel.setEvent(event = Step4Event.RemovePreferLocation(region = "")) //FIXME: bottomsheet으로부터 오는 지역 값 넣어야함
+                        },
+                        preferLocation = ""
+                    )
+                }
+            }
+        }
+        item {
             Text(
                 modifier = Modifier.padding(top = 32.dp),
                 text = context.getString(R.string.희망_품목),
@@ -333,6 +367,8 @@ fun ResumeStep4Screen(
                     color = NonggleTheme.colors.g2
                 )
             )
+        }
+        item { //품목
             LazyVerticalGrid(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -342,55 +378,17 @@ fun ResumeStep4Screen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-//                items(
-//                    count = ,
-//                ) { index ->
-//                    prefersWorkChip(
-//                        onClick = {
-//                            viewModel.setEvent(SignupContract.Event.SelectFarmerCategory(uiState.farmerCategory[index]))
-//                        },
-//                        cropItem = uiState.farmerCategory[index],
-//                        selectCropList = uiState.selectedFarmerCategory
+                items(
+                    count = uiState.totalPreferWorkCategoryMap.size,
+                ) { index ->
+                    val entry = uiState.totalPreferWorkCategoryMap.entries(index)
+//                    workCategoryChip(
+//                        categoryTitle = uiState.totalPreferWorkCategoryList.,
+//                        onClick = TODO(),
+//                        categoryActivate = TODO()
 //                    )
-//                }
+                }
             }
-        }
-    }
-}
-
-@Composable
-fun prefersWorkChip(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    workType: String,
-    workTypeList: List<String>
-) {
-    OutlinedCard(
-        modifier = modifier
-            .height(48.dp)
-            .fillMaxWidth()
-            .noRippleClickable {
-                onClick()
-            },
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White,
-        ),
-        border = BorderStroke(
-            width = 1.dp,
-            color = if (workTypeList.contains(workType)) NonggleTheme.colors.m2 else NonggleTheme.colors.g_line
-        )
-    ) {
-        Box(
-            modifier = modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                modifier = Modifier.padding(horizontal = 18.dp),
-                textAlign = TextAlign.Center,
-                text = workType,
-                style = NonggleTheme.typography.b1_main,
-                color = if (workTypeList.contains(workType)) NonggleTheme.colors.m1 else NonggleTheme.colors.g3,
-            )
         }
     }
 }
