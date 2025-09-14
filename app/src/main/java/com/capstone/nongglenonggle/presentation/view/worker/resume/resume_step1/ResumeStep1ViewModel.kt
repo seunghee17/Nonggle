@@ -1,8 +1,10 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1
 
 import android.net.Uri
+import android.util.Log
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.LinkedHashMap
 import javax.inject.Inject
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Effect as Step1Effect
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Event as Step1Event
@@ -15,12 +17,23 @@ class ResumeStep1ViewModel @Inject constructor() :
     ) {
     override fun handleEvent(event: Step1Event) {
         when (event) {
+            is Step1Event.UpDateDatePickerSheet -> {
+                updateState(currentState.copy(showDatePickerSheet = event.sheetState))
+            }
             is Step1Event.SetGenderType -> {
-                updateState(currentState.copy(selectedGender = event.gender))
+                selectWorkerGender(event.gender)
+            }
+
+            is Step1Event.GetImageFromGallery -> {
+                onImagePicked(event.uri)
+            }
+
+            is Step1Event.OpenGallery -> {
+                openGallery()
             }
 
             is Step1Event.SetCertificateAvailable -> {
-                updateState(currentState.copy(haveCertification = event.value))
+                selectWorkerCertificationAvailable(event.updateState)
             }
 
             is Step1Event.SetUserName -> {
@@ -50,18 +63,46 @@ class ResumeStep1ViewModel @Inject constructor() :
             }
 
             is Step1Event.AddCertificationChip -> {
-                val tmpList = currentState.userCertificationList
+                val tmpList = currentState.userCertificationList.toMutableList()
                 tmpList.add(event.certificationTitle)
+                updateState(
+                    currentState.copy(
+                        userCertificationList = tmpList,
+                        userCertificateType = ""
+                    )
+                )
+            }
+            is Step1Event.RemoveCertificationChip -> {
+                val tmpList = currentState.userCertificationList.toMutableList()
+                tmpList.remove(event.certificationTitle)
                 updateState(currentState.copy(userCertificationList = tmpList))
             }
         }
     }
 
-    fun onImagePicked(uri: Uri) {
+    private fun onImagePicked(uri: Uri) {
         updateState(currentState.copy(imageProfileUri = uri))
     }
 
-    fun openGallery() {
+    private fun selectWorkerGender(gender: String) {
+        val genderStateMap = currentState.genderSelectedMap.toMutableMap()
+        genderStateMap.keys.forEach { key ->
+            genderStateMap[key] = false
+        }
+        genderStateMap[gender] = true
+        updateState(currentState.copy(genderSelectedMap = LinkedHashMap(genderStateMap)))
+    }
+
+    private fun selectWorkerCertificationAvailable(updateState: String) {
+        val certificateAvailableMap = currentState.certificationPossessionSelectedMap.toMutableMap()
+        certificateAvailableMap.keys.forEach { key ->
+            certificateAvailableMap[key] = false
+        }
+        certificateAvailableMap[updateState] = true
+        updateState(currentState.copy(certificationPossessionSelectedMap = LinkedHashMap(certificateAvailableMap)))
+    }
+
+    private fun openGallery() {
         postEffect(effect = Step1Effect.OpenGallery)
     }
 }

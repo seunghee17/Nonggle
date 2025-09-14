@@ -1,8 +1,12 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component
 
 import android.content.Context
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +15,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedCard
@@ -35,9 +42,12 @@ import com.capstone.nongglenonggle.core.common.date_spinner.DateSpinner
 import com.capstone.nongglenonggle.core.common.dialog.NonggleBottomSheet
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
+import com.capstone.nongglenonggle.core.noRippleClickable
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Event
 import java.time.LocalDate
 import java.time.YearMonth
 import java.util.Date
+import java.util.LinkedHashMap
 import kotlin.math.min
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -182,7 +192,7 @@ fun genderSelectButton(
     modifier: Modifier = Modifier,
     gender: String,
     selectGender: () -> Unit,
-    selectedGender: String
+    genderSelectedMap: LinkedHashMap<String, Boolean>
 ) {
     OutlinedButton(
         modifier = modifier,
@@ -193,8 +203,8 @@ fun genderSelectButton(
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp
         ),
-        enableColor = if (selectedGender == gender) NonggleTheme.colors.m1 else NonggleTheme.colors.g_line,
-        enableContentColor = if (selectedGender == gender) NonggleTheme.colors.m1 else NonggleTheme.colors.g3,
+        enableColor = if (genderSelectedMap[gender] == true) NonggleTheme.colors.m1 else NonggleTheme.colors.g_line,
+        enableContentColor = if (genderSelectedMap[gender] == true) NonggleTheme.colors.m1 else NonggleTheme.colors.g3,
         pressedColor = NonggleTheme.colors.m1,
     )
 }
@@ -204,7 +214,7 @@ fun certificationButton(
     modifier: Modifier = Modifier,
     title: String,
     changeCertificateState: () -> Unit,
-    certificateAvailable: Boolean
+    certificateAvailable: LinkedHashMap<String, Boolean>
 ) {
     OutlinedButton(
         modifier = modifier,
@@ -215,9 +225,51 @@ fun certificationButton(
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp
         ),
-        enableColor = if (certificateAvailable && title == "있음" || !certificateAvailable && title == "없음") NonggleTheme.colors.m1 else NonggleTheme.colors.g_line,
-        enableContentColor = if (certificateAvailable && title == "있음" || !certificateAvailable && title == "없음") NonggleTheme.colors.m1 else NonggleTheme.colors.g3,
+        enableColor = if (certificateAvailable[title] == true) NonggleTheme.colors.m1 else NonggleTheme.colors.g_line,
+        enableContentColor = if (certificateAvailable[title]==true) NonggleTheme.colors.m1 else NonggleTheme.colors.g3,
         pressedColor = NonggleTheme.colors.m1,
     )
+}
+
+@Composable
+fun certificationChipItem(
+    modifier: Modifier = Modifier,
+    title: String,
+    removeChip: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .wrapContentWidth()
+            .wrapContentHeight()
+            .border(
+                BorderStroke(1.dp, NonggleTheme.colors.g_line),
+                shape = RoundedCornerShape(20.dp)
+            )
+            .background(
+                color = NonggleTheme.colors.g4,
+                shape = RoundedCornerShape(20.dp)
+            )
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 11.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = title,
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = spoqahanSansneo,
+                    fontWeight = FontWeight.Normal,
+                    color = NonggleTheme.colors.g2)
+            )
+            Image(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .noRippleClickable { removeChip() },
+                painter = painterResource(R.drawable.xcircle),
+                contentDescription = null,
+            )
+        }
+    }
 }
 

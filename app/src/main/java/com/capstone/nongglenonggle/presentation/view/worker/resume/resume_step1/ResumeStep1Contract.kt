@@ -5,29 +5,39 @@ import com.capstone.nongglenonggle.core.base.UiEffect
 import com.capstone.nongglenonggle.core.base.UiEvent
 import com.capstone.nongglenonggle.core.base.UiState
 import java.util.Date
+import java.util.LinkedHashMap
 
 class ResumeStep1Contract {
     data class State(
         val isLoading: Boolean = false,
         val userName: String = "",
-        val selectedGender: String = "",
-        val haveCertification: Boolean? = null,
+        val showDatePickerSheet: Boolean = false,
+        val genderSelectedMap: LinkedHashMap<String, Boolean> = linkedMapOf("여" to false, "남" to false),
+        val certificationPossessionSelectedMap: LinkedHashMap<String, Boolean> = linkedMapOf("있음" to false, "없음" to false),
         val imageProfileUri: Uri? = null,
         val birthDate: Date? = null,
         val birthDatePresnet: String = "생년월일을 선택해주세요.",
         val userCertificateType: String = "",
-        val userCertificationList: MutableList<String> = mutableListOf(),
+        val userCertificationList: List<String> = emptyList(),
     ) : UiState
 
     sealed interface Event : UiEvent {
+        data class UpDateDatePickerSheet(val sheetState: Boolean): Event
         data class SetGenderType(val gender: String) : Event
-        data class SetCertificateAvailable(val value: Boolean) : Event
+        data class GetImageFromGallery(val uri: Uri) : Event
+        object OpenGallery : Event
         object ClearUserName : Event
         data class SetUserName(val name: String) : Event
         data class SetBirthDate(val birthDate: Date) : Event
+        data class SetCertificateAvailable(val updateState: String) : Event
+
+        //자격증 textfield 입력 및 지우기
         data class SetUserCertificateDetail(val certificate: String) : Event
         object ClearUserCertificateDetail : Event
+
+        //자격증 chip 추가
         data class AddCertificationChip(val certificationTitle: String) : Event
+        data class RemoveCertificationChip(val certificationTitle: String) : Event
     }
 
     sealed interface Effect : UiEffect {

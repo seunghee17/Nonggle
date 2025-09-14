@@ -8,17 +8,23 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,11 +58,11 @@ import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component.certificationButton
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component.certificationChipItem
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component.dateSpinnerBottomSheet
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component.genderSelectButton
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Effect as Step1Effect
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Event as Step1Event
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.State as Step1State
 import java.time.LocalDate
 
 @Composable
@@ -68,7 +74,6 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
 
     var isNameTextFieldFocused by rememberSaveable { mutableStateOf(false) }
     var isCerTificateTextFieldFocused by rememberSaveable { mutableStateOf(false) }
-    var showDatePickerSheet by remember { mutableStateOf(false) }
 
     val pickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
@@ -76,13 +81,17 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
         if (uri != null) {
             context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
-        uri?.let { viewModel.onImagePicked(it) }
+        uri?.let { viewModel.setEvent(Step1Event.GetImageFromGallery(uri)) }
     }
 
     // Photo Picker 미지원 기기 fallback (거의 드물지만 대비)
     val getContentLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
-    ) { uri -> uri?.let(viewModel::onImagePicked) }
+    ) { uri ->
+        uri?.let {
+            viewModel.setEvent(Step1Event.GetImageFromGallery(it))
+        }
+    }
 
     //요청할 권한
     val isPhotoPickerAvailable = remember {
@@ -107,14 +116,14 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
         }
     }
 
-    if (showDatePickerSheet) {
+    if (uiState.showDatePickerSheet) {
         dateSpinnerBottomSheet(
             context = context,
             onConfirm = { picked ->
                 viewModel.setEvent(Step1Event.SetBirthDate(picked))
-                showDatePickerSheet = false         // 닫기
+                viewModel.setEvent(Step1Event.UpDateDatePickerSheet(!uiState.showDatePickerSheet))
             },
-            onDismissRequest = { showDatePickerSheet = false },
+            onDismissRequest = { viewModel.setEvent(Step1Event.UpDateDatePickerSheet(false)) },
             initialDate = LocalDate.now().minusYears(20),
             minDate = LocalDate.of(1900, 1, 1),
             maxDate = LocalDate.now()
@@ -145,9 +154,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                     modifier = Modifier
                         .size(width = 96.dp, height = 96.dp)
                         .padding(top = 16.dp)
-                        .clickable {
-                            viewModel.openGallery()
-                        },
+                        .clickable { viewModel.setEvent(Step1Event.OpenGallery) },
                     painter = painterResource(id = R.drawable.imageupload),
                     contentDescription = null,
                 )
@@ -165,7 +172,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                     modifier = Modifier
                         .size(96.dp)
                         .padding(top = 16.dp)
-                        .clickable { viewModel.openGallery() }
+                        .clickable { viewModel.setEvent(Step1Event.OpenGallery) }
                 )
             }
             Text(
@@ -221,7 +228,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         shape = RoundedCornerShape(4.dp)
                     )
                     .clickable {
-                        showDatePickerSheet = true
+                        viewModel.setEvent(Step1Event.UpDateDatePickerSheet(true))
                     }
             ) {
                 Row(
@@ -234,7 +241,6 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         text = uiState.birthDatePresnet,
                         style = NonggleTheme.typography.b4_btn,
                         textAlign = TextAlign.Start
-                        //color =  생년월일 유무에 따라 다른 색상 배정
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     Image(
@@ -263,7 +269,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                                     R.string.여
                                 )))
                     },
-                    selectedGender = uiState.selectedGender
+                    genderSelectedMap = uiState.genderSelectedMap
                 )
                 genderSelectButton(
                     modifier = Modifier
@@ -271,11 +277,9 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         .wrapContentHeight(),
                     gender = context.getString(R.string.남),
                     selectGender = {
-                        viewModel.setEvent(Step1Event.SetGenderType(context.getString(
-                                    R.string.남
-                                )))
+                        viewModel.setEvent(Step1Event.SetGenderType(context.getString(R.string.남)))
                     },
-                    selectedGender = uiState.selectedGender
+                    genderSelectedMap = uiState.genderSelectedMap
                 )
             }
             Text(
@@ -294,9 +298,9 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         .padding(end = 16.dp),
                     title = context.getString(R.string.있음),
                     changeCertificateState = {
-                        viewModel.setEvent(Step1Event.SetCertificateAvailable(value = true))
+                        viewModel.setEvent(Step1Event.SetCertificateAvailable(context.getString(R.string.있음)))
                     },
-                    certificateAvailable = uiState.haveCertification ?: false
+                    certificateAvailable = uiState.certificationPossessionSelectedMap
                 )
                 certificationButton(
                     modifier = Modifier
@@ -304,20 +308,21 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         .wrapContentHeight(),
                     title = context.getString(R.string.없음),
                     changeCertificateState = {
-                        viewModel.setEvent(Step1Event.SetCertificateAvailable(value = false))
+                        viewModel.setEvent(Step1Event.SetCertificateAvailable(context.getString(R.string.없음)))
                     },
-                    certificateAvailable = uiState.haveCertification ?: false
+                    certificateAvailable = uiState.certificationPossessionSelectedMap
                 )
             }
-            if (uiState.haveCertification == true) {
+            if (uiState.certificationPossessionSelectedMap[context.getString(R.string.있음)] == true) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .height(IntrinsicSize.Min)
                         .padding(bottom = if(uiState.userCertificationList.isNotEmpty()) 12.dp else 40.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     NonggleTextField(
                         modifier = Modifier
-                            .padding(top = 12.dp, end = 16.dp)
                             .weight(1f)
                             .wrapContentHeight()
                             .onFocusChanged { focusState ->
@@ -370,6 +375,25 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                             color = Color.White
                         ),
                     )
+                }
+                LazyVerticalGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 200.dp),
+                    columns = GridCells.Fixed(3),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    items(
+                        count = uiState.userCertificationList.size,
+                    ) { index ->
+                        certificationChipItem(
+                            title = uiState.userCertificationList[index],
+                            removeChip = {
+                                viewModel.setEvent(Step1Event.RemoveCertificationChip(uiState.userCertificationList[index]))
+                            }
+                        )
+                    }
                 }
             }
 
