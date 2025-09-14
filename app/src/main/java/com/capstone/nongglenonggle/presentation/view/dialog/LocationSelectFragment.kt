@@ -43,42 +43,41 @@ class LocationSelectFragment : BottomSheetDialogFragment() {
         }
 
         val recyclerview1 = binding.firstLocation
-        val firstRegion = resources.getStringArray(R.array.all).toList()
+        //val firstRegion = resources.getStringArray(R.array.all).toList()
 
-        val adapter1 = RegionFirstAdapter(firstRegion)
-        recyclerview1.adapter = adapter1
+        //val adapter1 = RegionFirstAdapter(firstRegion)
+        //recyclerview1.adapter = adapter1
 
 
 
-        adapter1.itemClickListener = { position, value ->
-            when (value) {
-                "서울" -> setNewList(R.array.seoul)
-                "강원" -> setNewList(R.array.kangwon)
-                "경기" -> setNewList(R.array.kyonggi)
-                "경남" -> setNewList(R.array.kyongnam)
-                "경북" -> setNewList(R.array.kyongbook)
-                "광주" -> setNewList(R.array.kwangju)
-                "대구" -> setNewList(R.array.daegu)
-                "대전" -> setNewList(R.array.daejun)
-                "부산" -> setNewList(R.array.busan)
-                "세종" -> {
-                }
-
-                "울산" -> setNewList(R.array.ulsan)
-                "인천" -> setNewList(R.array.incheon)
-                "전남" -> setNewList(R.array.jeonnam)
-                "전북" -> setNewList(R.array.jeonbook)
-                "제주" -> setNewList(R.array.jeju)
-                "충남" -> setNewList(R.array.choognam)
-                "충북" -> setNewList(R.array.choogbook)
-            }
-        }
+//        adapter1.itemClickListener = { position, value ->
+//            when (value) {
+//                "서울" -> setNewList(R.array.seoul)
+//                "강원" -> setNewList(R.array.kangwon)
+//                "경기" -> setNewList(R.array.kyonggi)
+//                "경남" -> setNewList(R.array.kyongnam)
+//                "경북" -> setNewList(R.array.kyongbook)
+//                "광주" -> setNewList(R.array.kwangju)
+//                "대구" -> setNewList(R.array.daegu)
+//                "대전" -> setNewList(R.array.daejun)
+//                "부산" -> setNewList(R.array.busan)
+//                "세종" -> {
+//                }
+//
+//                "울산" -> setNewList(R.array.ulsan)
+//                "인천" -> setNewList(R.array.incheon)
+//                "전남" -> setNewList(R.array.jeonnam)
+//                "전북" -> setNewList(R.array.jeonbook)
+//                "제주" -> setNewList(R.array.jeju)
+//                "충남" -> setNewList(R.array.choognam)
+//                "충북" -> setNewList(R.array.choogbook)
+//            }
+//        }
         binding.confirmButton.setOnClickListener() {
-            Log.d("LocationSelectFragment", "Before getting text1: ${adapter1.getSelectedText()}")
-            val selectedText1 = adapter1.getSelectedText()
-            if (selectedText1 != null) {
-                viewModel.storeLocation(selectedText1)
-            }
+            //val selectedText1 = adapter1.getSelectedText()
+//            if (selectedText1 != null) {
+//                viewModel.storeLocation(selectedText1)
+//            }
             val selectedText2 = adapter2.getSelectedText()
             if (selectedText2 != null) {
                 viewModel.storeLocation(selectedText2)

@@ -27,13 +27,11 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -54,7 +52,7 @@ import com.capstone.nongglenonggle.core.noRippleClickable
 import com.capstone.nongglenonggle.presentation.view.worker.resume.parent_component.ExposedDropMenuStateHolder
 import com.capstone.nongglenonggle.presentation.view.worker.resume.parent_component.rememberExposedMenuStateHolder
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2ViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Event as event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Event as Step2Event
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,11 +64,14 @@ fun ResumeCareerAddBottomSheet(
     onDismissRequest: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val effectFlow = viewModel.effect
 
-    var showCalendarDialog by remember { mutableStateOf(false) }
-
-    if(showCalendarDialog) {
-
+    if(uiState.showDatePickerDialog) {
+//        datePickerDialog(
+//            context = context,
+//
+//        )
     }
 
     NonggleBottomSheet(
@@ -128,7 +129,7 @@ fun ResumeCareerAddBottomSheet(
                         textFieldType = TextFieldType.Standard,
                         value = uiState.careerTextFieldValue,
                         onValueChange = {
-                            viewModel.setEvent(event.SetCareerTitle(it))
+                            viewModel.setEvent(Step2Event.SetCareerTitle(it))
                         },
                         placeholder = {
                             Text(
@@ -161,11 +162,11 @@ fun ResumeCareerAddBottomSheet(
                                 .wrapContentHeight(),
                             onClick = {
                                 viewModel.setEvent(
-                                    event.SetWorkPeriodRange(false)
+                                    Step2Event.SetWorkPeriodRange(false)
                                 )
                             },
                             title = context.getString(R.string.개월_미만),
-                            isActivate = uiState.careerAddBottomSheetState.isLongerThenMonth == false,
+                            isActivate = uiState.isLongerThenMonth == false,
                         )
                         periodOfWork(
                             modifier = Modifier
@@ -173,15 +174,15 @@ fun ResumeCareerAddBottomSheet(
                                 .wrapContentHeight(),
                             onClick = {
                                 viewModel.setEvent(
-                                    event.SetWorkPeriodRange(true)
+                                    Step2Event.SetWorkPeriodRange(true)
                                 )
                             },
                             title = context.getString(R.string.개월_이상),
-                            isActivate = uiState.careerAddBottomSheetState.isLongerThenMonth == true
+                            isActivate = uiState.isLongerThenMonth == true
                         )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
-                    if(uiState.careerAddBottomSheetState.isLongerThenMonth != null) {
+                    if(uiState.isLongerThenMonth != null) {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -192,29 +193,29 @@ fun ResumeCareerAddBottomSheet(
                                 modifier = Modifier
                                     .weight(0.5f)
                                     .wrapContentHeight(),
-                                onClick = {showCalendarDialog = true},
-                                title = if (uiState.careerAddBottomSheetState.careerStartDate == null) context.getString(
-                                    R.string.근무시작일) else (uiState.careerAddBottomSheetState.showCareerStartDate ?: ""),
-                                titleColor = if(uiState.careerAddBottomSheetState.careerStartDate == null) NonggleTheme.colors.g3 else Color.Black,
+                                onClick = {viewModel.setEvent(event = Step2Event.ShowDatePickerDialog(true))},
+                                title = if (uiState.careerStartDate == null) context.getString(
+                                    R.string.근무시작일) else (uiState.showCareerStartDate ?: ""),
+                                titleColor = if(uiState.careerStartDate == null) NonggleTheme.colors.g3 else Color.Black,
                             )
-                            if(uiState.careerAddBottomSheetState.isLongerThenMonth == true) {
+                            if(uiState.isLongerThenMonth == true) {
                                 selectCalendarBox(
                                     modifier = Modifier
                                         .weight(0.5f)
                                         .wrapContentHeight(),
-                                    onClick = {showCalendarDialog = true}, //FIXME: state 값 업데이트는 아직 안이뤄짐
-                                    title = if (uiState.careerAddBottomSheetState.careerEndDate == null) context.getString(
-                                        R.string.근무시작일) else (uiState.careerAddBottomSheetState.showCareerEndDate ?: ""),
-                                    titleColor = if(uiState.careerAddBottomSheetState.careerEndDate == null) NonggleTheme.colors.g3 else Color.Black,
+                                    onClick = {viewModel.setEvent(event = Step2Event.ShowDatePickerDialog(true))}, //FIXME: state 값 업데이트는 아직 안이뤄짐
+                                    title = if (uiState.careerEndDate == null) context.getString(
+                                        R.string.근무시작일) else (uiState.showCareerEndDate ?: ""),
+                                    titleColor = if(uiState.careerEndDate == null) NonggleTheme.colors.g3 else Color.Black,
                                 )
-                            } else if(uiState.careerAddBottomSheetState.isLongerThenMonth == false) {
+                            } else if(uiState.isLongerThenMonth == false) {
                                 selectDateBox(
                                     modifier = Modifier
                                         .weight(0.5f),
                                     onClick = {},
-                                    title = if (uiState.careerAddBottomSheetState.careerPeriodDay == null) context.getString(
-                                        R.string.근무_일) else (uiState.careerAddBottomSheetState.showCareerEndDate ?: ""),
-                                    titleColor = if(uiState.careerAddBottomSheetState.careerPeriodDay == null) NonggleTheme.colors.g3 else Color.Black,
+                                    title = if (uiState.careerPeriodDay == null) context.getString(
+                                        R.string.근무_일) else (uiState.showCareerEndDate ?: ""),
+                                    titleColor = if(uiState.careerPeriodDay == null) NonggleTheme.colors.g3 else Color.Black,
                                     stateHolder = rememberExposedMenuStateHolder()
                                 )
                             }
@@ -237,12 +238,9 @@ fun ResumeCareerAddBottomSheet(
                             .height(144.dp),
                         containerColor = Color.White,
                         textFieldType = TextFieldType.Filled,
-                        value = uiState.careerAddBottomSheetState.careerDetailContent,
+                        value = uiState.careerDetailContent,
                         onValueChange = {
-                            viewModel.setEvent(event = event.SetCareerDetail(
-                                it
-                            )
-                            )
+                            viewModel.setEvent(event = Step2Event.SetCareerDetail(it))
                         },
                         placeholder = {
                             Text(text = context.getString(R.string.업무내용을_상세히), style = NonggleTheme.typography.b1_main.copy(color = NonggleTheme.colors.g3))

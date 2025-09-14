@@ -18,9 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,6 +35,7 @@ import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.component.ResumeCareerAddBottomSheet
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.component.careerItem
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Event as Step2Event
 
 
 @Composable
@@ -48,14 +46,11 @@ fun ResumeStep2Screen(
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
 
-    //경력 추가 bottomsheet 상태 변수
-    var showCareerAddBottomSheet by rememberSaveable { mutableStateOf(false) }
-
-    if (showCareerAddBottomSheet) {
+    if (uiState.showCareerAddBottomSheet) {
         ResumeCareerAddBottomSheet(
             viewModel = viewModel,
             context = context,
-            onDismissRequest = { showCareerAddBottomSheet = false }
+            onDismissRequest = { viewModel.setEvent(Step2Event.ShowCareerBottomSheet(false)) }
         )
     }
 
@@ -123,7 +118,6 @@ fun ResumeStep2Screen(
             careerItem(item, {}, {}) /// FIXME: 실제 동작 넣어 수정하기
         }
         item {
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -134,7 +128,7 @@ fun ResumeStep2Screen(
                         shape = RoundedCornerShape(4.dp)
                     )
                     .noRippleClickable {
-                        showCareerAddBottomSheet = true
+                        viewModel.setEvent(Step2Event.ShowCareerBottomSheet(true))
                     },
             ) {
                 Row(

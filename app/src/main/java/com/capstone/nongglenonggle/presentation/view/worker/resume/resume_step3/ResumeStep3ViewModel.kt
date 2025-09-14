@@ -3,15 +3,16 @@ package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.Effect as effect
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.Event as event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.Effect as Step3Effect
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.Event as Step3Event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.State as Step3State
 
 @HiltViewModel
 class ResumeStep3ViewModel @Inject constructor() :
-    BaseViewModel<ResumeStep3Contract.Event, ResumeStep3Contract.State, ResumeStep3Contract.Effect>(
+    BaseViewModel<Step3Event, Step3State, Step3Effect>(
         initialState = ResumeStep3Contract.State()
     ) {
-    override fun handleEvent(event: ResumeStep3Contract.Event) {
+    override fun handleEvent(event: Step3Event) {
         super.handleEvent(event)
         when(event) {
             else -> {}

@@ -40,7 +40,7 @@ class ResumeStep4ViewModel @Inject constructor() :
                     return
                 }
                 tempMap.replace(event.key, !currentState)
-                updateState(currentState.copy(totalPreferWorkCategoryList = tempMap))
+                //updateState(currentState.copy(totalPreferWorkCategoryList = tempMap))
             }
         }
     }

@@ -381,7 +381,7 @@ fun ResumeStep4Screen(
                 items(
                     count = uiState.totalPreferWorkCategoryMap.size,
                 ) { index ->
-                    val entry = uiState.totalPreferWorkCategoryMap.entries(index)
+                    //val entry = uiState.totalPreferWorkCategoryMap.entries(index)
 //                    workCategoryChip(
 //                        categoryTitle = uiState.totalPreferWorkCategoryList.,
 //                        onClick = TODO(),
