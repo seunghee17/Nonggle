@@ -1,8 +1,5 @@
-package com.capstone.nongglenonggle.presentation.view.farmer.notice.compose_integration
+package com.capstone.nongglenonggle.presentation.view.farmer.notice
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,16 +21,6 @@ import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
-
-class NoticeWritingFinalScreenActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent{
-            NoticeWritingFinalScreenActivity()
-        }
-
-    }
-}
 
 @Composable
 fun NoticeWritingFinalScreen() {
