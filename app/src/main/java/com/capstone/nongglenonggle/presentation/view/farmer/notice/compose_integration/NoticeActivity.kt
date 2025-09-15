@@ -12,7 +12,7 @@ class NoticeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            NoticeScreen()
+            NoticeMainScreen()
         }
     }
 }

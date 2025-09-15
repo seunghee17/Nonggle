@@ -16,7 +16,7 @@ import com.capstone.nongglenonggle.core.common.component.NonggleTabRow
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 
 @Composable
-fun NoticeScreen(
+fun NoticeMainScreen(
     //navController: NavHostController,
 ) {
     val context = LocalContext.current
