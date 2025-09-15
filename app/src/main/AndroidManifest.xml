@@ -40,7 +40,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".presentation.view.farmer.notice.NoticeActivity"
+            android:name=".presentation.view.farmer.notice.compose_integration.NoticeActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
 
