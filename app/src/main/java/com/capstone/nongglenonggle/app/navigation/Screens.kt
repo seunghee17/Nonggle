@@ -9,12 +9,11 @@ sealed class Screens(val route: String) {
         object SetType: Screens("SignUp/SetType")
         object Step2: Screens("SignUp/Step2")
         object Step3: Screens("SignUp/Step3") //구인자만 해당하는 step
-        object AddressSearchWebView: Screens("SignUp/AddressSearch")
+        object AddressSearch: Screens("SignUp/AddressSearch")
     }
 
     object WorkerResumeWriting: Screens("WorkerResume") {
-        object ResumeTabInputScreen: Screens("WorkerResume/main")
-        object AddressSearchWebView: Screens("WorkerResume/search_address")
+        object ResumeTabScreen: Screens("WorkerResume/main")
         object ResumeComplete: Screens("WorkerResume/Complete")
     }
 }

@@ -17,9 +17,9 @@ import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.
 fun NavGraphBuilder.WorkerResumeGraph(navHostController: NavHostController) {
     navigation(
         route = Screens.WorkerResumeWriting.route,
-        startDestination = Screens.WorkerResumeWriting.ResumeTabInputScreen.route
+        startDestination = Screens.WorkerResumeWriting.ResumeTabScreen.route
     ) {
-        composable(route = Screens.WorkerResumeWriting.ResumeTabInputScreen.route) { entry ->
+        composable(route = Screens.WorkerResumeWriting.ResumeTabScreen.route) { entry ->
             val parent =
                 remember(entry) { navHostController.getBackStackEntry(Screens.WorkerResumeWriting.route) }
             val mainViewModel: ResumeMainViewModel = hiltViewModel(parent)

@@ -161,15 +161,6 @@ class SignupViewModel @Inject constructor(
         )
         viewModelScope.launch {
             updateState(currentState.copy(submitState = SignupContract.SubmitState.Loading))
-//            setUserSignUpUseCase.invoke(userData = userData)
-//                .onSuccess {
-//                    updateState(currentState.copy(submitState = SignupContract.SubmitState.Success))
-//                    postEffect(effect = SignupContract.Effect.NavigateToHomeScreen)
-//                }
-//                .onFailure { e->
-//                    val errorMessage = e.message ?: "데이터 전송에 실패했습니다."
-//                    updateState(currentState.copy(submitState = SignupContract.SubmitState.Error(errorMessage)))
-//                }
             val result = setUserSignUpUseCase.invoke(userData = userData)
             when(result) {
                 is AppResult.Success -> {

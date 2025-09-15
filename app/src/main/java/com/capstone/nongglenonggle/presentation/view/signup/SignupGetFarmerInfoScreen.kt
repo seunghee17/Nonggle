@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.app.navigation.Screens
 import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
@@ -53,6 +55,8 @@ fun SignupGetFarmerInfoScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val effectFlow = viewModel.effect
     val context = LocalContext.current
+    val selectAddressFlow = navController.currentBackStackEntry?.savedStateHandle?.getStateFlow("selectAddress", "")
+    val selectAddress by selectAddressFlow?.collectAsStateWithLifecycle() ?: remember {mutableStateOf("")}
 
     LaunchedEffect(true) {
         effectFlow.collect { effect ->
@@ -65,11 +69,17 @@ fun SignupGetFarmerInfoScreen(
                 }
 
                 is SignupContract.Effect.NavigateToAddressSearchScreen -> {
-                    navController.navigate(Screens.Signup.AddressSearchWebView.route)
+                    navController.navigate(Screens.Signup.AddressSearch.route)
                 }
 
                 else -> {}
             }
+        }
+    }
+
+    LaunchedEffect(selectAddress) {
+        if(selectAddress.isNotEmpty()) {
+            viewModel.setEvent(SignupContract.Event.updateDoroAddress(selectAddress))
         }
     }
 

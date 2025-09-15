@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.signup
+package com.capstone.nongglenonggle.presentation.view
 
 import android.annotation.SuppressLint
 import android.webkit.JavascriptInterface
@@ -23,7 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
+import com.capstone.nongglenonggle.presentation.view.signup.SignupContract
+import com.capstone.nongglenonggle.presentation.view.signup.SignupViewModel
 
 class JsBridge(private val onData: (String) -> Unit) {
     @JavascriptInterface
@@ -34,35 +37,21 @@ class JsBridge(private val onData: (String) -> Unit) {
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun FarmerAddressSearchScreen(
-    navController: NavHostController,
-    viewModel: SignupViewModel,
-) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+fun AddressSearchWebViewScreen() {
     val context = LocalContext.current
-    val effectFlow = viewModel.effect
-
-   LaunchedEffect(true) {
-        effectFlow.collect { effect ->
-            when(effect) {
-                is SignupContract.Effect.NavigateToBackScreen -> {
-                    navController.popBackStack()
-                }
-                else -> {}
-            }
-        }
-    }
+    val navController = rememberNavController()
 
     val webView = remember {
         WebView(context).apply {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
 
-            addJavascriptInterface(JsBridge(viewModel::getAddress), "Android")
+            addJavascriptInterface(JsBridge(onData = { address ->
+                goBackFromAddressSearch(selectAddress = address, navController)
+            }), "Android")
             webViewClient = object: WebViewClient() {
                 override fun onPageFinished(view: WebView, url: String) {
                     view.evaluateJavascript("javascript:sample2_execDaumPostcode();", null)
-                    viewModel.setLoading(false)
                 }
 
                 override fun onReceivedError(
@@ -73,7 +62,6 @@ fun FarmerAddressSearchScreen(
                     Log.e("TAG", "웹뷰 로드중 에러 발생 ${error}")
                 }
             }
-            viewModel.setLoading(true)
             loadUrl("https://nonggle.web.app/")
         }
     }
@@ -85,15 +73,6 @@ fun FarmerAddressSearchScreen(
             modifier = Modifier.fillMaxSize(),
             factory = {webView}
         )
-        if(uiState.isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .width(64.dp)
-                    .align(Alignment.Center),
-                color = NonggleTheme.colors.g1,
-                trackColor = NonggleTheme.colors.m1,
-            )
-        }
     }
 
     // 정리
@@ -104,4 +83,12 @@ fun FarmerAddressSearchScreen(
             webView.destroy()
         }
     }
+}
+
+fun goBackFromAddressSearch(selectAddress: String, navigatorController: NavHostController) {
+    navigatorController.previousBackStackEntry
+        ?.savedStateHandle
+        ?.set("selectAddress", selectAddress)
+
+    navigatorController.popBackStack()
 }
