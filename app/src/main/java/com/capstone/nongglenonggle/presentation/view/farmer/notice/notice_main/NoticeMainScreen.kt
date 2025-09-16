@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.farmer.notice.compose_integration
+package com.capstone.nongglenonggle.presentation.view.farmer.notice.notice_main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
 import com.capstone.nongglenonggle.core.common.button.FullButton
@@ -17,7 +18,7 @@ import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 
 @Composable
 fun NoticeMainScreen(
-    //navController: NavHostController,
+    navController: NavHostController,
 ) {
     val context = LocalContext.current
 

@@ -16,4 +16,10 @@ sealed class Screens(val route: String) {
         object ResumeTabScreen: Screens("WorkerResume/main")
         object ResumeComplete: Screens("WorkerResume/Complete")
     }
+
+    object FarmerNoticeWriting: Screens("FarmerNotice") {
+        object NoticeOnBoardingScreen: Screens("FarmerNotice/onboarding")
+        object NoticeTabScreen: Screens("FarmerNotice/main")
+        object NoticeFinalScreen: Screens("FarmerNotice/final")
+    }
 }

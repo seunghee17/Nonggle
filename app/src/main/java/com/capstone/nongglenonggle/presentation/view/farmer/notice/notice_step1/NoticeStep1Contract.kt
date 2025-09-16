@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.farmer.notice.compose_integration.notice_step1
+package com.capstone.nongglenonggle.presentation.view.farmer.notice.notice_step1
 
 import com.capstone.nongglenonggle.core.base.UiEffect
 import com.capstone.nongglenonggle.core.base.UiEvent
@@ -14,6 +14,6 @@ class NoticeStep1Contract {
     }
 
     sealed interface Effect : UiEffect {
-        data class UnAvailableToastmessage(val message: String):Effect
+        data class UnAvailableToastmessage(val message: String): Effect
     }
 }

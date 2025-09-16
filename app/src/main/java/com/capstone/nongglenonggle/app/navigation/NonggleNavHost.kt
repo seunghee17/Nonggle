@@ -3,6 +3,7 @@ package com.capstone.nongglenonggle.app.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.capstone.nongglenonggle.presentation.view.farmer.notice.nav_controller.FarmerNoticeGraph
 import com.capstone.nongglenonggle.presentation.view.login.nav_controller.LoginNavGraph
 import com.capstone.nongglenonggle.presentation.view.signup.nav_controller.SignupNavGraph
 import com.capstone.nongglenonggle.presentation.view.worker.resume.nav_controller.WorkerResumeGraph
@@ -30,5 +31,16 @@ fun ResumeNavHost() {
         startDestination = Screens.WorkerResumeWriting.route
     ) {
         WorkerResumeGraph(navHostController = navHostController)
+    }
+}
+
+@Composable
+fun NoticeNavHost() {
+    val navHostController = rememberNavController()
+    NavHost(
+        navController = navHostController,
+        startDestination = Screens.FarmerNoticeWriting.route
+    ) {
+        FarmerNoticeGraph(navHostController = navHostController)
     }
 }

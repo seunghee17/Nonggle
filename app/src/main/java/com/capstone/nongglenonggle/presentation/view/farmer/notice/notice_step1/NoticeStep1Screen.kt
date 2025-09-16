@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.farmer.notice.compose_integration.notice_step1
+package com.capstone.nongglenonggle.presentation.view.farmer.notice.notice_step1
 
 import android.content.Context
 import android.os.Bundle
@@ -10,7 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import androidx.viewpager2.widget.ViewPager2
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
@@ -180,6 +184,11 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
 }
 
 @Composable
-fun NoticeStep1Screen() {
-
+fun NoticeStep1Screen(
+    navController: NavHostController,
+    viewModel: NoticeStep1ViewModel
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val effectFlow = viewModel.effect
+    val context = LocalContext.current
 }

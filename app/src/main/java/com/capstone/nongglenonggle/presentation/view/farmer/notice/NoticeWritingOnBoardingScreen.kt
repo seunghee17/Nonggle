@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.farmer.notice.compose_integration
+package com.capstone.nongglenonggle.presentation.view.farmer.notice
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
