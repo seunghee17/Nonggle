@@ -7,9 +7,15 @@ import com.capstone.nongglenonggle.core.base.UiState
 class NoticeStep1Contract {
     data class State(
         val isLoading: Boolean = false,
+        val userName: String = "",
+        val userPhoneNumber: String = ""
     ): UiState
 
     sealed interface Event : UiEvent {
+        data class SetUserName(val name: String) : Event
+        object ClearUserName: Event
+        data class SetUserPhoneNumber(val phoneNumber: String): Event
+        object ClearUserPhoneNunber: Event
         object goToAddressSearchScreen: Event
     }
 
