@@ -15,7 +15,21 @@ class ResumeStep3ViewModel @Inject constructor() :
     override fun handleEvent(event: Step3Event) {
         super.handleEvent(event)
         when(event) {
-            else -> {}
+            is Step3Event.SetIntroduceDetail -> {
+                updateState(currentState.copy(introduceDetail = event.detail))
+            }
+            is Step3Event.ClearIntroduceDetail -> {
+                updateState(currentState.copy(introduceDetail = ""))
+            }
+            is Step3Event.SetPersonalityType -> {
+                updateState(currentState.copy(userPersonalityInput = event.type))
+            }
+            is Step3Event.ClearPersonalityType -> {
+                updateState(currentState.copy(userPersonalityInput = ""))
+            }
+            is Step3Event.SetAdditionalDetailComment -> {
+                updateState(currentState.copy(additionalComment = event.comment))
+            }
         }
     }
 }

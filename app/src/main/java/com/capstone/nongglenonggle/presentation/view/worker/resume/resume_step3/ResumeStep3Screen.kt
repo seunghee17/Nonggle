@@ -30,8 +30,8 @@ import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.Event as Event
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.Effect as Effect
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.Event as Step3Event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.Effect as Step3Effect
 
 @Composable
 fun ResumeStep3Screen(viewModel: ResumeStep3ViewModel) {
@@ -72,11 +72,13 @@ fun ResumeStep3Screen(viewModel: ResumeStep3ViewModel) {
                     .padding(bottom = 14.dp)
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .onFocusChanged { focusState -> isPersonalityFieldFocused = focusState.isFocused },
+                    .onFocusChanged { focusState ->
+                        isPersonalityFieldFocused = focusState.isFocused
+                    },
                 textFieldType = TextFieldType.Standard,
-                value = "",
+                value = uiState.introduceDetail,
                 onValueChange = {
-
+                    viewModel.setEvent(Step3Event.SetIntroduceDetail(detail = it))
                 },
                 textStyle = NonggleTheme.typography.b1_main,
                 textColor = Color.Black,
@@ -85,7 +87,7 @@ fun ResumeStep3Screen(viewModel: ResumeStep3ViewModel) {
                         NonggleIconButton(
                             ImageResourceId = R.drawable.xcircle,
                             onClick = {
-                                viewModel.setEvent(Event.ClearIntroduceDetail)
+                                viewModel.setEvent(Step3Event.ClearIntroduceDetail)
                             }
                         )
                     }
@@ -122,8 +124,8 @@ fun ResumeStep3Screen(viewModel: ResumeStep3ViewModel) {
             additionalInputTextField(
                 modifier = Modifier.padding(top = 12.dp),
                 context = context,
-                additionalValue = "",
-                onValueChange = {},
+                additionalValue = uiState.additionalComment,
+                onValueChange = { viewModel.setEvent(Step3Event.SetAdditionalDetailComment(comment = it)) },
             )
         }
     }
@@ -190,10 +192,6 @@ fun additionalInputTextField(
             onValueChange = onValueChange,
             textStyle = NonggleTheme.typography.b1_main,
             textColor = Color.Black,
-            trailingIcon = {
-
-            },
-
             placeholder = {
                 Text(
                     text = context.getString(R.string.하고싶은_말이나),
