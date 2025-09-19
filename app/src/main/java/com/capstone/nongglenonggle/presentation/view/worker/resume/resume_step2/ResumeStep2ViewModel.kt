@@ -2,6 +2,7 @@ package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2
 
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.Date
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Event as Step2Event
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Effect as Step2Effect
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.State as Step2State
@@ -36,6 +37,21 @@ class ResumeStep2ViewModel @Inject constructor() : BaseViewModel<Step2Event, Ste
             is Step2Event.SetCareerDetail -> {
                 updateState(currentState.copy(careerDetailContent = event.detail))
             }
+            is Step2Event.SetWorkHistoryRangeType -> {
+                updateState(currentState.copy(setStartRangeDate = event.isStart))
+            }
+            is Step2Event.SetWorkHistoryDate -> {
+                setWorkHistoryDate(event.historyDate)
+            }
         }
     }
+
+    private fun setWorkHistoryDate(date: Date) {
+        if(currentState.setStartRangeDate) {
+            updateState(currentState.copy(careerStartDate = date))
+        } else {
+            updateState(currentState.copy(careerEndDate = date))
+        }
+    }
+
 }

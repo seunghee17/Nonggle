@@ -67,19 +67,24 @@ fun ResumeCareerAddBottomSheet(
     val context = LocalContext.current
     val effectFlow = viewModel.effect
 
-    if(uiState.showDatePickerDialog) {
-//        datePickerDialog(
-//            context = context,
-//
-//        )
+    if (uiState.showDatePickerDialog) {
+        datePickerDialog(
+            context = context,
+            onConfirm = { pickedDate ->
+                viewModel.setEvent(Step2Event.SetWorkHistoryDate(historyDate = pickedDate))
+                viewModel.setEvent(event = Step2Event.ShowDatePickerDialog(false))
+            },
+            onDismissRequest = { viewModel.setEvent(Step2Event.ShowDatePickerDialog(false)) },
+        )
     }
 
     NonggleBottomSheet(
         onDismissRequest = onDismissRequest,
         header = {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
             ) {
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(
@@ -182,7 +187,7 @@ fun ResumeCareerAddBottomSheet(
                         )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
-                    if(uiState.isLongerThenMonth != null) {
+                    if (uiState.isLongerThenMonth != null) {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -193,29 +198,50 @@ fun ResumeCareerAddBottomSheet(
                                 modifier = Modifier
                                     .weight(0.5f)
                                     .wrapContentHeight(),
-                                onClick = {viewModel.setEvent(event = Step2Event.ShowDatePickerDialog(true))},
+                                onClick = {
+                                    viewModel.setEvent(
+                                        event = Step2Event.SetWorkHistoryRangeType(
+                                            isStart = true
+                                        )
+                                    )
+                                    viewModel.setEvent(event = Step2Event.ShowDatePickerDialog(true))
+                                },
                                 title = if (uiState.careerStartDate == null) context.getString(
-                                    R.string.근무시작일) else (uiState.showCareerStartDate ?: ""),
-                                titleColor = if(uiState.careerStartDate == null) NonggleTheme.colors.g3 else Color.Black,
+                                    R.string.근무시작일
+                                ) else (uiState.showCareerStartDate ?: ""),
+                                titleColor = if (uiState.careerStartDate == null) NonggleTheme.colors.g3 else Color.Black,
                             )
-                            if(uiState.isLongerThenMonth == true) {
+                            if (uiState.isLongerThenMonth == true) {
                                 selectCalendarBox(
                                     modifier = Modifier
                                         .weight(0.5f)
                                         .wrapContentHeight(),
-                                    onClick = {viewModel.setEvent(event = Step2Event.ShowDatePickerDialog(true))}, //FIXME: state 값 업데이트는 아직 안이뤄짐
+                                    onClick = {
+                                        viewModel.setEvent(
+                                            event = Step2Event.SetWorkHistoryRangeType(
+                                                isStart = false
+                                            )
+                                        )
+                                        viewModel.setEvent(
+                                            event = Step2Event.ShowDatePickerDialog(
+                                                true
+                                            )
+                                        )
+                                    },
                                     title = if (uiState.careerEndDate == null) context.getString(
-                                        R.string.근무시작일) else (uiState.showCareerEndDate ?: ""),
-                                    titleColor = if(uiState.careerEndDate == null) NonggleTheme.colors.g3 else Color.Black,
+                                        R.string.근무시작일
+                                    ) else (uiState.showCareerEndDate ?: ""),
+                                    titleColor = if (uiState.careerEndDate == null) NonggleTheme.colors.g3 else Color.Black,
                                 )
-                            } else if(uiState.isLongerThenMonth == false) {
+                            } else if (uiState.isLongerThenMonth == false) {
                                 selectDateBox(
                                     modifier = Modifier
                                         .weight(0.5f),
                                     onClick = {},
                                     title = if (uiState.careerPeriodDay == null) context.getString(
-                                        R.string.근무_일) else (uiState.showCareerEndDate ?: ""),
-                                    titleColor = if(uiState.careerPeriodDay == null) NonggleTheme.colors.g3 else Color.Black,
+                                        R.string.근무_일
+                                    ) else (uiState.showCareerEndDate ?: ""),
+                                    titleColor = if (uiState.careerPeriodDay == null) NonggleTheme.colors.g3 else Color.Black,
                                     stateHolder = rememberExposedMenuStateHolder()
                                 )
                             }
@@ -243,7 +269,10 @@ fun ResumeCareerAddBottomSheet(
                             viewModel.setEvent(event = Step2Event.SetCareerDetail(it))
                         },
                         placeholder = {
-                            Text(text = context.getString(R.string.업무내용을_상세히), style = NonggleTheme.typography.b1_main.copy(color = NonggleTheme.colors.g3))
+                            Text(
+                                text = context.getString(R.string.업무내용을_상세히),
+                                style = NonggleTheme.typography.b1_main.copy(color = NonggleTheme.colors.g3)
+                            )
                         },
                     )
                 }
@@ -301,7 +330,7 @@ fun periodOfWork(
 }
 
 @Composable
-fun selectCalendarBox (
+fun selectCalendarBox(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     title: String,
@@ -328,7 +357,7 @@ fun selectCalendarBox (
                 text = title,
                 style = NonggleTheme.typography.b4_btn,
                 textAlign = TextAlign.Start,
-                color =  titleColor
+                color = titleColor
             )
             Spacer(modifier = Modifier.weight(1f))
             Image(
@@ -340,7 +369,7 @@ fun selectCalendarBox (
 }
 
 @Composable
-fun selectDateBox (
+fun selectDateBox(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     title: String,
@@ -369,7 +398,7 @@ fun selectDateBox (
                 text = title,
                 style = NonggleTheme.typography.b4_btn,
                 textAlign = TextAlign.Start,
-                color =  titleColor
+                color = titleColor
             )
             Spacer(modifier = Modifier.weight(1f))
             Image(
@@ -379,7 +408,7 @@ fun selectDateBox (
         }
     }
     DropdownMenu(
-        modifier = Modifier.width(with(LocalDensity.current) {stateHolder.size.width.toDp()}),
+        modifier = Modifier.width(with(LocalDensity.current) { stateHolder.size.width.toDp() }),
         expanded = stateHolder.enabled,
         onDismissRequest = {
             stateHolder.onEabled(false)

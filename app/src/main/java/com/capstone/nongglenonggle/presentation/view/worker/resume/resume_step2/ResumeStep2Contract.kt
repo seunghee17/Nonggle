@@ -14,7 +14,7 @@ class ResumeStep2Contract {
 
         //bottomsheet의 상태관련 변수
         val showDatePickerDialog: Boolean = false,
-
+        val setStartRangeDate: Boolean = false,
         val careerTextFieldValue: String = "",
         val isLongerThenMonth: Boolean? = null,
         val careerStartDate: Date? = null,
@@ -34,6 +34,8 @@ class ResumeStep2Contract {
         data class ShowDatePickerDialog(val dialogState: Boolean): Event
         data class SetWorkPeriodRange(val isMonthOver: Boolean): Event
         data class SetCareerDetail(val detail: String): Event
+        data class SetWorkHistoryRangeType(val isStart: Boolean): Event
+        data class SetWorkHistoryDate(val historyDate: Date) : Event
     }
 
     sealed interface Effect : UiEffect {
