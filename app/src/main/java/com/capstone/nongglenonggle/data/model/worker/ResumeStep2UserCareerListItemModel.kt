@@ -1,6 +1,6 @@
 package com.capstone.nongglenonggle.data.model.worker
 
-import java.util.Date
+import java.time.Period
 import java.util.UUID
 
 //경력 추가 bottomsheet
@@ -9,7 +9,8 @@ import java.util.UUID
 data class ResumeStep2UserCareerListItem(
     val id: String = UUID.randomUUID().toString(), // 고유 ID
     val careerTitle: String = "",
-    val careerPeriod: String = "",
+    val careerPeriodText: String = "",
     val careerPeriodDetail: String = "",
-    val careerContent: String = ""
+    val careerContent: String = "",
+    val careerPeriod: Period? = null
 )

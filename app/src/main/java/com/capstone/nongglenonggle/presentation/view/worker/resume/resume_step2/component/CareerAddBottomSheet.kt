@@ -1,6 +1,7 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.component
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -18,20 +19,21 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -51,6 +53,7 @@ import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
 import com.capstone.nongglenonggle.presentation.view.worker.resume.parent_component.ExposedDropMenuStateHolder
 import com.capstone.nongglenonggle.presentation.view.worker.resume.parent_component.rememberExposedMenuStateHolder
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Effect
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2ViewModel
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Event as Step2Event
 
@@ -64,14 +67,40 @@ fun ResumeCareerAddBottomSheet(
     onDismissRequest: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val context = LocalContext.current
     val effectFlow = viewModel.effect
+    val stateHolder = rememberExposedMenuStateHolder()
 
-    if(uiState.showDatePickerDialog) {
-//        datePickerDialog(
-//            context = context,
-//
-//        )
+    LaunchedEffect(true) {
+        effectFlow.collect { effect ->
+            when (effect) {
+                is Effect.ShowErrorToast -> {
+                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+                }
+                else -> {}
+            }
+        }
+    }
+
+
+    if(uiState.showCalendarDialogStart) {
+        datePickerDialog(
+            context = context,
+            onConfirm = { pickDate ->
+                viewModel.setEvent(Step2Event.SetWorkStartDate(date = pickDate))
+                viewModel.setEvent(Step2Event.ShowStartDatePickerDialog(showDialog = false))
+            },
+            onDismissRequest = {viewModel.setEvent(Step2Event.ShowStartDatePickerDialog(showDialog = false))}
+        )
+    }
+    if(uiState.showCalendarDialogEnd) {
+        datePickerDialog(
+            context = context,
+            onConfirm = { pickDate ->
+                viewModel.setEvent(Step2Event.SetWorkEndDate(date = pickDate))
+                viewModel.setEvent(Step2Event.ShowEndDatePickerDialog(showDialog = false))
+            },
+            onDismissRequest = {viewModel.setEvent(Step2Event.ShowEndDatePickerDialog(showDialog = false))}
+        )
     }
 
     NonggleBottomSheet(
@@ -193,9 +222,8 @@ fun ResumeCareerAddBottomSheet(
                                 modifier = Modifier
                                     .weight(0.5f)
                                     .wrapContentHeight(),
-                                onClick = {viewModel.setEvent(event = Step2Event.ShowDatePickerDialog(true))},
-                                title = if (uiState.careerStartDate == null) context.getString(
-                                    R.string.근무시작일) else (uiState.showCareerStartDate ?: ""),
+                                onClick = {viewModel.setEvent(event = Step2Event.ShowStartDatePickerDialog(true))},
+                                title = uiState.showCareerStartDate,
                                 titleColor = if(uiState.careerStartDate == null) NonggleTheme.colors.g3 else Color.Black,
                             )
                             if(uiState.isLongerThenMonth == true) {
@@ -203,20 +231,23 @@ fun ResumeCareerAddBottomSheet(
                                     modifier = Modifier
                                         .weight(0.5f)
                                         .wrapContentHeight(),
-                                    onClick = {viewModel.setEvent(event = Step2Event.ShowDatePickerDialog(true))}, //FIXME: state 값 업데이트는 아직 안이뤄짐
-                                    title = if (uiState.careerEndDate == null) context.getString(
-                                        R.string.근무시작일) else (uiState.showCareerEndDate ?: ""),
+                                    onClick = {viewModel.setEvent(event = Step2Event.ShowEndDatePickerDialog(true))},
+                                    title = uiState.showCareerEndDate,
                                     titleColor = if(uiState.careerEndDate == null) NonggleTheme.colors.g3 else Color.Black,
                                 )
                             } else if(uiState.isLongerThenMonth == false) {
                                 selectDateBox(
                                     modifier = Modifier
                                         .weight(0.5f),
-                                    onClick = {},
-                                    title = if (uiState.careerPeriodDay == null) context.getString(
-                                        R.string.근무_일) else (uiState.showCareerEndDate ?: ""),
-                                    titleColor = if(uiState.careerPeriodDay == null) NonggleTheme.colors.g3 else Color.Black,
-                                    stateHolder = rememberExposedMenuStateHolder()
+                                    onClick = {
+                                        stateHolder.onEabled(true)
+                                    },
+                                    title = uiState.careerPeriodDay,
+                                    titleColor = if(uiState.careerPeriodDay == "근무 일 수 선택") NonggleTheme.colors.g3 else Color.Black,
+                                    stateHolder = stateHolder,
+                                    storeValue = {
+                                        viewModel.setEvent(event = Step2Event.SetWorkPeriodDate(date = stateHolder.value))
+                                    }
                                 )
                             }
                         }
@@ -255,7 +286,11 @@ fun ResumeCareerAddBottomSheet(
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp),
                 enabled = true,
-                onClick = {}, //FIXME: 경력 추가 하는 기능 구현하기
+                onClick = {
+                    viewModel.setEvent(Step2Event.AddCareerItem)
+                    viewModel.setEvent(Step2Event.SetClearState)
+                    viewModel.setEvent(Step2Event.ShowCareerBottomSheet(false))
+                },
                 titleText = context.getString(R.string.추가하기),
                 titleTextStyle = NonggleTheme.typography.t3
             )
@@ -339,60 +374,71 @@ fun selectCalendarBox (
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun selectDateBox (
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
+    storeValue: () -> Unit,
     title: String,
     titleColor: Color,
     stateHolder: ExposedDropMenuStateHolder
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .border(
-                BorderStroke(1.dp, NonggleTheme.colors.g_line),
-                shape = RoundedCornerShape(4.dp)
-            )
-            .noRippleClickable {
-                onClick()
-            }
-            .onGloballyPositioned { stateHolder.onSize(it.size.toSize()) },
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp, horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = title,
-                style = NonggleTheme.typography.b4_btn,
-                textAlign = TextAlign.Start,
-                color =  titleColor
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Image(
-                painter = painterResource(id = R.drawable.date),
-                contentDescription = null,
-            )
-        }
-    }
-    DropdownMenu(
-        modifier = Modifier.width(with(LocalDensity.current) {stateHolder.size.width.toDp()}),
+    ExposedDropdownMenuBox(
         expanded = stateHolder.enabled,
-        onDismissRequest = {
-            stateHolder.onEabled(false)
-        }
+        onExpandedChange = {stateHolder.onEabled(!stateHolder.enabled)},
+        modifier = modifier
     ) {
-        stateHolder.items.forEachIndexed { index, s ->
-            DropdownMenuItem(
-                text = { Text(text = s) },
-                onClick = {
-                    stateHolder.onSelectedIndex(index)
-                    stateHolder.onEabled(false)
+        Box(
+            modifier = modifier
+                .menuAnchor(MenuAnchorType.PrimaryNotEditable, stateHolder.enabled)
+                .fillMaxWidth()
+                .border(
+                    BorderStroke(1.dp, NonggleTheme.colors.g_line),
+                    shape = RoundedCornerShape(4.dp)
+                )
+                .noRippleClickable {
+                    onClick()
                 }
-            )
+                .onGloballyPositioned { stateHolder.onSize(it.size.toSize()) },
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp, horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = title,
+                    style = NonggleTheme.typography.b4_btn,
+                    textAlign = TextAlign.Start,
+                    color = titleColor
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Image(
+                    painter = painterResource(id = R.drawable.date),
+                    contentDescription = null,
+                )
+            }
+        }
+        ExposedDropdownMenu (
+            modifier = Modifier.width(with(LocalDensity.current) {stateHolder.size.width.toDp()}),
+            expanded = stateHolder.enabled,
+            onDismissRequest = {
+                stateHolder.onEabled(false)
+            },
+            containerColor = Color.White
+        ) {
+            stateHolder.items.forEachIndexed { index, s ->
+                DropdownMenuItem(
+                    text = { Text(text = s) },
+                    onClick = {
+                        stateHolder.onSelectedIndex(index)
+                        storeValue()
+                        stateHolder.onEabled(false)
+                    }
+                )
+            }
         }
     }
 }

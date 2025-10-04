@@ -1,7 +1,6 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1
 
 import android.net.Uri
-import android.util.Log
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.LinkedHashMap
@@ -105,4 +104,6 @@ class ResumeStep1ViewModel @Inject constructor() :
     private fun openGallery() {
         postEffect(effect = Step1Effect.OpenGallery)
     }
+
+    
 }

@@ -49,7 +49,6 @@ import java.util.Locale
 @AndroidEntryPoint
 class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.layout.activity_resume_complete) {
     private val viewModel : ResumeCompleteViewModel by viewModels()
-    //private lateinit var  adapter: ResumeCareerAdapter
     private val firebaseAuth:FirebaseAuth = FirebaseAuth.getInstance()
     private val firestore = FirebaseFirestore.getInstance()
     private lateinit var name:String
@@ -171,77 +170,77 @@ class ResumeCompleteActivity : BaseActivity<ActivityResumeCompleteBinding>(R.lay
 
 }
 
-@Composable
-fun careerItem(
-    resumeUserCareerListItem: ResumeStep2UserCareerListItem,
-) {
-    Box(
-        modifier = Modifier
-            .padding(horizontal = 20.dp, vertical = 16.dp)
-            .fillMaxWidth()
-            .border(
-                BorderStroke(1.dp, NonggleTheme.colors.g_line_light),
-                shape = RoundedCornerShape(4.dp)
-            )
-    ) {
-        Column {
-            Row {
-                bulletComponent()
-                Text(
-                    modifier = Modifier.padding(start = 8.dp),
-                    text = resumeUserCareerListItem.careerTitle,
-                    style = TextStyle(
-                        fontFamily = spoqahanSansneo,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Color.Black
-                    )
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    modifier = Modifier
-                        .drawBehind {
-                            drawRoundRect(
-                                color = Color(0xFFE5EBDD),
-                                size = this.size,
-                                cornerRadius = CornerRadius(4)
-                            )
-                        }
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
-                    text = resumeUserCareerListItem.careerPeriod,
-                    style = TextStyle(
-                        fontFamily = spoqahanSansneo,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Color.Black
-                    )
-                )
-            }
-            Text(
-                modifier = Modifier
-                    .padding(top = 10.dp),
-                text = resumeUserCareerListItem.careerPeriodDetail,
-                style = TextStyle(
-                    fontFamily = spoqahanSansneo,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = NonggleTheme.colors.g2
-                )
-            )
-            Text(
-                modifier = Modifier
-                    .padding(top = 8.dp),
-                text = resumeUserCareerListItem.careerContent,
-                style = TextStyle(
-                    fontFamily = spoqahanSansneo,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = NonggleTheme.colors.g2
-                )
-            )
-        }
-    }
-}
+//@Composable
+//fun careerItem(
+//    resumeUserCareerListItem: ResumeStep2UserCareerListItem,
+//) {
+//    Box(
+//        modifier = Modifier
+//            .padding(horizontal = 20.dp, vertical = 16.dp)
+//            .fillMaxWidth()
+//            .border(
+//                BorderStroke(1.dp, NonggleTheme.colors.g_line_light),
+//                shape = RoundedCornerShape(4.dp)
+//            )
+//    ) {
+//        Column {
+//            Row {
+//                bulletComponent()
+//                Text(
+//                    modifier = Modifier.padding(start = 8.dp),
+//                    text = resumeUserCareerListItem.careerTitle,
+//                    style = TextStyle(
+//                        fontFamily = spoqahanSansneo,
+//                        fontSize = 16.sp,
+//                        fontWeight = FontWeight.Medium,
+//                        color = Color.Black
+//                    )
+//                )
+//                Spacer(modifier = Modifier.weight(1f))
+//                Text(
+//                    modifier = Modifier
+//                        .drawBehind {
+//                            drawRoundRect(
+//                                color = Color(0xFFE5EBDD),
+//                                size = this.size,
+//                                cornerRadius = CornerRadius(4)
+//                            )
+//                        }
+//                        .padding(horizontal = 8.dp, vertical = 4.dp),
+//                    text = resumeUserCareerListItem.careerPeriod,
+//                    style = TextStyle(
+//                        fontFamily = spoqahanSansneo,
+//                        fontSize = 12.sp,
+//                        fontWeight = FontWeight.Medium,
+//                        color = Color.Black
+//                    )
+//                )
+//            }
+//            Text(
+//                modifier = Modifier
+//                    .padding(top = 10.dp),
+//                text = resumeUserCareerListItem.careerPeriodDetail,
+//                style = TextStyle(
+//                    fontFamily = spoqahanSansneo,
+//                    fontSize = 14.sp,
+//                    fontWeight = FontWeight.Normal,
+//                    color = NonggleTheme.colors.g2
+//                )
+//            )
+//            Text(
+//                modifier = Modifier
+//                    .padding(top = 8.dp),
+//                text = resumeUserCareerListItem.careerContent,
+//                style = TextStyle(
+//                    fontFamily = spoqahanSansneo,
+//                    fontSize = 12.sp,
+//                    fontWeight = FontWeight.Normal,
+//                    color = NonggleTheme.colors.g2
+//                )
+//            )
+//        }
+//    }
+//}
 
 @Composable
 fun bulletComponent(color: Color = NonggleTheme.colors.m1) {

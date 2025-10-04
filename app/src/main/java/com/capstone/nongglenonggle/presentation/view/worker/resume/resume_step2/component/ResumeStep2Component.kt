@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
@@ -32,19 +33,23 @@ import com.capstone.nongglenonggle.data.model.worker.ResumeStep2UserCareerListIt
 fun careerItem(
     resumeUserCareerListItem: ResumeStep2UserCareerListItem,
     deleteAction: () -> Unit,
-    modifyAction: () -> Unit,
 ) {
     Box(
         modifier = Modifier
-            .padding(horizontal = 20.dp, vertical = 16.dp)
+            .padding( vertical = 16.dp)
             .fillMaxWidth()
             .border(
                 BorderStroke(1.dp, NonggleTheme.colors.g_line_light),
                 shape = RoundedCornerShape(4.dp)
             )
     ) {
-        Column {
-            Row {
+        Column(
+            modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 bulletComponent()
                 Text(
                     modifier = Modifier.padding(start = 8.dp),
@@ -67,23 +72,13 @@ fun careerItem(
                             )
                         }
                         .padding(horizontal = 8.dp, vertical = 4.dp),
-                    text = resumeUserCareerListItem.careerPeriod,
+                    text = resumeUserCareerListItem.careerPeriodText,
                     style = TextStyle(
                         fontFamily = spoqahanSansneo,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.Black
                     )
-                )
-                Image(
-                    modifier = Modifier
-                        .padding(start = 16.dp)
-                        .size(24.dp)
-                        .noRippleClickable {
-                            modifyAction()
-                        },
-                    painter = painterResource(id = R.drawable.ppencil),
-                    contentDescription = null
                 )
                 Image(
                     modifier = Modifier

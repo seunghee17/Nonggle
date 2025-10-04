@@ -1,5 +1,6 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -17,6 +18,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +38,7 @@ import com.capstone.nongglenonggle.core.noRippleClickable
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.component.ResumeCareerAddBottomSheet
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.component.careerItem
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Event as Step2Event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Effect as Step2Effect
 
 
 @Composable
@@ -44,7 +47,19 @@ fun ResumeStep2Screen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val effectFlow = viewModel.effect
     val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(true) {
+        effectFlow.collect { effect ->
+            when (effect) {
+                is Step2Effect.ShowErrorToast -> {
+                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+                }
+                else -> {}
+            }
+        }
+    }
 
     if (uiState.showCareerAddBottomSheet) {
         ResumeCareerAddBottomSheet(
@@ -99,7 +114,7 @@ fun ResumeStep2Screen(
                     Text(
                         modifier = Modifier.padding(vertical = 16.dp),
                         textAlign = TextAlign.Center,
-                        text = context.getString(R.string.경력_총),
+                        text = uiState.totalPeriodParsing,
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontFamily = spoqahanSansneo,
@@ -113,9 +128,11 @@ fun ResumeStep2Screen(
         }
         this.items(
             items = uiState.careerList,
-            key = { it.id } // 또는 id 필드
+            key = { it.id }
         ) { item ->
-            careerItem(item, {}, {}) /// FIXME: 실제 동작 넣어 수정하기
+            careerItem(item, {
+                viewModel.setEvent(Step2Event.RemoveCareerItem(item = item))
+            })
         }
         item {
             Box(

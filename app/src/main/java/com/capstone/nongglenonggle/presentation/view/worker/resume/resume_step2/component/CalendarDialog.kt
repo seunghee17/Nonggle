@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,25 +19,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.button.FullButton
-import com.capstone.nongglenonggle.core.common.date_spinner.DateSpinner
+import com.capstone.nongglenonggle.core.common.date_spinner.DateSpinnerWithOutDay
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import java.time.LocalDate
-import java.util.Date
 
 @Composable
 fun datePickerDialog(
-    context: Context,
-    onConfirm: (Date) -> Unit,
+    context: Context = LocalContext.current,
+    onConfirm: (LocalDate) -> Unit,
     onDismissRequest: () -> Unit,
     initialDate: LocalDate = LocalDate.now(),
     minDate: LocalDate = LocalDate.of(1900, 1, 1),
@@ -56,12 +57,15 @@ fun datePickerDialog(
     Dialog(
         onDismissRequest = { onDismissRequest() },
         properties = DialogProperties(
-            dismissOnBackPress = true,
-            dismissOnClickOutside = true,
+            dismissOnBackPress = false,
+            dismissOnClickOutside = false,
         )
     ) {
         Card(
             shape = RoundedCornerShape(8.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White,
+            ),
         )
         {
             Column(
@@ -70,7 +74,7 @@ fun datePickerDialog(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    modifier = Modifier.padding(start = 20.dp, bottom = 32.dp),
+                    modifier = Modifier.padding(start = 20.dp, bottom = 32.dp, top = 20.dp),
                     text = context.getString(R.string.년_월_선택),
                     style = TextStyle(
                         fontFamily = spoqahanSansneo,
@@ -79,19 +83,15 @@ fun datePickerDialog(
                         fontSize = 18.sp
                     )
                 )
-                DateSpinner(
+                DateSpinnerWithOutDay(
                     year = year,
                     month = month,
                     onYearChange = { year = it },
                     onMonthChange = { month = it },
-                    onDayChange = {},
-                    day = 0,
                 )
                 Spacer(Modifier.height(16.dp))
                 Row(
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp)
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     FullButton(
                         modifier = Modifier.weight(weight = 0.5f),
@@ -111,7 +111,7 @@ fun datePickerDialog(
                     FullButton(
                         modifier = Modifier.weight(weight = 0.5f),
                         onClick = {
-                            onConfirm(Date(year, month, 0))
+                            onConfirm(LocalDate.of(year, month, 1))
                             onDismissRequest()
                         },
                         titleText = context.getString(R.string.확인),
@@ -127,4 +127,13 @@ fun datePickerDialog(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun datePickerDialogPreview() {
+    datePickerDialog(
+        onConfirm = {},
+        onDismissRequest = {}
+    )
 }
