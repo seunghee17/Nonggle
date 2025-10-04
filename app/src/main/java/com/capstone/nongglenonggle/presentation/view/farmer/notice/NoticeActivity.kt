@@ -3,7 +3,8 @@ package com.capstone.nongglenonggle.presentation.view.farmer.notice
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.capstone.nongglenonggle.presentation.view.farmer.notice.compose_integration.NoticeScreen
+import com.capstone.nongglenonggle.app.navigation.NoticeNavHost
+import com.capstone.nongglenonggle.presentation.view.farmer.notice.notice_main.NoticeMainScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -13,7 +14,7 @@ class NoticeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            NoticeScreen()
+            NoticeNavHost()
         }
     }
 }

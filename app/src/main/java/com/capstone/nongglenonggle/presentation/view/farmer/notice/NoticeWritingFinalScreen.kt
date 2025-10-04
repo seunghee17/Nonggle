@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.presentation.view.farmer.notice.compose_integration
+package com.capstone.nongglenonggle.presentation.view.farmer.notice
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -18,53 +18,36 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.capstone.nongglenonggle.R
-import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 
 @Composable
-fun NoticeWritingOnBoardingScreen() {
+fun NoticeWritingFinalScreen() {
     val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        NonggleAppBar(
-            onBackPressed = {  },
-            closeAction = true,
-            title = {
-                Text(
-                    text = context.getString(R.string.공고쓰기),
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight.Normal,
-                        fontFamily = spoqahanSansneo
-                    )
-                )
-            },
-        )
-        Spacer(modifier = Modifier.weight(1f))
         Image(
-            modifier = Modifier.fillMaxWidth(),
-            painter = painterResource(R.drawable.notice_guide),
+            modifier = Modifier.padding(),
+            painter = painterResource(R.drawable.notice_complete_final),
             contentDescription = null
         )
         Text(
             modifier = Modifier.padding(top = 30.dp),
-            text = context.getString(R.string.공고글_작성은),
+            text = context.getString(R.string.공고쓰기가_완료),
             style = TextStyle(
                 fontFamily = spoqahanSansneo,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Normal,
-                color = NonggleTheme.colors.g2
+                color = NonggleTheme.colors.g1
             )
         )
         Text(
             modifier = Modifier.padding(top = 16.dp),
-            text = context.getString(R.string.모든_항목을),
+            text = context.getString(R.string.이제_해당_공고글과),
             style = TextStyle(
                 fontFamily = spoqahanSansneo,
                 fontSize = 16.sp,
@@ -79,7 +62,7 @@ fun NoticeWritingOnBoardingScreen() {
                 .fillMaxWidth(),
             enabled = true,
             onClick = {},
-            titleText = context.getString(R.string.공고글_작성하러_가기),
+            titleText = context.getString(R.string.공고글_확인하러),
             titleTextStyle = NonggleTheme.typography.t3.copy(color = Color.White),
         )
     }

@@ -1,17 +1,20 @@
-package com.capstone.nongglenonggle.presentation.view.farmer.notice
+package com.capstone.nongglenonggle.presentation.view.farmer.notice.notice_step1
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import androidx.viewpager2.widget.ViewPager2
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
@@ -172,10 +175,20 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
     }
 
     fun moveToWeb(){
-        val intent = Intent(context,AddressSearchWebActivity::class.java)
-        startActivity(intent)
+//        val intent = Intent(context,AddressSearchWebActivity::class.java)
+//        startActivity(intent)
     }
 
 
 
+}
+
+@Composable
+fun NoticeStep1Screen(
+    navController: NavHostController,
+    viewModel: NoticeStep1ViewModel
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val effectFlow = viewModel.effect
+    val context = LocalContext.current
 }
