@@ -8,10 +8,13 @@ import androidx.room.Query
  */
 @Dao
 interface RegionDao {
+    @Query("SELECT * FROM region")
+    fun getAllRegion(): List<RegionEntity>
+
     @Query("""
         SELECT * FROM district
         WHERE regionOwnerId = :regionId
         ORDER BY name
     """)
-    suspend fun getDistrictsByRegionId(regionId: Long): List<DistrictEntity>
+    fun getDistrictsByRegionId(regionId: Long): List<DistrictEntity>
 }

@@ -5,8 +5,6 @@ import androidx.room.PrimaryKey
 
 import androidx.room.*
 
-import androidx.room.*
-
 /**
  * 상위 지역 엔티티 (예: 서울, 강원, 경기 등)
  */
@@ -32,22 +30,10 @@ data class RegionEntity(
     ],
     indices = [Index("regionOwnerId")]
 )
-
 data class DistrictEntity(
     @PrimaryKey(autoGenerate = true) val districtId: Long = 0,
     val name: String,
     val regionOwnerId: Long
 )
 
-/**
- * Region + District를 한 번에 조회하기 위한 JOIN DTO
- */
-data class RegionWithDistricts(
-    @Embedded val region: RegionEntity,
-    @Relation(
-        parentColumn = "regionId",
-        entityColumn = "regionOwnerId"
-    )
-    val districts: List<DistrictEntity>
-)
 
