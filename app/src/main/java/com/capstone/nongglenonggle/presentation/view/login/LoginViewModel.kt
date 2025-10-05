@@ -14,20 +14,23 @@ import com.capstone.nongglenonggle.presentation.view.signup.UserType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.capstone.nongglenonggle.presentation.view.login.LoginContract.Effect as LoginEffect
+import com.capstone.nongglenonggle.presentation.view.login.LoginContract.State as LoginState
+import com.capstone.nongglenonggle.presentation.view.login.LoginContract.Event as LoginEvent
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val getUserAuthDataRepositoryUseCase: GetUserAuthDataRepositoryUseCase,
     private val getRegionUseCase: GetRegionUseCase,
     private val googleAuthClient: GoogleAuthClient,
-) : BaseViewModel<LoginContract.Event, LoginContract.State, LoginContract.Effect>(initialState = LoginContract.State()) {
+) : BaseViewModel<LoginEvent, LoginState, LoginEffect>(initialState = LoginContract.State()) {
 
-    override fun handleEvent(event: LoginContract.Event) {
+    override fun handleEvent(event: LoginEvent) {
         when(event) {
-            is LoginContract.Event.KakaoLoginButtonClick -> {
+            is LoginEvent.KakaoLoginButtonClick -> {
                 handleKakaoLogin()
             }
-            is LoginContract.Event.GoogleLoginButtonClick -> {
+            is LoginEvent.GoogleLoginButtonClick -> {
                 viewModelScope.launch {
                     val intentSender = googleAuthClient.signIn()
                     intentSender?.let {
@@ -35,7 +38,7 @@ class LoginViewModel @Inject constructor(
                     }
                 }
             }
-            is LoginContract.Event.OnGoogleSignInResult -> {
+            is LoginEvent.OnGoogleSignInResult -> {
                 viewModelScope.launch {
                     val signInResult = googleAuthClient.signInWithIntent(event.intent)
                     handleSignInResult(signInResult)
@@ -45,7 +48,7 @@ class LoginViewModel @Inject constructor(
 
                         }
                         .onFailure {
-                            postEffect(LoginContract.Effect.UnAvailableToastmessage("데이터 로드에 실패했습니다."))
+                            postEffect(LoginEffect.UnAvailableToastmessage("데이터 로드에 실패했습니다."))
                         }
                 }
             }
@@ -53,7 +56,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun handleKakaoLogin() {
-        postEffect(LoginContract.Effect.UnAvailableToastmessage("점검 중입니다. 다른 로그인 수단을 이용해주세요."))
+        postEffect(LoginEffect.UnAvailableToastmessage("점검 중입니다. 다른 로그인 수단을 이용해주세요."))
     }
 
     fun handleSignInResult(result: SignInResult) {
@@ -65,7 +68,7 @@ class LoginViewModel @Inject constructor(
         )))
         if(result.data != null) {
             if(result.isNewUser == true) {
-                postEffect(LoginContract.Effect.NavigateToEnrollUser)
+                postEffect(LoginEffect.NavigateToEnrollUser)
             } else if(result.isNewUser == false) {
                 getUserLoginType()
             }
@@ -78,16 +81,16 @@ class LoginViewModel @Inject constructor(
             when(result) {
                 is AppResult.Success -> {
                     if (UserType.valueOf(result.data.signUpType) == UserType.WORKER) {
-                        postEffect(LoginContract.Effect.NavigateToWorkerHome)
+                        postEffect(LoginEffect.NavigateToWorkerHome)
                     } else if (UserType.valueOf(result.data.signUpType) == UserType.MANAGER) {
-                        postEffect(LoginContract.Effect.NavigateToFarmerHome)
+                        postEffect(LoginEffect.NavigateToFarmerHome)
                     } else {
-                        postEffect(LoginContract.Effect.NavigateToEnrollUser)
+                        postEffect(LoginEffect.NavigateToEnrollUser)
                     }
                 }
                 is AppResult.Failure -> {
                     val errorMsg = AppResultMessageProvider.message(result)
-                    postEffect(LoginContract.Effect.UnAvailableToastmessage(errorMsg))
+                    postEffect(LoginEffect.UnAvailableToastmessage(errorMsg))
                 }
             }
         }
