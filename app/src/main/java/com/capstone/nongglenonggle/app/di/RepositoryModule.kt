@@ -1,10 +1,12 @@
 package com.capstone.nongglenonggle.app.di
 
-import com.capstone.nongglenonggle.data.remote_datasource.ApiService
+import com.capstone.nongglenonggle.data.local_datasource.RegionDao
+import com.capstone.nongglenonggle.data.network.ApiService
 import com.capstone.nongglenonggle.data.repositoryimpl.ApplyRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.AuthenticationRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.FirestoreGetRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.FirestoreSetRepositoryImpl
+import com.capstone.nongglenonggle.data.repositoryimpl.LocalDataRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.RemoteDataRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.WorkerResumeRepositoryImpl
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
@@ -12,6 +14,7 @@ import com.capstone.nongglenonggle.domain.repository.ApplyRepository
 import com.capstone.nongglenonggle.domain.repository.AuthenticationRepository
 import com.capstone.nongglenonggle.domain.repository.FirestoreGetRepository
 import com.capstone.nongglenonggle.domain.repository.FirestoreSetRepository
+import com.capstone.nongglenonggle.domain.repository.LocalDataRepository
 import com.capstone.nongglenonggle.domain.repository.RemoteDataRepository
 import com.capstone.nongglenonggle.domain.repository.WorkerResumeRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -55,6 +58,15 @@ object RepositoryModule {
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) : RemoteDataRepository {
         return RemoteDataRepositoryImpl(service, ioDispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocalDataRepository(
+        regionDao: RegionDao,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ): LocalDataRepository {
+        return LocalDataRepositoryImpl(regionDao = regionDao, ioDispatcher)
     }
 
     @Provides

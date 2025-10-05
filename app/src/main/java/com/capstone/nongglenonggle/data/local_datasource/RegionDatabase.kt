@@ -13,22 +13,10 @@ abstract class RegionDatabase: RoomDatabase() {
 
     companion object {
         private var INSTANCE: RegionDatabase? = null
-        private val MIGRATION_1_2 = object: Migration(1,2) {
+        val MIGRATION_1_2 = object: Migration(1,2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE region ADD COLUMN description TEXT")
             }
-        }
-
-        @Synchronized
-        fun getDatabase(context: Context) : RegionDatabase {
-            if(INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(
-                    context.applicationContext,
-                    RegionDatabase::class.java,
-                    "region_database"
-                ).addMigrations(MIGRATION_1_2).build()
-            }
-            return INSTANCE as RegionDatabase
         }
     }
 }
