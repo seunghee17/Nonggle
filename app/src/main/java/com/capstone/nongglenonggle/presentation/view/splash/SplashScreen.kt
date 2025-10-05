@@ -25,31 +25,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.soYo
-import com.capstone.nongglenonggle.presentation.view.farmer.home.MainActivity
 import com.capstone.nongglenonggle.presentation.view.login.LoginActivity
 import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
-
-@AndroidEntryPoint
-class SplashActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
-        setContent {
-            val viewModel = hiltViewModel<SplashViewModel>()
-            SpalashScreen(viewModel = viewModel)
-        }
-
-    }
-
-}
 
 @Composable
 fun SpalashScreen(

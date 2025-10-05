@@ -6,6 +6,7 @@ import androidx.navigation.compose.rememberNavController
 import com.capstone.nongglenonggle.presentation.view.farmer.notice.nav_controller.FarmerNoticeGraph
 import com.capstone.nongglenonggle.presentation.view.login.nav_controller.LoginNavGraph
 import com.capstone.nongglenonggle.presentation.view.signup.nav_controller.SignupNavGraph
+import com.capstone.nongglenonggle.presentation.view.splash.SplashNavGraph
 import com.capstone.nongglenonggle.presentation.view.worker.resume.nav_controller.WorkerResumeGraph
 
 @Composable
@@ -17,6 +18,7 @@ fun NonggleNavHost() {
         //startDestination은 navhost에 직접적 자식의 screen을 지정해주어야함 object안에 내부 object이면 안됨
         startDestination = Screens.Signup.route
     ) {
+        SplashNavGraph()
         LoginNavGraph(navHostController = navHostController)
         SignupNavGraph(navHostController = navHostController)
         WorkerResumeGraph(navHostController = navHostController)
