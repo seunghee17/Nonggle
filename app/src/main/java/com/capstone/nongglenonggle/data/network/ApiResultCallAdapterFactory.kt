@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.data.remote_datasource
+package com.capstone.nongglenonggle.data.network
 
 import retrofit2.Call
 import retrofit2.CallAdapter

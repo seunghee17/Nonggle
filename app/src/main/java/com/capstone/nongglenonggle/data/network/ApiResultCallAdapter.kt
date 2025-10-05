@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.data.remote_datasource
+package com.capstone.nongglenonggle.data.network
 
 import okhttp3.Request
 import okio.Timeout

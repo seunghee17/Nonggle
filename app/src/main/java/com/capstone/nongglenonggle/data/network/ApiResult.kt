@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.data.remote_datasource
+package com.capstone.nongglenonggle.data.network
 
 
 sealed interface ApiResult<out T> {
