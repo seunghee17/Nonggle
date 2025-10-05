@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.data.network
+package com.capstone.nongglenonggle.data
 
 //- local, remote 데이터 소스 호출결과를 일관성 있게 표현하기 위한 wrapper class 입니다
 //- 성공시 AppResult.Success(data) 형태로 viewmodel에서 ui로 전달됩니다

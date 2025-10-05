@@ -5,7 +5,10 @@ import com.capstone.nongglenonggle.core.base.BaseViewModel
 import com.capstone.nongglenonggle.core.common.logger.AppResultMessageProvider
 import com.capstone.nongglenonggle.data.model.login.SignInResult
 import com.capstone.nongglenonggle.data.model.login.SignInState
-import com.capstone.nongglenonggle.data.network.AppResult
+import com.capstone.nongglenonggle.data.AppResult
+import com.capstone.nongglenonggle.data.remote_datasource.onFailure
+import com.capstone.nongglenonggle.data.remote_datasource.onSuccess
+import com.capstone.nongglenonggle.domain.usecase.GetRegionUseCase
 import com.capstone.nongglenonggle.domain.usecase.GetUserAuthDataRepositoryUseCase
 import com.capstone.nongglenonggle.presentation.view.signup.UserType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val getUserAuthDataRepositoryUseCase: GetUserAuthDataRepositoryUseCase,
+    private val getRegionUseCase: GetRegionUseCase,
     private val googleAuthClient: GoogleAuthClient,
 ) : BaseViewModel<LoginContract.Event, LoginContract.State, LoginContract.Effect>(initialState = LoginContract.State()) {
 
@@ -35,6 +39,14 @@ class LoginViewModel @Inject constructor(
                 viewModelScope.launch {
                     val signInResult = googleAuthClient.signInWithIntent(event.intent)
                     handleSignInResult(signInResult)
+                    /// FIXME: 위치 데이터 로컬 저장
+                    getRegionUseCase.invoke()
+                        .onSuccess {
+
+                        }
+                        .onFailure {
+                            postEffect(LoginContract.Effect.UnAvailableToastmessage("데이터 로드에 실패했습니다."))
+                        }
                 }
             }
         }

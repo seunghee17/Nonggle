@@ -1,7 +1,7 @@
 package com.capstone.nongglenonggle.domain.usecase
 
 import android.net.Uri
-import com.capstone.nongglenonggle.data.network.AppResult
+import com.capstone.nongglenonggle.data.AppResult
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
 import com.capstone.nongglenonggle.domain.repository.WorkerResumeRepository
 import kotlinx.coroutines.CoroutineDispatcher

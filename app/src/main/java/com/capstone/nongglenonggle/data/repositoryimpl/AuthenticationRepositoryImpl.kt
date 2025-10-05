@@ -2,12 +2,10 @@ package com.capstone.nongglenonggle.data.repositoryimpl
 
 
 import com.capstone.nongglenonggle.core.common.logger.AppResultLogger
-import com.capstone.nongglenonggle.core.common.logger.logFailure
 import com.capstone.nongglenonggle.data.model.sign_up.UserDataClass
 import com.capstone.nongglenonggle.domain.repository.AuthenticationRepository
 import com.google.firebase.auth.FirebaseAuth
-import com.capstone.nongglenonggle.data.network.AppResult
-import com.capstone.nongglenonggle.data.network.AppResult.Failure.Internal
+import com.capstone.nongglenonggle.data.AppResult
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
@@ -20,8 +18,9 @@ import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 import com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED
 import com.google.firebase.firestore.FirebaseFirestoreException.Code.UNAVAILABLE
+import javax.inject.Singleton
 import kotlin.coroutines.cancellation.CancellationException
-
+@Singleton
 class AuthenticationRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val firebaseAuth: FirebaseAuth,

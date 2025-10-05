@@ -3,7 +3,7 @@ package com.capstone.nongglenonggle.data.repositoryimpl
 import android.net.Uri
 import com.capstone.nongglenonggle.core.common.logger.AppResultLogger
 import com.capstone.nongglenonggle.core.common.logger.logFailure
-import com.capstone.nongglenonggle.data.network.AppResult
+import com.capstone.nongglenonggle.data.AppResult
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
 import com.capstone.nongglenonggle.domain.repository.WorkerResumeRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -15,7 +15,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.coroutines.cancellation.CancellationException
 
 class WorkerResumeRepositoryImpl @Inject constructor(
     private val firebaseStorage: FirebaseStorage,

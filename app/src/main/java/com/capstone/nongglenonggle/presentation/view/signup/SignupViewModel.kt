@@ -4,9 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import com.capstone.nongglenonggle.core.common.logger.AppResultMessageProvider
 import com.capstone.nongglenonggle.data.model.sign_up.UserDataClass
-import com.capstone.nongglenonggle.data.network.AppResult
+import com.capstone.nongglenonggle.data.AppResult
 import com.capstone.nongglenonggle.domain.usecase.SetUserSignUpUseCase
-import com.capstone.nongglenonggle.presentation.view.login.LoginContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

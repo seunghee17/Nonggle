@@ -1,5 +1,5 @@
 package com.capstone.nongglenonggle.core.common.logger
-import com.capstone.nongglenonggle.data.network.AppResult
+import com.capstone.nongglenonggle.data.AppResult
 
 object AppResultLogger {
     fun logFailure(failure: AppResult.Failure) {

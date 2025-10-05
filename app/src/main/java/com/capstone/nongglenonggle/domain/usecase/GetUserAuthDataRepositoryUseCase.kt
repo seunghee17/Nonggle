@@ -1,7 +1,7 @@
 package com.capstone.nongglenonggle.domain.usecase
 
 import com.capstone.nongglenonggle.data.model.sign_up.UserDataClass
-import com.capstone.nongglenonggle.data.network.AppResult
+import com.capstone.nongglenonggle.data.AppResult
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
 import com.capstone.nongglenonggle.domain.repository.AuthenticationRepository
 import kotlinx.coroutines.CoroutineDispatcher
