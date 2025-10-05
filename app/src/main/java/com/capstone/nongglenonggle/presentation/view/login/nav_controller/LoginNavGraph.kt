@@ -16,10 +16,10 @@ import com.capstone.nongglenonggle.presentation.view.login.LoginViewModel
 
 fun NavGraphBuilder.LoginNavGraph(navHostController: NavHostController) {
     navigation(
-        route = Screens.Signup.route,
-        startDestination = Screens.Login.route
+        route = Screens.Login.route,
+        startDestination = Screens.Login.LoginScreen.route
     ) {
-        composable(Screens.Login.route) { entry ->
+        composable(Screens.Login.LoginScreen.route) { entry ->
             val viewModel = hiltViewModel<LoginViewModel>()
 
             val launcher = rememberLauncherForActivityResult(

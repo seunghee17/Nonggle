@@ -16,9 +16,9 @@ fun NonggleNavHost() {
     NavHost(
         navController = navHostController,
         //startDestination은 navhost에 직접적 자식의 screen을 지정해주어야함 object안에 내부 object이면 안됨
-        startDestination = Screens.Signup.route
+        startDestination = Screens.Splash.route
     ) {
-        SplashNavGraph()
+        SplashNavGraph(navHostController = navHostController)
         LoginNavGraph(navHostController = navHostController)
         SignupNavGraph(navHostController = navHostController)
         WorkerResumeGraph(navHostController = navHostController)

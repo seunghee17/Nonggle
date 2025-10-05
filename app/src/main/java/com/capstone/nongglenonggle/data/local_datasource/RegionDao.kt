@@ -35,10 +35,14 @@ interface RegionDao {
     @Query("SELECT * FROM region")
     fun getAllRegion(): List<RegionEntity>
 
+
     @Query("""
         SELECT * FROM district
-        WHERE regionOwnerId = :regionId
+        WHERE regionOwnerId = (
+            SELECT regionId FROM region
+            WHERE name = :regionName
+        )
         ORDER BY name
     """)
-    fun getDistrictsByRegionId(regionId: Long): List<DistrictEntity>
+    fun getDistrictsByRegionId(regionName: String): List<DistrictEntity>
 }

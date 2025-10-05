@@ -37,12 +37,8 @@
             android:name=".presentation.view.farmer.notice.NoticeActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
-            android:name=".presentation.view.login.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.view.splash.SplashActivity"
+            android:name=".app.navigation.IntegrationMainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>

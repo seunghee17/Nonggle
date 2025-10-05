@@ -7,14 +7,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.capstone.nongglenonggle.app.navigation.Screens
 
-fun NavGraphBuilder.SplashNavGraph() {
+fun NavGraphBuilder.SplashNavGraph(navHostController: NavHostController) {
     navigation(
         route = Screens.Splash.route,
-        startDestination = Screens.Splash.route
+        startDestination = Screens.Splash.SplashScreen.route
     ) {
-        composable(Screens.Splash.route) { entry ->
+        composable(Screens.Splash.SplashScreen.route) { entry ->
             val viewModel = hiltViewModel<SplashViewModel>()
-            SpalashScreen(viewModel = viewModel)
+            SpalashScreen(viewModel = viewModel, navHostController = navHostController)
         }
     }
 }

@@ -25,16 +25,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
+import com.capstone.nongglenonggle.app.navigation.Screens
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.soYo
-import com.capstone.nongglenonggle.presentation.view.login.LoginActivity
 import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun SpalashScreen(
+    navHostController: NavHostController,
     viewModel: SplashViewModel,
 ) {
     val effectFlow = viewModel.effect
@@ -66,10 +68,10 @@ fun SpalashScreen(
                     context.startActivity(intent)
                 }
                 is SplashContract.Effect.NavigateToLogin -> {
-                    val intent = Intent(context, LoginActivity::class.java).apply {
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    navHostController.navigate(Screens.Login.route) {
+                        popUpTo(Screens.Splash.route) {inclusive = true}
+                        launchSingleTop = true
                     }
-                    context.startActivity(intent)
                 }
 
                 else -> {}
