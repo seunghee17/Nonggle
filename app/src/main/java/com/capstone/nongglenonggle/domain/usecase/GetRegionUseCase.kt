@@ -1,7 +1,7 @@
 package com.capstone.nongglenonggle.domain.usecase
 
 import com.capstone.nongglenonggle.data.model.remote_model.RegionModel
-import com.capstone.nongglenonggle.data.remote_datasource.ApiResult
+import com.capstone.nongglenonggle.data.network.ApiResult
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
 import com.capstone.nongglenonggle.domain.repository.RemoteDataRepository
 import kotlinx.coroutines.CoroutineDispatcher
