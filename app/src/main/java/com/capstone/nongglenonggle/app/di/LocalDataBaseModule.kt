@@ -26,7 +26,6 @@ object LocalDataBaseModule {
             "region_database"
         )
             .addMigrations(RegionDatabase.MIGRATION_1_2)
-            .fallbackToDestructiveMigration(true) //FIXME: 배포때는 지우기
             .build()
     }
 
