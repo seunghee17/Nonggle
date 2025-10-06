@@ -1,7 +1,6 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.component
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -28,7 +27,6 @@ import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,9 +49,8 @@ import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
-import com.capstone.nongglenonggle.presentation.view.worker.resume.parent_component.ExposedDropMenuStateHolder
-import com.capstone.nongglenonggle.presentation.view.worker.resume.parent_component.rememberExposedMenuStateHolder
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Effect
+import com.capstone.nongglenonggle.presentation.view.worker.resume.component.ExposedDropMenuStateHolder
+import com.capstone.nongglenonggle.presentation.view.worker.resume.component.rememberExposedMenuStateHolder
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2ViewModel
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Event as Step2Event
 
@@ -69,17 +66,6 @@ fun ResumeCareerAddBottomSheet(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val effectFlow = viewModel.effect
     val stateHolder = rememberExposedMenuStateHolder()
-
-    LaunchedEffect(true) {
-        effectFlow.collect { effect ->
-            when (effect) {
-                is Effect.ShowErrorToast -> {
-                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
-                }
-                else -> {}
-            }
-        }
-    }
 
 
     if(uiState.showCalendarDialogStart) {
