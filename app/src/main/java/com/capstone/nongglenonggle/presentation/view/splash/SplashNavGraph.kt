@@ -19,7 +19,7 @@ fun NavGraphBuilder.SplashNavGraph(navHostController: NavHostController) {
             val viewModel = hiltViewModel<SplashViewModel>()
             val context = LocalContext.current
 
-            SpalashRoute(
+            SplashRoute(
                 viewModel = viewModel,
                 navigateToWorkerHome = {
                     val intent = Intent(context, WorkerMainActivity::class.java).apply {

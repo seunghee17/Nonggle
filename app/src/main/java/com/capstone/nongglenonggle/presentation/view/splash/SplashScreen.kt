@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.collectLatest
 import com.capstone.nongglenonggle.presentation.view.splash.SplashContract.Effect as SplashEffect
 
 @Composable
-internal fun SpalashRoute(
+internal fun SplashRoute(
     viewModel: SplashViewModel,
     navigateToWorkerHome:() -> Unit,
     navigateToLogin: () -> Unit,
