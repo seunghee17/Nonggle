@@ -7,7 +7,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.analytics.analytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.HiltAndroidApp
-import io.grpc.android.BuildConfig
+import com.capstone.nongglenonggle.BuildConfig
 import timber.log.Timber
 
 @HiltAndroidApp
