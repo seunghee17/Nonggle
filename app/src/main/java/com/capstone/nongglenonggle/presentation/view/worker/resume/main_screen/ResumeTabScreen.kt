@@ -21,8 +21,6 @@ import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1ViewModel
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Screen
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2ViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Screen
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3ViewModel
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Screen
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4ViewModel
 
@@ -32,7 +30,6 @@ fun ResumeTabScreen(
     viewModel: ResumeMainViewModel,
     step1ViewModel: ResumeStep1ViewModel,
     step2ViewModel: ResumeStep2ViewModel,
-    step3ViewModel: ResumeStep3ViewModel,
     step4ViewModel: ResumeStep4ViewModel,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -42,7 +39,6 @@ fun ResumeTabScreen(
     val tabBarTitleList: List<String> = listOf(
         context.getString(R.string.worker_ResumeScreen_TabTitle_1),
         context.getString(R.string.worker_ResumeScreen_TabTitle_2),
-        context.getString(R.string.worker_ResumeScreen_TabTitle_3),
         context.getString(R.string.worker_ResumeScreen_TabTitle_4)
     )
 
@@ -77,8 +73,7 @@ fun ResumeTabScreen(
                when(page) {
                    0 -> ResumeStep1Screen(viewModel = step1ViewModel)
                    1 -> ResumeStep2Screen(viewModel = step2ViewModel)
-                   2 -> ResumeStep3Screen(viewModel = step3ViewModel)
-                   3 -> ResumeStep4Screen(viewModel = step4ViewModel)
+                   2 -> ResumeStep4Screen(viewModel = step4ViewModel)
                }
            }
        }

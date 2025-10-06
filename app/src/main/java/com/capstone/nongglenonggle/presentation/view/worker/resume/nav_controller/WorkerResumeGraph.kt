@@ -11,7 +11,6 @@ import com.capstone.nongglenonggle.presentation.view.worker.resume.main_screen.R
 import com.capstone.nongglenonggle.presentation.view.worker.resume.main_screen.ResumeTabScreen
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1ViewModel
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2ViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3ViewModel
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4ViewModel
 
 fun NavGraphBuilder.WorkerResumeGraph(navHostController: NavHostController) {
@@ -25,14 +24,12 @@ fun NavGraphBuilder.WorkerResumeGraph(navHostController: NavHostController) {
             val mainViewModel: ResumeMainViewModel = hiltViewModel(parent)
             val step1viewModel: ResumeStep1ViewModel = hiltViewModel(parent)
             val step2viewModel: ResumeStep2ViewModel = hiltViewModel(parent)
-            val step3viewModel: ResumeStep3ViewModel = hiltViewModel(parent)
             val step4viewModel: ResumeStep4ViewModel = hiltViewModel(parent)
             ResumeTabScreen(
                 navController = navHostController,
                 viewModel = mainViewModel,
                 step1ViewModel = step1viewModel,
                 step2ViewModel = step2viewModel,
-                step3ViewModel = step3viewModel,
                 step4ViewModel = step4viewModel,
             )
         }
