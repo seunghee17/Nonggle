@@ -79,11 +79,11 @@ fun LoginScreen(
             AppLogoForLogin()
             Spacer(modifier = Modifier.weight(1f))
             kakaoLoginButton(onClick = {
-                onEvent(LoginContract.Event.KakaoLoginButtonClick)
+                onEvent(LoginEvent.KakaoLoginButtonClick)
             }, context)
             Spacer(modifier = Modifier.height(16.dp))
             googleLoginButton(onClick = {
-                onEvent(LoginContract.Event.GoogleLoginButtonClick)
+                onEvent(LoginEvent.GoogleLoginButtonClick)
             }, context)
             Spacer(modifier = Modifier.height(20.dp))
         }

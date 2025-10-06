@@ -75,8 +75,7 @@ class LoginViewModel @Inject constructor(
                     }
                 }
                 is AppResult.Failure -> {
-                    val errorMsg = AppResultMessageProvider.message(result)
-                    postEffect(LoginEffect.UnAvailableToastmessage(errorMsg))
+                    postEffect(LoginEffect.NavigateToEnrollUser)
                 }
             }
         }
