@@ -81,6 +81,7 @@ class ResumeStep2ViewModel @Inject constructor() : BaseViewModel<Step2Event, Ste
             is Step2Event.RemoveCareerItem -> {
                 val newList = currentState.careerList.toMutableList()
                 newList.remove(event.item)
+                sumTotalCareer()
                 updateState(currentState.copy(careerList = newList))
             }
             is Step2Event.SetClearState -> {
