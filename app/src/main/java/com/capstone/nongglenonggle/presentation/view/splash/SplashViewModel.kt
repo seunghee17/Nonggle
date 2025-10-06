@@ -3,6 +3,8 @@ package com.capstone.nongglenonggle.presentation.view.splash
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import com.capstone.nongglenonggle.data.AppResult
+import com.capstone.nongglenonggle.data.onFailure
+import com.capstone.nongglenonggle.data.onSuccess
 import com.capstone.nongglenonggle.domain.usecase.GetUserAuthDataRepositoryUseCase
 import com.capstone.nongglenonggle.presentation.view.signup.UserType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,19 +26,21 @@ class SplashViewModel @Inject constructor(
 
     private fun getUserLoginType() {
         viewModelScope.launch {
-            val result = getUserAuthDataRepositoryUseCase.invoke()
-            when (result) {
-                is AppResult.Success -> {
-                    if (UserType.valueOf(result.data.signUpType) == UserType.WORKER) {
-                        postEffect(SplashContract.Effect.NavigateToWorkerHome)
-                    } else {
-                        postEffect(SplashContract.Effect.NavigateToLogin)
+            getUserAuthDataRepositoryUseCase.invoke()
+                .onSuccess {
+                    val userType = UserType.valueOf(it.signUpType)
+                    when (userType) {
+                        UserType.WORKER -> {
+                            postEffect(SplashContract.Effect.NavigateToWorkerHome)
+                        }
+                        else -> {
+                            postEffect(SplashContract.Effect.NavigateToLogin)
+                        }
                     }
                 }
-                is AppResult.Failure -> {
+                .onFailure {
                     postEffect(SplashContract.Effect.NavigateToLogin)
                 }
-            }
         }
     }
 }
