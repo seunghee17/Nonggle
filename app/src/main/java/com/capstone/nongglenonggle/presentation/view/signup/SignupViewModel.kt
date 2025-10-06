@@ -115,7 +115,7 @@ class SignupViewModel @Inject constructor(
                     }
                 }
 
-                is SignUpEvent.updateDoroAddress -> {
+                is SignUpEvent.UpdateDoroAddress -> {
                     getAddress(event.data)
                 }
 
@@ -136,38 +136,42 @@ class SignupViewModel @Inject constructor(
                     }
                     updateState(currentState.copy(selectedFarmerCategory = tmpList))
                 }
-                is SignUpEvent.navigateToStep1Button -> {
+                is SignUpEvent.NavigateToStep1Button -> {
                     postEffect(effect = SignUpEffect.NavigateToStep1Screen)
                 }
-                is SignUpEvent.navigateToStep3Button -> {
+                is SignUpEvent.NavigateToStep3Button -> {
                     postEffect(effect = SignUpEffect.NavigateToStep3Screen)
                 }
                 is SignUpEvent.SaveUserInfo -> {
                     sendUserInfoToDB(context = event.context)
                 }
+
+                is SignUpEvent.NavigateToBackScreen -> {
+                    postEffect(effect = SignUpEffect.NavigateToBackScreen)
+                }
+
+                is SignUpEvent.NavigateToAddressSearchScreen -> {
+                    setLoading(true)
+                    postEffect(SignUpEffect.NavigateToAddressSearchScreen)
+                }
             }
         }
     }
 
-    fun getAddress(data: String) {
+    private fun getAddress(data: String) {
         updateState(currentState.copy(farmerAddressSearchFromDoro = data))
         postEffect(effect = SignUpEffect.NavigateToBackScreen)
     }
 
-    fun clearAddressDetail() {
+    private fun clearAddressDetail() {
         updateState(currentState.copy(farmerAddressDeatail = ""))
     }
 
-    fun setLoading(loading: Boolean) {
+    private fun setLoading(loading: Boolean) {
         updateState(currentState.copy(isLoading = loading))
     }
 
-    fun navigateToAddressScreen() {
-        setLoading(true)
-        postEffect(SignUpEffect.NavigateToAddressSearchScreen)
-    }
-
-    fun sendUserInfoToDB(context: Context) {
+    private fun sendUserInfoToDB(context: Context) {
         if(currentState.submitState is SignupContract.SubmitState.Loading) return
 
         updateState(currentState.copy(isLoading = true))

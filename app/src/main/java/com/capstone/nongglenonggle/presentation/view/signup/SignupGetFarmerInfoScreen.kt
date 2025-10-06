@@ -1,7 +1,6 @@
 package com.capstone.nongglenonggle.presentation.view.signup
 
 import android.content.Context
-import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,44 +31,44 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
-import com.capstone.nongglenonggle.app.navigation.Screens
 import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
 import com.capstone.nongglenonggle.core.common.button.NonggleIconButton
 import com.capstone.nongglenonggle.core.common.textfield.NonggleTextField
 import com.capstone.nongglenonggle.core.common.textfield.TextFieldType
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.noRippleClickable
-import com.capstone.nongglenonggle.presentation.view.farmer.home.MainActivity
+import com.capstone.nongglenonggle.presentation.view.signup.SignupContract.Event as SignupEvent
+import com.capstone.nongglenonggle.presentation.view.signup.SignupContract.State as SignupState
+import com.capstone.nongglenonggle.presentation.view.signup.SignupContract.Effect as SignupEffect
 
 @Composable
-fun SignupGetFarmerInfoScreen(
-    navController: NavHostController,
+internal fun SignupGetFarmerInfoRoute(
     viewModel: SignupViewModel,
+    navigateToHomeScreen: () -> Unit,
+    navigateToSearchAddress: () -> Unit,
+    navigateToBackScreen: () -> Unit,
+    navHostController: NavHostController,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val effectFlow = viewModel.effect
-    val context = LocalContext.current
-    val selectAddressFlow = navController.currentBackStackEntry?.savedStateHandle?.getStateFlow("selectAddress", "")
+
+    val selectAddressFlow = navHostController.currentBackStackEntry?.savedStateHandle?.getStateFlow("selectAddress", "")
     val selectAddress by selectAddressFlow?.collectAsStateWithLifecycle() ?: remember {mutableStateOf("")}
+
 
     LaunchedEffect(true) {
         effectFlow.collect { effect ->
             when (effect) {
-                is SignupContract.Effect.NavigateToHomeScreen -> { //구인자 홈화면으로
-                    val intent = Intent(context, MainActivity::class.java).apply {
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    }
-                    context.startActivity(intent)
-                }
+                is SignupContract.Effect.NavigateToHomeScreen -> navigateToHomeScreen()
 
-                is SignupContract.Effect.NavigateToAddressSearchScreen -> {
-                    navController.navigate(Screens.Signup.AddressSearch.route)
-                }
+                is SignupContract.Effect.NavigateToAddressSearchScreen -> navigateToSearchAddress()
+                is SignupEffect.NavigateToBackScreen -> navigateToBackScreen()
 
                 else -> {}
             }
@@ -78,9 +77,25 @@ fun SignupGetFarmerInfoScreen(
 
     LaunchedEffect(selectAddress) {
         if(selectAddress.isNotEmpty()) {
-            viewModel.setEvent(SignupContract.Event.updateDoroAddress(selectAddress))
+            viewModel.setEvent(SignupContract.Event.UpdateDoroAddress(selectAddress))
         }
     }
+
+    SignupGetFarmerInfoScreen(
+        state = uiState,
+        onEvent = viewModel::setEvent
+    )
+
+}
+
+@Composable
+fun SignupGetFarmerInfoScreen(
+    state: SignupState,
+    onEvent: (SignupEvent) -> Unit
+) {
+    val context = LocalContext.current
+
+
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -92,7 +107,7 @@ fun SignupGetFarmerInfoScreen(
         ) {
             item {
                 NonggleAppBar(
-                    onBackPressed = { navController.popBackStack() },
+                    onBackPressed = { onEvent(SignupContract.Event.NavigateToBackScreen) },
                     backAction = true,
                     title = {},
                 )
@@ -134,20 +149,18 @@ fun SignupGetFarmerInfoScreen(
                 setUserAddressDoroTextField(
                     context = context,
                     modifier = Modifier.padding(top = 20.dp, start = 10.dp, end = 10.dp),
-                    doroAddress = uiState.farmerAddressSearchFromDoro,
-                    navigateToSearchAddress = {
-                        viewModel.navigateToAddressScreen()
-                    }
+                    doroAddress = state.farmerAddressSearchFromDoro,
+                    navigateToSearchAddress = { onEvent(SignupEvent.NavigateToAddressSearchScreen) }
                 )
                 setUserAddressDetailTextField(
                     context = context,
                     modifier = Modifier.padding(top = 10.dp, start = 10.dp, end = 10.dp),
-                    doroAddressDetail = uiState.farmerAddressDeatail,
+                    doroAddressDetail = state.farmerAddressDeatail,
                     clearValueAction = {
-                        viewModel.setEvent(SignupContract.Event.ClearFarmerAddressDetail)
+                        onEvent(SignupEvent.ClearFarmerAddressDetail)
                     },
                     onValueChange = {
-                        viewModel.setEvent(SignupContract.Event.InputFarmerAddressDetail(it))
+                        onEvent(SignupEvent.InputFarmerAddressDetail(it))
                     },
                 )
                 Text(
@@ -177,14 +190,14 @@ fun SignupGetFarmerInfoScreen(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
                     items(
-                        count = uiState.farmerCategory.size,
+                        count = state.farmerCategory.size,
                     ) { index ->
                         cropsInfo(
                             onClick = {
-                                viewModel.setEvent(SignupContract.Event.SelectFarmerCategory(uiState.farmerCategory[index]))
+                                onEvent(SignupEvent.SelectFarmerCategory(state.farmerCategory[index]))
                             },
-                            cropItem = uiState.farmerCategory[index],
-                            selectCropList = uiState.selectedFarmerCategory
+                            cropItem = state.farmerCategory[index],
+                            selectCropList = state.selectedFarmerCategory
                         )
                     }
                 }
@@ -198,7 +211,7 @@ fun SignupGetFarmerInfoScreen(
                 .align(Alignment.BottomCenter),
             enable = true,
             onClick = {
-                viewModel.setEvent(SignupContract.Event.SaveUserInfo(context))
+                onEvent(SignupEvent.SaveUserInfo(context))
             }
         )
     }
@@ -316,4 +329,10 @@ fun cropsInfo(
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SignupGetFarmerInfoPreviewScreen() {
+    SignupGetFarmerInfoScreen(SignupState(), {})
 }

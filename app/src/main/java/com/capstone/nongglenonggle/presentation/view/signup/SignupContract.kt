@@ -10,7 +10,6 @@ class SignupContract {
         object Idle: SubmitState
         object Loading: SubmitState
         object Success: SubmitState
-        class Error(val message: String): SubmitState
     }
 
     data class State(
@@ -40,13 +39,15 @@ class SignupContract {
         object AcitivateAgeLimitCheckBox: Event()
         object AcitivateServiceUseTermCheckBox: Event()
         object AcitivatePersonalInfoCheckBox: Event()
-        data class updateDoroAddress(val data: String): Event()
+        data class UpdateDoroAddress(val data: String): Event()
         data class InputFarmerAddressDetail(val detailAddress: String): Event()
         object ClearFarmerAddressDetail: Event()
         data class SelectFarmerCategory(val category: String): Event()
-        object navigateToStep1Button: Event()
-        object navigateToStep3Button: Event()
+        object NavigateToStep1Button: Event()
+        object NavigateToStep3Button: Event()
+        object NavigateToAddressSearchScreen: Event()
         data class SaveUserInfo(val context: Context): Event()
+        object NavigateToBackScreen: Event()
     }
 
     sealed class Effect: UiEffect {

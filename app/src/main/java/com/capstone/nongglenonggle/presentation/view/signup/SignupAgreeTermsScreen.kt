@@ -1,6 +1,5 @@
 package com.capstone.nongglenonggle.presentation.view.signup
 
-import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,44 +27,51 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.noRippleClickable
-import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
-
+import com.capstone.nongglenonggle.presentation.view.signup.SignupContract.State as SignupState
+import com.capstone.nongglenonggle.presentation.view.signup.SignupContract.Event as SignupEvent
 
 @Composable
-fun SignupAgreeTermsScreen (
-    navController: NavHostController,
+internal fun SignupAgreeTermsRoute(
     viewModel: SignupViewModel,
+    navigateToStep3: () -> Unit,
+    navigateToHome: () -> Unit,
+    navigateToBack: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val effectFlow = viewModel.effect
-    val context = LocalContext.current
-
-    val scrollState = rememberScrollState()
 
     LaunchedEffect(true) {
         effectFlow.collect { effect ->
             when (effect) {
-                is SignupContract.Effect.NavigateToStep3Screen -> {
-                    navController.navigate("signup/step3")
-                }
-                is SignupContract.Effect.NavigateToHomeScreen -> { //구직자회원의 홈화면으로
-                    val intent = Intent(context, WorkerMainActivity::class.java).apply {
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    }
-                    context.startActivity(intent)
-                }
+                is SignupContract.Effect.NavigateToStep3Screen -> navigateToStep3()
+                is SignupContract.Effect.NavigateToHomeScreen -> navigateToHome()
+                is SignupContract.Effect.NavigateToBackScreen -> navigateToBack()
                 else -> {}
             }
         }
     }
+    SignupAgreeTermsScreen(
+        state = uiState,
+        onEvent = viewModel::setEvent
+    )
+}
+
+@Composable
+fun SignupAgreeTermsScreen (
+    state: SignupState,
+    onEvent: (SignupEvent) -> Unit
+) {
+    val context = LocalContext.current
+
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
@@ -73,7 +79,7 @@ fun SignupAgreeTermsScreen (
             .verticalScroll(scrollState)
     ) {
         NonggleAppBar(
-            onBackPressed = { navController.popBackStack() },
+            onBackPressed = { onEvent(SignupEvent.NavigateToBackScreen) },
             backAction = true,
             title = {},
         )
@@ -102,35 +108,35 @@ fun SignupAgreeTermsScreen (
         termsAllCheckBoxButton(
             modifier = Modifier.padding(horizontal = 20.dp),
             onClick = {
-                viewModel.setEvent(SignupContract.Event.AcitivateAllTermCheckBox)
+                onEvent(SignupEvent.AcitivateAllTermCheckBox)
             },
             termInfoText = context.getString(R.string.sign_up_agree_content_allAgree),
-            checkBoxState = uiState.allCheckBoxState
+            checkBoxState = state.allCheckBoxState
         )
         termsCheckBoxButton(
             modifier = Modifier.padding(horizontal = 20.dp),
             onClick = {
-                viewModel.setEvent(SignupContract.Event.AcitivateAgeLimitCheckBox)
+                onEvent(SignupEvent.AcitivateAgeLimitCheckBox)
             },
             termInfoText = context.getString(R.string.sign_up_agree_content_ageLimit),
-            checkBoxState = uiState.ageLimitConfirmCheckBox
+            checkBoxState = state.ageLimitConfirmCheckBox
         )
 
         termsCheckBoxButton(
             modifier = Modifier.padding(horizontal = 20.dp),
             onClick = {
-                viewModel.setEvent(SignupContract.Event.AcitivateServiceUseTermCheckBox)
+                onEvent(SignupEvent.AcitivateServiceUseTermCheckBox)
             },
             termInfoText = context.getString(R.string.sign_up_agree_content_serviceAgree),
-            checkBoxState = uiState.serviceUseTermCheckBox
+            checkBoxState = state.serviceUseTermCheckBox
         )
         termsCheckBoxButton(
             modifier = Modifier.padding(horizontal = 20.dp),
             onClick = {
-                viewModel.setEvent(SignupContract.Event.AcitivatePersonalInfoCheckBox)
+                onEvent(SignupEvent.AcitivatePersonalInfoCheckBox)
             },
             termInfoText = context.getString(R.string.sign_up_agree_content_personalCollectInfoAgree),
-            checkBoxState = uiState.personalInfoCheckBox
+            checkBoxState = state.personalInfoCheckBox
         )
         Spacer(modifier = Modifier.weight(1f))
         nextBtn(
@@ -140,10 +146,10 @@ fun SignupAgreeTermsScreen (
                 .wrapContentHeight(),
             enable = true,
             onClick = {
-                if(uiState.userSignupType == UserType.MANAGER) {
-                    viewModel.setEvent(event = SignupContract.Event.navigateToStep3Button)
+                if(state.userSignupType == UserType.MANAGER) {
+                    onEvent(SignupEvent.NavigateToStep3Button)
                 } else {
-                    viewModel.setEvent(event = SignupContract.Event.SaveUserInfo(context))
+                    onEvent(SignupEvent.SaveUserInfo(context))
                 }
             })
     }
@@ -257,5 +263,14 @@ fun termsAllCheckBoxButton(
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SignupAgreeTermsPreviewScreen() {
+    SignupAgreeTermsScreen(
+        state = SignupState(),
+        onEvent = {}
+    )
 }
 
