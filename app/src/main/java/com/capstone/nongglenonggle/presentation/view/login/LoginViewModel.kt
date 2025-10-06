@@ -63,15 +63,13 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun getUserLoginType() {
+    private fun getUserLoginType() {
         viewModelScope.launch {
             val result = getUserAuthDataRepositoryUseCase.invoke()
             when(result) {
                 is AppResult.Success -> {
                     if (UserType.valueOf(result.data.signUpType) == UserType.WORKER) {
                         postEffect(LoginEffect.NavigateToWorkerHome)
-                    } else if (UserType.valueOf(result.data.signUpType) == UserType.MANAGER) {
-                        postEffect(LoginEffect.NavigateToFarmerHome)
                     } else {
                         postEffect(LoginEffect.NavigateToEnrollUser)
                     }

@@ -62,7 +62,7 @@ fun googleLoginButton(
             .padding(horizontal = 20.dp)
             .fillMaxWidth(),
         onClick = onClick,
-        titleText = context.getString(R.string.start_with_kakao),
+        titleText = context.getString(R.string.start_with_google),
         contentColor = NonggleTheme.colors.g2,
         backgroundColor = NonggleTheme.colors.g4,
         titleTextStyle = NonggleTheme.typography.b4_btn,

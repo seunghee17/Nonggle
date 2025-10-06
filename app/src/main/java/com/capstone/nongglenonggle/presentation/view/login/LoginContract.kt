@@ -26,7 +26,6 @@ class LoginContract {
 
     sealed class Effect: UiEffect {
         object NavigateToEnrollUser: Effect()
-        object NavigateToFarmerHome: Effect()
         object NavigateToWorkerHome: Effect()
         data class UnAvailableToastmessage(val message: String): Effect()
         data class LaunchGoogleSignIn(val intentSender: IntentSender) : Effect()

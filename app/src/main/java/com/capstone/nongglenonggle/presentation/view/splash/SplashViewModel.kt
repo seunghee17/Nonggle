@@ -14,19 +14,21 @@ class SplashViewModel @Inject constructor(
     private val getUserAuthDataRepositoryUseCase: GetUserAuthDataRepositoryUseCase
 ): BaseViewModel<SplashContract.Event, SplashContract.State, SplashContract.Effect>(initialState = SplashContract.State()) {
 
+    init {
+        getUserLoginType()
+    }
+
     override fun handleEvent(event: SplashContract.Event) {
 
     }
 
-    fun getUserLoginType() {
+    private fun getUserLoginType() {
         viewModelScope.launch {
             val result = getUserAuthDataRepositoryUseCase.invoke()
             when (result) {
                 is AppResult.Success -> {
                     if (UserType.valueOf(result.data.signUpType) == UserType.WORKER) {
                         postEffect(SplashContract.Effect.NavigateToWorkerHome)
-                    } else if (UserType.valueOf(result.data.signUpType) == UserType.MANAGER) {
-                        postEffect(SplashContract.Effect.NavigateToFarmerHome)
                     } else {
                         postEffect(SplashContract.Effect.NavigateToLogin)
                     }

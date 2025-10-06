@@ -20,6 +20,7 @@ import com.capstone.nongglenonggle.presentation.view.login.component.AppLogoForL
 import com.capstone.nongglenonggle.presentation.view.login.component.googleLoginButton
 import com.capstone.nongglenonggle.presentation.view.login.component.kakaoLoginButton
 import com.capstone.nongglenonggle.presentation.view.login.LoginContract.Event as LoginEvent
+import com.capstone.nongglenonggle.presentation.view.login.LoginContract.Effect as LoginEffect
 
 @Composable
 internal fun LoginRoute(
@@ -35,19 +36,15 @@ internal fun LoginRoute(
     LaunchedEffect(true) {
         effectFlow.collectLatest { effect ->
             when (effect) {
-                is LoginContract.Effect.NavigateToEnrollUser -> navigateToEnrollUser()
+                is LoginEffect.NavigateToEnrollUser -> navigateToEnrollUser()
 
-                is LoginContract.Effect.NavigateToFarmerHome -> {
-                    Toast.makeText(context, "구인자 로그인만 가능합니다.", Toast.LENGTH_SHORT).show()
-                }
+                is LoginEffect.NavigateToWorkerHome -> navigateToWorkerHome()
 
-                is LoginContract.Effect.NavigateToWorkerHome -> navigateToWorkerHome()
-
-                is LoginContract.Effect.UnAvailableToastmessage -> {
+                is LoginEffect.UnAvailableToastmessage -> {
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
                 }
 
-                is LoginContract.Effect.LaunchGoogleSignIn -> {
+                is LoginEffect.LaunchGoogleSignIn -> {
                     onLaunchGoogleSignIn(effect.intentSender)
                 }
             }
