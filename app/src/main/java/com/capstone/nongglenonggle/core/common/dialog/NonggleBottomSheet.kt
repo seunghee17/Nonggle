@@ -24,7 +24,6 @@ fun NonggleBottomSheet(
     sheetState: SheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
         confirmValueChange = { newState ->
-            // 시트를 닫히지 않게 하려면 false 리턴
             newState != SheetValue.Hidden
         }
     ),

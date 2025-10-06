@@ -1,15 +1,9 @@
 package com.capstone.nongglenonggle.presentation.view.login
 
-import android.content.Context
-import android.content.Intent
 import android.content.IntentSender
 import android.widget.Toast
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -17,28 +11,22 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.capstone.nongglenonggle.R
-import com.capstone.nongglenonggle.core.common.button.ImageButton
-import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.NongleTheme
-import com.capstone.nongglenonggle.core.design_system.soYo
 import kotlinx.coroutines.flow.collectLatest
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
-import com.capstone.nongglenonggle.app.navigation.Screens
-import com.capstone.nongglenonggle.presentation.view.farmer.home.MainActivity
-import com.capstone.nongglenonggle.presentation.view.worker.home.WorkerMainActivity
+import com.capstone.nongglenonggle.presentation.view.login.component.AppLogoForLogin
+import com.capstone.nongglenonggle.presentation.view.login.component.googleLoginButton
+import com.capstone.nongglenonggle.presentation.view.login.component.kakaoLoginButton
+import com.capstone.nongglenonggle.presentation.view.login.LoginContract.Event as LoginEvent
 
 @Composable
-fun LoginScreen(
+internal fun LoginRoute(
     viewModel: LoginViewModel,
-    navController: NavHostController,
-    onLaunchGoogleSignIn: (IntentSender) -> Unit
+    onLaunchGoogleSignIn: (IntentSender) -> Unit,
+    navigateToEnrollUser: () -> Unit,
+    navigateToWorkerHome: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val effectFlow = viewModel.effect
@@ -47,27 +35,13 @@ fun LoginScreen(
     LaunchedEffect(true) {
         effectFlow.collectLatest { effect ->
             when (effect) {
-                is LoginContract.Effect.NavigateToEnrollUser -> {
-                    navController.navigate(Screens.Signup.route) {
-                        popUpTo(Screens.Login.route) {inclusive = true} //로그인 그래프 통째 제거
-                        launchSingleTop = true
-                    }
-
-                }
+                is LoginContract.Effect.NavigateToEnrollUser -> navigateToEnrollUser()
 
                 is LoginContract.Effect.NavigateToFarmerHome -> {
-                    val intent = Intent(context, MainActivity::class.java).apply {
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    }
-                    context.startActivity(intent)
+                    Toast.makeText(context, "구인자 로그인만 가능합니다.", Toast.LENGTH_SHORT).show()
                 }
 
-                is LoginContract.Effect.NavigateToWorkerHome -> {
-                    val intent = Intent(context, WorkerMainActivity::class.java).apply {
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    }
-                    context.startActivity(intent)
-                }
+                is LoginContract.Effect.NavigateToWorkerHome -> navigateToWorkerHome()
 
                 is LoginContract.Effect.UnAvailableToastmessage -> {
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
@@ -88,6 +62,18 @@ fun LoginScreen(
         }
     }
 
+    LoginScreen(
+        onEvent = viewModel::setEvent
+    )
+
+}
+
+@Composable
+fun LoginScreen(
+    onEvent: (LoginEvent) -> Unit
+) {
+    val context = LocalContext.current
+
     NongleTheme {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
@@ -96,66 +82,21 @@ fun LoginScreen(
             AppLogoForLogin()
             Spacer(modifier = Modifier.weight(1f))
             kakaoLoginButton(onClick = {
-                viewModel.setEvent(LoginContract.Event.KakaoLoginButtonClick)
+                onEvent(LoginContract.Event.KakaoLoginButtonClick)
             }, context)
             Spacer(modifier = Modifier.height(16.dp))
             googleLoginButton(onClick = {
-                viewModel.setEvent(LoginContract.Event.GoogleLoginButtonClick)
+                onEvent(LoginContract.Event.GoogleLoginButtonClick)
             }, context)
             Spacer(modifier = Modifier.height(20.dp))
         }
     }
 }
 
+@Preview
 @Composable
-fun AppLogoForLogin() {
-    Text(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 50.dp),
-        text = "농글",
-        color = NonggleTheme.colors.m1,
-        style = TextStyle(
-            fontFamily = soYo,
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp
-        ),
-        textAlign = TextAlign.Center
-    )
-}
-
-@Composable
-fun kakaoLoginButton(
-    onClick: () -> Unit,
-    context: Context
-) {
-    ImageButton(
-        modifier = Modifier
-            .padding(horizontal = 20.dp)
-            .fillMaxWidth(),
-        onClick = onClick,
-        titleText = context.getString(R.string.start_with_kakao),
-        contentColor = NonggleTheme.colors.g1,
-        backgroundColor = Color(0xFFF9E000),
-        titleTextStyle = NonggleTheme.typography.b4_btn,
-        imageResource = R.drawable.kakaobtn
-    )
-}
-
-@Composable
-fun googleLoginButton(
-    onClick: () -> Unit,
-    context: Context
-) {
-    ImageButton(
-        modifier = Modifier
-            .padding(horizontal = 20.dp)
-            .fillMaxWidth(),
-        onClick = onClick,
-        titleText = context.getString(R.string.start_with_kakao),
-        contentColor = NonggleTheme.colors.g2,
-        backgroundColor = NonggleTheme.colors.g4,
-        titleTextStyle = NonggleTheme.typography.b4_btn,
-        imageResource = R.drawable.googleimg
+fun LoginScreenPreview() {
+    LoginScreen(
+        onEvent = {}
     )
 }
