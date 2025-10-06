@@ -15,6 +15,7 @@ sealed interface AppResult<out T> {
         data class NotFound(val throwable: Throwable) : Failure
         data class OutOfRange(val throwable: Throwable) : Failure
         data class Internal(val throwable: Throwable) : Failure
+        data class Cancelled(val throwable: Throwable) : Failure
         data class Unknown(val throwable: Throwable) : Failure
 
         fun asThrowable(): Throwable = when (this) {
@@ -23,6 +24,7 @@ sealed interface AppResult<out T> {
             is NotFound -> throwable
             is OutOfRange -> throwable
             is Internal -> throwable
+            is Cancelled -> throwable
             is Unknown -> throwable
         }
     }

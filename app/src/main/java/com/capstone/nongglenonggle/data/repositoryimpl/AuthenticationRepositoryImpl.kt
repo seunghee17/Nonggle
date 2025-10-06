@@ -49,6 +49,10 @@ class AuthenticationRepositoryImpl @Inject constructor(
                 }
                 AppResultLogger.logFailure(failure)
                 failure
+            } catch (e: CancellationException) {
+                val failure = AppResult.Failure.Cancelled(e)
+                AppResultLogger.logFailure(failure)
+                failure
             } catch (e: Exception) {
                 val failure = AppResult.Failure.Unknown(e)
                 AppResultLogger.logFailure(failure)
