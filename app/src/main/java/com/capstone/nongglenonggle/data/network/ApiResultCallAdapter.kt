@@ -31,7 +31,11 @@ private class ApiResultCall<R>(
             private fun Response<R>.toApiResult(): ApiResult<R> {
                 // Http error response (4xx - 5xx)
                 if (!isSuccessful) {
-                    val errorBody = errorBody()!!.string()
+                    val errorBody = try {
+                        errorBody()?.string().orEmpty()
+                    } catch (e: Exception) {
+                        ""
+                    }
                     return ApiResult.Failure.HttpError(
                         code = code(),
                         message = message(),
