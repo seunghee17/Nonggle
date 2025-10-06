@@ -143,7 +143,7 @@ fun SignupAgreeTermsScreen (
                 if(uiState.userSignupType == UserType.MANAGER) {
                     viewModel.setEvent(event = SignupContract.Event.navigateToStep3Button)
                 } else {
-                    viewModel.setEvent(event = SignupContract.Event.navigateToHomeButton)
+                    viewModel.setEvent(event = SignupContract.Event.SaveUserInfo(context))
                 }
             })
     }

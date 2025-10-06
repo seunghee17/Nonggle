@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.app.navigation.Screens
 import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
@@ -199,7 +198,7 @@ fun SignupGetFarmerInfoScreen(
                 .align(Alignment.BottomCenter),
             enable = true,
             onClick = {
-                viewModel.setEvent(SignupContract.Event.navigateToHomeButton)
+                viewModel.setEvent(SignupContract.Event.SaveUserInfo(context))
             }
         )
     }

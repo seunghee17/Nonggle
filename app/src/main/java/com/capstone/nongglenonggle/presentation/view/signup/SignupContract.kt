@@ -1,5 +1,6 @@
 package com.capstone.nongglenonggle.presentation.view.signup
 
+import android.content.Context
 import com.capstone.nongglenonggle.core.base.UiEffect
 import com.capstone.nongglenonggle.core.base.UiEvent
 import com.capstone.nongglenonggle.core.base.UiState
@@ -45,7 +46,7 @@ class SignupContract {
         data class SelectFarmerCategory(val category: String): Event()
         object navigateToStep1Button: Event()
         object navigateToStep3Button: Event()
-        object navigateToHomeButton: Event()
+        data class SaveUserInfo(val context: Context): Event()
     }
 
     sealed class Effect: UiEffect {

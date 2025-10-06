@@ -1,5 +1,6 @@
 package com.capstone.nongglenonggle.presentation.view.signup
 
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import com.capstone.nongglenonggle.core.common.logger.AppResultMessageProvider
@@ -141,8 +142,8 @@ class SignupViewModel @Inject constructor(
                 is SignUpEvent.navigateToStep3Button -> {
                     postEffect(effect = SignUpEffect.NavigateToStep3Screen)
                 }
-                is SignUpEvent.navigateToHomeButton -> {
-                    sendUserInfoToDB()
+                is SignUpEvent.SaveUserInfo -> {
+                    sendUserInfoToDB(context = event.context)
                 }
             }
         }
@@ -166,7 +167,7 @@ class SignupViewModel @Inject constructor(
         postEffect(SignUpEffect.NavigateToAddressSearchScreen)
     }
 
-    fun sendUserInfoToDB() {
+    fun sendUserInfoToDB(context: Context) {
         if(currentState.submitState is SignupContract.SubmitState.Loading) return
 
         updateState(currentState.copy(isLoading = true))
@@ -184,7 +185,7 @@ class SignupViewModel @Inject constructor(
                     postEffect(effect = SignUpEffect.NavigateToHomeScreen)
                 }
                 is AppResult.Failure -> {
-                    val errorMsg = AppResultMessageProvider.message(result)
+                    val errorMsg = AppResultMessageProvider.message(context,result)
                     postEffect(SignUpEffect.SetToastMessage(errorMsg))
                 }
             }
