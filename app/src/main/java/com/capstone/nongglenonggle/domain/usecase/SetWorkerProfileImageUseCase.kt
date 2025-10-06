@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class SetWorkderProfileImageUseCase @Inject constructor(
+class SetWorkerProfileImageUseCase @Inject constructor(
     private val workerResumeRepository: WorkerResumeRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
