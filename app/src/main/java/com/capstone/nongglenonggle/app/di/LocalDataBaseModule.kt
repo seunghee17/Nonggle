@@ -25,7 +25,6 @@ object LocalDataBaseModule {
             RegionDatabase::class.java,
             "region_database"
         )
-            .addMigrations(RegionDatabase.MIGRATION_1_2)
             .build()
     }
 
