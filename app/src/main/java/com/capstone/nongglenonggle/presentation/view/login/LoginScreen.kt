@@ -40,7 +40,7 @@ internal fun LoginRoute(
 
                 is LoginEffect.NavigateToWorkerHome -> navigateToWorkerHome()
 
-                is LoginEffect.UnAvailableToastmessage -> {
+                is LoginEffect.ShowToastMessage -> {
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
                 }
 

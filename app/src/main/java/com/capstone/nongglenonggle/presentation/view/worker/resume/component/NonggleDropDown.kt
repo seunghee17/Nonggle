@@ -29,15 +29,14 @@ class ExposedDropMenuStateHolder {
     var value by mutableStateOf("")
     var selectedIndex by mutableStateOf(-1)
     var size by mutableStateOf(Size.Zero)
-    val icon: Int
-    @Composable get() = if(enabled) {
-       R.drawable.caretup
+    fun getIcon(): Int = if (enabled) {
+        R.drawable.caretup
     } else {
         R.drawable.caretdown
     }
 
     val items = (1..31).map { "${it}일" }
-    fun onEabled(newValue: Boolean) {
+    fun onEnabled(newValue: Boolean) {
         enabled = newValue
     }
 
@@ -72,19 +71,19 @@ fun PreviewDropDownMenu() {
                 label = { Text(text = "label") },
                 trailingIcon = {
                     Icon(
-                        painter = painterResource(id = stateHolder.icon),
+                        painter = painterResource(id = stateHolder.getIcon()),
                         contentDescription = null,
                         Modifier.clickable {
-                            stateHolder.onEabled(!(stateHolder.enabled))
+                            stateHolder.onEnabled(!(stateHolder.enabled))
                         }
                     )
                 },
             )
             DropdownMenu(
-                modifier = Modifier.width(with(LocalDensity.current) {stateHolder.size.width.toDp()}),
+                modifier = Modifier.width(with(LocalDensity.current) { stateHolder.size.width.toDp() }),
                 expanded = stateHolder.enabled,
                 onDismissRequest = {
-                    stateHolder.onEabled(false)
+                    stateHolder.onEnabled(false)
                 }
             ) {
                 stateHolder.items.forEachIndexed { index, s ->
@@ -92,7 +91,7 @@ fun PreviewDropDownMenu() {
                         text = { Text(text = s) },
                         onClick = {
                             stateHolder.onSelectedIndex(index)
-                            stateHolder.onEabled(false)
+                            stateHolder.onEnabled(false)
                         }
                     )
                 }

@@ -5,7 +5,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.jetbrains.annotations.NotNull
 import timber.log.Timber
 
-class ReleaseTree(private val crashlytics: FirebaseCrashlytics) : @NotNull Timber.Tree() {
+class ReleaseTree(private val crashlytics: FirebaseCrashlytics) : Timber.Tree() {
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if (priority == Log.ERROR) {
 

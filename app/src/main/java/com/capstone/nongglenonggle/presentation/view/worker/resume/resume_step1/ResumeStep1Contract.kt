@@ -41,7 +41,7 @@ class ResumeStep1Contract {
         object ClearUserName : Event
         data class SetUserName(val name: String) : Event
         data class SetBirthDate(val birthDate: Date) : Event
-        data class SetCertificateAvailable(val updateState: String) : Event
+        data class SetCertificateAvailable(val optionKey: String) : Event
 
         //자격증 textfield 입력 및 지우기
         data class SetUserCertificateDetail(val certificate: String) : Event

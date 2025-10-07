@@ -32,7 +32,7 @@ object AppResultLogger {
                 AppLogger.e("$tag: 알 수 없는 오류 발생", failure.throwable)
             }
 
-            is AppResult.Failure.Cancelled -> AppLogger.e("$tag - 사용자가 작업을 취소했습니다.", failure.throwable)
+            is AppResult.Failure.Cancelled -> AppLogger.e("$tag: 사용자가 작업을 취소했습니다.", failure.throwable)
         }
     }
 }

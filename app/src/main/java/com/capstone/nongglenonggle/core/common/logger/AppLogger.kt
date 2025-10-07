@@ -6,7 +6,9 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import timber.log.Timber
 
 object AppLogger {
+    @Volatile
     private var crashlytics: FirebaseCrashlytics? = null
+    @Volatile
     private var analytics: FirebaseAnalytics? = null
 
     fun init(crashlytics: FirebaseCrashlytics?, analytics: FirebaseAnalytics?) {
@@ -20,7 +22,11 @@ object AppLogger {
 
     fun e(message: String, throwable: Throwable? = null) {
         Timber.e(throwable, message)
-        crashlytics?.recordException(throwable ?: Exception(message))
+        val exception = throwable ?: Exception(message).apply {
+            stackTrace = Thread.currentThread().stackTrace.drop(1).toTypedArray()
+        }
+        crashlytics?.recordException(exception)
+
     }
 
     fun event(name: String, params: Bundle? = null) {

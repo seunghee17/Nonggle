@@ -23,9 +23,6 @@ fun NonggleBottomSheet(
     onDismissRequest: () -> Unit,
     sheetState: SheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
-        confirmValueChange = { newState ->
-            newState != SheetValue.Hidden
-        }
     ),
     occupyWeight: Float = 0.9f,
     header: @Composable () -> Unit = {},

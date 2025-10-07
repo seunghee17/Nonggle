@@ -7,7 +7,6 @@ import com.capstone.nongglenonggle.core.base.UiEvent
 import com.capstone.nongglenonggle.core.base.UiState
 import com.capstone.nongglenonggle.data.model.login.SignInState
 import com.capstone.nongglenonggle.data.model.login.UserData
-import javax.inject.Inject
 
 class LoginContract {
     data class State(
@@ -27,7 +26,7 @@ class LoginContract {
     sealed class Effect: UiEffect {
         object NavigateToEnrollUser: Effect()
         object NavigateToWorkerHome: Effect()
-        data class UnAvailableToastmessage(val message: String): Effect()
+        data class ShowToastMessage(val message: String): Effect()
         data class LaunchGoogleSignIn(val intentSender: IntentSender) : Effect()
     }
 }

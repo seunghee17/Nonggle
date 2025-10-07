@@ -43,11 +43,11 @@ class WorkerResumeRepositoryImpl @Inject constructor(
                     UNAVAILABLE -> AppResult.Failure.NetworkError(e)
                     else -> AppResult.Failure.Unknown(e)
                 }
-                AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                AppResultLogger.logFailure<WorkerResumeRepositoryImpl>(failure)
                 failure
             } catch (e: Exception) {
                 val failure = AppResult.Failure.Unknown(e)
-                AppResultLogger.logFailure<AuthenticationRepositoryImpl>(failure)
+                AppResultLogger.logFailure<WorkerResumeRepositoryImpl>(failure)
                 failure
             }
         }

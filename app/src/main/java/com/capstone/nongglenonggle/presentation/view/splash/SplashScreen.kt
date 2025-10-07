@@ -37,9 +37,6 @@ internal fun SplashRoute(
 
     LaunchedEffect(Unit) {
         delay(2000L)
-    }
-
-    LaunchedEffect(true) {
         effectFlow.collectLatest { effect ->
             when (effect) {
                 is SplashEffect.NavigateToWorkerHome -> navigateToWorkerHome()
@@ -50,7 +47,7 @@ internal fun SplashRoute(
 }
 
 @Composable
-fun SpalashScreen() {
+fun SplashScreen() {
     val context = LocalContext.current
 
     Column(
@@ -92,6 +89,6 @@ fun SpalashScreen() {
 @Composable
 fun PreviewSplashScreen() {
     NonggleTheme {
-        SpalashScreen()
+        SplashScreen()
     }
 }

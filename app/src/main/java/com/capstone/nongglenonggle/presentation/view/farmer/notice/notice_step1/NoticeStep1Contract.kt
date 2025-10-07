@@ -15,11 +15,11 @@ class NoticeStep1Contract {
         data class SetUserName(val name: String) : Event
         object ClearUserName: Event
         data class SetUserPhoneNumber(val phoneNumber: String): Event
-        object ClearUserPhoneNunber: Event
-        object goToAddressSearchScreen: Event
+        object ClearUserPhoneNumber: Event
+        object GoToAddressSearchScreen: Event
     }
 
     sealed interface Effect : UiEffect {
-        data class UnAvailableToastmessage(val message: String): Effect
+        data class ShowToastMessage(val message: String): Effect
     }
 }

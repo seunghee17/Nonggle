@@ -2,7 +2,6 @@ package com.capstone.nongglenonggle.presentation.view.login
 
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
-import com.capstone.nongglenonggle.core.common.logger.AppResultMessageProvider
 import com.capstone.nongglenonggle.data.model.login.SignInResult
 import com.capstone.nongglenonggle.data.model.login.SignInState
 import com.capstone.nongglenonggle.data.AppResult
@@ -44,7 +43,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun handleKakaoLogin() {
-        postEffect(LoginEffect.UnAvailableToastmessage("점검 중입니다. 다른 로그인 수단을 이용해주세요."))
+        postEffect(LoginEffect.ShowToastMessage("점검 중입니다. 다른 로그인 수단을 이용해주세요."))
     }
 
     fun handleSignInResult(result: SignInResult) {

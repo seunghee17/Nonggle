@@ -171,9 +171,6 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
             }
         }
     }
-
-
-
 }
 
 @Composable

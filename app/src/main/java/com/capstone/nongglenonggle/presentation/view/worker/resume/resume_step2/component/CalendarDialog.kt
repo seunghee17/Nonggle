@@ -88,6 +88,8 @@ fun datePickerDialog(
                     month = month,
                     onYearChange = { year = it },
                     onMonthChange = { month = it },
+                    minDate = minDate,
+                    maxDate = maxDate
                 )
                 Spacer(Modifier.height(16.dp))
                 Row(

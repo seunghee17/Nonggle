@@ -27,7 +27,6 @@ import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,7 +39,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.common.dialog.NonggleBottomSheet
@@ -52,7 +50,6 @@ import com.capstone.nongglenonggle.core.noRippleClickable
 import com.capstone.nongglenonggle.presentation.view.worker.resume.component.ExposedDropMenuStateHolder
 import com.capstone.nongglenonggle.presentation.view.worker.resume.component.rememberExposedMenuStateHolder
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.State
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2ViewModel
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Event as Step2Event
 
 
@@ -226,7 +223,7 @@ fun ResumeCareerAddBottomSheet(
                                     modifier = Modifier
                                         .weight(0.5f),
                                     onClick = {
-                                        stateHolder.onEabled(true)
+                                        stateHolder.onEnabled(true)
                                     },
                                     title = state.careerPeriodDay,
                                     titleColor = if(state.careerPeriodDay == "근무 일 수 선택") NonggleTheme.colors.g3 else Color.Black,
@@ -372,7 +369,7 @@ fun selectDateBox (
 ) {
     ExposedDropdownMenuBox(
         expanded = stateHolder.enabled,
-        onExpandedChange = {stateHolder.onEabled(!stateHolder.enabled)},
+        onExpandedChange = {stateHolder.onEnabled(!stateHolder.enabled)},
         modifier = modifier
     ) {
         Box(
@@ -411,7 +408,7 @@ fun selectDateBox (
             modifier = Modifier.width(with(LocalDensity.current) {stateHolder.size.width.toDp()}),
             expanded = stateHolder.enabled,
             onDismissRequest = {
-                stateHolder.onEabled(false)
+                stateHolder.onEnabled(false)
             },
             containerColor = Color.White
         ) {
@@ -421,7 +418,7 @@ fun selectDateBox (
                     onClick = {
                         stateHolder.onSelectedIndex(index)
                         storeValue()
-                        stateHolder.onEabled(false)
+                        stateHolder.onEnabled(false)
                     }
                 )
             }
