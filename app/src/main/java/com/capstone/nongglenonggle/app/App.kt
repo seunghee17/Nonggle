@@ -12,13 +12,18 @@ import timber.log.Timber
 
 @HiltAndroidApp
 class App : Application() {
+    lateinit var crashlytics: FirebaseCrashlytics
     override fun onCreate() {
         super.onCreate()
-        val crashlytics = FirebaseCrashlytics.getInstance()
-        AppLogger.init(
-            crashlytics = crashlytics,
-            analytics = Firebase.analytics
-        )
+        try {
+            crashlytics = FirebaseCrashlytics.getInstance()
+            AppLogger.init(
+                crashlytics = crashlytics,
+                analytics = Firebase.analytics
+            )
+        } catch (e: Exception) {
+            AppLogger.e("Firebase initialization failed", e)
+        }
 
         if(BuildConfig.DEBUG) {
             Timber.plant(object: Timber.DebugTree(){
