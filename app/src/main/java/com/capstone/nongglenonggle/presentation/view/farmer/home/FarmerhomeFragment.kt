@@ -88,7 +88,7 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
                 //notice정보 패칭하는 함수 호출
                 viewModel.viewModelScope.launch {
                     viewModel.fetchNoticeVisible()
-                    val data = viewModel.setUserFromRef(data?.refs.get(0))
+                    val data = viewModel.setUserFromRef(data.refs.get(0))
                     if(data != null) {
                         viewModel._noticeData.value = data
                     }

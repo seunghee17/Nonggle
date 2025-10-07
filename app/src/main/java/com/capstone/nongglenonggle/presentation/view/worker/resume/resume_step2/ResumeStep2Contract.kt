@@ -3,7 +3,7 @@ package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2
 import com.capstone.nongglenonggle.core.base.UiEffect
 import com.capstone.nongglenonggle.core.base.UiEvent
 import com.capstone.nongglenonggle.core.base.UiState
-import com.capstone.nongglenonggle.data.model.worker.ResumeStep2UserCareerListItem
+import com.capstone.nongglenonggle.data.model.worker.UserCareerListItemModel
 import java.time.LocalDate
 import java.time.Period
 
@@ -11,7 +11,7 @@ class ResumeStep2Contract {
     data class State(
         val isLoading: Boolean = false,
         val showCareerAddBottomSheet: Boolean = false,
-        val careerList: List<ResumeStep2UserCareerListItem> = emptyList(),
+        val careerList: List<UserCareerListItemModel> = emptyList(),
         val totalPeriod: Period? = null,
         val totalPeriodParsing: String = "총 0년 0개월 0일",
 
@@ -37,7 +37,7 @@ class ResumeStep2Contract {
         data class ShowCareerBottomSheet(val bottomSheetState: Boolean): Event
         data class SetCareerTitle(val title: String) : Event
         object ClearCareerTitle : Event
-        data class RemoveCareerItem(val item: ResumeStep2UserCareerListItem): Event
+        data class RemoveCareerItem(val item: UserCareerListItemModel): Event
 
         //bottomsheet 이벤트
         data class ShowStartDatePickerDialog(val showDialog: Boolean): Event

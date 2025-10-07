@@ -11,7 +11,7 @@ import com.capstone.nongglenonggle.presentation.view.worker.resume.main_screen.R
 import com.capstone.nongglenonggle.presentation.view.worker.resume.main_screen.ResumeTabScreen
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1ViewModel
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2ViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep3ViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3ViewModel
 
 fun NavGraphBuilder.WorkerResumeGraph(navHostController: NavHostController) {
     navigation(

@@ -27,11 +27,11 @@ import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
-import com.capstone.nongglenonggle.data.model.worker.ResumeStep2UserCareerListItem
+import com.capstone.nongglenonggle.data.model.worker.UserCareerListItemModel
 
 @Composable
 fun careerItem(
-    resumeUserCareerListItem: ResumeStep2UserCareerListItem,
+    resumeUserCareerListItem: UserCareerListItemModel,
     deleteAction: () -> Unit,
 ) {
     Box(

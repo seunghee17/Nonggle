@@ -65,7 +65,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
         withContext(ioDispatcher) {
             val user = firebaseAuth.currentUser
             if (user == null) {
-                val failure = AppResult.Failure.Unknown(Throwable("회원정보 저장에 실패했습니다. 다시 시도해주세요."))
+                val failure = AppResult.Failure.Unknown(Throwable("회원정보 로드에 실패했습니다. 다시 시도해주세요."))
                 AppResultLogger.logFailure(failure)
                 failure
 

@@ -6,6 +6,8 @@ import com.capstone.nongglenonggle.core.base.BaseViewModel
 import com.capstone.nongglenonggle.core.common.logger.AppResultMessageProvider
 import com.capstone.nongglenonggle.data.model.sign_up.UserDataClass
 import com.capstone.nongglenonggle.data.AppResult
+import com.capstone.nongglenonggle.data.model.remote_model.SubRegion
+import com.capstone.nongglenonggle.data.model.worker.RegionListModel
 import com.capstone.nongglenonggle.data.network.onFailure
 import com.capstone.nongglenonggle.data.network.onSuccess
 import com.capstone.nongglenonggle.domain.usecase.GetRegionUseCase
@@ -33,7 +35,7 @@ class SignupViewModel @Inject constructor(
         viewModelScope.launch {
             getRegionUseCase.invoke()
                 .onSuccess {
-                    saveRegionToLocalDataBaseUseCase.invoke(it.regions)
+                    saveRegionToLocalDataBaseUseCase.invoke(changeToRegionList(it.regions))
                 }
                 .onFailure {
 
@@ -198,6 +200,14 @@ class SignupViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun changeToRegionList(subRegionList: List<SubRegion>) : List<RegionListModel> {
+        val regionList = mutableListOf<RegionListModel>()
+        subRegionList.forEach {
+            regionList.add(RegionListModel(it.name, it.districts))
+        }
+        return regionList
     }
 }
 

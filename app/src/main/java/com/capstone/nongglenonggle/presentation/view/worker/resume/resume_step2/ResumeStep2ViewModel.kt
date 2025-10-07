@@ -1,8 +1,7 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2
 
-import android.util.Log
 import com.capstone.nongglenonggle.core.base.BaseViewModel
-import com.capstone.nongglenonggle.data.model.worker.ResumeStep2UserCareerListItem
+import com.capstone.nongglenonggle.data.model.worker.UserCareerListItemModel
 import java.time.format.DateTimeFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDate
@@ -100,7 +99,7 @@ class ResumeStep2ViewModel @Inject constructor() : BaseViewModel<Step2Event, Ste
         }
     }
 
-    private fun parsingCareerItem(): ResumeStep2UserCareerListItem {
+    private fun parsingCareerItem(): UserCareerListItemModel {
         var period: String = ""
         var periodDetail: String = ""
         var periodData: Period? = null
@@ -114,7 +113,7 @@ class ResumeStep2ViewModel @Inject constructor() : BaseViewModel<Step2Event, Ste
             periodDetail = currentState.careerPeriodDay
             periodData = Period.ofDays(currentState.careerPeriodDay.filter { it.isDigit() }.toInt())
         }
-        val careerItem = ResumeStep2UserCareerListItem(
+        val careerItem = UserCareerListItemModel(
             careerTitle = currentState.careerTextFieldValue,
             careerPeriodText = period,
             careerPeriodDetail = periodDetail,
