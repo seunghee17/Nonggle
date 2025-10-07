@@ -31,42 +31,6 @@ import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
 import java.util.LinkedHashMap
 
-@Composable
-fun certificationChipItem(
-    modifier: Modifier = Modifier,
-    removeChip: () -> Unit,
-    certificationTitle: String,
-) {
-    OutlinedCard(
-        modifier = modifier
-            .height(48.dp)
-            .fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White,
-        ),
-    ) {
-        Row(
-            modifier = modifier,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                certificationTitle,
-                modifier = Modifier.padding(end = 16.dp),
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontFamily = spoqahanSansneo,
-                    fontWeight = FontWeight.Normal,
-                    color = NonggleTheme.colors.g2
-                )
-            )
-            Image(
-                modifier = Modifier.padding(end = 16.dp),
-                painter = painterResource(id = R.drawable.xcircle),
-                contentDescription = null
-            )
-        }
-    }
-}
 
 @Composable
 fun genderSelectButton(
@@ -119,7 +83,7 @@ fun certificationChipItem(
     removeChip: () -> Unit,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .wrapContentWidth()
             .wrapContentHeight()
             .border(

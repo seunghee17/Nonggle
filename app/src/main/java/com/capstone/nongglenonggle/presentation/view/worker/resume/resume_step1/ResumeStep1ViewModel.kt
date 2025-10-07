@@ -40,7 +40,7 @@ class ResumeStep1ViewModel @Inject constructor() :
             }
 
             is Step1Event.SetCertificateAvailable -> {
-                selectWorkerCertificationAvailable(event.updateState)
+                selectWorkerCertificationAvailable(event.optionKey)
             }
 
             is Step1Event.SetUserName -> {
@@ -104,12 +104,12 @@ class ResumeStep1ViewModel @Inject constructor() :
         updateState(currentState.copy(genderSelectedMap = LinkedHashMap(genderStateMap)))
     }
 
-    private fun selectWorkerCertificationAvailable(updateState: String) {
+    private fun selectWorkerCertificationAvailable(optionKey: String) {
         val certificateAvailableMap = currentState.certificationPossessionSelectedMap.toMutableMap()
         certificateAvailableMap.keys.forEach { key ->
             certificateAvailableMap[key] = false
         }
-        certificateAvailableMap[updateState] = true
+        certificateAvailableMap[optionKey] = true
         updateState(
             currentState.copy(
                 certificationPossessionSelectedMap = LinkedHashMap(
