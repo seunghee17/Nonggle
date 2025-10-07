@@ -28,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -39,16 +40,16 @@ import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.component.careerItem
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Event as Step2Event
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Effect as Step2Effect
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.State as Step2State
 
 
 @Composable
-fun ResumeStep2Screen(
+internal fun ResumeStep2Route(
     viewModel: ResumeStep2ViewModel,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val context = LocalContext.current
     val effectFlow = viewModel.effect
-    val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
 
     LaunchedEffect(true) {
         effectFlow.collect { effect ->
@@ -56,16 +57,31 @@ fun ResumeStep2Screen(
                 is Step2Effect.ShowErrorToast -> {
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
                 }
-                else -> {}
             }
         }
     }
 
-    if (uiState.showCareerAddBottomSheet) {
+    ResumeStep2Screen(
+        state = uiState,
+        onEvent = viewModel::setEvent
+    )
+}
+
+@Composable
+fun ResumeStep2Screen(
+    state: Step2State,
+    onEvent: (Step2Event) -> Unit,
+) {
+    val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
+
+
+    if (state.showCareerAddBottomSheet) {
         ResumeCareerAddBottomSheet(
-            viewModel = viewModel,
+            state = state,
+            onEvent = onEvent,
             context = context,
-            onDismissRequest = { viewModel.setEvent(Step2Event.ShowCareerBottomSheet(false)) }
+            onDismissRequest = { onEvent(Step2Event.ShowCareerBottomSheet(false)) }
         )
     }
 
@@ -114,7 +130,7 @@ fun ResumeStep2Screen(
                     Text(
                         modifier = Modifier.padding(vertical = 16.dp),
                         textAlign = TextAlign.Center,
-                        text = uiState.totalPeriodParsing,
+                        text = state.totalPeriodParsing,
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontFamily = spoqahanSansneo,
@@ -127,11 +143,11 @@ fun ResumeStep2Screen(
             }
         }
         this.items(
-            items = uiState.careerList,
+            items = state.careerList,
             key = { it.id }
         ) { item ->
             careerItem(item, {
-                viewModel.setEvent(Step2Event.RemoveCareerItem(item = item))
+                onEvent(Step2Event.RemoveCareerItem(item = item))
             })
         }
         item {
@@ -145,7 +161,7 @@ fun ResumeStep2Screen(
                         shape = RoundedCornerShape(4.dp)
                     )
                     .noRippleClickable {
-                        viewModel.setEvent(Step2Event.ShowCareerBottomSheet(true))
+                        onEvent(Step2Event.ShowCareerBottomSheet(true))
                     },
             ) {
                 Row(
@@ -172,4 +188,13 @@ fun ResumeStep2Screen(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ResumeStep2PreviewScreen() {
+    ResumeStep2Screen(
+        state = Step2State(),
+        onEvent = {}
+    )
 }

@@ -51,6 +51,7 @@ import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
 import com.capstone.nongglenonggle.presentation.view.worker.resume.component.ExposedDropMenuStateHolder
 import com.capstone.nongglenonggle.presentation.view.worker.resume.component.rememberExposedMenuStateHolder
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.State
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2ViewModel
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Contract.Event as Step2Event
 
@@ -59,33 +60,32 @@ import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.
 @Composable
 fun ResumeCareerAddBottomSheet(
     modifier: Modifier = Modifier,
-    viewModel: ResumeStep2ViewModel,
+    state: State,
+    onEvent: (Step2Event) -> Unit,
     context: Context,
     onDismissRequest: () -> Unit,
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val effectFlow = viewModel.effect
     val stateHolder = rememberExposedMenuStateHolder()
 
 
-    if(uiState.showCalendarDialogStart) {
+    if(state.showCalendarDialogStart) {
         datePickerDialog(
             context = context,
             onConfirm = { pickDate ->
-                viewModel.setEvent(Step2Event.SetWorkStartDate(date = pickDate))
-                viewModel.setEvent(Step2Event.ShowStartDatePickerDialog(showDialog = false))
+                onEvent(Step2Event.SetWorkStartDate(date = pickDate))
+                onEvent(Step2Event.ShowStartDatePickerDialog(showDialog = false))
             },
-            onDismissRequest = {viewModel.setEvent(Step2Event.ShowStartDatePickerDialog(showDialog = false))}
+            onDismissRequest = {onEvent(Step2Event.ShowStartDatePickerDialog(showDialog = false))}
         )
     }
-    if(uiState.showCalendarDialogEnd) {
+    if(state.showCalendarDialogEnd) {
         datePickerDialog(
             context = context,
             onConfirm = { pickDate ->
-                viewModel.setEvent(Step2Event.SetWorkEndDate(date = pickDate))
-                viewModel.setEvent(Step2Event.ShowEndDatePickerDialog(showDialog = false))
+                onEvent(Step2Event.SetWorkEndDate(date = pickDate))
+                onEvent(Step2Event.ShowEndDatePickerDialog(showDialog = false))
             },
-            onDismissRequest = {viewModel.setEvent(Step2Event.ShowEndDatePickerDialog(showDialog = false))}
+            onDismissRequest = {onEvent(Step2Event.ShowEndDatePickerDialog(showDialog = false))}
         )
     }
 
@@ -142,9 +142,9 @@ fun ResumeCareerAddBottomSheet(
                             .fillMaxWidth()
                             .padding(start = 4.dp),
                         textFieldType = TextFieldType.Standard,
-                        value = uiState.careerTextFieldValue,
+                        value = state.careerTextFieldValue,
                         onValueChange = {
-                            viewModel.setEvent(Step2Event.SetCareerTitle(it))
+                            onEvent(Step2Event.SetCareerTitle(it))
                         },
                         placeholder = {
                             Text(
@@ -176,28 +176,28 @@ fun ResumeCareerAddBottomSheet(
                                 .weight(0.5f)
                                 .wrapContentHeight(),
                             onClick = {
-                                viewModel.setEvent(
+                                onEvent(
                                     Step2Event.SetWorkPeriodRange(false)
                                 )
                             },
                             title = context.getString(R.string.개월_미만),
-                            isActivate = uiState.isLongerThenMonth == false,
+                            isActivate = state.isLongerThenMonth == false,
                         )
                         periodOfWork(
                             modifier = Modifier
                                 .weight(0.5f)
                                 .wrapContentHeight(),
                             onClick = {
-                                viewModel.setEvent(
+                                onEvent(
                                     Step2Event.SetWorkPeriodRange(true)
                                 )
                             },
                             title = context.getString(R.string.개월_이상),
-                            isActivate = uiState.isLongerThenMonth == true
+                            isActivate = state.isLongerThenMonth == true
                         )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
-                    if(uiState.isLongerThenMonth != null) {
+                    if(state.isLongerThenMonth != null) {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -208,31 +208,31 @@ fun ResumeCareerAddBottomSheet(
                                 modifier = Modifier
                                     .weight(0.5f)
                                     .wrapContentHeight(),
-                                onClick = {viewModel.setEvent(event = Step2Event.ShowStartDatePickerDialog(true))},
-                                title = uiState.showCareerStartDate,
-                                titleColor = if(uiState.careerStartDate == null) NonggleTheme.colors.g3 else Color.Black,
+                                onClick = {onEvent(Step2Event.ShowStartDatePickerDialog(true))},
+                                title = state.showCareerStartDate,
+                                titleColor = if(state.careerStartDate == null) NonggleTheme.colors.g3 else Color.Black,
                             )
-                            if(uiState.isLongerThenMonth == true) {
+                            if(state.isLongerThenMonth == true) {
                                 selectCalendarBox(
                                     modifier = Modifier
                                         .weight(0.5f)
                                         .wrapContentHeight(),
-                                    onClick = {viewModel.setEvent(event = Step2Event.ShowEndDatePickerDialog(true))},
-                                    title = uiState.showCareerEndDate,
-                                    titleColor = if(uiState.careerEndDate == null) NonggleTheme.colors.g3 else Color.Black,
+                                    onClick = {onEvent(Step2Event.ShowEndDatePickerDialog(true))},
+                                    title = state.showCareerEndDate,
+                                    titleColor = if(state.careerEndDate == null) NonggleTheme.colors.g3 else Color.Black,
                                 )
-                            } else if(uiState.isLongerThenMonth == false) {
+                            } else if(state.isLongerThenMonth == false) {
                                 selectDateBox(
                                     modifier = Modifier
                                         .weight(0.5f),
                                     onClick = {
                                         stateHolder.onEabled(true)
                                     },
-                                    title = uiState.careerPeriodDay,
-                                    titleColor = if(uiState.careerPeriodDay == "근무 일 수 선택") NonggleTheme.colors.g3 else Color.Black,
+                                    title = state.careerPeriodDay,
+                                    titleColor = if(state.careerPeriodDay == "근무 일 수 선택") NonggleTheme.colors.g3 else Color.Black,
                                     stateHolder = stateHolder,
                                     storeValue = {
-                                        viewModel.setEvent(event = Step2Event.SetWorkPeriodDate(date = stateHolder.value))
+                                        onEvent(Step2Event.SetWorkPeriodDate(date = stateHolder.value))
                                     }
                                 )
                             }
@@ -255,9 +255,9 @@ fun ResumeCareerAddBottomSheet(
                             .height(144.dp),
                         containerColor = Color.White,
                         textFieldType = TextFieldType.Filled,
-                        value = uiState.careerDetailContent,
+                        value = state.careerDetailContent,
                         onValueChange = {
-                            viewModel.setEvent(event = Step2Event.SetCareerDetail(it))
+                            onEvent(Step2Event.SetCareerDetail(it))
                         },
                         placeholder = {
                             Text(text = context.getString(R.string.업무내용을_상세히), style = NonggleTheme.typography.b1_main.copy(color = NonggleTheme.colors.g3))
@@ -273,9 +273,9 @@ fun ResumeCareerAddBottomSheet(
                     .padding(horizontal = 20.dp),
                 enabled = true,
                 onClick = {
-                    viewModel.setEvent(Step2Event.AddCareerItem)
-                    viewModel.setEvent(Step2Event.SetClearState)
-                    viewModel.setEvent(Step2Event.ShowCareerBottomSheet(false))
+                    onEvent(Step2Event.AddCareerItem)
+                    onEvent(Step2Event.SetClearState)
+                    onEvent(Step2Event.ShowCareerBottomSheet(false))
                 },
                 titleText = context.getString(R.string.추가하기),
                 titleTextStyle = NonggleTheme.typography.t3
