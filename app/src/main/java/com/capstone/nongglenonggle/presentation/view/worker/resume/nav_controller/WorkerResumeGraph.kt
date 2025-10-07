@@ -11,7 +11,7 @@ import com.capstone.nongglenonggle.presentation.view.worker.resume.main_screen.R
 import com.capstone.nongglenonggle.presentation.view.worker.resume.main_screen.ResumeTabScreen
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1ViewModel
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2ViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4ViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep3ViewModel
 
 fun NavGraphBuilder.WorkerResumeGraph(navHostController: NavHostController) {
     navigation(
@@ -19,18 +19,17 @@ fun NavGraphBuilder.WorkerResumeGraph(navHostController: NavHostController) {
         startDestination = Screens.WorkerResumeWriting.ResumeTabScreen.route
     ) {
         composable(route = Screens.WorkerResumeWriting.ResumeTabScreen.route) { entry ->
-            val parent =
-                remember(entry) { navHostController.getBackStackEntry(Screens.WorkerResumeWriting.route) }
+            val parent = remember(entry) { navHostController.getBackStackEntry(Screens.WorkerResumeWriting.route) }
             val mainViewModel: ResumeMainViewModel = hiltViewModel(parent)
             val step1viewModel: ResumeStep1ViewModel = hiltViewModel(parent)
             val step2viewModel: ResumeStep2ViewModel = hiltViewModel(parent)
-            val step4viewModel: ResumeStep4ViewModel = hiltViewModel(parent)
+            val step4viewModel: ResumeStep3ViewModel = hiltViewModel(parent)
             ResumeTabScreen(
                 navController = navHostController,
                 viewModel = mainViewModel,
                 step1ViewModel = step1viewModel,
                 step2ViewModel = step2viewModel,
-                step4ViewModel = step4viewModel,
+                step3ViewModel = step4viewModel,
             )
         }
     }
