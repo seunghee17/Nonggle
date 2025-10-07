@@ -30,7 +30,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,9 +61,8 @@ import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component.certificationButton
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component.certificationChipItem
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component.dateSpinnerBottomSheet
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component.DateSpinnerBottomSheet
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component.genderSelectButton
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Effect as Step1Effect
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Event as Step1Event
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.State as Step1State
 
@@ -118,7 +116,7 @@ fun ResumeStep1Screen(
     val isPhotoPickerAvailable = remember { isPhotoPickerAvailable(context) }
 
     if (state.showDatePickerSheet) {
-        dateSpinnerBottomSheet(
+        DateSpinnerBottomSheet(
             context = context,
             onConfirm = { picked ->
                 onEvent(Step1Event.SetBirthDate(picked))

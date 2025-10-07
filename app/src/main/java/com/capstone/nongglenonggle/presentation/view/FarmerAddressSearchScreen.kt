@@ -37,9 +37,8 @@ class JsBridge(private val onData: (String) -> Unit) {
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun AddressSearchWebViewScreen() {
+fun AddressSearchWebViewScreen(navHostController: NavHostController) {
     val context = LocalContext.current
-    val navController = rememberNavController()
 
     val webView = remember {
         WebView(context).apply {
@@ -47,7 +46,7 @@ fun AddressSearchWebViewScreen() {
             settings.domStorageEnabled = true
 
             addJavascriptInterface(JsBridge(onData = { address ->
-                goBackFromAddressSearch(selectAddress = address, navController)
+                goBackFromAddressSearch(selectAddress = address, navHostController)
             }), "Android")
             webViewClient = object: WebViewClient() {
                 override fun onPageFinished(view: WebView, url: String) {
