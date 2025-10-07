@@ -74,7 +74,7 @@ class LoginViewModel @Inject constructor(
                     }
                 }
                 is AppResult.Failure -> {
-                    postEffect(LoginEffect.NavigateToEnrollUser)
+                    postEffect(LoginEffect.ShowToastMessage("로그인을 다시 시도해주세요."))
                 }
             }
         }

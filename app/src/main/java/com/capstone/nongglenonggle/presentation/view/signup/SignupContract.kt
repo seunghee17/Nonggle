@@ -35,7 +35,7 @@ class SignupContract {
         object ClearUserName: Event()
 
         //약관동의 체크박스에 대한 event
-        object AcitivateAllTermCheckBox: Event()
+        object ActivateAllTermCheckBox: Event()
         object AcitivateAgeLimitCheckBox: Event()
         object AcitivateServiceUseTermCheckBox: Event()
         object AcitivatePersonalInfoCheckBox: Event()

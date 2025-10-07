@@ -6,6 +6,7 @@ import com.capstone.nongglenonggle.core.base.BaseViewModel
 import com.capstone.nongglenonggle.core.common.logger.AppResultMessageProvider
 import com.capstone.nongglenonggle.data.model.sign_up.UserDataClass
 import com.capstone.nongglenonggle.data.AppResult
+import com.capstone.nongglenonggle.data.network.onFailure
 import com.capstone.nongglenonggle.data.network.onSuccess
 import com.capstone.nongglenonggle.domain.usecase.GetRegionUseCase
 import com.capstone.nongglenonggle.domain.usecase.SaveRegionToLocalDataBaseUseCase
@@ -34,6 +35,9 @@ class SignupViewModel @Inject constructor(
                 .onSuccess {
                     saveRegionToLocalDataBaseUseCase.invoke(it.regions)
                 }
+                .onFailure {
+
+                }
         }
     }
 
@@ -55,7 +59,7 @@ class SignupViewModel @Inject constructor(
                     updateState(currentState.copy(userName = ""))
                 }
 
-                is SignUpEvent.AcitivateAllTermCheckBox -> {
+                is SignUpEvent.ActivateAllTermCheckBox -> {
                     val currentAllCheckboxState = currentState.allCheckBoxState
                     updateState(currentState.copy(allCheckBoxState = !currentAllCheckboxState))
                     updateState(

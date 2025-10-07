@@ -108,7 +108,7 @@ fun SignupAgreeTermsScreen (
         termsAllCheckBoxButton(
             modifier = Modifier.padding(horizontal = 20.dp),
             onClick = {
-                onEvent(SignupEvent.AcitivateAllTermCheckBox)
+                onEvent(SignupEvent.ActivateAllTermCheckBox)
             },
             termInfoText = context.getString(R.string.sign_up_agree_content_allAgree),
             checkBoxState = state.allCheckBoxState
