@@ -14,15 +14,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
-import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.common.component.NonggleTabRow
-import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Route
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1ViewModel
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Route
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2ViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep3Route
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep3ViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Route
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3ViewModel
 
 @Composable
 fun ResumeTabScreen(
@@ -77,13 +75,5 @@ fun ResumeTabScreen(
                }
            }
        }
-        FullButton(
-            modifier = Modifier
-                .fillMaxWidth(),
-            enabled = true,
-            onClick = {},
-            titleText = context.getString(R.string.next_btn_Title),
-            titleTextStyle = NonggleTheme.typography.t3
-        )
     }
 }

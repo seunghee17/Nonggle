@@ -27,5 +27,11 @@ class RegionDataRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getSubRegionList(parentRegion: String): List<String> {
+        return withContext(ioDispatcher) {
+            regionDao.getDistrictsByRegion(parentRegion).map { it.name }
+        }
+    }
+
 
 }

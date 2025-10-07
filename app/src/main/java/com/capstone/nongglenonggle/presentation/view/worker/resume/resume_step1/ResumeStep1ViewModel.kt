@@ -1,12 +1,11 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1
 
 import android.net.Uri
-import androidx.activity.result.ActivityResultLauncher
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.time.Instant
-import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.LinkedHashMap
+import java.util.Locale
 import javax.inject.Inject
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Effect as Step1Effect
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Event as Step1Event
@@ -52,14 +51,13 @@ class ResumeStep1ViewModel @Inject constructor() :
             }
 
             is Step1Event.SetBirthDate -> {
-                val locaUserBirthDate = Instant.ofEpochMilli(event.birthDate.time)
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate()
+                val koreanLocale = Locale("ko", "KR")
+                val formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일", koreanLocale)
 
                 updateState(
                     currentState.copy(
-                        birthDate = locaUserBirthDate,
-                        birthDatePresent = "${locaUserBirthDate.year}년 ${locaUserBirthDate.month}월 ${locaUserBirthDate.dayOfMonth}일"
+                        birthDate = event.birthDate,
+                        birthDatePresent = event.birthDate.format(formatter)
                     )
                 )
             }

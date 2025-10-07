@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,14 +36,12 @@ import com.capstone.nongglenonggle.core.common.dialog.NonggleBottomSheet
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import java.time.LocalDate
 import java.time.YearMonth
-import java.util.Calendar
-import java.util.Date
 import kotlin.math.min
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DateSpinnerBottomSheet(
-    onConfirm: (Date) -> Unit,
+    onConfirm: (LocalDate) -> Unit,
     onDismissRequest: () -> Unit,
     context: Context,
     initialDate: LocalDate = LocalDate.now(),
@@ -70,11 +69,12 @@ fun DateSpinnerBottomSheet(
     day = day.coerceIn(dayMin, dayMax)
 
     NonggleBottomSheet(
-        occupyWeight = 0.5f,
         onDismissRequest = onDismissRequest,
         header = {
             Row(
-                modifier = Modifier.padding(top = 16.dp, start = 20.dp),
+                modifier = Modifier
+                    .padding(top = 16.dp, start = 20.dp)
+                    .wrapContentHeight(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -100,7 +100,7 @@ fun DateSpinnerBottomSheet(
         bodyContent = {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .wrapContentHeight()
                     .padding(horizontal = 20.dp)
                     .imePadding()
             ) {
@@ -115,7 +115,6 @@ fun DateSpinnerBottomSheet(
                     minDate = minDate,
                     maxDate = maxDate
                 )
-
                 Spacer(Modifier.height(16.dp))
             }
         },
@@ -123,11 +122,7 @@ fun DateSpinnerBottomSheet(
             FullButton(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    val selectedDate = Calendar.getInstance().apply {
-                        set(Calendar.YEAR, year)
-                        set(Calendar.MONTH, month - 1)
-                        set(Calendar.DAY_OF_MONTH, day)
-                    }.time
+                    val selectedDate: LocalDate = LocalDate.of(year, month, day)
                     onConfirm(selectedDate)
                     onDismissRequest()
                 },

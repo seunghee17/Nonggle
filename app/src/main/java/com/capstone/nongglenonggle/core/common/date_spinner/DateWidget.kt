@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -31,7 +32,6 @@ fun DateSpinner(
     minDate: LocalDate = LocalDate.of(1900, 1, 1),
     maxDate: LocalDate = LocalDate.of(2100, 12, 31),
     zeroPadMonthDay: Boolean = true,
-    pickerHeight: Dp = 160.dp,
     pickerSpacing: Dp = 12.dp
 ) {
     val minYear = minDate.year
@@ -49,14 +49,16 @@ fun DateSpinner(
 
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(min = pickerHeight),
+            .wrapContentHeight()
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(pickerSpacing)
     ) {
         // YEAR
         SpinnerNumberPicker(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentHeight(),
             value = year,
             range = minYear..maxYear,
             onValueChange = onYearChange,
@@ -65,7 +67,9 @@ fun DateSpinner(
 
         // MONTH
         SpinnerNumberPicker(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentHeight(),
             value = month,
             range = monthMin..monthMax,
             onValueChange = onMonthChange,
@@ -74,7 +78,9 @@ fun DateSpinner(
 
         // DAY
         SpinnerNumberPicker(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentHeight(),
             value = day,
             range = dayMin..dayMax,
             onValueChange = onDayChange,
@@ -110,7 +116,9 @@ fun DateSpinnerWithOutDay(
     ) {
         // YEAR
         SpinnerNumberPicker(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentHeight(),
             value = year,
             range = minYear..maxYear,
             onValueChange = onYearChange,
@@ -119,7 +127,9 @@ fun DateSpinnerWithOutDay(
 
         // MONTH
         SpinnerNumberPicker(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentHeight(),
             value = month,
             range = monthMin..monthMax,
             onValueChange = onMonthChange,

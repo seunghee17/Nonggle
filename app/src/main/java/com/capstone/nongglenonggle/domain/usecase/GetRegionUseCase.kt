@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+//서버 로부터 전체 지역 데이터 받아옴
 class GetRegionUseCase @Inject constructor(
     private val remoteDataRepository: RemoteDataRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
