@@ -6,11 +6,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,52 +28,11 @@ import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
 
 @Composable
-fun preferRegionChip (
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    preferLocation: String,
-) {
-    Box(
-        modifier = Modifier
-            .wrapContentHeight()
-            .wrapContentWidth()
-            .background(color = NonggleTheme.colors.g4)
-            .border(
-                BorderStroke(1.dp, NonggleTheme.colors.g_line),
-                shape = RoundedCornerShape(28.dp)
-            ),
-
-        ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = preferLocation,
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontFamily = spoqahanSansneo,
-                    fontWeight = FontWeight.Normal,
-                    color = NonggleTheme.colors.g2
-                )
-            )
-            Image(
-                modifier = Modifier
-                    .padding(start = 8.dp)
-                    .noRippleClickable { onClick() },
-                painter = painterResource(R.drawable.xcircle),
-                contentDescription = null
-            )
-        }
-    }
-}
-
-@Composable
 fun workCategoryChip(
     modifier: Modifier = Modifier,
     categoryTitle: String,
     onClick: () -> Unit,
-    categoryActivate: Boolean
+    selectCategoryList: List<String>
 ) {
     OutlinedButton(
         modifier = modifier,
@@ -82,8 +43,59 @@ fun workCategoryChip(
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp
         ),
-        enableColor = if (categoryActivate) NonggleTheme.colors.m1 else NonggleTheme.colors.g_line,
-        enableContentColor = if (categoryActivate) NonggleTheme.colors.m1 else NonggleTheme.colors.g3,
+        enableColor = if (selectCategoryList.contains(categoryTitle)) NonggleTheme.colors.m1 else NonggleTheme.colors.g_line,
+        enableContentColor = if (selectCategoryList.contains(categoryTitle)) NonggleTheme.colors.m1 else NonggleTheme.colors.g3,
         pressedColor = NonggleTheme.colors.m1,
+    )
+}
+
+@Composable
+fun selectedChipItem(
+    modifier: Modifier = Modifier,
+    title: String,
+    removeChip: () -> Unit,
+) {
+    Box(
+        modifier = modifier
+            .wrapContentWidth()
+            .wrapContentHeight()
+            .border(
+                BorderStroke(1.dp, NonggleTheme.colors.g_line),
+                shape = RoundedCornerShape(20.dp)
+            )
+            .background(
+                color = NonggleTheme.colors.g4,
+                shape = RoundedCornerShape(20.dp)
+            )
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 11.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = title,
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = spoqahanSansneo,
+                    fontWeight = FontWeight.Normal,
+                    color = NonggleTheme.colors.g2)
+            )
+            Image(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .noRippleClickable { removeChip() },
+                painter = painterResource(R.drawable.xcircle),
+                contentDescription = null,
+            )
+        }
+    }
+}
+
+@Composable
+fun itemDivider() {
+    VerticalDivider(
+        color = NonggleTheme.colors.g_line,
+        thickness = 1.dp,
+        modifier = Modifier.fillMaxHeight()
     )
 }

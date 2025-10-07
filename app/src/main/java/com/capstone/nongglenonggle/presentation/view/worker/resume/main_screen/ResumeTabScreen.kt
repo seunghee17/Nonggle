@@ -17,12 +17,12 @@ import com.capstone.nongglenonggle.core.common.appbar.NonggleAppBar
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.common.component.NonggleTabRow
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Screen
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Route
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1ViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Screen
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2Route
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step2.ResumeStep2ViewModel
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4Screen
-import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep4ViewModel
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep3Route
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step4.ResumeStep3ViewModel
 
 @Composable
 fun ResumeTabScreen(
@@ -30,7 +30,7 @@ fun ResumeTabScreen(
     viewModel: ResumeMainViewModel,
     step1ViewModel: ResumeStep1ViewModel,
     step2ViewModel: ResumeStep2ViewModel,
-    step4ViewModel: ResumeStep4ViewModel,
+    step3ViewModel: ResumeStep3ViewModel,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val effectFlow = viewModel.effect
@@ -71,9 +71,9 @@ fun ResumeTabScreen(
                horizontalAlignment = Alignment.CenterHorizontally
            ) {
                when(page) {
-                   0 -> ResumeStep1Screen(viewModel = step1ViewModel)
-                   1 -> ResumeStep2Screen(viewModel = step2ViewModel)
-                   2 -> ResumeStep4Screen(viewModel = step4ViewModel)
+                   0 -> ResumeStep1Route(viewModel = step1ViewModel)
+                   1 -> ResumeStep2Route(viewModel = step2ViewModel)
+                   2 -> ResumeStep3Route(viewModel = step3ViewModel)
                }
            }
        }
