@@ -21,9 +21,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.capstone.nongglenonggle.R
@@ -33,12 +35,13 @@ import com.capstone.nongglenonggle.core.common.dialog.NonggleBottomSheet
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import java.time.LocalDate
 import java.time.YearMonth
+import java.util.Calendar
 import java.util.Date
 import kotlin.math.min
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun dateSpinnerBottomSheet(
+fun DateSpinnerBottomSheet(
     onConfirm: (Date) -> Unit,
     onDismissRequest: () -> Unit,
     context: Context,
@@ -120,7 +123,12 @@ fun dateSpinnerBottomSheet(
             FullButton(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    onConfirm(Date(year, month, day))
+                    val selectedDate = Calendar.getInstance().apply {
+                        set(Calendar.YEAR, year)
+                        set(Calendar.MONTH, month - 1)
+                        set(Calendar.DAY_OF_MONTH, day)
+                    }.time
+                    onConfirm(selectedDate)
                     onDismissRequest()
                 },
                 titleText = context.getString(R.string.확인),
@@ -133,5 +141,15 @@ fun dateSpinnerBottomSheet(
                 enabled = true
             )
         }
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DateSpinnerBottomSheetPreview() {
+    DateSpinnerBottomSheet(
+        onConfirm = {},
+        onDismissRequest = {},
+        context = LocalContext.current,
     )
 }
