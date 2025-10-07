@@ -100,9 +100,7 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
             }
         })
 
-        binding.address.setOnClickListener{
-            moveToWeb()
-        }
+        binding.address.setOnClickListener{}
 
         viewModel.AddressFromWeb.observe(viewLifecycleOwner){isdata->
             if(viewModel.AddressFromWeb.value != null){
@@ -172,11 +170,6 @@ class noticeAFragment : BaseFragment<FragmentNoticeABinding>(R.layout.fragment_n
                 false
             }
         }
-    }
-
-    fun moveToWeb(){
-//        val intent = Intent(context,AddressSearchWebActivity::class.java)
-//        startActivity(intent)
     }
 
 
