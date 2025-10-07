@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.capstone.nongglenonggle.data.model.remote_model.SubRegion
+import com.capstone.nongglenonggle.data.model.worker.RegionListModel
 
 /**
  * DAO
@@ -19,7 +19,7 @@ interface RegionDao {
     fun insertDistricts(districts: List<DistrictEntity>)
 
     @Transaction
-    fun insertRegionsWithDistricts(subRegions: List<SubRegion>) {
+    fun insertRegionsWithDistricts(subRegions: List<RegionListModel>) {
         subRegions.forEach { subRegion ->
             val regionId = insertRegion(RegionEntity(name = subRegion.name))
             val districts = subRegion.districts.map { district ->
@@ -44,5 +44,5 @@ interface RegionDao {
         )
         ORDER BY name
     """)
-    fun getDistrictsByRegionId(regionName: String): List<DistrictEntity>
+    fun getDistrictsByRegion(regionName: String): List<DistrictEntity>
 }

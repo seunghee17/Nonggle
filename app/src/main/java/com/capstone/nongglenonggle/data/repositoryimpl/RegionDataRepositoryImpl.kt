@@ -1,23 +1,31 @@
 package com.capstone.nongglenonggle.data.repositoryimpl
 
 import com.capstone.nongglenonggle.data.local_datasource.RegionDao
-import com.capstone.nongglenonggle.data.model.remote_model.SubRegion
+import com.capstone.nongglenonggle.data.model.worker.RegionListModel
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
-import com.capstone.nongglenonggle.domain.repository.LocalDataRepository
+import com.capstone.nongglenonggle.domain.repository.RegionRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Singleton
 import javax.inject.Inject
 
 @Singleton
-class LocalDataRepositoryImpl @Inject constructor(
+class RegionDataRepositoryImpl @Inject constructor(
     private val regionDao: RegionDao,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-): LocalDataRepository {
+): RegionRepository {
 
-    override suspend fun saveRegionToLocalDB(subRegions: List<SubRegion>) {
+    override suspend fun saveRegionToLocalDB(subRegions: List<RegionListModel>) {
         return withContext(ioDispatcher) {
             regionDao.insertRegionsWithDistricts(subRegions)
         }
     }
+
+    override suspend fun getRegionList(): List<String> {
+        return withContext(ioDispatcher) {
+            regionDao.getAllRegion().map { it.name }
+        }
+    }
+
+
 }

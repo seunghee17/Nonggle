@@ -7,7 +7,7 @@ import com.capstone.nongglenonggle.data.local_datasource.RegionDatabase
 import org.junit.Before
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.capstone.nongglenonggle.data.model.remote_model.SubRegion
+import com.capstone.nongglenonggle.data.model.worker.RegionListModel
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Test
@@ -37,7 +37,7 @@ class LocalDataSourceTest {
     @Test
     fun getAllRegionTest() = runBlocking {
         //given nothing
-        val testRegionList = listOf(SubRegion("전체", listOf("서울특별시", "부산광역시", "제주시")), SubRegion("서울", listOf("광진구", "성동구", "강남구")))
+        val testRegionList = listOf(RegionListModel("전체", listOf("서울특별시", "부산광역시", "제주시")), RegionListModel("서울", listOf("광진구", "성동구", "강남구")))
         //when
         regionDao.insertRegionsWithDistricts(testRegionList)
         val regions = regionDao.getAllRegion()
@@ -50,11 +50,11 @@ class LocalDataSourceTest {
     @Test
     fun getSubRegionTest() = runBlocking {
         //given
-        val testRegionList = listOf(SubRegion("전체", listOf("서울특별시", "부산광역시", "제주시")), SubRegion("서울", listOf("광진구", "성동구", "강남구")))
+        val testRegionList = listOf(RegionListModel("전체", listOf("서울특별시", "부산광역시", "제주시")), RegionListModel("서울", listOf("광진구", "성동구", "강남구")))
 
         //when
         regionDao.insertRegionsWithDistricts(testRegionList)
-        val subRegions = regionDao.getDistrictsByRegionId("서울")
+        val subRegions = regionDao.getDistrictsByRegion("서울")
 
         //then
         assertEquals(3, subRegions.size)
