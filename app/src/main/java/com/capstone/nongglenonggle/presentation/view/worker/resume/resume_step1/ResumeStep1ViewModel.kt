@@ -1,8 +1,11 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1
 
 import android.net.Uri
+import androidx.activity.result.ActivityResultLauncher
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.time.Instant
+import java.time.ZoneId
 import java.util.LinkedHashMap
 import javax.inject.Inject
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Effect as Step1Effect
@@ -16,9 +19,10 @@ class ResumeStep1ViewModel @Inject constructor() :
     ) {
     override fun handleEvent(event: Step1Event) {
         when (event) {
-            is Step1Event.UpDateDatePickerSheet -> {
+            is Step1Event.UpdateDatePickerSheet -> {
                 updateState(currentState.copy(showDatePickerSheet = event.sheetState))
             }
+
             is Step1Event.SetGenderType -> {
                 selectWorkerGender(event.gender)
             }
@@ -28,7 +32,11 @@ class ResumeStep1ViewModel @Inject constructor() :
             }
 
             is Step1Event.OpenGallery -> {
-                openGallery()
+                openGallery(
+                    event.isPhotoPickerAvailable,
+                    event.getContentLauncher,
+                    event.pickerLauncher
+                )
             }
 
             is Step1Event.SetCertificateAvailable -> {
@@ -44,11 +52,14 @@ class ResumeStep1ViewModel @Inject constructor() :
             }
 
             is Step1Event.SetBirthDate -> {
-                val userBirth = event.birthDate
+                val locaUserBirthDate = Instant.ofEpochMilli(event.birthDate.time)
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate()
+
                 updateState(
                     currentState.copy(
-                        birthDate = userBirth,
-                        birthDatePresnet = "${userBirth.year}년 ${userBirth.month}월 ${userBirth.date}일"
+                        birthDate = locaUserBirthDate,
+                        birthDatePresent = "${locaUserBirthDate.year}년 ${locaUserBirthDate.month}월 ${locaUserBirthDate.dayOfMonth}일"
                     )
                 )
             }
@@ -71,6 +82,7 @@ class ResumeStep1ViewModel @Inject constructor() :
                     )
                 )
             }
+
             is Step1Event.RemoveCertificationChip -> {
                 val tmpList = currentState.userCertificationList.toMutableList()
                 tmpList.remove(event.certificationTitle)
@@ -98,12 +110,26 @@ class ResumeStep1ViewModel @Inject constructor() :
             certificateAvailableMap[key] = false
         }
         certificateAvailableMap[updateState] = true
-        updateState(currentState.copy(certificationPossessionSelectedMap = LinkedHashMap(certificateAvailableMap)))
+        updateState(
+            currentState.copy(
+                certificationPossessionSelectedMap = LinkedHashMap(
+                    certificateAvailableMap
+                )
+            )
+        )
     }
 
-    private fun openGallery() {
-        postEffect(effect = Step1Effect.OpenGallery)
+    private fun openGallery(
+        isPhotoPickerAvailable: Boolean,
+        getContentLauncher: () -> Unit,
+        pickerLauncher: () -> Unit
+    ) {
+        if (isPhotoPickerAvailable) {
+            pickerLauncher()
+        } else {
+            getContentLauncher()
+        }
     }
 
-    
+
 }

@@ -4,10 +4,12 @@ import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia.Companion.isPhotoPickerAvailable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -38,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -63,13 +66,28 @@ import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.component.genderSelectButton
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Effect as Step1Effect
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.Event as Step1Event
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1.ResumeStep1Contract.State as Step1State
+
 import java.time.LocalDate
 
 @Composable
-fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
+internal fun ResumeStep1Route(
+    viewModel: ResumeStep1ViewModel
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    ResumeStep1Screen(
+        state = uiState,
+        onEvent = viewModel::setEvent
+    )
+}
+
+@Composable
+fun ResumeStep1Screen(
+    state: Step1State,
+    onEvent: (Step1Event) -> Unit
+) {
     val context = LocalContext.current
-    val effectFlow = viewModel.effect
     val focusManager = LocalFocusManager.current
 
     var isNameTextFieldFocused by rememberSaveable { mutableStateOf(false) }
@@ -79,9 +97,12 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
         contract = ActivityResultContracts.PickVisualMedia()
     ) { uri ->
         if (uri != null) {
-            context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            context.contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
         }
-        uri?.let { viewModel.setEvent(Step1Event.GetImageFromGallery(uri)) }
+        uri?.let { onEvent(Step1Event.GetImageFromGallery(uri)) }
     }
 
     // Photo Picker 미지원 기기 fallback (거의 드물지만 대비)
@@ -89,41 +110,21 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
         uri?.let {
-            viewModel.setEvent(Step1Event.GetImageFromGallery(it))
+            onEvent(Step1Event.GetImageFromGallery(it))
         }
     }
 
     //요청할 권한
-    val isPhotoPickerAvailable = remember {
-        ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable()
-    }
+    val isPhotoPickerAvailable = remember { isPhotoPickerAvailable(context) }
 
-    LaunchedEffect(true) {
-        effectFlow.collect { effect ->
-            when (effect) {
-                is Step1Effect.OpenGallery -> {
-                    if (isPhotoPickerAvailable) {
-                        pickerLauncher.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                        )
-                    } else {
-                        // 구형 기기/환경 fallback
-                        getContentLauncher.launch("image/*")
-                    }
-                }
-                else -> {}
-            }
-        }
-    }
-
-    if (uiState.showDatePickerSheet) {
+    if (state.showDatePickerSheet) {
         dateSpinnerBottomSheet(
             context = context,
             onConfirm = { picked ->
-                viewModel.setEvent(Step1Event.SetBirthDate(picked))
-                viewModel.setEvent(Step1Event.UpDateDatePickerSheet(!uiState.showDatePickerSheet))
+                onEvent(Step1Event.SetBirthDate(picked))
+                onEvent(Step1Event.UpdateDatePickerSheet(!state.showDatePickerSheet))
             },
-            onDismissRequest = { viewModel.setEvent(Step1Event.UpDateDatePickerSheet(false)) },
+            onDismissRequest = { onEvent(Step1Event.UpdateDatePickerSheet(false)) },
             initialDate = LocalDate.now().minusYears(20),
             minDate = LocalDate.of(1900, 1, 1),
             maxDate = LocalDate.now()
@@ -134,7 +135,9 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp)
-            .clickable { focusManager.clearFocus() }
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = { focusManager.clearFocus() })
+            }
     ) {
         item {
             Text(
@@ -149,19 +152,32 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                 style = NonggleTheme.typography.b2_sub,
                 color = NonggleTheme.colors.g2
             )
-            if (uiState.imageProfileUri == null) {
+            if (state.imageProfileUri == null) {
                 Image(
                     modifier = Modifier
                         .size(width = 96.dp, height = 96.dp)
                         .padding(top = 16.dp)
-                        .clickable { viewModel.setEvent(Step1Event.OpenGallery) },
+                        .clickable {
+                            onEvent(
+                                Step1Event.OpenGallery(
+                                    isPhotoPickerAvailable = isPhotoPickerAvailable,
+                                    getContentLauncher = { getContentLauncher.launch("image/*") },
+                                    pickerLauncher = {
+                                        pickerLauncher.launch(
+                                            PickVisualMediaRequest(
+                                                ActivityResultContracts.PickVisualMedia.ImageOnly
+                                            )
+                                        )
+                                    }
+                                ))
+                        },
                     painter = painterResource(id = R.drawable.imageupload),
                     contentDescription = null,
                 )
             } else {
                 val galleryPhotoPainter = rememberAsyncImagePainter(
                     model = ImageRequest.Builder(context)
-                        .data(uiState.imageProfileUri)
+                        .data(state.imageProfileUri)
                         .placeholder(R.drawable.imageupload)
                         .build()
                 )
@@ -172,7 +188,20 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                     modifier = Modifier
                         .size(96.dp)
                         .padding(top = 16.dp)
-                        .clickable { viewModel.setEvent(Step1Event.OpenGallery) }
+                        .clickable {
+                            onEvent(
+                                Step1Event.OpenGallery(
+                                    isPhotoPickerAvailable = isPhotoPickerAvailable,
+                                    getContentLauncher = { getContentLauncher.launch("image/*") },
+                                    pickerLauncher = {
+                                        pickerLauncher.launch(
+                                            PickVisualMediaRequest(
+                                                ActivityResultContracts.PickVisualMedia.ImageOnly
+                                            )
+                                        )
+                                    }
+                                ))
+                        }
                 )
             }
             Text(
@@ -188,18 +217,18 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                     .wrapContentHeight()
                     .onFocusChanged { focusState -> isNameTextFieldFocused = focusState.isFocused },
                 textFieldType = TextFieldType.Standard,
-                value = uiState.userName,
+                value = state.userName,
                 onValueChange = {
-                    viewModel.setEvent(Step1Event.SetUserName(it))
+                    onEvent(Step1Event.SetUserName(it))
                 },
                 textStyle = NonggleTheme.typography.b1_main,
                 textColor = Color.Black,
                 trailingIcon = {
-                    if (uiState.userName.isNotEmpty() && isNameTextFieldFocused) {
+                    if (state.userName.isNotEmpty() && isNameTextFieldFocused) {
                         NonggleIconButton(
                             ImageResourceId = R.drawable.xcircle,
                             onClick = {
-                                viewModel.setEvent(Step1Event.ClearUserName)
+                                onEvent(Step1Event.ClearUserName)
                             }
                         )
                     }
@@ -228,7 +257,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         shape = RoundedCornerShape(4.dp)
                     )
                     .clickable {
-                        viewModel.setEvent(Step1Event.UpDateDatePickerSheet(true))
+                        onEvent(Step1Event.UpdateDatePickerSheet(true))
                     }
             ) {
                 Row(
@@ -238,7 +267,7 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = uiState.birthDatePresnet,
+                        text = state.birthDatePresent,
                         style = NonggleTheme.typography.b4_btn,
                         textAlign = TextAlign.Start
                     )
@@ -265,11 +294,15 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         .padding(end = 16.dp),
                     gender = context.getString(R.string.여),
                     selectGender = {
-                        viewModel.setEvent(Step1Event.SetGenderType(context.getString(
+                        onEvent(
+                            Step1Event.SetGenderType(
+                                context.getString(
                                     R.string.여
-                                )))
+                                )
+                            )
+                        )
                     },
-                    genderSelectedMap = uiState.genderSelectedMap
+                    genderSelectedMap = state.genderSelectedMap
                 )
                 genderSelectButton(
                     modifier = Modifier
@@ -277,9 +310,9 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         .wrapContentHeight(),
                     gender = context.getString(R.string.남),
                     selectGender = {
-                        viewModel.setEvent(Step1Event.SetGenderType(context.getString(R.string.남)))
+                        onEvent(Step1Event.SetGenderType(context.getString(R.string.남)))
                     },
-                    genderSelectedMap = uiState.genderSelectedMap
+                    genderSelectedMap = state.genderSelectedMap
                 )
             }
             Text(
@@ -298,9 +331,9 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         .padding(end = 16.dp),
                     title = context.getString(R.string.있음),
                     changeCertificateState = {
-                        viewModel.setEvent(Step1Event.SetCertificateAvailable(context.getString(R.string.있음)))
+                        onEvent(Step1Event.SetCertificateAvailable(context.getString(R.string.있음)))
                     },
-                    certificateAvailable = uiState.certificationPossessionSelectedMap
+                    certificateAvailable = state.certificationPossessionSelectedMap
                 )
                 certificationButton(
                     modifier = Modifier
@@ -308,17 +341,17 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                         .wrapContentHeight(),
                     title = context.getString(R.string.없음),
                     changeCertificateState = {
-                        viewModel.setEvent(Step1Event.SetCertificateAvailable(context.getString(R.string.없음)))
+                        onEvent(Step1Event.SetCertificateAvailable(context.getString(R.string.없음)))
                     },
-                    certificateAvailable = uiState.certificationPossessionSelectedMap
+                    certificateAvailable = state.certificationPossessionSelectedMap
                 )
             }
-            if (uiState.certificationPossessionSelectedMap[context.getString(R.string.있음)] == true) {
+            if (state.certificationPossessionSelectedMap[context.getString(R.string.있음)] == true) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(IntrinsicSize.Min)
-                        .padding(bottom = if(uiState.userCertificationList.isNotEmpty()) 12.dp else 40.dp),
+                        .padding(bottom = if (state.userCertificationList.isNotEmpty()) 12.dp else 40.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     NonggleTextField(
@@ -329,18 +362,18 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                                 isCerTificateTextFieldFocused = focusState.isFocused
                             },
                         textFieldType = TextFieldType.Standard,
-                        value = uiState.userCertificateType,
+                        value = state.userCertificateType,
                         onValueChange = {
-                            viewModel.setEvent(Step1Event.SetUserCertificateDetail(it))
+                            onEvent(Step1Event.SetUserCertificateDetail(it))
                         },
                         textStyle = NonggleTheme.typography.b1_main,
                         textColor = Color.Black,
                         trailingIcon = {
-                            if (uiState.userCertificateType.isNotEmpty() && isCerTificateTextFieldFocused) {
+                            if (state.userCertificateType.isNotEmpty() && isCerTificateTextFieldFocused) {
                                 NonggleIconButton(
                                     ImageResourceId = R.drawable.xcircle,
                                     onClick = {
-                                        viewModel.setEvent(Step1Event.ClearUserCertificateDetail)
+                                        onEvent(Step1Event.ClearUserCertificateDetail)
                                     }
                                 )
                             }
@@ -359,11 +392,11 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                             .wrapContentWidth()
                             .wrapContentHeight(),
                         contentPadding = PaddingValues(horizontal = 30.dp, vertical = 13.dp),
-                        enabled = uiState.userCertificateType.isNotEmpty(),
+                        enabled = state.userCertificateType.isNotEmpty(),
                         onClick = {
-                            viewModel.setEvent(
+                            onEvent(
                                 Step1Event.AddCertificationChip(
-                                    uiState.userCertificateType
+                                    state.userCertificateType
                                 )
                             )
                         },
@@ -385,12 +418,12 @@ fun ResumeStep1Screen(viewModel: ResumeStep1ViewModel) {
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     items(
-                        count = uiState.userCertificationList.size,
+                        count = state.userCertificationList.size,
                     ) { index ->
                         certificationChipItem(
-                            title = uiState.userCertificationList[index],
+                            title = state.userCertificationList[index],
                             removeChip = {
-                                viewModel.setEvent(Step1Event.RemoveCertificationChip(uiState.userCertificationList[index]))
+                                onEvent(Step1Event.RemoveCertificationChip(state.userCertificationList[index]))
                             }
                         )
                     }
