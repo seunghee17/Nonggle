@@ -44,7 +44,7 @@ class LocalDataSourceTest {
 
         // then
         assertEquals(2, regions.size)
-        assertEquals("전체", regions.first().name)
+        assertEquals("전체", regions.first())
     }
 
     @Test

@@ -10,9 +10,9 @@ import com.capstone.nongglenonggle.data.model.remote_model.SubRegion
 import com.capstone.nongglenonggle.data.model.worker.RegionListModel
 import com.capstone.nongglenonggle.data.network.onFailure
 import com.capstone.nongglenonggle.data.network.onSuccess
-import com.capstone.nongglenonggle.domain.usecase.GetRegionUseCase
-import com.capstone.nongglenonggle.domain.usecase.SaveRegionToLocalDataBaseUseCase
-import com.capstone.nongglenonggle.domain.usecase.SetUserSignUpUseCase
+import com.capstone.nongglenonggle.domain.usecase.sign_up.GetRegionUseCase
+import com.capstone.nongglenonggle.domain.usecase.sign_up.SaveRegionToLocalDataBaseUseCase
+import com.capstone.nongglenonggle.domain.usecase.sign_up.SetUserSignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

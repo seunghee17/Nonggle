@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.domain.usecase
+package com.capstone.nongglenonggle.domain.usecase.worker
 
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
 import com.capstone.nongglenonggle.domain.repository.RegionRepository

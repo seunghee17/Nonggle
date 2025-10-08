@@ -20,7 +20,7 @@ class ResumeStep3Contract {
         val totalPreferWorkCategoryList: Array<String> = arrayOf("식량작물", "채소", "과수", "특용작물", "화훼", "축산", "농기계작업", "기타"),
         val selectedPreferWorkCategoryList: List<String> = emptyList(),
 
-    ) : UiState
+        ) : UiState
 
     sealed interface Event : UiEvent {
         // 희망 근무 위치 선택 기능에 대한 이벤트

@@ -23,7 +23,7 @@ class RegionDataRepositoryImpl @Inject constructor(
 
     override suspend fun getRegionList(): List<String> {
         return withContext(ioDispatcher) {
-            regionDao.getAllRegion().map { it.name }
+            regionDao.getAllRegion()
         }
     }
 

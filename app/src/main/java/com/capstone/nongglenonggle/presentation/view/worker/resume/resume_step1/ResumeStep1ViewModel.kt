@@ -2,6 +2,7 @@ package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step1
 
 import android.net.Uri
 import com.capstone.nongglenonggle.core.base.BaseViewModel
+import com.capstone.nongglenonggle.domain.usecase.worker.SetWorkerProfileImageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.format.DateTimeFormatter
 import java.util.LinkedHashMap

@@ -32,8 +32,8 @@ interface RegionDao {
         }
     }
 
-    @Query("SELECT * FROM region")
-    fun getAllRegion(): List<RegionEntity>
+    @Query("SELECT DISTINCT name FROM region")
+    fun getAllRegion(): List<String>
 
 
     @Query("""

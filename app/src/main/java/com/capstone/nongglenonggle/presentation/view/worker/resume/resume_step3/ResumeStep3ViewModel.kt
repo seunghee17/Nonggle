@@ -1,9 +1,10 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import com.capstone.nongglenonggle.core.common.logger.AppLogger
-import com.capstone.nongglenonggle.domain.usecase.GetParentRegionListUseCase
-import com.capstone.nongglenonggle.domain.usecase.GetSubRegionListUseCase
+import com.capstone.nongglenonggle.domain.usecase.worker.GetParentRegionListUseCase
+import com.capstone.nongglenonggle.domain.usecase.worker.GetSubRegionListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,7 +15,7 @@ import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.
 @HiltViewModel
 class ResumeStep3ViewModel @Inject constructor(
     private val getParentRegionListUseCase: GetParentRegionListUseCase,
-    private val getSubRegionListUseCase: GetSubRegionListUseCase
+    private val getSubRegionListUseCase: GetSubRegionListUseCase,
 ) :BaseViewModel<Step3Event, Step3State, Step3Effect>(initialState = Step3State()) {
 
     override fun handleEvent(event: Step3Event) {
@@ -27,7 +28,6 @@ class ResumeStep3ViewModel @Inject constructor(
                         updateState(currentState.copy(isLocationBottomSheetLoading = true))
                         getAllRegion()
                         updateState(currentState.copy(isLocationBottomSheetLoading = false))
-                        AppLogger.d("${currentState.regionList}")
                     }
                 }
             }
@@ -85,6 +85,7 @@ class ResumeStep3ViewModel @Inject constructor(
         try {
             val regions = getParentRegionListUseCase.invoke()
             updateState(currentState.copy(regionList = regions))
+            Log.d("TTAG", "${currentState.regionList}")
         } catch (e: Exception) {
             AppLogger.i("getAllRegion error at ResumeStep3ViewModel")
         }

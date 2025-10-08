@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.domain.usecase
+package com.capstone.nongglenonggle.domain.usecase.login
 
 import com.capstone.nongglenonggle.data.model.sign_up.UserDataClass
 import com.capstone.nongglenonggle.data.AppResult
@@ -8,10 +8,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class SetUserSignUpUseCase @Inject constructor(
+class GetUserAuthDataRepositoryUseCase @Inject constructor(
     private val authenticationRepository: AuthenticationRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend operator fun invoke(userData: UserDataClass): AppResult<Unit> =
-        withContext(ioDispatcher) { authenticationRepository.setUserData(userData = userData) }
+    suspend operator fun invoke(): AppResult<UserDataClass> =
+        withContext(ioDispatcher) { authenticationRepository.getUserData() }
 }

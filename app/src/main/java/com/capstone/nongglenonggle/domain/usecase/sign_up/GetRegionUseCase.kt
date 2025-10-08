@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.domain.usecase
+package com.capstone.nongglenonggle.domain.usecase.sign_up
 
 import com.capstone.nongglenonggle.data.model.remote_model.RegionModel
 import com.capstone.nongglenonggle.data.network.ApiResult

@@ -1,14 +1,13 @@
 package com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capstone.nongglenonggle.R
-import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
@@ -44,17 +42,23 @@ import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.component.workCategoryChip
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.Event as Step3Event
 import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.State as Step3State
+import com.capstone.nongglenonggle.presentation.view.worker.resume.resume_step3.ResumeStep3Contract.Effect as Step3Effect
+
 
 @Composable
 internal fun ResumeStep3Route(
     viewModel: ResumeStep3ViewModel,
 ) {
+    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val effectFlow = viewModel.effect
 
     LaunchedEffect(Unit) {
         effectFlow.collect { effect ->
             when (effect) {
+                is Step3Effect.FailToastMessage -> {
+                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+                }
                 else -> {}
             }
         }
@@ -84,136 +88,123 @@ fun ResumeStep3Screen(
         onEvent(Step3Event.ClearSheetState)
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 20.dp, end = 20.dp, bottom = 60.dp)
-        ) {
-            item {
-                Text(
-                    modifier = Modifier.padding(top = 24.dp, bottom = 12.dp),
-                    text = context.getString(R.string.희망_근무지역),
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        color = NonggleTheme.colors.g1,
-                        fontWeight = FontWeight.Normal,
-                        fontFamily = spoqahanSansneo
-                    )
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 20.dp, end = 20.dp, bottom = 60.dp)
+    ) {
+        item {
+            Text(
+                modifier = Modifier.padding(top = 24.dp, bottom = 12.dp),
+                text = context.getString(R.string.희망_근무지역),
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    color = NonggleTheme.colors.g1,
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = spoqahanSansneo
                 )
-                Box(
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .border(
+                        BorderStroke(1.dp, NonggleTheme.colors.g_line),
+                        shape = RoundedCornerShape(4.dp)
+                    )
+                    .noRippleClickable {
+                        onEvent(Step3Event.ShowRegionBottomSheet(true))
+                    },
+
+                ) {
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .wrapContentHeight()
-                        .border(
-                            BorderStroke(1.dp, NonggleTheme.colors.g_line),
-                            shape = RoundedCornerShape(4.dp)
+                        .padding(horizontal = 12.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = context.getString(R.string.희망_근무지역),
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium,
+                            fontFamily = spoqahanSansneo,
+                            color = NonggleTheme.colors.g3
                         )
-                        .noRippleClickable {
-                            onEvent(Step3Event.ShowRegionBottomSheet(true))
-                        },
-
-                    ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 12.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = context.getString(R.string.희망_근무지역),
-                            style = TextStyle(
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Medium,
-                                fontFamily = spoqahanSansneo,
-                                color = NonggleTheme.colors.g3
-                            )
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                        Image(
-                            modifier = Modifier.size(size = 24.dp),
-                            painter = painterResource(R.drawable.place),
-                            contentDescription = null
-                        )
-                    }
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Image(
+                        modifier = Modifier.size(size = 24.dp),
+                        painter = painterResource(R.drawable.place),
+                        contentDescription = null
+                    )
                 }
             }
-            if(state.preferLocationList.isNotEmpty() && !state.showSelectLocationBottomSheet) {
-                item {
-                    LazyVerticalGrid(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(100.dp)
-                            .padding(top = 12.dp),
-                        columns = GridCells.Fixed(3),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    ) {
-                        items(count = state.preferLocationList.size) { index ->
-                            selectedChipItem(
-                                title = state.preferLocationList[index],
-                                removeChip = {onEvent(Step3Event.RemovePreferLocation(state.preferLocationList[index]))}
-                            )
-                        }
-                    }
-                }
-            }
+        }
+        if(state.preferLocationList.isNotEmpty() && !state.showSelectLocationBottomSheet) {
             item {
-                Text(
-                    modifier = Modifier.padding(top = 32.dp),
-                    text = context.getString(R.string.희망_품목),
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Normal,
-                        fontFamily = spoqahanSansneo,
-                        color = NonggleTheme.colors.g1
-                    )
-                )
-                Text(
-                    modifier = Modifier.padding(top = 8.dp),
-                    text = context.getString(R.string.다중_선택이),
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Normal,
-                        fontFamily = spoqahanSansneo,
-                        color = NonggleTheme.colors.g2
-                    )
-                )
-            }
-            item { //품목
                 LazyVerticalGrid(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(max = 200.dp)
+                        .height(100.dp)
                         .padding(top = 12.dp),
                     columns = GridCells.Fixed(3),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
-                    items(
-                        count = state.totalPreferWorkCategoryList.size,
-                    ) { index ->
-                        workCategoryChip(
-                            categoryTitle = state.totalPreferWorkCategoryList[index],
-                            onClick = {
-                                onEvent(Step3Event.SelectPreferWorkCategory(state.totalPreferWorkCategoryList[index]))
-                            },
-                            selectCategoryList = state.selectedPreferWorkCategoryList
+                    items(count = state.preferLocationList.size) { index ->
+                        selectedChipItem(
+                            title = state.preferLocationList[index],
+                            removeChip = {onEvent(Step3Event.RemovePreferLocation(state.preferLocationList[index]))}
                         )
                     }
                 }
             }
         }
-        Column {
-            Spacer(modifier = Modifier.weight(1f))
-            FullButton(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                enabled = true,
-                onClick = {},
-                titleText = context.getString(R.string.next_btn_Title),
-                titleTextStyle = NonggleTheme.typography.t3
+        item {
+            Text(
+                modifier = Modifier.padding(top = 32.dp),
+                text = context.getString(R.string.희망_품목),
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = spoqahanSansneo,
+                    color = NonggleTheme.colors.g1
+                )
             )
+            Text(
+                modifier = Modifier.padding(top = 8.dp),
+                text = context.getString(R.string.다중_선택이),
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = spoqahanSansneo,
+                    color = NonggleTheme.colors.g2
+                )
+            )
+        }
+        item { //품목
+            LazyVerticalGrid(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 200.dp)
+                    .padding(top = 12.dp),
+                columns = GridCells.Fixed(3),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                items(
+                    count = state.totalPreferWorkCategoryList.size,
+                ) { index ->
+                    workCategoryChip(
+                        categoryTitle = state.totalPreferWorkCategoryList[index],
+                        onClick = {
+                            onEvent(Step3Event.SelectPreferWorkCategory(state.totalPreferWorkCategoryList[index]))
+                        },
+                        selectCategoryList = state.selectedPreferWorkCategoryList
+                    )
+                }
+            }
         }
     }
 }

@@ -2,10 +2,9 @@ package com.capstone.nongglenonggle.presentation.view.splash
 
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
-import com.capstone.nongglenonggle.data.AppResult
 import com.capstone.nongglenonggle.data.onFailure
 import com.capstone.nongglenonggle.data.onSuccess
-import com.capstone.nongglenonggle.domain.usecase.GetUserAuthDataRepositoryUseCase
+import com.capstone.nongglenonggle.domain.usecase.login.GetUserAuthDataRepositoryUseCase
 import com.capstone.nongglenonggle.presentation.view.signup.UserType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

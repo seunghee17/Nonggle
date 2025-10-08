@@ -111,7 +111,7 @@ fun ResumeCareerAddBottomSheet(
             LazyColumn(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
-                    .fillMaxSize()
+                    .wrapContentHeight()
             ) {
                 item {
                     Spacer(modifier = Modifier.height(8.dp))
@@ -247,7 +247,7 @@ fun ResumeCareerAddBottomSheet(
                     )
                     NonggleTextField(
                         modifier = Modifier
-                            .padding(top = 12.dp)
+                            .padding(top = 12.dp, bottom = 20.dp)
                             .fillMaxWidth()
                             .height(144.dp),
                         containerColor = Color.White,

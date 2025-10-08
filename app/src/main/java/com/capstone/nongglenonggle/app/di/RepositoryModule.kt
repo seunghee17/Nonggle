@@ -45,10 +45,11 @@ object RepositoryModule {
     @Singleton
     fun provideWorkerResumeRepository(
         firebaseStorage: FirebaseStorage,
+        firestore: FirebaseFirestore,
         firebaseAuth: FirebaseAuth,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ): WorkerResumeRepository {
-        return WorkerResumeRepositoryImpl(firebaseStorage, firebaseAuth, ioDispatcher)
+        return WorkerResumeRepositoryImpl(firebaseStorage, firestore, firebaseAuth, ioDispatcher)
     }
 
     @Provides

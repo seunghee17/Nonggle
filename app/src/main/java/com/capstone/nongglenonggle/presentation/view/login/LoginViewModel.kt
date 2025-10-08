@@ -5,7 +5,7 @@ import com.capstone.nongglenonggle.core.base.BaseViewModel
 import com.capstone.nongglenonggle.data.model.login.SignInResult
 import com.capstone.nongglenonggle.data.model.login.SignInState
 import com.capstone.nongglenonggle.data.AppResult
-import com.capstone.nongglenonggle.domain.usecase.GetUserAuthDataRepositoryUseCase
+import com.capstone.nongglenonggle.domain.usecase.login.GetUserAuthDataRepositoryUseCase
 import com.capstone.nongglenonggle.presentation.view.signup.UserType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -74,7 +74,8 @@ class LoginViewModel @Inject constructor(
                     }
                 }
                 is AppResult.Failure -> {
-                    postEffect(LoginEffect.ShowToastMessage("로그인을 다시 시도해주세요."))
+                    //postEffect(LoginEffect.ShowToastMessage("로그인을 다시 시도해주세요."))
+                    postEffect(LoginEffect.NavigateToEnrollUser)
                 }
             }
         }
