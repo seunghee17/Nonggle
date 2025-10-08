@@ -54,6 +54,7 @@ fun DateSpinnerBottomSheet(
 
     val minYear = minDate.year
     val maxYear = maxDate.year
+    year = year.coerceIn(minYear, maxYear)
 
     // 선택된 연도에 따른 월 범위 동적 제한
     val monthMin = if (year == minYear) minDate.monthValue else 1
