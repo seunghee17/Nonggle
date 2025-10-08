@@ -5,7 +5,6 @@ import com.capstone.nongglenonggle.core.base.UiEffect
 import com.capstone.nongglenonggle.core.base.UiEvent
 import com.capstone.nongglenonggle.core.base.UiState
 import java.time.LocalDate
-import java.util.Date
 import java.util.LinkedHashMap
 
 class ResumeStep1Contract {
