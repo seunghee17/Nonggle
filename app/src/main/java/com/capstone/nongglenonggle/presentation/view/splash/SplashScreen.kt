@@ -44,6 +44,7 @@ internal fun SplashRoute(
             }
         }
     }
+    SplashScreen()
 }
 
 @Composable

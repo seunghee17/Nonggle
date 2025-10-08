@@ -49,7 +49,11 @@ class ResumeStep2ViewModel @Inject constructor() : BaseViewModel<Step2Event, Ste
                 )
             }
             is Step2Event.SetWorkEndDate -> {
-                if(event.date < currentState.careerStartDate) {
+                val startDate = currentState.careerStartDate ?: run {
+                    postEffect(Step2Effect.ShowErrorToast("먼저 근무 시작일을 선택해 주세요."))
+                    return
+                }
+                if(event.date < startDate) {
                     postEffect(Step2Effect.ShowErrorToast("근무 기간을 다시 확인해주세요."))
                     return
                 }

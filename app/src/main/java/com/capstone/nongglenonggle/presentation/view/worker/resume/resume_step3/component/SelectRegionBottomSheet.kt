@@ -49,6 +49,7 @@ fun SelectRegionBottomSheet(
 ) {
 
     NonggleBottomSheet(
+        modifier = modifier,
         onDismissRequest = onDismissRequest,
         header = {
             Row(
@@ -73,7 +74,7 @@ fun SelectRegionBottomSheet(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.close),
-                        modifier = modifier.size(width = 24.dp, height = 24.dp),
+                        modifier = Modifier.size(width = 24.dp, height = 24.dp),
                         contentDescription = null,
                         tint = Color.Black
                     )

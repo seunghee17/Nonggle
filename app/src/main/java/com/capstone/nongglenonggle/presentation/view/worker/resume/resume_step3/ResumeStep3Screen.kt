@@ -77,6 +77,12 @@ fun ResumeStep3Screen(
 ) {
     val context = LocalContext.current
 
+    LaunchedEffect(state.showSelectLocationBottomSheet) {
+        if (!state.showSelectLocationBottomSheet) {
+            onEvent(Step3Event.ClearSheetState)
+        }
+    }
+
     if(state.showSelectLocationBottomSheet) {
         SelectRegionBottomSheet(
             context = context,
@@ -84,8 +90,6 @@ fun ResumeStep3Screen(
             onEvent = onEvent,
             onDismissRequest = { onEvent(Step3Event.ShowRegionBottomSheet(false)) }
         )
-    } else {
-        onEvent(Step3Event.ClearSheetState)
     }
 
     LazyColumn(
