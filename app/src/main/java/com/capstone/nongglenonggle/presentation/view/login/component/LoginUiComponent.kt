@@ -35,7 +35,7 @@ fun AppLogoForLogin() {
 }
 
 @Composable
-fun kakaoLoginButton(
+fun KakaoLoginButton(
     onClick: () -> Unit,
     context: Context
 ) {
@@ -53,7 +53,7 @@ fun kakaoLoginButton(
 }
 
 @Composable
-fun googleLoginButton(
+fun GoogleLoginButton(
     onClick: () -> Unit,
     context: Context
 ) {

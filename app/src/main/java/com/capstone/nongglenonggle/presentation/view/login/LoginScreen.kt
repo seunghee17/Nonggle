@@ -17,8 +17,8 @@ import com.capstone.nongglenonggle.core.design_system.NongleTheme
 import kotlinx.coroutines.flow.collectLatest
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capstone.nongglenonggle.presentation.view.login.component.AppLogoForLogin
-import com.capstone.nongglenonggle.presentation.view.login.component.googleLoginButton
-import com.capstone.nongglenonggle.presentation.view.login.component.kakaoLoginButton
+import com.capstone.nongglenonggle.presentation.view.login.component.GoogleLoginButton
+import com.capstone.nongglenonggle.presentation.view.login.component.KakaoLoginButton
 import com.capstone.nongglenonggle.presentation.view.login.LoginContract.Event as LoginEvent
 import com.capstone.nongglenonggle.presentation.view.login.LoginContract.Effect as LoginEffect
 
@@ -78,11 +78,11 @@ fun LoginScreen(
             Spacer(modifier = Modifier.weight(1f))
             AppLogoForLogin()
             Spacer(modifier = Modifier.weight(1f))
-            kakaoLoginButton(onClick = {
+            KakaoLoginButton(onClick = {
                 onEvent(LoginEvent.KakaoLoginButtonClick)
             }, context)
             Spacer(modifier = Modifier.height(16.dp))
-            googleLoginButton(onClick = {
+            GoogleLoginButton(onClick = {
                 onEvent(LoginEvent.GoogleLoginButtonClick)
             }, context)
             Spacer(modifier = Modifier.height(20.dp))
