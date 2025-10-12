@@ -118,12 +118,10 @@ class ResumeMainViewModel @Inject constructor(
         if(imageUri == null) return
         val result = setWorkerProfileImageUseCase.invoke(imageUri)
         when(result) {
-            is AppResult.Success -> {
-
-            }
             is AppResult.Failure -> {
-
+                postEffect(effect = MainEffect.ShowToastMessage("이미지 저장에 실패하여 기본 이미지로 대체됩니다."))
             }
+            else -> {}
         }
     }
 }
