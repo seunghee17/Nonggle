@@ -4,24 +4,28 @@ import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
 import com.capstone.nongglenonggle.data.model.login.SignInResult
 import com.capstone.nongglenonggle.data.model.login.SignInState
-import com.capstone.nongglenonggle.domain.usecase.GetUserAuthDataRepositoryUseCase
+import com.capstone.nongglenonggle.data.AppResult
+import com.capstone.nongglenonggle.domain.usecase.login.GetUserAuthDataRepositoryUseCase
 import com.capstone.nongglenonggle.presentation.view.signup.UserType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.capstone.nongglenonggle.presentation.view.login.LoginContract.Effect as LoginEffect
+import com.capstone.nongglenonggle.presentation.view.login.LoginContract.State as LoginState
+import com.capstone.nongglenonggle.presentation.view.login.LoginContract.Event as LoginEvent
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val getUserAuthDataRepositoryUseCase: GetUserAuthDataRepositoryUseCase,
     private val googleAuthClient: GoogleAuthClient,
-) : BaseViewModel<LoginContract.Event, LoginContract.State, LoginContract.Effect>(initialState = LoginContract.State()) {
+) : BaseViewModel<LoginEvent, LoginState, LoginEffect>(initialState = LoginContract.State()) {
 
-    override fun handleEvent(event: LoginContract.Event) {
+    override fun handleEvent(event: LoginEvent) {
         when(event) {
-            is LoginContract.Event.KakaoLoginButtonClick -> {
+            is LoginEvent.KakaoLoginButtonClick -> {
                 handleKakaoLogin()
             }
-            is LoginContract.Event.GoogleLoginButtonClick -> {
+            is LoginEvent.GoogleLoginButtonClick -> {
                 viewModelScope.launch {
                     val intentSender = googleAuthClient.signIn()
                     intentSender?.let {
@@ -29,7 +33,7 @@ class LoginViewModel @Inject constructor(
                     }
                 }
             }
-            is LoginContract.Event.OnGoogleSignInResult -> {
+            is LoginEvent.OnGoogleSignInResult -> {
                 viewModelScope.launch {
                     val signInResult = googleAuthClient.signInWithIntent(event.intent)
                     handleSignInResult(signInResult)
@@ -39,7 +43,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun handleKakaoLogin() {
-        postEffect(LoginContract.Effect.UnAvailableToastmessage("점검 중입니다. 다른 로그인 수단을 이용해주세요."))
+        postEffect(LoginEffect.ShowToastMessage("점검 중입니다. 다른 로그인 수단을 이용해주세요."))
     }
 
     fun handleSignInResult(result: SignInResult) {
@@ -51,29 +55,29 @@ class LoginViewModel @Inject constructor(
         )))
         if(result.data != null) {
             if(result.isNewUser == true) {
-                postEffect(LoginContract.Effect.NavigateToEnrollUser)
+                postEffect(LoginEffect.NavigateToEnrollUser)
             } else if(result.isNewUser == false) {
                 getUserLoginType()
             }
         }
     }
 
-    fun getUserLoginType() {
+    private fun getUserLoginType() {
         viewModelScope.launch {
-            getUserAuthDataRepositoryUseCase.invoke()
-                .onSuccess {
-                    if(UserType.valueOf(it.signUpType) == UserType.WORKER) {
-                        postEffect(LoginContract.Effect.NavigateToWorkerHome)
-                    } else if(UserType.valueOf(it.signUpType) == UserType.MANAGER) {
-                        postEffect(LoginContract.Effect.NavigateToFarmerHome)
+            val result = getUserAuthDataRepositoryUseCase.invoke()
+            when(result) {
+                is AppResult.Success -> {
+                    if (UserType.valueOf(result.data.signUpType) == UserType.WORKER) {
+                        postEffect(LoginEffect.NavigateToWorkerHome)
                     } else {
-                        postEffect(LoginContract.Effect.NavigateToEnrollUser)
+                        postEffect(LoginEffect.NavigateToEnrollUser)
                     }
                 }
-                .onFailure { e ->
-                    val errorMessage = e.message ?: "사용자 가입 형식 로드에 실패했습니다."
-                    updateState(currentState.copy(errorMessage = errorMessage))
+                is AppResult.Failure -> {
+                    //postEffect(LoginEffect.ShowToastMessage("로그인을 다시 시도해주세요."))
+                    postEffect(LoginEffect.NavigateToEnrollUser)
                 }
+            }
         }
     }
 

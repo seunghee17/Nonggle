@@ -5,9 +5,15 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 interface UiState
@@ -24,8 +30,8 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect>(
     private val _event: MutableSharedFlow<Event> = MutableSharedFlow()
     val event = _event.asSharedFlow()
 
-    private val _effect: Channel<Effect> = Channel()
-    val effect = _effect.receiveAsFlow()
+    private val _effect = Channel<Effect>(Channel.BUFFERED)
+    val effect = _effect.receiveAsFlow() // 단일소비모델
 
     fun setEvent(event: Event) {
         viewModelScope.launch {
@@ -43,19 +49,29 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect>(
         }
     }
 
-    init {
-        subScribeEvent()
-    }
+    protected open fun handleEvent(event: Event) {}
 
-    // ViewModel 생명주기 동안 event를 구독하여 상태를 업데이트한다.
-    // collect된 이벤트는 handleEvent()로 처리된다.
-    private fun subScribeEvent() {
+    init {
+        //subScribeEvent()
         viewModelScope.launch {
-            event.collect{
-                handleEvent(it)
-            }
+            event.collect(::handleEvent)
         }
     }
 
-    abstract fun handleEvent(event: Event)
+    protected inline fun <reified T : Event> onEvent(
+        crossinline block: (T) -> Unit
+    ) {
+        viewModelScope.launch {
+            event.filterIsInstance<T>()
+                .collect {block(it)}
+        }
+    }
+
+    fun<T> select(
+        selector: (State) -> T
+    ): StateFlow<T> =
+        uiState.map(selector)
+            .distinctUntilChanged()
+            .stateIn(viewModelScope, SharingStarted.Eagerly, selector(currentState))
+
 }

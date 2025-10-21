@@ -168,8 +168,8 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
     }
 
     private fun goToNext(){
-        val intent = Intent(requireContext(),NoticeCompleteguideActivity::class.java)
-        startActivity(intent)
+//        val intent = Intent(requireContext(), NoticeWritingFinalScreenActivity::class.java)
+//        startActivity(intent)
     }
 
     //날짜 선택용

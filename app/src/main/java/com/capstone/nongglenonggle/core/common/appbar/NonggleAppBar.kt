@@ -35,7 +35,7 @@ fun NonggleAppBar(
             actionIconContentColor = Color.Black,
         ),
         navigationIcon = {
-            IconButton(onClick = onBackPressed) {
+            IconButton(onClick = { onBackPressed() }) {
                 if(closeAction == true) {
                     Icon(Icons.Filled.Close, null)
                 } else if(backAction == true) {

@@ -13,7 +13,6 @@ class SplashContract {
     }
 
     sealed class Effect: UiEffect {
-        object NavigateToFarmerHome: Effect()
         object NavigateToWorkerHome: Effect()
         object NavigateToLogin: Effect()
     }

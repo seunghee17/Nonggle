@@ -1,15 +1,21 @@
 package com.capstone.nongglenonggle.app.di
 
+import com.capstone.nongglenonggle.data.local_datasource.RegionDao
+import com.capstone.nongglenonggle.data.network.ApiService
 import com.capstone.nongglenonggle.data.repositoryimpl.ApplyRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.AuthenticationRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.FirestoreGetRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.FirestoreSetRepositoryImpl
+import com.capstone.nongglenonggle.data.repositoryimpl.RegionDataRepositoryImpl
+import com.capstone.nongglenonggle.data.repositoryimpl.RemoteDataRepositoryImpl
 import com.capstone.nongglenonggle.data.repositoryimpl.WorkerResumeRepositoryImpl
 import com.capstone.nongglenonggle.domain.qualifiers.IoDispatcher
 import com.capstone.nongglenonggle.domain.repository.ApplyRepository
 import com.capstone.nongglenonggle.domain.repository.AuthenticationRepository
 import com.capstone.nongglenonggle.domain.repository.FirestoreGetRepository
 import com.capstone.nongglenonggle.domain.repository.FirestoreSetRepository
+import com.capstone.nongglenonggle.domain.repository.RegionRepository
+import com.capstone.nongglenonggle.domain.repository.RemoteDataRepository
 import com.capstone.nongglenonggle.domain.repository.WorkerResumeRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,10 +45,29 @@ object RepositoryModule {
     @Singleton
     fun provideWorkerResumeRepository(
         firebaseStorage: FirebaseStorage,
+        firestore: FirebaseFirestore,
         firebaseAuth: FirebaseAuth,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ): WorkerResumeRepository {
-        return WorkerResumeRepositoryImpl(firebaseStorage, firebaseAuth, ioDispatcher)
+        return WorkerResumeRepositoryImpl(firebaseStorage, firestore, firebaseAuth, ioDispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoteDataRepository(
+        service: ApiService,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ) : RemoteDataRepository {
+        return RemoteDataRepositoryImpl(service, ioDispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRegionDataRepository(
+        regionDao: RegionDao,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ): RegionRepository {
+        return RegionDataRepositoryImpl(regionDao = regionDao, ioDispatcher)
     }
 
     @Provides

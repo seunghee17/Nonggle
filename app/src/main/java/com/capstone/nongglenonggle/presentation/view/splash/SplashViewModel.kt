@@ -2,7 +2,9 @@ package com.capstone.nongglenonggle.presentation.view.splash
 
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
-import com.capstone.nongglenonggle.domain.usecase.GetUserAuthDataRepositoryUseCase
+import com.capstone.nongglenonggle.data.onFailure
+import com.capstone.nongglenonggle.data.onSuccess
+import com.capstone.nongglenonggle.domain.usecase.login.GetUserAuthDataRepositoryUseCase
 import com.capstone.nongglenonggle.presentation.view.signup.UserType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,23 +15,29 @@ class SplashViewModel @Inject constructor(
     private val getUserAuthDataRepositoryUseCase: GetUserAuthDataRepositoryUseCase
 ): BaseViewModel<SplashContract.Event, SplashContract.State, SplashContract.Effect>(initialState = SplashContract.State()) {
 
+    init {
+        getUserLoginType()
+    }
+
     override fun handleEvent(event: SplashContract.Event) {
 
     }
 
-    fun getUserLoginType() {
+    private fun getUserLoginType() {
         viewModelScope.launch {
             getUserAuthDataRepositoryUseCase.invoke()
                 .onSuccess {
-                    if(UserType.valueOf(it.signUpType) == UserType.WORKER) {
-                        postEffect(SplashContract.Effect.NavigateToWorkerHome)
-                    } else if(UserType.valueOf(it.signUpType) == UserType.MANAGER) {
-                        postEffect(SplashContract.Effect.NavigateToFarmerHome)
-                    } else {
-                        postEffect(SplashContract.Effect.NavigateToLogin)
+                    val userType = UserType.valueOf(it.signUpType)
+                    when (userType) {
+                        UserType.WORKER -> {
+                            postEffect(SplashContract.Effect.NavigateToWorkerHome)
+                        }
+                        else -> {
+                            postEffect(SplashContract.Effect.NavigateToLogin)
+                        }
                     }
                 }
-                .onFailure { e ->
+                .onFailure {
                     postEffect(SplashContract.Effect.NavigateToLogin)
                 }
         }

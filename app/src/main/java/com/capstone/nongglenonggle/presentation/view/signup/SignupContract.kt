@@ -1,16 +1,15 @@
 package com.capstone.nongglenonggle.presentation.view.signup
 
+import android.content.Context
 import com.capstone.nongglenonggle.core.base.UiEffect
 import com.capstone.nongglenonggle.core.base.UiEvent
 import com.capstone.nongglenonggle.core.base.UiState
-import javax.inject.Inject
 
 class SignupContract {
     sealed interface SubmitState {
         object Idle: SubmitState
         object Loading: SubmitState
         object Success: SubmitState
-        class Error(val message: String): SubmitState
     }
 
     data class State(
@@ -36,17 +35,19 @@ class SignupContract {
         object ClearUserName: Event()
 
         //약관동의 체크박스에 대한 event
-        object AcitivateAllTermCheckBox: Event()
+        object ActivateAllTermCheckBox: Event()
         object AcitivateAgeLimitCheckBox: Event()
         object AcitivateServiceUseTermCheckBox: Event()
         object AcitivatePersonalInfoCheckBox: Event()
-        data class updateDoroAddress(val data: String): Event()
+        data class UpdateDoroAddress(val data: String): Event()
         data class InputFarmerAddressDetail(val detailAddress: String): Event()
         object ClearFarmerAddressDetail: Event()
         data class SelectFarmerCategory(val category: String): Event()
-        object navigateToStep1Button: Event()
-        object navigateToStep3Button: Event()
-        object navigateToHomeButton: Event()
+        object NavigateToStep1Button: Event()
+        object NavigateToStep3Button: Event()
+        object NavigateToAddressSearchScreen: Event()
+        data class SaveUserInfo(val context: Context): Event()
+        object NavigateToBackScreen: Event()
     }
 
     sealed class Effect: UiEffect {
@@ -55,6 +56,6 @@ class SignupContract {
         object NavigateToHomeScreen: Effect()
         object NavigateToBackScreen: Effect()
         object NavigateToAddressSearchScreen: Effect()
-        data class setToastMessage(val message: String): Effect()
+        data class SetToastMessage(val message: String): Effect()
     }
 }

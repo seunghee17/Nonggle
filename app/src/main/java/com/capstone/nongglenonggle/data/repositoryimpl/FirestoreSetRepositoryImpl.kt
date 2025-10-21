@@ -2,7 +2,6 @@ package com.capstone.nongglenonggle.data.repositoryimpl
 
 import android.util.Log
 import com.capstone.nongglenonggle.domain.entity.NoticeContent
-import com.capstone.nongglenonggle.domain.entity.ResumeContent
 import com.capstone.nongglenonggle.domain.repository.FirestoreSetRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
@@ -29,22 +28,6 @@ class FirestoreSetRepositoryImpl @Inject constructor(
             return@withContext docRef
         } catch (e: Exception) {
             Log.e("error", "Failed to add notice data: ${e.message}")
-            throw e
-        }
-    }
-
-
-
-    override suspend fun addResumeData(resumeContent: ResumeContent, id1 :String, id2:String): DocumentReference = withContext(Dispatchers.IO) {
-        val currentUserUid = firebaseAuth.currentUser?.uid ?: throw IllegalStateException("User is not valid")
-
-        val docRef = firestore.collection("Resume").document(id1).collection(id2).document(currentUserUid)
-
-        try {
-            docRef.set(resumeContent).await()
-            return@withContext docRef
-        } catch (e: Exception) {
-            Log.e("FirestoreSetRepositoryImpl", "Failed to add notice data: ${e.message}")
             throw e
         }
     }
@@ -110,25 +93,6 @@ class FirestoreSetRepositoryImpl @Inject constructor(
             storeDoc.set(update, SetOptions.merge()).await()
         }catch (e:Exception){
             Log.e("error","user is not valid")
-        }
-        return@withContext Unit
-    }
-
-
-    //구직자 개인 테이블 저장용
-    override suspend fun addResumeRefToUser(docRef: DocumentReference) = withContext(Dispatchers.IO){
-        try{
-            val currentUid = firebaseAuth.currentUser?.uid
-            if(currentUid == null){
-                Log.e("addResumeRefToUser","user is not valid")
-            }
-            else{
-                val userdoc = firestore.collection("Worker").document(currentUid)
-                val update = hashMapOf("refs" to FieldValue.arrayUnion(docRef))
-                userdoc.set(update, SetOptions.merge()).await()
-            }
-        }catch (e:Exception){
-            Log.e("addResumeRefToUser","user is not valid")
         }
         return@withContext Unit
     }

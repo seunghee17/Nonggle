@@ -32,23 +32,24 @@ import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import com.capstone.nongglenonggle.R
-import com.capstone.nongglenonggle.app.Screens
 import com.capstone.nongglenonggle.core.common.button.FullButton
 import com.capstone.nongglenonggle.core.design_system.NonggleTheme
 import com.capstone.nongglenonggle.core.design_system.spoqahanSansneo
 import com.capstone.nongglenonggle.core.noRippleClickable
 import kotlinx.coroutines.flow.collectLatest
+import com.capstone.nongglenonggle.presentation.view.signup.SignupContract.State as SignupState
+import com.capstone.nongglenonggle.presentation.view.signup.SignupContract.Event as SignupEvent
 
 
 @Composable
-fun SetUserTypeScreen(
-    navController: NavHostController,
-    viewModel: SignupViewModel
+internal fun SignupSetUserTypeRoute(
+    viewModel: SignupViewModel,
+    navigateToStep1: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val effectFlow = viewModel.effect
@@ -57,18 +58,27 @@ fun SetUserTypeScreen(
     LaunchedEffect(true) {
         effectFlow.collectLatest { effect ->
             when(effect) {
-                is SignupContract.Effect.NavigateToStep1Screen -> {
-                    navController.navigate(Screens.Signup.Step2.route)
-                }
-                is SignupContract.Effect.setToastMessage -> {
+                is SignupContract.Effect.NavigateToStep1Screen -> navigateToStep1()
+                is SignupContract.Effect.SetToastMessage -> {
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
                 }
-                else -> {
-                    // Handle other effects
-                }
+                else -> {}
             }
         }
     }
+
+    SetUserTypeScreen(
+        state = uiState,
+        onEvent = viewModel::setEvent
+    )
+}
+
+@Composable
+fun SetUserTypeScreen(
+    state: SignupState,
+    onEvent: (SignupEvent) -> Unit
+) {
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier.fillMaxHeight(),
@@ -81,18 +91,18 @@ fun SetUserTypeScreen(
             UserType.MANAGER,
             modifier = Modifier.padding(horizontal = 20.dp),
             onClick = {
-                viewModel.setEvent(SignupContract.Event.SelectUseTypeBox(UserType.MANAGER))
+                onEvent(SignupEvent.SelectUseTypeBox(UserType.MANAGER))
             },
-            selectType = uiState.userSignupType
+            selectType = state.userSignupType
         )
         Spacer(modifier = Modifier.height(16.dp))
         userTypeContainer(
             UserType.WORKER,
             modifier = Modifier.padding(horizontal = 20.dp),
             onClick = {
-                viewModel.setEvent(SignupContract.Event.SelectUseTypeBox(UserType.WORKER))
+                onEvent(SignupEvent.SelectUseTypeBox(UserType.WORKER))
             },
-            selectType = uiState.userSignupType
+            selectType = state.userSignupType
         )
         Spacer(modifier = Modifier.weight(1f))
         nextBtn(
@@ -102,7 +112,7 @@ fun SetUserTypeScreen(
                 .wrapContentHeight(),
             enable = true,
             onClick = {
-                viewModel.setEvent(SignupContract.Event.navigateToStep1Button)
+                onEvent(SignupEvent.NavigateToStep1Button)
             })
     }
 }
@@ -213,4 +223,10 @@ fun nextBtn(context: Context, modifier: Modifier, enable: Boolean, onClick: () -
         titleText = context.getString(R.string.next_btn_Title),
         titleTextStyle = NonggleTheme.typography.t3
     )
+}
+
+@Preview
+@Composable
+fun SetUserTypeScreenPreview() {
+    SetUserTypeScreen(SignupState(), {})
 }

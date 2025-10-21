@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -30,7 +32,6 @@ fun DateSpinner(
     minDate: LocalDate = LocalDate.of(1900, 1, 1),
     maxDate: LocalDate = LocalDate.of(2100, 12, 31),
     zeroPadMonthDay: Boolean = true,
-    pickerHeight: Dp = 160.dp,
     pickerSpacing: Dp = 12.dp
 ) {
     val minYear = minDate.year
@@ -48,14 +49,16 @@ fun DateSpinner(
 
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(min = pickerHeight),
+            .wrapContentHeight()
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(pickerSpacing)
     ) {
         // YEAR
         SpinnerNumberPicker(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentHeight(),
             value = year,
             range = minYear..maxYear,
             onValueChange = onYearChange,
@@ -64,7 +67,9 @@ fun DateSpinner(
 
         // MONTH
         SpinnerNumberPicker(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentHeight(),
             value = month,
             range = monthMin..monthMax,
             onValueChange = onMonthChange,
@@ -73,10 +78,61 @@ fun DateSpinner(
 
         // DAY
         SpinnerNumberPicker(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentHeight(),
             value = day,
             range = dayMin..dayMax,
             onValueChange = onDayChange,
+            formatter = { if (zeroPadMonthDay) "%02d".format(it) else "$it" },
+        )
+    }
+}
+
+@Composable
+fun DateSpinnerWithOutDay(
+    year: Int,
+    month: Int,
+    onYearChange: (Int) -> Unit,
+    onMonthChange: (Int) -> Unit,
+    minDate: LocalDate = LocalDate.of(1900, 1, 1),
+    maxDate: LocalDate = LocalDate.of(2100, 12, 31),
+    zeroPadMonthDay: Boolean = true,
+    pickerHeight: Dp = 160.dp,
+    pickerSpacing: Dp = 12.dp
+) {
+    val minYear = minDate.year
+    val maxYear = maxDate.year
+
+    val monthMin = if (year == minYear) minDate.monthValue else 1
+    val monthMax = if (year == maxYear) maxDate.monthValue else 12
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = pickerHeight),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(pickerSpacing)
+    ) {
+        // YEAR
+        SpinnerNumberPicker(
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentHeight(),
+            value = year,
+            range = minYear..maxYear,
+            onValueChange = onYearChange,
+            formatter = { "$it" },
+        )
+
+        // MONTH
+        SpinnerNumberPicker(
+            modifier = Modifier
+                .weight(1f)
+                .wrapContentHeight(),
+            value = month,
+            range = monthMin..monthMax,
+            onValueChange = onMonthChange,
             formatter = { if (zeroPadMonthDay) "%02d".format(it) else "$it" },
         )
     }
@@ -137,5 +193,4 @@ private fun SpinnerNumberPicker(
         )
     }
 }
-
 

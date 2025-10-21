@@ -148,6 +148,7 @@ fun ContainedButton(
     onClick: () -> Unit,
     titleText: String,
     titleTextStyle: TextStyle,
+    contentPadding: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 13.dp),
     backgroundColor: Color = NonggleTheme.colors.m1,
     pressBackgroundColor: Color = NonggleTheme.colors.m2,
     disableBackGroundColor: Color = NonggleTheme.colors.m3,
@@ -162,7 +163,7 @@ fun ContainedButton(
         backgroundColor = if(isPressed) pressBackgroundColor else backgroundColor,
         disableContentColor = disableBackGroundColor,
         onClick = onClick,
-        contentPadding = PaddingValues(vertical = 16.dp, horizontal = 13.dp),
+        contentPadding = contentPadding,
         interactionSource = interactionSource,
         content = {
             Text(

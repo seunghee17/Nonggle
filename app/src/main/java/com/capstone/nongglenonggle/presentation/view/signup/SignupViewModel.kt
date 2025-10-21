@@ -1,41 +1,67 @@
 package com.capstone.nongglenonggle.presentation.view.signup
 
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.core.base.BaseViewModel
+import com.capstone.nongglenonggle.core.common.logger.AppResultMessageProvider
 import com.capstone.nongglenonggle.data.model.sign_up.UserDataClass
-import com.capstone.nongglenonggle.domain.usecase.SetUserSignUpUseCase
+import com.capstone.nongglenonggle.data.AppResult
+import com.capstone.nongglenonggle.data.model.remote_model.SubRegion
+import com.capstone.nongglenonggle.data.model.worker.RegionListModel
+import com.capstone.nongglenonggle.data.network.onFailure
+import com.capstone.nongglenonggle.data.network.onSuccess
+import com.capstone.nongglenonggle.domain.usecase.sign_up.GetRegionUseCase
+import com.capstone.nongglenonggle.domain.usecase.sign_up.SaveRegionToLocalDataBaseUseCase
+import com.capstone.nongglenonggle.domain.usecase.sign_up.SetUserSignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.capstone.nongglenonggle.presentation.view.signup.SignupContract.Event as SignUpEvent
+import com.capstone.nongglenonggle.presentation.view.signup.SignupContract.Effect as SignUpEffect
+import com.capstone.nongglenonggle.presentation.view.signup.SignupContract.State as SignUpState
 
 @HiltViewModel
 class SignupViewModel @Inject constructor(
-    private val setUserSignUpUseCase: SetUserSignUpUseCase
-) : BaseViewModel<SignupContract.Event, SignupContract.State, SignupContract.Effect>(initialState = SignupContract.State()) {
+    private val setUserSignUpUseCase: SetUserSignUpUseCase,
+    private val getRegionUseCase: GetRegionUseCase,
+    private val saveRegionToLocalDataBaseUseCase: SaveRegionToLocalDataBaseUseCase
+) : BaseViewModel<SignUpEvent, SignUpState, SignUpEffect>(initialState = SignupContract.State()) {
 
     //비즈니스 로직에 필요한 변수
     //체크박스 활성화 개수
     private var activeCheckBoxCount: Int =0
 
-    override fun handleEvent(event: SignupContract.Event) {
+    init {
+        viewModelScope.launch {
+            getRegionUseCase.invoke()
+                .onSuccess {
+                    saveRegionToLocalDataBaseUseCase.invoke(changeToRegionList(it.regions))
+                }
+                .onFailure {
+
+                }
+        }
+    }
+
+    override fun handleEvent(event: SignUpEvent) {
         viewModelScope.launch {
             when (event) {
                 //SignupSetUserType에서 가입하는 유저의 타입 정하는 이벤트
-                is SignupContract.Event.SelectUseTypeBox -> {
+                is SignUpEvent.SelectUseTypeBox -> {
                     updateState(currentState.copy(userSignupType = event.type))
                 }
 
                 //사용자 이름 작성
-                is SignupContract.Event.UserInsertName -> {
+                is SignUpEvent.UserInsertName -> {
                     updateState(currentState.copy(userName = event.userName))
                 }
 
                 //사용자 이름 지우기
-                is SignupContract.Event.ClearUserName -> {
+                is SignUpEvent.ClearUserName -> {
                     updateState(currentState.copy(userName = ""))
                 }
 
-                is SignupContract.Event.AcitivateAllTermCheckBox -> {
+                is SignUpEvent.ActivateAllTermCheckBox -> {
                     val currentAllCheckboxState = currentState.allCheckBoxState
                     updateState(currentState.copy(allCheckBoxState = !currentAllCheckboxState))
                     updateState(
@@ -52,7 +78,7 @@ class SignupViewModel @Inject constructor(
                     }
                 }
 
-                is SignupContract.Event.AcitivateAgeLimitCheckBox -> {
+                is SignUpEvent.AcitivateAgeLimitCheckBox -> {
                     updateState(currentState.copy(ageLimitConfirmCheckBox = !currentState.ageLimitConfirmCheckBox))
                     if(currentState.ageLimitConfirmCheckBox) {
                         activeCheckBoxCount+=1
@@ -66,7 +92,7 @@ class SignupViewModel @Inject constructor(
                     }
                 }
 
-                is SignupContract.Event.AcitivateServiceUseTermCheckBox -> {
+                is SignUpEvent.AcitivateServiceUseTermCheckBox -> {
                     updateState(currentState.copy(serviceUseTermCheckBox = !currentState.serviceUseTermCheckBox))
                     if(currentState.serviceUseTermCheckBox) {
                         activeCheckBoxCount+=1
@@ -80,7 +106,7 @@ class SignupViewModel @Inject constructor(
                     }
                 }
 
-                is SignupContract.Event.AcitivatePersonalInfoCheckBox -> {
+                is SignUpEvent.AcitivatePersonalInfoCheckBox -> {
                     updateState(currentState.copy(personalInfoCheckBox = !currentState.personalInfoCheckBox))
 
                     if(currentState.personalInfoCheckBox) {
@@ -95,19 +121,19 @@ class SignupViewModel @Inject constructor(
                     }
                 }
 
-                is SignupContract.Event.updateDoroAddress -> {
+                is SignUpEvent.UpdateDoroAddress -> {
                     getAddress(event.data)
                 }
 
-                is SignupContract.Event.ClearFarmerAddressDetail -> {
+                is SignUpEvent.ClearFarmerAddressDetail -> {
                     clearAddressDetail()
                 }
 
-                is SignupContract.Event.InputFarmerAddressDetail -> {
+                is SignUpEvent.InputFarmerAddressDetail -> {
                     updateState(currentState.copy(farmerAddressDeatail = event.detailAddress))
                 }
 
-                is SignupContract.Event.SelectFarmerCategory -> {
+                is SignUpEvent.SelectFarmerCategory -> {
                     val tmpList = currentState.selectedFarmerCategory.toMutableList()
                     if(tmpList.contains(event.category)) {
                         tmpList.remove(event.category)
@@ -116,38 +142,42 @@ class SignupViewModel @Inject constructor(
                     }
                     updateState(currentState.copy(selectedFarmerCategory = tmpList))
                 }
-                is SignupContract.Event.navigateToStep1Button -> {
-                    postEffect(effect = SignupContract.Effect.NavigateToStep1Screen)
+                is SignUpEvent.NavigateToStep1Button -> {
+                    postEffect(effect = SignUpEffect.NavigateToStep1Screen)
                 }
-                is SignupContract.Event.navigateToStep3Button -> {
-                    postEffect(effect = SignupContract.Effect.NavigateToStep3Screen)
+                is SignUpEvent.NavigateToStep3Button -> {
+                    postEffect(effect = SignUpEffect.NavigateToStep3Screen)
                 }
-                is SignupContract.Event.navigateToHomeButton -> {
-                    sendUserInfoToDB()
+                is SignUpEvent.SaveUserInfo -> {
+                    sendUserInfoToDB(context = event.context)
+                }
+
+                is SignUpEvent.NavigateToBackScreen -> {
+                    postEffect(effect = SignUpEffect.NavigateToBackScreen)
+                }
+
+                is SignUpEvent.NavigateToAddressSearchScreen -> {
+                    setLoading(true)
+                    postEffect(SignUpEffect.NavigateToAddressSearchScreen)
                 }
             }
         }
     }
 
-    fun getAddress(data: String) {
+    private fun getAddress(data: String) {
         updateState(currentState.copy(farmerAddressSearchFromDoro = data))
-        postEffect(effect = SignupContract.Effect.NavigateToBackScreen)
+        postEffect(effect = SignUpEffect.NavigateToBackScreen)
     }
 
-    fun clearAddressDetail() {
+    private fun clearAddressDetail() {
         updateState(currentState.copy(farmerAddressDeatail = ""))
     }
 
-    fun setLoading(loading: Boolean) {
+    private fun setLoading(loading: Boolean) {
         updateState(currentState.copy(isLoading = loading))
     }
 
-    fun navigateToAddressScreen() {
-        setLoading(true)
-        postEffect(SignupContract.Effect.NavigateToAddressSearchScreen)
-    }
-
-    fun sendUserInfoToDB() {
+    private fun sendUserInfoToDB(context: Context) {
         if(currentState.submitState is SignupContract.SubmitState.Loading) return
 
         updateState(currentState.copy(isLoading = true))
@@ -158,16 +188,26 @@ class SignupViewModel @Inject constructor(
         )
         viewModelScope.launch {
             updateState(currentState.copy(submitState = SignupContract.SubmitState.Loading))
-            setUserSignUpUseCase.invoke(userData = userData)
-                .onSuccess {
+            val result = setUserSignUpUseCase.invoke(userData = userData)
+            when(result) {
+                is AppResult.Success -> {
                     updateState(currentState.copy(submitState = SignupContract.SubmitState.Success))
-                    postEffect(effect = SignupContract.Effect.NavigateToHomeScreen)
+                    postEffect(effect = SignUpEffect.NavigateToHomeScreen)
                 }
-                .onFailure { e->
-                    val errorMessage = e.message ?: "데이터 전송에 실패했습니다."
-                    updateState(currentState.copy(submitState = SignupContract.SubmitState.Error(errorMessage)))
+                is AppResult.Failure -> {
+                    val errorMsg = AppResultMessageProvider.message(context,result)
+                    postEffect(SignUpEffect.SetToastMessage(errorMsg))
                 }
+            }
         }
+    }
+
+    private fun changeToRegionList(subRegionList: List<SubRegion>) : List<RegionListModel> {
+        val regionList = mutableListOf<RegionListModel>()
+        subRegionList.forEach {
+            regionList.add(RegionListModel(it.name, it.districts))
+        }
+        return regionList
     }
 }
 
