@@ -1,76 +1,73 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id "org.jetbrains.kotlin.plugin.compose" version "2.0.20"
-    id 'kotlin-kapt'
-    id "com.google.gms.google-services"
-    id 'com.google.dagger.hilt.android'
-    id 'com.google.firebase.crashlytics'
+    id ("com.android.application")
+    id ("org.jetbrains.kotlin.android")
+    id ("org.jetbrains.kotlin.plugin.compose") version "2.0.20"
+    id ("kotlin-kapt")
+    id ("com.google.gms.google-services")
+    id ("com.google.dagger.hilt.android")
+    id ("com.google.firebase.crashlytics")
 }
 kotlin {
     jvmToolchain(17)
 }
 
-def localProperties = new Properties()
-def localPropertiesFile = rootProject.file("local.properties")
-if (localPropertiesFile.exists()) {
-    localPropertiesFile.withInputStream(localProperties.&load)
-}
-
 android {
-    namespace 'com.capstone.nongglenonggle'
-    compileSdk 35
+    namespace = "com.capstone.nongglenonggle"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId "com.capstone.nongglenonggle"
-        minSdk 26
-        targetSdk 35
-        versionCode 1
-        versionName "1.0"
+        applicationId = "com.capstone.nongglenonggle"
+        minSdk = 26
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "LOCATION_URL", "\"${localProperties["LOCATION_URL"]}\"")
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-
-    packagingOptions {
-        exclude 'META-INF/LICENSE.md'
-        exclude 'META-INF/NOTICE.md'
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
-        dataBinding true
-        compose true
-        buildConfig true
+        dataBinding = true
+        compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.7.1"
+    }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    packaging {
+        resources {
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/NOTICE.md"
+        }
     }
 }
 
 dependencies {
     //play service 정의
-    implementation 'com.google.android.gms:play-services-auth:21.4.0'
-    implementation 'androidx.media3:media3-common-ktx:1.8.0'
-    implementation 'androidx.room:room-runtime-android:2.8.0'
+    implementation ("com.google.android.gms:play-services-auth:21.4.0")
+    implementation ("androidx.media3:media3-common-ktx:1.8.0")
+    implementation ("androidx.room:room-runtime-android:2.8.0")
 
 
     //Compose 정의
-    Dependency composeBom = platform('androidx.compose:compose-bom:2025.05.00')
-    implementation composeBom
-    testImplementation composeBom
+    val composeBom = platform("androidx.compose:compose-bom:2025.05.00")
+    implementation(composeBom)
+    testImplementation(composeBom)
 
     implementation("androidx.compose.runtime:runtime")
     implementation("androidx.compose.ui:ui")
@@ -92,7 +89,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
 
 
     //Firebase 관련 정의
@@ -123,11 +120,11 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.9")
     testImplementation("io.mockk:mockk:1.14.5")
     testImplementation("app.cash.turbine:turbine:1.0.0")
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation ("junit:junit:4.13.2")
 
     //hilt
-    implementation "com.google.dagger:hilt-android:2.56"
-    kapt "com.google.dagger:hilt-compiler:2.56"
+    implementation ("com.google.dagger:hilt-android:2.56")
+    kapt ("com.google.dagger:hilt-compiler:2.56")
 
     //retrofit + okhttp
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -140,7 +137,7 @@ dependencies {
     kapt("androidx.room:room-compiler:2.5.0")
     implementation("androidx.room:room-ktx:2.5.0")
 
-    implementation('com.google.android.flexbox:flexbox:3.0.0')
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
 
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.3")
@@ -148,11 +145,12 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
     //androidTestImplementation
-    androidTestImplementation 'androidx.test:core-ktx:1.7.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation composeBom
+    androidTestImplementation ("androidx.test:core-ktx:1.7.0")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation(composeBom)
 }
+
 kapt {
-    correctErrorTypes true
+    correctErrorTypes = true
 }
