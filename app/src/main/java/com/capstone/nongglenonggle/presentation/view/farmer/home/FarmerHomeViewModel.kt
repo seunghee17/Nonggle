@@ -7,11 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.domain.entity.FarmerHomeData
 import com.capstone.nongglenonggle.domain.entity.NoticeContent
-import com.capstone.nongglenonggle.domain.entity.OffererHomeFilterContent
 import com.capstone.nongglenonggle.domain.usecase.FetchFarmerDataUseCase
-import com.capstone.nongglenonggle.domain.usecase.GetAllResumeUseCase
-import com.capstone.nongglenonggle.domain.usecase.GetBasedOnAddressUseCase
-import com.capstone.nongglenonggle.domain.usecase.GetBasedOnCategoryUseCase
 import com.capstone.nongglenonggle.domain.usecase.GetNoticeUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
@@ -23,10 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FarmerHomeViewModel @Inject constructor(
     private val fetchFarmerDataUseCase: FetchFarmerDataUseCase,
-    private val getBasedOnCategoryUseCase: GetBasedOnCategoryUseCase,
-    private val getBasedOnAddressUseCase: GetBasedOnAddressUseCase,
     private val getNoticeUseCase: GetNoticeUseCase,
-    private val getAllResumeUseCase: GetAllResumeUseCase
 )
     : ViewModel(){
     private val firebaseAuth = FirebaseAuth.getInstance()
@@ -59,8 +52,6 @@ class FarmerHomeViewModel @Inject constructor(
             _userDetail.value = user
 
             setUserCategoryList()
-            setRefDataCategory()
-            setRefDataAddress("" ,"") /// FIXME: 오류가 발생하여 임시적으로 이렇게 처리
         }
     }
     private val _isNotice = MutableLiveData<Boolean>()
@@ -88,48 +79,6 @@ class FarmerHomeViewModel @Inject constructor(
         }
     }
 
-    fun setRefDataCategory() {
-        viewModelScope.launch {
-            val allData = mutableListOf<DocumentReference>()
-            try {
-                for (i in 0 until categories.size) {
-                    val data = getBasedOnCategoryUseCase("ResumeCategory", categories[i])
-                    if(data != null){
-                        allData.addAll(data)
-                    }
-                }
-                _basedOnCategory.postValue(allData)
-            } catch (e: Exception) {
-                Log.e("FarmerHomeViewModel1", "데이터 가져오는 중 오류 발생: $e")
-            }
-        }
-    }
-
-    fun setRefDataAddress(first:String, second:String){
-        viewModelScope.launch {
-            try{
-                val data = getBasedOnAddressUseCase("ResumeFilter",first, second)
-                if(data != null){
-                    val currentData = _basedOnCategory.value.orEmpty()
-                    val combinedData = mutableListOf<DocumentReference>()
-                    combinedData.addAll(currentData)
-                    combinedData.addAll(data)
-                    _basedOnCategory.postValue(combinedData)
-                }
-            }catch (e:Exception){
-                Log.e("FarmerHomeViewModel1", "데이터 가져오는 중 오류 발생: $e")
-            }
-        }
-    }
-
-    suspend fun setDataFromRef(documentReference:DocumentReference) : OffererHomeFilterContent?{
-        return try{
-            val documentSnapshot = documentReference.get().await()
-            documentSnapshot.toObject(OffererHomeFilterContent::class.java)
-        }catch (e:Exception){
-            null
-        }
-    }
 
     suspend fun setUserFromRef(documentReference:DocumentReference) : NoticeContent?{
         return try{

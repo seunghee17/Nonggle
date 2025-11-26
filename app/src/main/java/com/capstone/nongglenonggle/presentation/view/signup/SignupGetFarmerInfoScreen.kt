@@ -255,6 +255,17 @@ fun setUserAddressDoroTextField(
     )
 }
 
+@Preview(showBackground = true)
+@Composable
+fun previewScreen() {
+    setUserAddressDoroTextField(
+        modifier = Modifier,
+        context = LocalContext.current,
+        doroAddress = "",
+        navigateToSearchAddress = {}
+    )
+}
+
 @Composable
 fun setUserAddressDetailTextField(
     context: Context,

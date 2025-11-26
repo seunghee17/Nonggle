@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
-import com.capstone.nongglenonggle.domain.entity.OffererHomeFilterContent
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
-import com.capstone.nongglenonggle.presentation.view.adapter.FilterFarmerHomeAdapter
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.FragmentFarmerHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,34 +34,14 @@ class FarmerhomeFragment : BaseFragment<FragmentFarmerHomeBinding>(R.layout.frag
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-
-
-        val adapter = FilterFarmerHomeAdapter(emptyList(), object : FilterFarmerHomeAdapter.onItemClickListener{
-            override fun onItemClickListener(uid: String) {
-
-            }
-        }
-        )
-        binding.recyclerWorker.adapter = adapter
         setupInit()
         observe()
 
         viewModel.basedOnCategory.observe(viewLifecycleOwner){doc->
             viewModel.updateUI()
-            viewModel.viewModelScope.launch {
-                val dataList = mutableListOf<OffererHomeFilterContent>()
-                for(documentReference in viewModel.basedOnCategory.value ?: emptyList()){
-                    val data = viewModel.setDataFromRef(documentReference)
-                    data?.let{
-                        dataList.add(it)
-                    }
-                }
-                adapter.updateList(dataList)
-            }
+
         }
-        binding.toSearch.setOnClickListener{
-            findNavController().navigate(R.id.searchWorkerFragment)
-        }
+
 
         binding.noticeApplier.setOnClickListener{
             findNavController().navigate(R.id.noticeFragment)

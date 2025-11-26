@@ -13,7 +13,6 @@ import androidx.fragment.app.activityViewModels
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.FragmentNoticeDBinding
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
-import com.capstone.nongglenonggle.presentation.view.dialog.HireDatePickerFragment
 import com.capstone.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel
 
 class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_notice_d) {
@@ -175,8 +174,7 @@ class noticeDFragment : BaseFragment<FragmentNoticeDBinding>(R.layout.fragment_n
     //날짜 선택용
     private fun showDatePicker()
     {
-        val newFrament = HireDatePickerFragment()
-        newFrament.show(parentFragmentManager,"datepicker")
+        //newFrament.show(parentFragmentManager,"datepicker")
     }
     fun EditText.getClearButton(drawableRightId:Int){
         val drawableRight = 2

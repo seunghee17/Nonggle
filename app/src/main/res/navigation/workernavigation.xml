@@ -11,16 +11,13 @@
         android:label="fragment_worker_home"
         tools:layout="@layout/fragment_worker_home" >
         <action
-            android:id="@+id/action_workerHomeFragment_to_alarmFragment"
-            app:destination="@id/alarmFragment"
-            app:popUpTo="@id/workerHomeFragment"
-            app:popUpToInclusive="true"/>
-        <action
             android:id="@+id/action_workerHomeFragment_to_workerSearchFragment"
             app:destination="@id/workerSearchFragment"
             app:popUpTo="@id/workerHomeFragment"
             app:popUpToInclusive="true"/>
     </fragment>
+
+
     <fragment
         android:id="@+id/workerMypageFragment"
         android:name="com.capstone.nongglenonggle.presentation.view.worker.mypage.WorkerMypageFragment"
@@ -32,16 +29,7 @@
             app:popUpTo="@id/workerMypageFragment"
             app:popUpToInclusive="true"/>
     </fragment>
-    <fragment
-        android:id="@+id/workerSearchFragment"
-        android:name="com.capstone.nongglenonggle.presentation.view.worker.search.WorkerSearchFragment"
-        android:label="fragment_worker_search"
-        tools:layout="@layout/fragment_worker_search" />
-    <fragment
-        android:id="@+id/alarmFragment"
-        android:name="com.capstone.nongglenonggle.presentation.view.worker.home.AlarmFragment"
-        android:label="fragment_alarm"
-        tools:layout="@layout/fragment_alarm" />
+
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.capstone.nongglenonggle.presentation.view.SettingFragment"

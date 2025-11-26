@@ -58,8 +58,7 @@ fun NoticeWritingFinalScreen() {
         )
         Spacer(modifier = Modifier.weight(1f))
         FullButton(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             enabled = true,
             onClick = {},
             titleText = context.getString(R.string.공고글_확인하러),

@@ -3,7 +3,6 @@ package com.capstone.nongglenonggle.presentation.view.farmer.notice
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -17,7 +16,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.FragmentNoticeCBinding
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
-import com.capstone.nongglenonggle.presentation.view.adapter.SpinnerAdapter
 import com.capstone.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel
 
 class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_notice_c) {
@@ -265,10 +263,6 @@ class noticeCFragment : BaseFragment<FragmentNoticeCBinding>(R.layout.fragment_n
     // 스피너 어댑터 초기화 함수
     private fun initSpinner(spinner: Spinner, itemsArrayId: Int, hintText: String, viewModelLiveData: MutableLiveData<Boolean>,index: Int) {
         val items = resources.getStringArray(itemsArrayId)
-        val adapter = SpinnerAdapter(requireContext(), R.layout.item_spinner, items, R.id.list_content)
-        adapter.setHintTextColor(hintText, R.color.g3)
-        spinner.adapter = adapter
-        spinner.setSelection(adapter.count)
 
         spinner.post {
             spinner.dropDownVerticalOffset = spinner.height

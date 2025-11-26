@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
 
         navController.addOnDestinationChangedListener{_,destination,_->
-            if(destination.id == R.id.farmerhomeFragment || destination.id==R.id.searchWorkerFragment || destination.id == R.id.farmerMypageFragment){
+            if(destination.id == R.id.farmerhomeFragment || destination.id == R.id.farmerMypageFragment){
                 bottomNavi.visibility = View.VISIBLE
             }else{
                 bottomNavi.visibility = View.GONE

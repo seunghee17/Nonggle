@@ -19,21 +19,19 @@
         app:defaultNavHost = "true"/>
 
 
-
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:itemActiveIndicatorStyle="@null"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@drawable/selector_apptint"
+        app:itemRippleColor="@null"
         app:itemTextColor="@drawable/selector_menu_text"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navi_bar_farmer"
-        app:itemRippleColor="@null"
-        app:itemActiveIndicatorStyle="@null"
-        app:itemBackground="@color/white"
-        app:itemIconTint="@drawable/selector_apptint" />
-
+        tools:layout_editor_absoluteX="0dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

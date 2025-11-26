@@ -6,10 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.nongglenonggle.domain.entity.ResumeContent
-import com.capstone.nongglenonggle.domain.entity.SeekerHomeFilterContent
 import com.capstone.nongglenonggle.domain.entity.WorkerHomeData
 import com.capstone.nongglenonggle.domain.usecase.FetchWorkerDataUseCase
-import com.capstone.nongglenonggle.domain.usecase.GetAllNoticeUseCase
 import com.capstone.nongglenonggle.domain.usecase.ModifyFarmerDBUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
@@ -26,7 +24,6 @@ import javax.inject.Inject
 @HiltViewModel
 class WorkerHomeViewModel @Inject constructor(
     private val fetchWorkerDataUseCase: FetchWorkerDataUseCase,
-    private val getAllNoticeUseCase: GetAllNoticeUseCase,
     private val modifyFarmerDBUseCase: ModifyFarmerDBUseCase
 ) :ViewModel(){
     private val firestore = FirebaseFirestore.getInstance()
@@ -35,8 +32,6 @@ class WorkerHomeViewModel @Inject constructor(
     private val _userDetail = MutableLiveData<WorkerHomeData?>()
     val userDetail : LiveData<WorkerHomeData?> = _userDetail
 
-    private val _allNotice = MutableLiveData<List<SeekerHomeFilterContent>>()
-    val allNotice:LiveData<List<SeekerHomeFilterContent>> = _allNotice
 
     val _homeResume = MutableLiveData<ResumeContent>()
     val homeResume:LiveData<ResumeContent> = _homeResume
@@ -77,13 +72,7 @@ class WorkerHomeViewModel @Inject constructor(
             _userDetail.value = user
         }
     }
-    fun getAllNotice(){
-        viewModelScope.launch {
-            getAllNoticeUseCase().collect{data->
-                _allNotice.value = data
-            }
-        }
-    }
+
 
     val _isResume = MutableLiveData<Boolean>()
     val isResume:LiveData<Boolean> = _isResume
@@ -91,14 +80,6 @@ class WorkerHomeViewModel @Inject constructor(
     private val _haveData = MutableLiveData<Boolean>()
     val haveData:LiveData<Boolean> = _haveData
 
-    fun updateVisible(){
-        if(allNotice.value != null){
-            _haveData.value = true
-        }
-        else{
-            _haveData.value = false
-        }
-    }
 
     fun fetchResumeVisible(){
         if(_userDetail.value?.refs != null){
@@ -134,7 +115,6 @@ class WorkerHomeViewModel @Inject constructor(
     init{
         fetchUserInfo()
         fetchResumeVisible()
-        getAllNotice()
         _haveData.value = false
     }
 }

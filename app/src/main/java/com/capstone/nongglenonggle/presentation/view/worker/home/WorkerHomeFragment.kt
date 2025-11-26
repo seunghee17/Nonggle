@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,24 +15,18 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.databinding.FragmentWorkerHomeBinding
-import com.capstone.nongglenonggle.domain.entity.SeekerHomeFilterContent
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
-import com.capstone.nongglenonggle.presentation.view.adapter.FilterWorkerHomeAdapter
-import com.capstone.nongglenonggle.presentation.view.farmer.notice.NoticeCompleteActivity
 import com.capstone.nongglenonggle.presentation.view.worker.resume.ResumeActivity
 import com.capstone.nongglenonggle.presentation.viewModel.worker.WorkerHomeViewModel
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.fragment_worker_home) {
     private val viewModel : WorkerHomeViewModel by viewModels()
-    private lateinit var adapter: FilterWorkerHomeAdapter
-    private val firebaseAuth = FirebaseAuth.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.fetchUserInfo()
@@ -50,24 +43,6 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-
-        adapter = FilterWorkerHomeAdapter(emptyList(), object :
-            FilterWorkerHomeAdapter.onItemClickListener {
-            override fun onItemClick(uid:String) {
-                val intent = Intent(requireContext(), NoticeCompleteActivity::class.java)
-                intent.putExtra("UID_KEY", uid)
-                startActivity(intent)
-            }
-
-        })
-
-
-        binding.recycler.adapter = adapter
-
-        binding.bell.setOnClickListener{
-            findNavController().navigate(R.id.alarmFragment)
-        }
-
 
         viewModel.userDetail.observe(viewLifecycleOwner, Observer{userDetail ->
             if(userDetail?.refs?.isNotEmpty() == true){
@@ -101,15 +76,6 @@ class WorkerHomeFragment : BaseFragment<FragmentWorkerHomeBinding>(R.layout.frag
             startActivity(intent)
         }
 
-
-        viewModel.allNotice.observe(viewLifecycleOwner){docs->
-            val noticeList = mutableListOf<SeekerHomeFilterContent>()
-            for(notice in docs){
-                noticeList.add(notice)
-            }
-            adapter.updateList(noticeList)
-            viewModel.updateVisible()
-        }
 
         val imageView = binding.imageView
         val displayMetrics = Resources.getSystem().displayMetrics

@@ -7,12 +7,6 @@
         android:enabled="true"
         />
     <item
-        android:id="@+id/searchWorkerFragment"
-        android:title="일손찾기"
-        android:icon="@drawable/selector_menu_icon2"
-        android:enabled="true"
-        />
-    <item
         android:id="@+id/noticeFragment"
         android:title="공고쓰기"
         android:icon="@drawable/selector_menu_icon3"

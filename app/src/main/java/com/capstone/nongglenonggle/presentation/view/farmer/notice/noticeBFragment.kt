@@ -14,16 +14,12 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.capstone.nongglenonggle.R
 import com.capstone.nongglenonggle.presentation.base.BaseFragment
 import com.capstone.nongglenonggle.databinding.FragmentNoticeBBinding
-import com.capstone.nongglenonggle.presentation.view.adapter.SpinnerAdapter
-import com.capstone.nongglenonggle.presentation.view.dialog.HireDatePickerFragment
-import com.capstone.nongglenonggle.presentation.view.dialog.TimepickerFragment
 import com.capstone.nongglenonggle.presentation.viewModel.farmer.FarmerNoticeViewModel
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
@@ -111,10 +107,7 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
 
 
         val dayItems = resources.getStringArray(R.array.select_day)
-        val dayadapter = SpinnerAdapter(requireContext(), R.layout.item_spinner, dayItems, R.id.list_content)
-        dayadapter.setHintTextColor("근무 요일을 선택해주세요.", R.color.g3)
-        binding.daySelectSpinner.adapter = dayadapter
-        binding.daySelectSpinner.setSelection(dayadapter.count)
+
         binding.daySelectSpinner.post {
             binding.daySelectSpinner.dropDownVerticalOffset = binding.daySelectSpinner.height
         }
@@ -170,7 +163,7 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
 
         binding.datepicker1.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                showDatePicker()
+
             }
             false
         }
@@ -206,12 +199,6 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
             }
         }
 
-        binding.datepicker2.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                showDatePicker()
-            }
-            false
-        }
 
         //업무 세부 내용
         binding.noticeContent.addTextChangedListener(object : TextWatcher {
@@ -227,12 +214,6 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
 
         })
 
-        binding.workTimeStart.setOnClickListener {
-            showTimePicker()
-        }
-        binding.workTimeEnd.setOnClickListener {
-            showTimePicker()
-        }
 
         viewModel.TimeList.observe(viewLifecycleOwner) { data ->
             data?.let {
@@ -293,16 +274,6 @@ class noticeBFragment : BaseFragment<FragmentNoticeBBinding>(R.layout.fragment_n
                 false
             }
         }
-    }
-
-    private fun showDatePicker() {
-        val newFrament = HireDatePickerFragment()
-        newFrament.show(parentFragmentManager,"datepicker")
-    }
-
-    private fun showTimePicker(){
-        val newFragment = TimepickerFragment()
-        newFragment.show(parentFragmentManager,"timepicker")
     }
 
     //권한이 없을때 해당함수 호출
