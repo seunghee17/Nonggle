@@ -14,4 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "nongglenonggle"
 include (":app")
-include(":build-logic:convention")
+include(":build-logic:")
