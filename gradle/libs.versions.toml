@@ -56,4 +56,6 @@ firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "
 gms-google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 
 # Custom Convention Plugin
-nongglenonggle-android-application = {id = "capstone.android.application", version = "unspecified"}
+nongglenonggle-android-application = {id = "nongglenonggle.android.application", version = "unspecified"}
+nongglenonggle-android-application-compose = {id = "nongglenonggle.android.application.compose", version = "unspecified"}
+nongglenonggle-android-library = {id = "nongglenonggle.android.library", version = "unspecified"}

@@ -14,8 +14,18 @@ dependencies {
 gradlePlugin {
     plugins {
         register("androidApplication") {
-            id = "capstone.android.application"
+            id = "nongglenonggle.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
+        }
+
+        register("androidApplicationCompose") {
+            id = "nongglenonggle.android.application.compose"
+            implementationClass = "AndroidApplicationComposeConventionPlugin"
+        }
+
+        register("androidLibrary") {
+            id = "nongglenonggle.android.library"
+            implementationClass = "AndroidLibraryConventionPlugin"
         }
     }
 }
