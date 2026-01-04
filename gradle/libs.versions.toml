@@ -1,19 +1,33 @@
 [versions]
 agp = "8.5.2"
+androidTools = "31.5.0"
 kotlin = "2.0.21"
+ksp = "2.0.21-1.0.27"
 hilt = "2.56"
 google-services = "4.4.3"
 firebaseCrashlyticsPlugin = "3.0.6"
 jetbrainsKotlinJvm = "2.0.21"
 
+# 프로젝트 세팅값
+projectApplicationId = "com.capstone.nongglenonggle"
+projectVersionName = "1.0"
+projectVersionCode = "1"
+projectMinSdkVersion = "26"
+projectTargetSdkVersion = "36"
+projectCompileSdkVersion = "36"
+
 [libraries]
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 # hilt
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
@@ -21,3 +35,6 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
 # google service
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 gms-google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+
+# Custom Convention Plugin
+nongglenonggle-android-application = {id = "capstone.android.application", version = "unspecified"}
