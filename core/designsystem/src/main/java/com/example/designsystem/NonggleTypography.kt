@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.core.design_system
+package com.example.designsystem
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle

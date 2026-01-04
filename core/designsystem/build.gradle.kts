@@ -7,6 +7,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)

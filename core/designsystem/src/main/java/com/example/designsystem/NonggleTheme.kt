@@ -1,4 +1,4 @@
-package com.capstone.nongglenonggle.core.design_system
+package com.example.designsystem
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -6,9 +6,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 
 @Composable
 fun NonggleTheme(content: @Composable () -> Unit) {
-    CompositionLocalProvider {
-        content()
-    }
+
 }
 
 object NonggleTheme {
