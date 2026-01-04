@@ -1,0 +1,23 @@
+[versions]
+agp = "8.5.2"
+kotlin = "2.0.21"
+hilt = "2.56"
+google-services = "4.4.3"
+firebaseCrashlyticsPlugin = "3.0.6"
+jetbrainsKotlinJvm = "2.0.21"
+
+[libraries]
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+
+# hilt
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
+
+# google service
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
+gms-google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
