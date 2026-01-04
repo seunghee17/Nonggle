@@ -17,3 +17,4 @@ rootProject.name = "nongglenonggle"
 include (":app")
 include (":build-logic:convention")
 include(":domain")
+include(":core")
