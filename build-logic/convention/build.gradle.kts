@@ -14,18 +14,28 @@ dependencies {
 gradlePlugin {
     plugins {
         register("androidApplication") {
-            id = "nongglenonggle.android.application"
+            id = "example.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
 
         register("androidApplicationCompose") {
-            id = "nongglenonggle.android.application.compose"
+            id = "example.android.application.compose"
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
 
         register("androidLibrary") {
-            id = "nongglenonggle.android.library"
+            id = "example.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
+        }
+
+        register("androidLibraryCompose") {
+            id = "example.android.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
+
+        register("androidData") {
+            id = "example.android.data"
+            implementationClass = "AndroidDataConventionPlugin"
         }
     }
 }

@@ -39,6 +39,7 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 # Compose ui
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 
 [plugins]
@@ -55,7 +56,10 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 gms-google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 
+
 # Custom Convention Plugin
-nongglenonggle-android-application = {id = "nongglenonggle.android.application", version = "unspecified"}
-nongglenonggle-android-application-compose = {id = "nongglenonggle.android.application.compose", version = "unspecified"}
-nongglenonggle-android-library = {id = "nongglenonggle.android.library", version = "unspecified"}
+nongglenonggle-android-application = {id = "example.android.application", version = "unspecified"}
+nongglenonggle-android-application-compose = {id = "example.android.application.compose", version = "unspecified"}
+nongglenonggle-android-library = {id = "example.android.library", version = "unspecified"}
+nongglenonggle-android-library-compose = {id = "example.android.library.compose", version = "unspecified"}
+nongglenonggle-android-data = {id = "example.android.library", version = "unspecified"}

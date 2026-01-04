@@ -1,5 +1,3 @@
-package com.example
-
 import com.android.build.api.dsl.ApplicationExtension
 import com.example.convention.ExtensionType
 import com.example.convention.configureBuildTypes

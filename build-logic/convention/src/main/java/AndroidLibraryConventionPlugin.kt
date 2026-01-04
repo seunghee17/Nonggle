@@ -1,5 +1,3 @@
-package com.example
-
 import com.android.build.gradle.LibraryExtension
 import com.example.convention.ExtensionType
 import com.example.convention.configureBuildTypes
